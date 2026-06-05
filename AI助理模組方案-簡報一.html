@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 官方助理 — 模組方案與建置流程</title>
+<style>
+  :root {
+    --bg: #000;
+    --card: #1c1c1e;
+    --card-hover: #2c2c2e;
+    --border: rgba(255,255,255,0.08);
+    --text: #f5f5f7;
+    --text-sec: #a1a1a6;
+    --blue: #0a84ff;
+    --green: #30d158;
+    --orange: #ff9f0a;
+    --purple: #bf5af2;
+    --pink: #ff375f;
+    --teal: #64d2ff;
+    --g1: linear-gradient(135deg, #0a84ff, #5e5ce6);
+    --g2: linear-gradient(135deg, #30d158, #0a84ff);
+    --g3: linear-gradient(135deg, #ff9f0a, #ff375f);
+    --g4: linear-gradient(90deg, #0a84ff, #30d158, #ff9f0a);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 60px 24px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(10,132,255,0.12) 0%, transparent 60%);
+  }
+  .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(10,132,255,0.15); color: var(--blue); font-size: 14px; font-weight: 600; margin-bottom: 24px; }
+  .hero h1 { font-size: clamp(36px,6vw,60px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { font-style: normal; background: var(--g1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: clamp(18px,2.5vw,22px); color: var(--text-sec); max-width: 620px; margin-bottom: 40px; }
+  .hero-stats { display: flex; gap: 48px; flex-wrap: wrap; justify-content: center; }
+  .hero-stat .num { font-size: 48px; font-weight: 700; background: var(--g2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-stat .lbl { font-size: 14px; color: var(--text-sec); margin-top: 4px; }
+
+  /* ── Section ── */
+  section { padding: 100px 0; }
+  .sec-label { font-size: 14px; font-weight: 600; color: var(--blue); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+  .sec-title { font-size: clamp(28px,4vw,44px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; }
+  .sec-sub { font-size: 18px; color: var(--text-sec); max-width: 650px; margin-bottom: 48px; }
+
+  /* ── Module Flow ── */
+  .flow-diagram {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 40px; margin-bottom: 48px; text-align: center;
+  }
+  .flow-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .flow-box {
+    padding: 14px 24px; border-radius: 12px; font-size: 15px; font-weight: 600;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+  }
+  .flow-box.base { background: rgba(10,132,255,0.12); border-color: rgba(10,132,255,0.3); color: var(--blue); }
+  .flow-box.opt { background: rgba(48,209,88,0.1); border-color: rgba(48,209,88,0.25); color: var(--green); }
+  .flow-box.end { background: rgba(255,159,10,0.1); border-color: rgba(255,159,10,0.25); color: var(--orange); }
+  .flow-arrow { color: var(--text-sec); font-size: 20px; }
+  .flow-branch { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .flow-label { font-size: 13px; color: var(--text-sec); margin-top: 4px; }
+
+  /* ── Module Cards ── */
+  .mod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px,1fr)); gap: 20px; }
+  .mod-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .mod-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.3); }
+  .mod-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .mod-card.base::before { background: var(--g1); }
+  .mod-card.opt::before { background: var(--g2); }
+  .mod-tag { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+  .mod-tag.base { background: rgba(10,132,255,0.15); color: var(--blue); }
+  .mod-tag.opt { background: rgba(48,209,88,0.15); color: var(--green); }
+  .mod-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .mod-card .desc { font-size: 15px; color: var(--text-sec); margin-bottom: 20px; }
+  .mod-feat { list-style: none; }
+  .mod-feat li { padding: 8px 0; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .mod-feat li:last-child { border-bottom: none; }
+  .mod-feat .ck { color: var(--green); font-weight: bold; flex-shrink: 0; }
+  .mod-case { margin-top: 16px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-radius: 10px; font-size: 13px; color: var(--text-sec); }
+  .mod-case strong { color: var(--text); }
+
+  /* ── Packages ── */
+  .pkg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 20px; }
+  .pkg-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; text-align: center; position: relative; overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .pkg-card:hover { transform: translateY(-4px); }
+  .pkg-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .pkg-card.a::before { background: var(--g1); }
+  .pkg-card.b::before { background: var(--g2); }
+  .pkg-card.c::before { background: var(--g3); }
+  .pkg-card.recommend { border-color: rgba(48,209,88,0.4); }
+  .pkg-badge { position: absolute; top: 16px; right: 16px; padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; background: rgba(48,209,88,0.2); color: var(--green); }
+  .pkg-icon { font-size: 40px; margin-bottom: 12px; }
+  .pkg-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .pkg-card .pkg-desc { font-size: 14px; color: var(--text-sec); margin-bottom: 20px; }
+  .pkg-items { text-align: left; margin-bottom: 20px; }
+  .pkg-items .item { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .pkg-items .item:last-child { border-bottom: none; }
+  .pkg-items .item .ck { color: var(--green); flex-shrink: 0; }
+  .pkg-items .item .dash { color: var(--text-sec); opacity: 0.3; flex-shrink: 0; }
+  .pkg-for { margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; font-size: 13px; color: var(--text-sec); text-align: left; }
+  .pkg-for strong { color: var(--text); }
+
+  /* ── Delivery Flow ── */
+  .deliv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 20px; }
+  .deliv-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px; position: relative;
+  }
+  .deliv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 16px 16px 0 0; }
+  .deliv-card.phase1::before { background: var(--g1); }
+  .deliv-card.phase2::before { background: var(--g2); }
+  .deliv-phase { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+  .deliv-phase.p1 { background: rgba(10,132,255,0.15); color: var(--blue); }
+  .deliv-phase.p2 { background: rgba(48,209,88,0.15); color: var(--green); }
+  .deliv-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .deliv-card .deliv-desc { font-size: 15px; color: var(--text-sec); margin-bottom: 16px; }
+  .deliv-steps { list-style: none; }
+  .deliv-steps li { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 15px; }
+  .deliv-steps li:last-child { border-bottom: none; }
+  .deliv-steps .step-num {
+    width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .deliv-steps .step-num.p1 { background: rgba(10,132,255,0.2); color: var(--blue); }
+  .deliv-steps .step-num.p2 { background: rgba(48,209,88,0.2); color: var(--green); }
+  .deliv-steps .step-text { flex: 1; }
+  .deliv-steps .step-text strong { display: block; }
+  .deliv-steps .step-text span { font-size: 13px; color: var(--text-sec); }
+  .deliv-steps .step-time { font-size: 13px; color: var(--text-sec); flex-shrink: 0; }
+
+  /* ── Timeline ── */
+  .timeline { max-width: 700px; margin: 0 auto; }
+  .tl-item { display: flex; gap: 20px; position: relative; }
+  .tl-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .tl-dot {
+    width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; flex-shrink: 0; z-index: 1;
+  }
+  .tl-dot.blue { background: var(--g1); }
+  .tl-dot.green { background: var(--g2); }
+  .tl-conn { width: 2px; flex: 1; background: rgba(10,132,255,0.2); min-height: 24px; }
+  .tl-content { padding-bottom: 28px; }
+  .tl-content h4 { font-size: 18px; font-weight: 600; margin-bottom: 2px; }
+  .tl-content p { font-size: 15px; color: var(--text-sec); }
+  .tl-content .tl-time { font-size: 13px; color: var(--blue); font-weight: 600; margin-top: 4px; }
+
+  /* ── Deliverables ── */
+  .delv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 16px; }
+  .delv-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px; text-align: center;
+  }
+  .delv-icon { font-size: 32px; margin-bottom: 12px; }
+  .delv-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .delv-card p { font-size: 14px; color: var(--text-sec); }
+
+  /* ── CTA ── */
+  .cta { text-align: center; padding: 100px 24px; background: radial-gradient(ellipse at 50% 100%, rgba(48,209,88,0.08) 0%, transparent 60%); }
+  .cta h2 { font-size: clamp(28px,4vw,44px); font-weight: 700; margin-bottom: 16px; }
+  .cta p { font-size: 18px; color: var(--text-sec); margin-bottom: 32px; }
+  .cta-btn { display: inline-block; padding: 16px 40px; border-radius: 14px; background: var(--blue); color: #fff; font-size: 18px; font-weight: 600; text-decoration: none; transition: transform 0.2s, opacity 0.2s; }
+  .cta-btn:hover { transform: scale(1.03); opacity: 0.9; }
+
+  footer { text-align: center; padding: 40px 24px; font-size: 13px; color: var(--text-sec); border-top: 1px solid var(--border); }
+
+  @media (max-width: 640px) {
+    .hero-stats { gap: 24px; }
+    .hero-stat .num { font-size: 36px; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ Hero ════════ -->
+<div class="hero">
+  <div class="badge">🤖 AI 官方助理方案</div>
+  <h1>用 AI 打造<br>你的<em>數位業務團隊</em></h1>
+  <p>不是聊天機器人，是一個懂你業務的 AI 助理。幫你接單、回客、建檔、通知，讓你專注做真正重要的事。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">5</div><div class="lbl">功能模組</div></div>
+    <div class="hero-stat"><div class="num">3</div><div class="lbl">方案選擇</div></div>
+    <div class="hero-stat"><div class="num">7</div><div class="lbl">天完成建置</div></div>
+  </div>
+</div>
+
+<!-- ════════ Problem ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">痛點</div>
+    <div class="sec-title">你是不是也遇到這些問題？</div>
+    <div class="sec-sub">從 B2B 轉 B2C，客戶詢問量暴增，但人力跟不上。</div>
+
+    <div class="mod-grid" style="margin-bottom:0">
+      <div class="mod-card opt">
+        <div style="font-size:36px;margin-bottom:16px">⏰</div>
+        <h3>回覆太慢，客戶跑掉</h3>
+        <div class="desc">客戶晚上問問題，隔天才回，人早就去別家買了。</div>
+      </div>
+      <div class="mod-card opt">
+        <div style="font-size:36px;margin-bottom:16px">🤯</div>
+        <h3>同時 50 人來問，客服崩潰</h3>
+        <div class="desc">一個人最多回 50 則/天，超過就爆了，品質也下降。</div>
+      </div>
+      <div class="mod-card opt">
+        <div style="font-size:36px;margin-bottom:16px">📋</div>
+        <h3>客戶資料散落各處</h3>
+        <div class="desc">A 客服聊的內容 B 客服不知道，客戶要重複講。</div>
+      </div>
+      <div class="mod-card opt">
+        <div style="font-size:36px;margin-bottom:16px">🌾</div>
+        <h3>專業問題答不了</h3>
+        <div class="desc">品種、種植方式、氣候適應⋯通用機器人根本答不出來。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Architecture ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">架構</div>
+    <div class="sec-title">模組怎麼串在一起？</div>
+    <div class="sec-sub">所有模組以 n8n 自動化平台為核心，串接 LINE 官方帳號，依客戶需求選配。</div>
+
+    <div class="flow-diagram">
+      <div class="flow-row">
+        <div class="flow-box base">📱 客戶 LINE 訊息</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box base">🤖 模組 1：AI 智能回覆</div>
+      </div>
+      <div class="flow-row" style="margin-top:8px">
+        <div class="flow-branch">
+          <div style="text-align:center">
+            <div class="flow-box opt">✅ 能答 → 秒回客戶</div>
+          </div>
+          <div style="text-align:center">
+            <div class="flow-box end">❓ 答不了</div>
+            <div class="flow-label" style="margin-top:8px">↓</div>
+            <div class="flow-box opt" style="margin-top:8px">🧑 模組 2：真人轉接</div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-row" style="margin-top:16px; padding-top:16px; border-top: 1px solid var(--border);">
+        <div class="flow-box opt">📦 模組 3：訂單自動化</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box opt">📢 模組 4：狀態推播</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box end">📣 模組 5：主動推播</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Modules ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">功能模組</div>
+    <div class="sec-title">5 個模組，依需求選配</div>
+    <div class="sec-sub">每個模組獨立運作，也可以組合使用。先選核心需求，再依成長階段加購。</div>
+
+    <div class="mod-grid">
+      <!-- Module 1 -->
+      <div class="mod-card base">
+        <span class="mod-tag base">基礎模組 · 必選</span>
+        <h3>🤖 LINE AI 智能回覆</h3>
+        <div class="desc">LINE 訊息進來，AI Agent 用你的知識庫自動回覆客戶。</div>
+        <ul class="mod-feat">
+          <li><span class="ck">✓</span> 客製知識庫（產品、價格、種植方式⋯）</li>
+          <li><span class="ck">✓</span> 專業語氣設定（跟你本人說話一樣）</li>
+          <li><span class="ck">✓</span> 多輪對話（不是死板的關鍵字回覆）</li>
+          <li><span class="ck">✓</span> 24 小時不休息，同時處理無上限</li>
+        </ul>
+        <div class="mod-case"><strong>實戰案例：</strong>美地居家收納、小牧人羊奶 — 客戶 LINE 問問題，AI 秒回專業回答</div>
+      </div>
+
+      <!-- Module 2 -->
+      <div class="mod-card opt">
+        <span class="mod-tag opt">附加模組</span>
+        <h3>🧑 真人轉接</h3>
+        <div class="desc">AI 答不了的問題，自動轉接真人客服處理。</div>
+        <ul class="mod-feat">
+          <li><span class="ck">✓</span> 上班時間：直接轉接真人</li>
+          <li><span class="ck">✓</span> 非上班時間：自動留訊息，上班後通知</li>
+          <li><span class="ck">✓</span> Telegram 即時通知老闆（有新訊息）</li>
+          <li><span class="ck">✓</span> 客戶不會覺得被機器人打發</li>
+        </ul>
+        <div class="mod-case"><strong>運作方式：</strong>AI 判斷無法回答 → 自動觸發轉接流程 → 真人接手對話</div>
+      </div>
+
+      <!-- Module 3 -->
+      <div class="mod-card opt">
+        <span class="mod-tag opt">附加模組</span>
+        <h3>📦 預約/訂單自動化</h3>
+        <div class="desc">引導客戶填寫訂單資訊，自動建檔到 Google Sheets，通知老闆。</div>
+        <ul class="mod-feat">
+          <li><span class="ck">✓</span> LINE 引導填寫（品項、數量、地址⋯）</li>
+          <li><span class="ck">✓</span> 自動寫入 Google Sheets（訂單管理表）</li>
+          <li><span class="ck">✓</span> Telegram 即時通知老闆（新訂單）</li>
+          <li><span class="ck">✓</span> 零遺漏、零手動輸入</li>
+        </ul>
+        <div class="mod-case"><strong>實戰案例：</strong>小牧人羊奶 — 客戶 LINE 填問卷 → 自動建档 → 老闆即時收到通知</div>
+      </div>
+
+      <!-- Module 4 -->
+      <div class="mod-card opt">
+        <span class="mod-tag opt">附加模組</span>
+        <h3>📢 訂單狀態推播</h3>
+        <div class="desc">出貨、配送、完成，每個狀態自動 LINE 通知客戶。</div>
+        <ul class="mod-feat">
+          <li><span class="ck">✓</span> 訂單確認 → 自動通知客戶</li>
+          <li><span class="ck">✓</span> 出貨通知 → 附物流單號</li>
+          <li><span class="ck">✓</span> 送達確認 → 附評價連結</li>
+          <li><span class="ck">✓</span> 客戶不用一直來問「我的訂單呢？」</li>
+        </ul>
+        <div class="mod-case"><strong>實戰案例：</strong>小牧人羊奶 — 訂單狀態更新後自動推播給客戶</div>
+      </div>
+
+      <!-- Module 5 -->
+      <div class="mod-card opt">
+        <span class="mod-tag opt">附加模組</span>
+        <h3>📣 主動推播通知</h3>
+        <div class="desc">新品上市、促銷活動、季節提醒，主動推播給客戶。</div>
+        <ul class="mod-feat">
+          <li><span class="ck">✓</span> 新品上市自動通知（例如：當季種子到貨）</li>
+          <li><span class="ck">✓</span> 促銷活動推播（限時優惠、滿額折扣）</li>
+          <li><span class="ck">✓</span> 季節種植提醒（該播種了！）</li>
+          <li><span class="ck">✓</span> 客戶分群推播（買過番茄的推番茄新品）</li>
+        </ul>
+        <div class="mod-case"><strong>運作方式：</strong>設定推播條件 → n8n 自動觸發 → LINE 群發給目標客戶</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Packages ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">方案選擇</div>
+    <div class="sec-title">3 個方案，找到最適合你的</div>
+    <div class="sec-sub">每個方案都可以依需求微調，先選最接近的，再客製修改。</div>
+
+    <div class="pkg-grid">
+      <!-- A -->
+      <div class="pkg-card a">
+        <div class="pkg-icon">🔵</div>
+        <h3>方案 A：智能客服起步</h3>
+        <div class="pkg-desc">先解決「回不完」的問題</div>
+        <div class="pkg-items">
+          <div class="item"><span class="ck">✓</span> LINE AI 智能回覆</div>
+          <div class="item"><span class="ck">✓</span> 真人轉接</div>
+          <div class="item"><span class="dash">—</span> <span style="opacity:0.4">訂單自動化</span></div>
+          <div class="item"><span class="dash">—</span> <span style="opacity:0.4">狀態推播</span></div>
+          <div class="item"><span class="dash">—</span> <span style="opacity:0.4">主動推播</span></div>
+        </div>
+        <div class="pkg-for">
+          <strong>適合：</strong>剛從 B2B 轉 B2C、詢問量暴增、預算有限。先用 AI 接住客戶，再慢慢升級。
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="pkg-card b recommend">
+        <div class="pkg-badge">🔥 推薦</div>
+        <div class="pkg-icon">🟢</div>
+        <h3>方案 B：訂單自動化</h3>
+        <div class="pkg-desc">從接單到出貨，全流程自動化</div>
+        <div class="pkg-items">
+          <div class="item"><span class="ck">✓</span> LINE AI 智能回覆</div>
+          <div class="item"><span class="ck">✓</span> 真人轉接</div>
+          <div class="item"><span class="ck">✓</span> 預約/訂單自動化</div>
+          <div class="item"><span class="ck">✓</span> 訂單狀態推播</div>
+          <div class="item"><span class="dash">—</span> <span style="opacity:0.4">主動推播</span></div>
+        </div>
+        <div class="pkg-for">
+          <strong>適合：</strong>已有穩定客群、訂單量成長中。需要從「接單 → 建檔 → 出貨 → 通知」全自動化。
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="pkg-card c">
+        <div class="pkg-icon">🟠</div>
+        <h3>方案 C：全方位營運</h3>
+        <div class="pkg-desc">完整的數位營運系統</div>
+        <div class="pkg-items">
+          <div class="item"><span class="ck">✓</span> LINE AI 智能回覆</div>
+          <div class="item"><span class="ck">✓</span> 真人轉接</div>
+          <div class="item"><span class="ck">✓</span> 預約/訂單自動化</div>
+          <div class="item"><span class="ck">✓</span> 訂單狀態推播</div>
+          <div class="item"><span class="ck">✓</span> 主動推播通知</div>
+        </div>
+        <div class="pkg-for">
+          <strong>適合：</strong>規模較大、產品線多、需要主動行銷推播。打造 24 小時運轉的自動化營運系統。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Delivery ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">建置流程</div>
+    <div class="sec-title">從簽約到上線，只要 7 天</div>
+    <div class="sec-sub">你只需要提供業務資料，剩下的我們全部搞定。</div>
+
+    <div class="deliv-grid">
+      <!-- Phase 1 -->
+      <div class="deliv-card phase1">
+        <span class="deliv-phase p1">第一階段</span>
+        <h3>📋 簽約與準備</h3>
+        <div class="deliv-desc">確認方案、簽約收款、建立溝通管道。</div>
+        <ol class="deliv-steps">
+          <li>
+            <span class="step-num p1">1</span>
+            <div class="step-text"><strong>確認方案</strong><span>選 A/B/C，確認模組組合</span></div>
+          </li>
+          <li>
+            <span class="step-num p1">2</span>
+            <div class="step-text"><strong>報價簽約</strong><span>正式報價書 + 合約確認</span></div>
+          </li>
+          <li>
+            <span class="step-num p1">3</span>
+            <div class="step-text"><strong>收取建置費</strong><span>全額或 50% 頭期款</span></div>
+          </li>
+          <li>
+            <span class="step-num p1">4</span>
+            <div class="step-text"><strong>建立溝通群組</strong><span>LINE 群（客戶 + 我方）</span></div>
+          </li>
+          <li>
+            <span class="step-num p1">5</span>
+            <div class="step-text"><strong>交付需求表</strong><span>請客戶準備業務資料</span></div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="deliv-card phase2">
+        <span class="deliv-phase p2">第二階段</span>
+        <h3>🚀 建置與交付</h3>
+        <div class="deliv-desc">知識庫建置、系統串接、測試上線。</div>
+        <ol class="deliv-steps">
+          <li>
+            <span class="step-num p2">1</span>
+            <div class="step-text"><strong>客戶填寫資料</strong><span>產品資訊、常見問題、語氣偏好</span></div>
+            <span class="step-time">1-2 天</span>
+          </li>
+          <li>
+            <span class="step-num p2">2</span>
+            <div class="step-text"><strong>需求訪談</strong><span>深入了解業務細節</span></div>
+            <span class="step-time">30-60 分鐘</span>
+          </li>
+          <li>
+            <span class="step-num p2">3</span>
+            <div class="step-text"><strong>知識庫建置</strong><span>根據業務內容建立 Q&A</span></div>
+            <span class="step-time">2-3 天</span>
+          </li>
+          <li>
+            <span class="step-num p2">4</span>
+            <div class="step-text"><strong>系統串接</strong><span>n8n + LINE + Sheets</span></div>
+            <span class="step-time">2-3 天</span>
+          </li>
+          <li>
+            <span class="step-num p2">5</span>
+            <div class="step-text"><strong>內部測試</strong><span>模擬客戶對話，確認品質</span></div>
+            <span class="step-time">1 天</span>
+          </li>
+          <li>
+            <span class="step-num p2">6</span>
+            <div class="step-text"><strong>客戶驗收</strong><span>實際 LINE 測試，確認滿意</span></div>
+            <span class="step-time">1 天</span>
+          </li>
+          <li>
+            <span class="step-num p2">7</span>
+            <div class="step-text"><strong>正式上線</strong><span>開放客戶使用 + 收尾款</span></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Deliverables ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">交付內容</div>
+    <div class="sec-title">上線時你會收到這些</div>
+
+    <div class="delv-grid">
+      <div class="delv-card">
+        <div class="delv-icon">📱</div>
+        <h4>LINE AI 助理</h4>
+        <p>已上線的 LINE 官方帳號，AI 自動回覆客戶</p>
+      </div>
+      <div class="delv-card">
+        <div class="delv-icon">📊</div>
+        <h4>Google Sheets 訂單表</h4>
+        <p>自動建檔的訂單/預約管理表</p>
+      </div>
+      <div class="delv-card">
+        <div class="delv-icon">🔔</div>
+        <h4>Telegram 通知</h4>
+        <p>新訂單、異常狀況即時推播給你</p>
+      </div>
+      <div class="delv-card">
+        <div class="delv-icon">📖</div>
+        <h4>知識庫文件</h4>
+        <p>完整的 Q&A 知識庫，可隨時更新</p>
+      </div>
+      <div class="delv-card">
+        <div class="delv-icon">📝</div>
+        <h4>操作教學</h4>
+        <p>如何更新知識庫、查看訂單、管理客戶</p>
+      </div>
+      <div class="delv-card">
+        <div class="delv-icon">🛡️</div>
+        <h4>售後支援</h4>
+        <p>LINE 群即時回報問題，系統異常自動警報</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<div class="cta">
+  <h2>準備好讓 AI 幫你接單了嗎？</h2>
+  <p>免費 15 分鐘諮詢，幫你分析最適合的方案組合。</p>
+  <a href="https://lin.ee/qQjLRxP" class="cta-btn">立即預約諮詢</a>
+</div>
+
+<footer>
+  <p>AI 官方助理方案 ｜ 由 Jacob 團隊提供</p>
+</footer>
+
+</body>
+</html>

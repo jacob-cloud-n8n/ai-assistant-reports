@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 官方助理 — 後續服務與營運管理</title>
+<style>
+  :root {
+    --bg: #000;
+    --card: #1c1c1e;
+    --card-hover: #2c2c2e;
+    --border: rgba(255,255,255,0.08);
+    --text: #f5f5f7;
+    --text-sec: #a1a1a6;
+    --blue: #0a84ff;
+    --green: #30d158;
+    --orange: #ff9f0a;
+    --purple: #bf5af2;
+    --pink: #ff375f;
+    --teal: #64d2ff;
+    --yellow: #ffd60a;
+    --g1: linear-gradient(135deg, #0a84ff, #5e5ce6);
+    --g2: linear-gradient(135deg, #30d158, #0a84ff);
+    --g3: linear-gradient(135deg, #ff9f0a, #ff375f);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    padding: 60px 24px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(48,209,88,0.1) 0%, transparent 60%);
+  }
+  .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(48,209,88,0.15); color: var(--green); font-size: 14px; font-weight: 600; margin-bottom: 24px; }
+  .hero h1 { font-size: clamp(36px,6vw,60px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { font-style: normal; background: var(--g2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: clamp(18px,2.5vw,22px); color: var(--text-sec); max-width: 620px; margin-bottom: 40px; }
+  .hero-stats { display: flex; gap: 48px; flex-wrap: wrap; justify-content: center; }
+  .hero-stat .num { font-size: 48px; font-weight: 700; background: var(--g2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-stat .lbl { font-size: 14px; color: var(--text-sec); margin-top: 4px; }
+
+  /* ── Section ── */
+  section { padding: 100px 0; }
+  .sec-label { font-size: 14px; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+  .sec-title { font-size: clamp(28px,4vw,44px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; }
+  .sec-sub { font-size: 18px; color: var(--text-sec); max-width: 650px; margin-bottom: 48px; }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 20px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.3); }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.c1::before { background: var(--g1); }
+  .card.c2::before { background: var(--g2); }
+  .card.c3::before { background: var(--g3); }
+  .card-icon { font-size: 36px; margin-bottom: 16px; }
+  .card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .card .desc { font-size: 15px; color: var(--text-sec); margin-bottom: 16px; }
+  .feat-list { list-style: none; }
+  .feat-list li { padding: 8px 0; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .feat-list li:last-child { border-bottom: none; }
+  .feat-list .ck { color: var(--green); font-weight: bold; flex-shrink: 0; }
+
+  /* ── Timeline ── */
+  .timeline { max-width: 700px; margin: 0 auto; }
+  .tl-item { display: flex; gap: 20px; }
+  .tl-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .tl-dot {
+    width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0; z-index: 1;
+  }
+  .tl-dot.blue { background: rgba(10,132,255,0.2); }
+  .tl-dot.green { background: rgba(48,209,88,0.2); }
+  .tl-dot.orange { background: rgba(255,159,10,0.2); }
+  .tl-conn { width: 2px; flex: 1; min-height: 20px; }
+  .tl-conn.blue { background: rgba(10,132,255,0.2); }
+  .tl-conn.green { background: rgba(48,209,88,0.2); }
+  .tl-content { padding-bottom: 28px; }
+  .tl-content h4 { font-size: 18px; font-weight: 600; margin-bottom: 2px; }
+  .tl-content p { font-size: 15px; color: var(--text-sec); }
+
+  /* ── Service Table ── */
+  .svc-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+  .svc-table th {
+    text-align: left; padding: 16px 20px; font-size: 14px; font-weight: 600;
+    color: var(--text-sec); border-bottom: 1px solid var(--border);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .svc-table td { padding: 16px 20px; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .svc-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .svc-table .highlight { color: var(--green); font-weight: 600; }
+  .svc-table .freq { color: var(--text-sec); font-size: 13px; }
+
+  /* ── SLA Cards ── */
+  .sla-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; margin-bottom: 48px; }
+  .sla-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px; text-align: center;
+  }
+  .sla-card .sla-icon { font-size: 32px; margin-bottom: 12px; }
+  .sla-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .sla-card .sla-val { font-size: 28px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+  .sla-card p { font-size: 13px; color: var(--text-sec); }
+
+  /* ── Price Table ── */
+  .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 20px; }
+  .price-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; text-align: center; position: relative; overflow: hidden;
+  }
+  .price-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .price-card.a::before { background: var(--g1); }
+  .price-card.b::before { background: var(--g2); }
+  .price-card.c::before { background: var(--g3); }
+  .price-card.recommend { border-color: rgba(48,209,88,0.4); }
+  .price-badge { position: absolute; top: 16px; right: 16px; padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; background: rgba(48,209,88,0.2); color: var(--green); }
+  .price-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .price-card .pkg-desc { font-size: 14px; color: var(--text-sec); margin-bottom: 20px; }
+  .price-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 15px; }
+  .price-row:last-child { border-bottom: none; }
+  .price-row .val { font-weight: 600; }
+  .price-total { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .price-total .label { font-size: 14px; color: var(--text-sec); }
+  .price-total .amount { font-size: 36px; font-weight: 700; }
+  .price-total .amount.blue { color: var(--blue); }
+  .price-total .amount.green { color: var(--green); }
+  .price-total .amount.orange { color: var(--orange); }
+  .price-note { font-size: 13px; color: var(--text-sec); margin-top: 8px; }
+
+  /* ── FAQ ── */
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 24px 28px; margin-bottom: 12px;
+  }
+  .faq-item h4 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .faq-item p { font-size: 15px; color: var(--text-sec); }
+
+  /* ── CTA ── */
+  .cta { text-align: center; padding: 100px 24px; background: radial-gradient(ellipse at 50% 100%, rgba(48,209,88,0.08) 0%, transparent 60%); }
+  .cta h2 { font-size: clamp(28px,4vw,44px); font-weight: 700; margin-bottom: 16px; }
+  .cta p { font-size: 18px; color: var(--text-sec); margin-bottom: 32px; }
+  .cta-btn { display: inline-block; padding: 16px 40px; border-radius: 14px; background: var(--green); color: #000; font-size: 18px; font-weight: 600; text-decoration: none; transition: transform 0.2s, opacity 0.2s; }
+  .cta-btn:hover { transform: scale(1.03); opacity: 0.9; }
+
+  footer { text-align: center; padding: 40px 24px; font-size: 13px; color: var(--text-sec); border-top: 1px solid var(--border); }
+
+  @media (max-width: 640px) {
+    .hero-stats { gap: 24px; }
+    .hero-stat .num { font-size: 36px; }
+    .svc-table { font-size: 14px; }
+    .svc-table th, .svc-table td { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ Hero ════════ -->
+<div class="hero">
+  <div class="badge">🤝 後續服務與營運管理</div>
+  <h1>上線只是<em>開始</em><br>我們陪你長久經營</h1>
+  <p>系統上線後，我們持續維護、更新、優化，確保你的 AI 助理一直保持最佳狀態。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">7×24</div><div class="lbl">系統監控</div></div>
+    <div class="hero-stat"><div class="num">即時</div><div class="lbl">問題回報處理</div></div>
+    <div class="hero-stat"><div class="num">每月</div><div class="lbl">知識庫更新</div></div>
+  </div>
+</div>
+
+<!-- ════════ Service Overview ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">服務內容</div>
+    <div class="sec-title">月維護包含哪些服務？</div>
+    <div class="sec-sub">每月固定維護，確保系統穩定運作，持續優化回覆品質。</div>
+
+    <div class="card-grid">
+      <div class="card c1">
+        <div class="card-icon">🔧</div>
+        <h3>系統穩定運維</h3>
+        <div class="desc">n8n 工作流監控，異常自動警報，即時修復。</div>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span> 7×24 系統監控（異常自動通知）</li>
+          <li><span class="ck">✓</span> n8n 工作流異常即時修復</li>
+          <li><span class="ck">✓</span> LINE Token / API 過期自動更新</li>
+          <li><span class="ck">✓</span> Google Sheets 權限維護</li>
+        </ul>
+      </div>
+
+      <div class="card c2">
+        <div class="card-icon">📖</div>
+        <h3>知識庫持續更新</h3>
+        <div class="desc">根據客戶新增的產品或常見問題，更新 AI 知識庫。</div>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span> 新產品/新服務上架更新</li>
+          <li><span class="ck">✓</span> 新增常見問題 Q&A</li>
+          <li><span class="ck">✓</span> 調整回覆語氣與邏輯</li>
+          <li><span class="ck">✓</span> 季節性內容更新（例如：當季種子）</li>
+        </ul>
+      </div>
+
+      <div class="card c3">
+        <div class="card-icon">📊</div>
+        <h3>定期檢視與優化</h3>
+        <div class="desc">每月回顧 AI 回覆品質，持續提升客戶體驗。</div>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span> 月度營運報告（詢問量、熱門問題）</li>
+          <li><span class="ck">✓</span> AI 回覆品質檢視</li>
+          <li><span class="ck">✓</span> 客戶反饋分析與調整建議</li>
+          <li><span class="ck">✓</span> 優化建議（新功能、流程改善）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SLA ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">服務承諾</div>
+    <div class="sec-title">我們的服務水準</div>
+    <div class="sec-sub">明確的服務承諾，讓你放心。</div>
+
+    <div class="sla-grid">
+      <div class="sla-card">
+        <div class="sla-icon">⚡</div>
+        <h4>問題回應時間</h4>
+        <div class="sla-val">2 小時內</div>
+        <p>LINE 群回報問題，2 小時內回應</p>
+      </div>
+      <div class="sla-card">
+        <div class="sla-icon">🔧</div>
+        <h4>系統修復時間</h4>
+        <div class="sla-val">24 小時內</div>
+        <p>非緊急問題 24 小時內修復</p>
+      </div>
+      <div class="sla-card">
+        <div class="sla-icon">🚨</div>
+        <h4>緊急修復時間</h4>
+        <div class="sla-val">4 小時內</div>
+        <p>系統完全中斷，4 小時內修復</p>
+      </div>
+      <div class="sla-card">
+        <div class="sla-icon">📖</div>
+        <h4>知識庫更新</h4>
+        <div class="sla-val">3 天內</div>
+        <p>收到更新需求，3 天內完成</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Problem Report Flow ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">問題處理</div>
+    <div class="sec-title">遇到問題怎麼辦？</div>
+    <div class="sec-sub">三種問題回報管道，確保你的問題即時被處理。</div>
+
+    <div class="card-grid">
+      <div class="card c1">
+        <div class="card-icon">💬</div>
+        <h3>LINE 專屬群組</h3>
+        <div class="desc">簽約後建立的 LINE 群組，直接在這裡回報問題。</div>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span> 最方便的回報管道</li>
+          <li><span class="ck">✓</span> 可以截圖、傳影片說明問題</li>
+          <li><span class="ck">✓</span> 處理進度即時回報</li>
+        </ul>
+      </div>
+
+      <div class="card c2">
+        <div class="card-icon">🤖</div>
+        <h3>系統自動警報</h3>
+        <div class="desc">n8n 異常時，系統自動通知我們，不用你回報。</div>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span> 工作流出錯自動觸發</li>
+          <li><span class="ck">✓</span> 包含錯誤原因與執行 ID</li>
+          <li><span class="ck">✓</span> 主動修復，你可能都不會發現問題</li>
+        </ul>
+      </div>
+
+      <div class="card c3">
+        <div class="card-icon">📞</div>
+        <h3>定期檢視會議</h3>
+        <div class="desc">每月一次線上會議，回顧營運狀況，討論優化方向。</div>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span> 月度營運數據回顧</li>
+          <li><span class="ck">✓</span> 問題清單檢視</li>
+          <li><span class="ck">✓</span> 下月優化計畫討論</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Upgrade ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">方案升級</div>
+    <div class="sec-title">生意成長了，系統也要跟著升級</div>
+    <div class="sec-sub">隨時可以加購模組或升級方案，不需要重新簽約。</div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot blue">📈</div>
+          <div class="tl-conn blue"></div>
+        </div>
+        <div class="tl-content">
+          <h4>生意成長，詢問量增加</h4>
+          <p>AI 回覆量持續成長，現有模組已經不夠用。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot green">💬</div>
+          <div class="tl-conn green"></div>
+        </div>
+        <div class="tl-content">
+          <h4>LINE 群提出需求</h4>
+          <p>在 LINE 群告訴我們需要加購什麼模組，我們評估後報價。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot green">✅</div>
+          <div class="tl-conn green"></div>
+        </div>
+        <div class="tl-content">
+          <h4>確認報價，開始建置</h4>
+          <p>確認費用後，我們開始建置新模組，通常 3-5 個工作天完成。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot orange">🚀</div>
+        </div>
+        <div class="tl-content">
+          <h4>新模組上線</h4>
+          <p>測試通過後直接上線，無縫接軌，不影響現有運作。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ Pricing ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">費用說明</div>
+    <div class="sec-title">建置費 + 月維護費</div>
+    <div class="sec-sub">一次性的建置費加上每月維護費，讓系統持續為你運作。</div>
+
+    <div class="price-grid">
+      <!-- A -->
+      <div class="price-card a">
+        <h3>🔵 方案 A</h3>
+        <div class="pkg-desc">智能客服起步</div>
+        <div class="price-row"><span>LINE AI 智能回覆</span><span class="val">含</span></div>
+        <div class="price-row"><span>真人轉接</span><span class="val">含</span></div>
+        <div class="price-row"><span>知識庫建置</span><span class="val">含</span></div>
+        <div class="price-row"><span>操作教學</span><span class="val">含</span></div>
+        <div class="price-total">
+          <div class="label">建置費</div>
+          <div class="amount blue">$12,000</div>
+          <div class="price-note">月維護費 $2,000/月</div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="price-card b recommend">
+        <div class="price-badge">🔥 推薦</div>
+        <h3>🟢 方案 B</h3>
+        <div class="pkg-desc">訂單自動化</div>
+        <div class="price-row"><span>方案 A 全部內容</span><span class="val">含</span></div>
+        <div class="price-row"><span>預約/訂單自動化</span><span class="val">含</span></div>
+        <div class="price-row"><span>訂單狀態推播</span><span class="val">含</span></div>
+        <div class="price-row"><span>Google Sheets 建檔</span><span class="val">含</span></div>
+        <div class="price-total">
+          <div class="label">建置費</div>
+          <div class="amount green">$20,000</div>
+          <div class="price-note">月維護費 $3,000/月</div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="price-card c">
+        <h3>🟠 方案 C</h3>
+        <div class="pkg-desc">全方位營運</div>
+        <div class="price-row"><span>方案 B 全部內容</span><span class="val">含</span></div>
+        <div class="price-row"><span>主動推播通知</span><span class="val">含</span></div>
+        <div class="price-row"><span>客戶分群推播</span><span class="val">含</span></div>
+        <div class="price-row"><span>季節性自動提醒</span><span class="val">含</span></div>
+        <div class="price-total">
+          <div class="label">建置費</div>
+          <div class="amount orange">$25,000</div>
+          <div class="price-note">月維護費 $4,000/月</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px; padding:24px; background:var(--card); border:1px solid var(--border); border-radius:14px;">
+      <p style="font-size:15px; color:var(--text-sec); text-align:center;">
+        💡 <strong style="color:var(--text)">加購模組：</strong>任何方案都可以單獨加購模組，費用依模組複雜度而定，LINE 群討論後報價。<br>
+        📅 <strong style="color:var(--text)">付款方式：</strong>建置費簽約時收取（可分二期），月維護費每月自動扣款或轉帳。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FAQ ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">常見問題</div>
+    <div class="sec-title">你可能想知道的事</div>
+
+    <div class="faq-item">
+      <h4>月維護費可以隨時取消嗎？</h4>
+      <p>可以。提前一個月通知即可。取消後系統會停止運作，知識庫備份會提供給你。</p>
+    </div>
+    <div class="faq-item">
+      <h4>如果 AI 回錯怎麼辦？</h4>
+      <p>AI 回覆範圍限定在知識庫內，不會亂答。如果發現回錯，在 LINE 群回報，我們 24 小時內修正知識庫。</p>
+    </div>
+    <div class="faq-item">
+      <h4>知識庫更新有次數限制嗎？</h4>
+      <p>月維護費內包含合理範圍的更新（每月約 5-10 次）。如果是大量改版（例如整條產品線更換），會另外評估費用。</p>
+    </div>
+    <div class="faq-item">
+      <h4>系統出問題影響客戶怎麼辦？</h4>
+      <p>我們有 7×24 監控，異常自動通知。緊急問題 4 小時內修復。如果是我們的責任導致系統中斷，當月維護費減免。</p>
+    </div>
+    <div class="faq-item">
+      <h4>可以自己更新知識庫嗎？</h4>
+      <p>可以。我們會提供操作教學，簡單的 Q&A 更新你可以自己來。複雜的邏輯調整交給我們處理。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<div class="cta">
+  <h2>準備好開始了嗎？</h2>
+  <p>免費 15 分鐘諮詢，幫你分析最適合的方案。</p>
+  <a href="https://lin.ee/qQjLRxP" class="cta-btn">立即預約諮詢</a>
+</div>
+
+<footer>
+  <p>AI 官方助理方案 ｜ 由 Jacob 團隊提供</p>
+</footer>
+
+</body>
+</html>
