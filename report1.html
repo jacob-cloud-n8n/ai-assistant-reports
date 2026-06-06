@@ -274,6 +274,9 @@
       <div style="margin-top: 32px; border-top: 1px solid var(--border); padding-top: 32px;">
         <p class="flow-label" style="margin-bottom: 16px; font-weight: 600; font-size: 14px; color: var(--text);">⚡ 實戰 n8n 引擎自動化工作流架構</p>
         <img src="images/n8n_workflow.png" alt="n8n AI Workflow" style="max-width: 90%; max-height: 500px; object-fit: contain; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.06);">
+        <div style="margin-top: 16px; font-size: 14px; color: var(--text-sec); line-height: 1.5; text-align: left; max-width: 90%; margin-left: auto; margin-right: auto;">
+          ℹ️ <strong>工作流架構說明：</strong>此架構為真實小牧人羊奶與美地居家收納的運作模型。它以 n8n 為中樞，自動過濾 LINE Webhook 事件，協同 Google Sheets 進行「值班狀態防插話判定」，並呼叫 OpenAI/Gemini 來執行語氣生成及工單寫入，具有極高的穩定性與自癒能力。
+        </div>
       </div>
     </div>
   </div>
@@ -301,6 +304,9 @@
         <div class="mod-case">
           <strong>實戰案例：</strong>美地居家收納、小牧人羊奶 — 客戶 LINE 問問題/傳現場照片，AI 秒回專業評估
           <img src="images/line_chat.png" alt="LINE Chat Mockup" style="max-width:100%; border-radius:10px; margin-top:16px; box-shadow:0 8px 24px rgba(0,0,0,0.05); border:1px solid rgba(0,0,0,0.06);">
+          <div class="mod-tech-tip" style="margin-top: 12px; padding: 10px 12px; background: rgba(0, 113, 227, 0.04); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; font-size: 13px; color: var(--text-sec);">
+            💡 <strong>N8N 自動化機制：</strong>接收 LINE 訊息 ➔ 載入動態提示詞 ➔ 若為圖片則自動經由 ImgBB 上傳 Notion ➔ 調用 Google Sheets/Notion 知識庫回答。
+          </div>
         </div>
       </div>
 
@@ -332,6 +338,9 @@
         <div class="mod-case">
           <strong>實戰案例：</strong>小牧人羊奶 — 客戶填單 → 自動寫入 Sheets 與 Notion → 老闆即時收到通知
           <img src="images/notion_dashboard.png" alt="Notion Dashboard Mockup" style="max-width:100%; border-radius:10px; margin-top:16px; box-shadow:0 8px 24px rgba(0,0,0,0.05); border:1px solid rgba(0,0,0,0.06);">
+          <div class="mod-tech-tip" style="margin-top: 12px; padding: 10px 12px; background: rgba(52, 199, 89, 0.04); border-left: 3px solid var(--green); border-radius: 0 8px 8px 0; font-size: 13px; color: var(--text-sec);">
+            💡 <strong>N8N 自動化機制：</strong>引導式表單收集 ➔ 智能核對營業時間與配送路線 ➔ 自動寫入 Sheets/Notion 並在 Notion 建立看板卡片 ➔ 推送 Discord 派單。
+          </div>
         </div>
       </div>
 
