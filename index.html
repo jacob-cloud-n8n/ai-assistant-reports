@@ -3,22 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 官方助理方案簡報</title>
+<title>AI 官方助理方案簡報首頁</title>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', sans-serif; background: #fafafa; color: #1d1d1f; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-  .container { text-align: center; }
-  h1 { font-size: 36px; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.02em; }
-  p.sub { font-size: 16px; color: #6e6e73; margin-bottom: 32px; }
-  a { display: block; padding: 20px 40px; margin: 12px auto; background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; color: #0071e3; font-size: 18px; text-decoration: none; max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: background 0.2s, transform 0.2s; }
-  a:hover { background: #f5f5f7; transform: translateY(-2px); }
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --border: rgba(0, 0, 0, 0.06);
+    --text: #1d1d1f;
+    --text-sec: #6e6e73;
+    --blue: #0071e3;
+    --green: #248a3d;
+    --g1: linear-gradient(135deg, #0071e3, #5e5ce6);
+    --g2: linear-gradient(135deg, #34c759, #0071e3);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; display: flex; justify-content: center; align-items: center;
+    padding: 40px 24px; -webkit-font-smoothing: antialiased;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,113,227,0.04) 0%, transparent 60%);
+  }
+  .container {
+    max-width: 1100px; width: 100%; display: grid;
+    grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;
+  }
+
+  /* ── Left Side (Hero Image & Title) ── */
+  .hero-left { text-align: left; }
+  .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(0,113,227,0.08); color: var(--blue); font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+  h1 { font-size: clamp(32px, 4.5vw, 48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 12px; }
+  h1 em { font-style: normal; background: var(--g1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  p.sub { font-size: 16px; color: var(--text-sec); margin-bottom: 32px; line-height: 1.6; }
+  .img-wrapper {
+    position: relative; width: 100%; max-width: 480px; border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08); border: 1px solid var(--border); overflow: hidden;
+  }
+  .img-wrapper img { width: 100%; height: auto; display: block; }
+
+  /* ── Right Side (Presentation Entries) ── */
+  .hero-right { display: flex; flex-direction: column; gap: 20px; }
+  .nav-card {
+    display: block; padding: 28px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; text-decoration: none; color: inherit;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .nav-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; }
+  .nav-card.report1::before { background: var(--g1); }
+  .nav-card.report2::before { background: var(--g2); }
+  
+  .nav-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    border-color: rgba(0,0,0,0.12);
+  }
+  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .card-title { font-size: 20px; font-weight: 700; color: var(--text); }
+  .card-arrow { font-size: 18px; color: var(--text-sec); transition: transform 0.2s; }
+  .nav-card:hover .card-arrow { transform: translateX(4px); color: var(--blue); }
+  
+  .card-desc { font-size: 14px; color: var(--text-sec); line-height: 1.5; margin-bottom: 16px; }
+  .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .card-tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 8px; background: rgba(0,0,0,0.03); color: var(--text-sec); }
+  
+  footer { margin-top: 40px; font-size: 12px; color: var(--text-sec); }
+
+  @media (max-width: 768px) {
+    body { padding: 40px 16px; }
+    .container { grid-template-columns: 1fr; gap: 40px; }
+    .hero-left { text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .img-wrapper { max-width: 360px; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>AI 官方助理方案</h1>
-  <p class="sub">模組方案 ｜ 建置流程 ｜ 營運管理</p>
-  <a href="report1.html">📊 簡報一：模組方案與建置流程</a>
-  <a href="report2.html">🤝 簡報二：後續服務與營運管理</a>
+  <!-- Left Column -->
+  <div class="hero-left">
+    <div class="badge">🤖 AI 官方助理專案</div>
+    <h1>用 AI 自動化<br>重塑您的<em>營運中樞</em></h1>
+    <p class="sub">以 n8n 自動化平台為核心，串接 LINE 與 Notion 數據庫，幫您建置 24 小時不休息的智能客服、訂單管理與主動行銷系統。</p>
+    <div class="img-wrapper">
+      <img src="images/hero_cover.png" alt="AI 官方助理自動化架構示意圖">
+    </div>
+  </div>
+
+  <!-- Right Column -->
+  <div class="hero-right">
+    <!-- Card 1 -->
+    <a href="report1.html" class="nav-card report1">
+      <div class="card-header">
+        <div class="card-title">📊 簡報一：模組方案與建置</div>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-desc">介紹 AI 客服、預約與訂單自動化的 5 大核心模組，以及 3 種不同階段的建置包裝與完整建置時程。</div>
+      <div class="card-tags">
+        <span class="card-tag">智能回覆</span>
+        <span class="card-tag">訂單自動化</span>
+        <span class="card-tag">Notion 看板</span>
+        <span class="card-tag">7天建置</span>
+      </div>
+    </a>
+
+    <!-- Card 2 -->
+    <a href="report2.html" class="nav-card report2">
+      <div class="card-header">
+        <div class="card-title">🤝 簡報二：營運管理與費用</div>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-desc">說明上線後的月維護服務內容、SLA 服務承諾、異常自動警報自癒機制，以及限時的 Beta 搶先體驗特惠價格。</div>
+      <div class="card-tags">
+        <span class="card-tag">7×24監控</span>
+        <span class="card-tag">雙大腦自癒</span>
+        <span class="card-tag">Beta早鳥6折</span>
+        <span class="card-tag">API實報實銷</span>
+      </div>
+    </a>
+    
+    <footer>
+      <p>© 2026 AI 官方助理方案首頁 ｜ 由 Jacob 團隊提供</p>
+    </footer>
+  </div>
 </div>
 </body>
 </html>
