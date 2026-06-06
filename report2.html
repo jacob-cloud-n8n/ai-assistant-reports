@@ -374,9 +374,61 @@
 <!-- ════════ Pricing ════════ -->
 <section>
   <div class="wrap">
-    <div class="sec-label">費用說明</div>
+    <div class="sec-label">費用與優勢</div>
     <div class="sec-title">建置費 + 月維護費</div>
-    <div class="sec-sub">一次性的建置費加上每月維護費，讓系統持續為你運作。</div>
+    <div class="sec-sub">我們採用「一次性建置 + 數據私有化」模式，相較於市售訂閱平台，能為您省下龐大的長期費用。</div>
+
+    <!-- 項目對比區塊 -->
+    <div style="overflow-x: auto; margin-bottom: 48px;">
+      <table class="svc-table" style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); width: 100%;">
+        <thead>
+          <tr style="background: rgba(0,0,0,0.02);">
+            <th style="font-weight: 700; color: var(--text); padding: 16px 20px;">比較項目</th>
+            <th style="font-weight: 700; color: var(--text-sec); padding: 16px 20px;">一般 MarTech 訂閱平台 (如漸強/Omnichat)</th>
+            <th style="font-weight: 700; color: var(--text-sec); padding: 16px 20px;">市售 RAG 客製化接案</th>
+            <th style="font-weight: 700; color: var(--green); background: rgba(52, 199, 89, 0.04); padding: 16px 20px;">本專案 AI 助理 (Beta 早鳥)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 16px 20px;"><strong>收費模式</strong></td>
+            <td style="padding: 16px 20px;">按好友數/席位數月租 (隨企業成長暴增)</td>
+            <td style="padding: 16px 20px;">一次性建置費 + 高額維修費</td>
+            <td class="highlight" style="background: rgba(52, 199, 89, 0.02); padding: 16px 20px;"><strong>買斷制工作流 + 實報實銷 (無人頭費)</strong></td>
+          </tr>
+          <tr>
+            <td style="padding: 16px 20px;"><strong>長期成本</strong></td>
+            <td style="padding: 16px 20px;">隨用戶數增加成倍暴增 (每年數萬至數十萬)</td>
+            <td style="padding: 16px 20px;">高昂 (任何修改都需重新報價)</td>
+            <td class="highlight" style="background: rgba(52, 199, 89, 0.02); padding: 16px 20px;"><strong>極低 (僅需付極低 VPS 與實際 API 用量)</strong></td>
+          </tr>
+          <tr>
+            <td style="padding: 16px 20px;"><strong>數據安全</strong></td>
+            <td style="padding: 16px 20px;">資料存放在平台伺服器，無法自由移轉</td>
+            <td style="padding: 16px 20px;">視開發商架構而定</td>
+            <td class="highlight" style="background: rgba(52, 199, 89, 0.02); padding: 16px 20px;"><strong>數據私有化 (完全存在您的 Notion/Sheets)</strong></td>
+          </tr>
+          <tr>
+            <td style="padding: 16px 20px;"><strong>高可用保障</strong></td>
+            <td style="padding: 16px 20px;">平台當機即客服癱瘓</td>
+            <td style="padding: 16px 20px;">通常無備援機制</td>
+            <td class="highlight" style="background: rgba(52, 199, 89, 0.02); padding: 16px 20px;"><strong>雙大腦自癒機制 (Gemini + DeepSeek 備援)</strong></td>
+          </tr>
+          <tr>
+            <td style="padding: 16px 20px;"><strong>客製彈性</strong></td>
+            <td style="padding: 16px 20px;">受限於平台模組，無法對接特殊後台</td>
+            <td style="padding: 16px 20px;">高開發成本</td>
+            <td class="highlight" style="background: rgba(52, 199, 89, 0.02); padding: 16px 20px;"><strong>無上限客製 (Notion/Discord 深度串接)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Beta 限量早鳥 Banner -->
+    <div style="background: rgba(255, 149, 0, 0.08); border: 1px solid rgba(255, 149, 0, 0.15); border-radius: 14px; padding: 18px; text-align: center; margin-bottom: 32px; box-shadow: 0 4px 12px rgba(255, 149, 0, 0.02);">
+      <span style="font-weight: 700; color: var(--orange); font-size: 16px;">🚀 Beta 搶先體驗特惠 (限量前 5 名)</span>
+      <p style="font-size: 14px; color: var(--text-sec); margin-top: 6px; line-height: 1.5;">本方案目前處於 Beta 測試版，為累積優質實戰案例，首批簽約客戶可享建置費 <strong>約 6 折早鳥優惠</strong>，且維護費享有終身折扣！</p>
+    </div>
 
     <div class="price-grid">
       <!-- A -->
@@ -389,8 +441,11 @@
         <div class="price-row"><span>操作教學</span><span class="val">含</span></div>
         <div class="price-total">
           <div class="label">建置費</div>
-          <div class="amount blue">$38,000</div>
-          <div class="price-note">月維護費 $2,000/月</div>
+          <div class="amount blue">
+            <span style="font-size: 15px; text-decoration: line-through; color: var(--text-sec); opacity: 0.5; font-weight: 400;">$38,000</span><br>
+            $22,800
+          </div>
+          <div class="price-note">Beta 早鳥月費 $1,500/月 (原價 $2,000)</div>
         </div>
       </div>
 
