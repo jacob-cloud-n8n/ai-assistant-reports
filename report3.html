@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 助理運用與教學課程 — 建立你的數位員工</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --border: rgba(0, 0, 0, 0.06);
+    --text: #1d1d1f;
+    --text-sec: #6e6e73;
+    --blue: #0071e3;
+    --green: #248a3d;
+    --orange: #ff9500;
+    --purple: #af52de;
+    --g1: linear-gradient(135deg, #0071e3, #5e5ce6);
+    --g2: linear-gradient(135deg, #34c759, #0071e3);
+    --g3: linear-gradient(135deg, #ff9500, #ff2d55);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: auto; padding: 100px 0 60px 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(175,82,222,0.06) 0%, transparent 60%);
+  }
+  .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(175,82,222,0.08); color: var(--purple); font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+  .hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 20px; }
+  .hero h1 em { font-style: normal; background: linear-gradient(135deg, #af52de, #ff2d55); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: 18px; color: var(--text-sec); max-width: 100%; margin-bottom: 32px; }
+  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; justify-content: flex-start; }
+  .hero-stat .num { font-size: 48px; font-weight: 700; background: linear-gradient(135deg, #af52de, #0071e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-stat .lbl { font-size: 14px; color: var(--text-sec); margin-top: 4px; }
+
+  /* ── Section ── */
+  section { padding: 80px 0; }
+  .sec-label { font-size: 14px; font-weight: 600; color: var(--purple); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+  .sec-title { font-size: clamp(28px,4vw,44px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; }
+  .sec-sub { font-size: 18px; color: var(--text-sec); max-width: 650px; margin-bottom: 48px; }
+
+  /* ── Grid ── */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; position: relative; overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .card.c1::before { background: var(--g1); }
+  .card.c2::before { background: var(--g2); }
+  .card.c3::before { background: var(--g3); }
+  .card.c-purple::before { background: linear-gradient(135deg, #af52de, #ff2d55); }
+  
+  .card-tag { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+  .card-tag.blue { background: rgba(0, 113, 227, 0.08); color: var(--blue); }
+  .card-tag.green { background: rgba(52, 199, 89, 0.08); color: var(--green); }
+  .card-tag.purple { background: rgba(175, 82, 222, 0.08); color: var(--purple); }
+
+  .card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .card .desc { font-size: 15px; color: var(--text-sec); margin-bottom: 20px; }
+  .card-list { list-style: none; }
+  .card-list li { padding: 8px 0; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .card-list li:last-child { border-bottom: none; }
+  .card-list .ck { color: var(--green); font-weight: bold; flex-shrink: 0; }
+  .card-list .cross { color: #ff2d55; font-weight: bold; flex-shrink: 0; }
+  
+  /* ── Service Table ── */
+  .svc-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+  .svc-table th {
+    text-align: left; padding: 16px 20px; font-size: 14px; font-weight: 600;
+    color: var(--text-sec); border-bottom: 1px solid var(--border);
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .svc-table td { padding: 16px 20px; font-size: 15px; border-bottom: 1px solid rgba(0,0,0,0.04); }
+  .svc-table tr:hover td { background: #f5f5f7; }
+  .svc-table .highlight { color: var(--purple); font-weight: 600; }
+
+  /* ── Price Section ── */
+  .price-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; text-align: center; position: relative; overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .price-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+  .price-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .price-card.a::before { background: var(--g1); }
+  .price-card.b::before { background: var(--g2); }
+  .price-card.c::before { background: linear-gradient(135deg, #af52de, #ff2d55); }
+  .price-card.recommend { border-color: rgba(175,82,222,0.3); }
+  .price-badge { position: absolute; top: 16px; right: 16px; padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; background: rgba(175,82,222,0.1); color: var(--purple); }
+  .price-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .price-card .pkg-desc { font-size: 14px; color: var(--text-sec); margin-bottom: 20px; }
+  .price-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 15px; }
+  .price-row:last-child { border-bottom: none; }
+  .price-row .val { font-weight: 600; }
+  .price-total { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .price-total .label { font-size: 14px; color: var(--text-sec); }
+  .price-total .amount { font-size: 36px; font-weight: 700; }
+  .price-total .amount.blue { color: var(--blue); }
+  .price-total .amount.green { color: var(--green); }
+  .price-total .amount.purple { color: var(--purple); }
+  .price-note { font-size: 13px; color: var(--text-sec); margin-top: 8px; }
+
+  /* ── CTA ── */
+  .cta { text-align: center; padding: 80px 24px; background: radial-gradient(ellipse at 50% 100%, rgba(175, 82, 222, 0.04) 0%, transparent 60%); }
+  .cta h2 { font-size: clamp(28px,4vw,44px); font-weight: 700; margin-bottom: 16px; }
+  .cta p { font-size: 18px; color: var(--text-sec); margin-bottom: 32px; }
+  .cta-btn { display: inline-block; padding: 16px 40px; border-radius: 14px; background: var(--purple); color: #fff; font-size: 18px; font-weight: 600; text-decoration: none; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 4px 15px rgba(175, 82, 222, 0.2); }
+  .cta-btn:hover { transform: scale(1.03); opacity: 0.9; }
+
+  footer { text-align: center; padding: 40px 24px; font-size: 13px; color: var(--text-sec); border-top: 1px solid var(--border); }
+
+  @media (max-width: 768px) {
+    .hero-stats { gap: 24px; justify-content: center; }
+    .hero-stat .num { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ Hero ════════ -->
+<div class="hero">
+  <div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px; align-items: center;">
+    <div style="text-align: left;">
+      <div class="badge">🎓 AI Agent 教學與陪跑</div>
+      <h1>建立你的<br><em>專屬 AI 數位員工</em></h1>
+      <p>不只是一堂提示詞課。我們手把手教您使用 n8n 自動化平台，串接大語言模型、LINE 及 Notion，建置能真正分擔您日常工作負荷的 AI 助理團隊。</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">3</div><div class="lbl">實戰班別</div></div>
+        <div class="hero-stat"><div class="num">6 折</div><div class="lbl">早鳥體驗</div></div>
+        <div class="hero-stat"><div class="num">1對1</div><div class="lbl">落地陪跑</div></div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center;">
+      <img src="images/hero_cover.png" alt="AI 助理教學課程" style="width: 100%; max-width: 440px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); border: 1px solid var(--border);">
+    </div>
+  </div>
+</div>
+
+<!-- ════════ 有無助理對比 (Before vs After) ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">價值對比</div>
+    <div class="sec-title">有助理 vs 沒助理的關鍵差異</div>
+    <div class="sec-sub">把重複的系統性行政庶務轉交給 AI 代理，您才能專注於核心決策與商務成長。</div>
+
+    <div class="grid-2">
+      <!-- 沒助理 -->
+      <div class="card c-purple">
+        <span class="card-tag purple" style="background: rgba(255, 45, 85, 0.08); color: #ff2d55;">❌ 傳統無助理模式</span>
+        <h3>重複、瑣碎、容易疲憊的日常</h3>
+        <ul class="card-list">
+          <li><span class="cross">✕</span> <strong>手動謄寫工單</strong>：客戶來單需人工複製到 Google Sheets 與 Notion。</li>
+          <li><span class="cross">✕</span> <strong>資訊查找耗時</strong>：需不斷在歷史聊天紀錄中查找客戶歷史預約與偏好。</li>
+          <li><span class="cross">✕</span> <strong>頻繁的手動流程</strong>：開工需要手動執行程式庫更新、收工需要人為篩選金鑰與撰寫成果日誌。</li>
+          <li><span class="cross">✕</span> <strong>資訊孤島</strong>：各平台（LINE、Discord、Notion）數據散落，無法連動。</li>
+        </ul>
+      </div>
+
+      <!-- 有助理 -->
+      <div class="card c2">
+        <span class="card-tag green">✅ AI 助理協作模式</span>
+        <h3>自動、自癒、高效流暢的體驗</h3>
+        <ul class="card-list">
+          <li><span class="ck">✓</span> <strong>全自動資料歸檔</strong>：LINE 訊息或表單進來，AI 自動結構化並同步寫入多端資料庫。</li>
+          <li><span class="ck">✓</span> <strong>即時上下文彙整</strong>：AI 助理能自動攜帶上下文，將客戶背景資料整理好提供給管理員。</li>
+          <li><span class="ck">✓</span> <strong>一鍵代理指令</strong>：對助理說「開工」或「收工」，系統自動接管 Git 拉取、金鑰掃描過濾、推播日誌。</li>
+          <li><span class="ck">✓</span> <strong>錯誤捕獲與自癒</strong>：工作流出現錯誤時自動重試，並將異常日誌即時推送到 Discord 通知。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 助理分類說明 ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">助理分類</div>
+    <div class="sec-title">隨身助理 vs 全能助理</div>
+    <div class="sec-sub">依據不同工作場景與需求，客製化設計最適合您的數位員工。</div>
+
+    <div class="grid-2">
+      <!-- 隨身助理 -->
+      <div class="card c1">
+        <span class="card-tag blue">📱 隨身助理 (Mobile Agent)</span>
+        <h3>以 Hermes 為例</h3>
+        <div class="desc">為行動端與日常對話量身打造，注重快速反應與日常資訊對齊。</div>
+        <ul class="card-list">
+          <li><span class="ck">✓</span> <strong>極速輕量問答</strong>：優化系統提示詞，拒絕無效檢索，1 秒內直接回應一般問候與報價。</li>
+          <li><span class="ck">✓</span> <strong>日常隨手記事</strong>：在 LINE / Telegram 傳送文字或空間照片，自動解析並記錄。</li>
+          <li><span class="ck">✓</span> <strong>雲端動態同步</strong>：免修改代碼，隨時在 Google Sheets 修改指令，AI 即時同步載入新風格。</li>
+        </ul>
+      </div>
+
+      <!-- 全能助理 / 桌面助手 -->
+      <div class="card c2">
+        <span class="card-tag green">💻 全能助理 (Desktop / Code Agent)</span>
+        <h3>以 Codex / ag 為例</h3>
+        <div class="desc">為複雜工作、程式開發及大檔案操作而設計，具備強大工具調用能力。</div>
+        <ul class="card-list">
+          <li><span class="ck">✓</span> <strong>自動版本控制</strong>：執行 Git Fetch、Rebase Pull 及金鑰自動防禦過濾，保障代碼安全。</li>
+          <li><span class="ck">✓</span> <strong>複雜工具調用</strong>：自動讀寫 Google Sheets 與 Notion 看板，協同 Firebase 管理。</li>
+          <li><span class="ck">✓</span> <strong>錯誤自癒子流程</strong>：n8n 連線死鎖或當機時，執行 error-handler 主動重試並通知 Discord 派單。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 實戰案例：ADRIAN 團隊協作 ════════ -->
+<section style="background: rgba(175, 82, 222, 0.02); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-label">實戰證實</div>
+    <div class="sec-title">看看我們團隊如何與 AI 協作</div>
+    <div class="sec-sub">我們不只教技術，更將我們（Jacob + AI 助理團隊）的真實協作流程傾囊相授。</div>
+
+    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 40px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02);">
+      <h3 style="font-size: 24px; margin-bottom: 16px;">⚡ 「開工與收工」全自動化代理流程</h3>
+      <p style="color: var(--text-sec); margin-bottom: 24px; font-size: 16px;">
+        在我們的專案開發中，我們不手動處理冗雜的日常行政。透過 Codex 與 Hermes 助理，我們的協作方式如下：
+      </p>
+      <div class="grid-3" style="text-align: left; gap: 24px;">
+        <div>
+          <h4 style="font-weight: 700; margin-bottom: 8px; color: var(--purple);">1. 一鍵開工</h4>
+          <p style="font-size: 14px; color: var(--text-sec);">開發者下達「開工」指令，Codex 自動拉取遠端最新代碼並執行 git rebase，同時讀取 ANTIGRAVITY 專案規範與駕駛艙筆記。</p>
+        </div>
+        <div>
+          <h4 style="font-weight: 700; margin-bottom: 8px; color: var(--purple);">2. 資安與過濾</h4>
+          <p style="font-size: 14px; color: var(--text-sec);">AI 在開發過程中隨時監控，嚴防將 API keys、Google Cookie 等敏感金鑰 commit 至公開 repo。</p>
+        </div>
+        <div>
+          <h4 style="font-weight: 700; margin-bottom: 8px; color: var(--purple);">3. 自動收工推送</h4>
+          <p style="font-size: 14px; color: var(--text-sec);">下達「收工」指令，助理自動掃描變更、撰寫 walkthrough 成果報告，並自動 stage 本次相關檔案並推送到 GitHub。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 課程說明 ════════ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">實實戰教學</div>
+    <div class="sec-title">3 個教學方案，助您精通 AI 建置</div>
+    <div class="sec-sub">從個人微型應用，到企業內部大型流程自動化，找到最適合您的學習路徑。</div>
+
+    <div class="price-grid">
+      <!-- 課程 A -->
+      <div class="price-card a">
+        <h3>🔵 課程 A</h3>
+        <div class="pkg-desc">隨身助理建置班 (Hermes)</div>
+        <div class="price-row"><span>LINE / Telegram 助理建置</span><span class="val">含</span></div>
+        <div class="price-row"><span>Google Sheets 動態提示詞</span><span class="val">含</span></div>
+        <div class="price-row"><span>智慧快速對話優化</span><span class="val">含</span></div>
+        <div class="price-row"><span>基礎 RAG 知識庫對接</span><span class="val">含</span></div>
+        <div class="price-total">
+          <div class="label">課程費用</div>
+          <div class="amount blue">
+            <span style="font-size: 15px; text-decoration: line-through; color: var(--text-sec); opacity: 0.5; font-weight: 400;">$48,000</span><br>
+            $28,800
+          </div>
+          <div class="price-note">適合：個人工作室、行銷人員、微型創業者</div>
+        </div>
+      </div>
+
+      <!-- 課程 B -->
+      <div class="price-card b recommend">
+        <div class="price-badge">🔥 熱門</div>
+        <h3>🟢 課程 B</h3>
+        <div class="pkg-desc">全能助理與桌面實戰班 (Codex)</div>
+        <div class="price-row"><span>課程 A 全部內容</span><span class="val">含</span></div>
+        <div class="price-row"><span>n8n 工作流中樞與錯誤自癒</span><span class="val">含</span></div>
+        <div class="price-row"><span>Notion 看板與 Sheets 雙軌讀寫</span><span class="val">含</span></div>
+        <div class="price-row"><span>Git 自動版本管理與防資安洩漏</span><span class="val">含</span></div>
+        <div class="price-total">
+          <div class="label">課程費用</div>
+          <div class="amount green">
+            <span style="font-size: 15px; text-decoration: line-through; color: var(--text-sec); opacity: 0.5; font-weight: 400;">$98,000</span><br>
+            $58,800
+          </div>
+          <div class="price-note">適合：企業營運主管、IT 種子部隊、PM</div>
+        </div>
+      </div>
+
+      <!-- 課程 C -->
+      <div class="price-card c">
+        <h3>🟣 課程 C</h3>
+        <div class="pkg-desc">企業專屬 AI 助理落地陪跑</div>
+        <div class="price-row"><span>課程 B 全部內容</span><span class="val">含</span></div>
+        <div class="price-row"><span>顧問進駐業務流程梳理</span><span class="val">含</span></div>
+        <div class="price-row"><span>手把手帶領開發專屬助理</span><span class="val">含</span></div>
+        <div class="price-row"><span>系統架構設計與 SLA 部署</span><span class="val">含</span></div>
+        <div class="price-total">
+          <div class="label">專案費用</div>
+          <div class="amount purple">
+            <span style="font-size: 15px; text-decoration: line-through; color: var(--text-sec); opacity: 0.5; font-weight: 400;">$250,000</span><br>
+            $150,000
+          </div>
+          <div class="price-note">適合：需要將 AI 深度融入核心業務的中小企業</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beta 早鳥 Banner -->
+    <div style="background: rgba(255, 149, 0, 0.08); border: 1px solid rgba(255, 149, 0, 0.15); border-radius: 14px; padding: 18px; text-align: center; margin-top: 32px; box-shadow: 0 4px 12px rgba(255, 149, 0, 0.02);">
+      <span style="font-weight: 700; color: var(--orange); font-size: 16px;">🚀 Beta 搶先體驗特惠 (限量前 10 名)</span>
+      <p style="font-size: 14px; color: var(--text-sec); margin-top: 6px; line-height: 1.5;">為了累積最扎實的企業實戰案例，本階段前 10 位簽約合作之客戶，建置課程費直接享 **約 6 折早鳥優惠**，並提供長達 3 個月的一對一技術諮詢！</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FAQ ════════ -->
+<section style="border-top: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-label">常見問題</div>
+    <div class="sec-title">您可能想知道的事</div>
+    
+    <div class="grid-2" style="gap: 20px; text-align: left;">
+      <div style="background: var(--card); border: 1px solid var(--border); padding: 24px; border-radius: 14px;">
+        <h4 style="font-weight: 700; margin-bottom: 8px;">沒有程式開發背景學得會嗎？</h4>
+        <p style="font-size: 14px; color: var(--text-sec);">可以。課程 B 的核心在於使用 n8n 的視覺化 No-Code 介面搭建邏輯，搭配 AI 助理輔助，即使沒有工程背景也能輕鬆上手。</p>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); padding: 24px; border-radius: 14px;">
+        <h4 style="font-weight: 700; margin-bottom: 8px;">課程 C 的陪跑計畫如何進行？</h4>
+        <p style="font-size: 14px; color: var(--text-sec);">顧問會實際訪談您的業務流程，抓出最耗時的 3 個重複工作，在 1 到 2 個月內手把手帶領您的團隊將 AI 助理實體建置並部署上線。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CTA ════════ -->
+<div class="cta">
+  <h2>開始打造您的專屬數位業務團隊</h2>
+  <p>免費 15 分鐘諮詢，幫您診斷最適合的 AI 助理導入路徑。</p>
+  <a href="https://lin.ee/qQjLRxP" class="cta-btn">立即預約諮詢</a>
+</div>
+
+<footer>
+  <p>AI 助理教學與陪跑方案 ｜ 由 Jacob 團隊提供</p>
+</footer>
+
+</body>
+</html>
