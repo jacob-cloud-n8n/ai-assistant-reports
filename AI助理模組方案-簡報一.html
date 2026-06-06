@@ -6,22 +6,22 @@
 <title>AI 官方助理 — 模組方案與建置流程</title>
 <style>
   :root {
-    --bg: #000;
-    --card: #1c1c1e;
-    --card-hover: #2c2c2e;
-    --border: rgba(255,255,255,0.08);
-    --text: #f5f5f7;
-    --text-sec: #a1a1a6;
-    --blue: #0a84ff;
-    --green: #30d158;
-    --orange: #ff9f0a;
-    --purple: #bf5af2;
-    --pink: #ff375f;
-    --teal: #64d2ff;
-    --g1: linear-gradient(135deg, #0a84ff, #5e5ce6);
-    --g2: linear-gradient(135deg, #30d158, #0a84ff);
-    --g3: linear-gradient(135deg, #ff9f0a, #ff375f);
-    --g4: linear-gradient(90deg, #0a84ff, #30d158, #ff9f0a);
+    --bg: #fafafa;
+    --card: #ffffff;
+    --card-hover: #ffffff;
+    --border: rgba(0, 0, 0, 0.06);
+    --text: #1d1d1f;
+    --text-sec: #6e6e73;
+    --blue: #0071e3;
+    --green: #248a3d;
+    --orange: #ff9500;
+    --purple: #af52de;
+    --pink: #ff2d55;
+    --teal: #5ac8fa;
+    --g1: linear-gradient(135deg, #0071e3, #5e5ce6);
+    --g2: linear-gradient(135deg, #34c759, #0071e3);
+    --g3: linear-gradient(135deg, #ff9500, #ff2d55);
+    --g4: linear-gradient(90deg, #0071e3, #34c759, #ff9500);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -36,9 +36,9 @@
     min-height: 100vh; display: flex; flex-direction: column;
     align-items: center; justify-content: center; text-align: center;
     padding: 60px 24px;
-    background: radial-gradient(ellipse at 50% 0%, rgba(10,132,255,0.12) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,113,227,0.06) 0%, transparent 60%);
   }
-  .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(10,132,255,0.15); color: var(--blue); font-size: 14px; font-weight: 600; margin-bottom: 24px; }
+  .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(0,113,227,0.08); color: var(--blue); font-size: 14px; font-weight: 600; margin-bottom: 24px; }
   .hero h1 { font-size: clamp(36px,6vw,60px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; }
   .hero h1 em { font-style: normal; background: var(--g1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero p { font-size: clamp(18px,2.5vw,22px); color: var(--text-sec); max-width: 620px; margin-bottom: 40px; }
@@ -56,15 +56,16 @@
   .flow-diagram {
     background: var(--card); border: 1px solid var(--border); border-radius: 20px;
     padding: 40px; margin-bottom: 48px; text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02);
   }
   .flow-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
   .flow-box {
     padding: 14px 24px; border-radius: 12px; font-size: 15px; font-weight: 600;
-    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border); background: rgba(0, 0, 0, 0.02);
   }
-  .flow-box.base { background: rgba(10,132,255,0.12); border-color: rgba(10,132,255,0.3); color: var(--blue); }
-  .flow-box.opt { background: rgba(48,209,88,0.1); border-color: rgba(48,209,88,0.25); color: var(--green); }
-  .flow-box.end { background: rgba(255,159,10,0.1); border-color: rgba(255,159,10,0.25); color: var(--orange); }
+  .flow-box.base { background: rgba(0, 113, 227, 0.08); border-color: rgba(0, 113, 227, 0.15); color: var(--blue); }
+  .flow-box.opt { background: rgba(52, 199, 89, 0.08); border-color: rgba(52, 199, 89, 0.15); color: var(--green); }
+  .flow-box.end { background: rgba(255, 149, 0, 0.08); border-color: rgba(255, 149, 0, 0.15); color: var(--orange); }
   .flow-arrow { color: var(--text-sec); font-size: 20px; }
   .flow-branch { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
   .flow-label { font-size: 13px; color: var(--text-sec); margin-top: 4px; }
@@ -74,22 +75,23 @@
   .mod-card {
     background: var(--card); border: 1px solid var(--border); border-radius: 20px;
     padding: 32px; position: relative; overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .mod-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.3); }
+  .mod-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
   .mod-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .mod-card.base::before { background: var(--g1); }
   .mod-card.opt::before { background: var(--g2); }
   .mod-tag { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
-  .mod-tag.base { background: rgba(10,132,255,0.15); color: var(--blue); }
-  .mod-tag.opt { background: rgba(48,209,88,0.15); color: var(--green); }
+  .mod-tag.base { background: rgba(0, 113, 227, 0.08); color: var(--blue); }
+  .mod-tag.opt { background: rgba(52, 199, 89, 0.08); color: var(--green); }
   .mod-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
   .mod-card .desc { font-size: 15px; color: var(--text-sec); margin-bottom: 20px; }
   .mod-feat { list-style: none; }
-  .mod-feat li { padding: 8px 0; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .mod-feat li { padding: 8px 0; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px solid rgba(0,0,0,0.04); }
   .mod-feat li:last-child { border-bottom: none; }
   .mod-feat .ck { color: var(--green); font-weight: bold; flex-shrink: 0; }
-  .mod-case { margin-top: 16px; padding: 12px 16px; background: rgba(255,255,255,0.03); border-radius: 10px; font-size: 13px; color: var(--text-sec); }
+  .mod-case { margin-top: 16px; padding: 12px 16px; background: #f5f5f7; border-radius: 10px; font-size: 13px; color: var(--text-sec); }
   .mod-case strong { color: var(--text); }
 
   /* ── Packages ── */
@@ -97,24 +99,25 @@
   .pkg-card {
     background: var(--card); border: 1px solid var(--border); border-radius: 20px;
     padding: 32px; text-align: center; position: relative; overflow: hidden;
-    transition: transform 0.3s;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .pkg-card:hover { transform: translateY(-4px); }
+  .pkg-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
   .pkg-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .pkg-card.a::before { background: var(--g1); }
   .pkg-card.b::before { background: var(--g2); }
   .pkg-card.c::before { background: var(--g3); }
-  .pkg-card.recommend { border-color: rgba(48,209,88,0.4); }
-  .pkg-badge { position: absolute; top: 16px; right: 16px; padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; background: rgba(48,209,88,0.2); color: var(--green); }
+  .pkg-card.recommend { border-color: rgba(52,199,89,0.3); }
+  .pkg-badge { position: absolute; top: 16px; right: 16px; padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; background: rgba(52,199,89,0.1); color: var(--green); }
   .pkg-icon { font-size: 40px; margin-bottom: 12px; }
   .pkg-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
   .pkg-card .pkg-desc { font-size: 14px; color: var(--text-sec); margin-bottom: 20px; }
   .pkg-items { text-align: left; margin-bottom: 20px; }
-  .pkg-items .item { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .pkg-items .item { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 15px; border-bottom: 1px solid rgba(0,0,0,0.04); }
   .pkg-items .item:last-child { border-bottom: none; }
   .pkg-items .item .ck { color: var(--green); flex-shrink: 0; }
   .pkg-items .item .dash { color: var(--text-sec); opacity: 0.3; flex-shrink: 0; }
-  .pkg-for { margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.03); border-radius: 10px; font-size: 13px; color: var(--text-sec); text-align: left; }
+  .pkg-for { margin-top: 16px; padding: 12px; background: #f5f5f7; border-radius: 10px; font-size: 13px; color: var(--text-sec); text-align: left; }
   .pkg-for strong { color: var(--text); }
 
   /* ── Delivery Flow ── */
@@ -122,24 +125,25 @@
   .deliv-card {
     background: var(--card); border: 1px solid var(--border); border-radius: 16px;
     padding: 28px; position: relative;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04);
   }
   .deliv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 16px 16px 0 0; }
   .deliv-card.phase1::before { background: var(--g1); }
   .deliv-card.phase2::before { background: var(--g2); }
   .deliv-phase { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
-  .deliv-phase.p1 { background: rgba(10,132,255,0.15); color: var(--blue); }
-  .deliv-phase.p2 { background: rgba(48,209,88,0.15); color: var(--green); }
+  .deliv-phase.p1 { background: rgba(0, 113, 227, 0.08); color: var(--blue); }
+  .deliv-phase.p2 { background: rgba(52, 199, 89, 0.08); color: var(--green); }
   .deliv-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
   .deliv-card .deliv-desc { font-size: 15px; color: var(--text-sec); margin-bottom: 16px; }
   .deliv-steps { list-style: none; }
-  .deliv-steps li { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 15px; }
+  .deliv-steps li { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 15px; }
   .deliv-steps li:last-child { border-bottom: none; }
   .deliv-steps .step-num {
     width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 700; flex-shrink: 0;
   }
-  .deliv-steps .step-num.p1 { background: rgba(10,132,255,0.2); color: var(--blue); }
-  .deliv-steps .step-num.p2 { background: rgba(48,209,88,0.2); color: var(--green); }
+  .deliv-steps .step-num.p1 { background: rgba(0, 113, 227, 0.1); color: var(--blue); }
+  .deliv-steps .step-num.p2 { background: rgba(52, 199, 89, 0.1); color: var(--green); }
   .deliv-steps .step-text { flex: 1; }
   .deliv-steps .step-text strong { display: block; }
   .deliv-steps .step-text span { font-size: 13px; color: var(--text-sec); }
@@ -153,9 +157,9 @@
     width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
     font-size: 16px; font-weight: 700; flex-shrink: 0; z-index: 1;
   }
-  .tl-dot.blue { background: var(--g1); }
-  .tl-dot.green { background: var(--g2); }
-  .tl-conn { width: 2px; flex: 1; background: rgba(10,132,255,0.2); min-height: 24px; }
+  .tl-dot.blue { background: var(--g1); color: #fff; }
+  .tl-dot.green { background: var(--g2); color: #fff; }
+  .tl-conn { width: 2px; flex: 1; background: rgba(0, 113, 227, 0.15); min-height: 24px; }
   .tl-content { padding-bottom: 28px; }
   .tl-content h4 { font-size: 18px; font-weight: 600; margin-bottom: 2px; }
   .tl-content p { font-size: 15px; color: var(--text-sec); }
@@ -166,13 +170,14 @@
   .delv-card {
     background: var(--card); border: 1px solid var(--border); border-radius: 14px;
     padding: 24px; text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.04);
   }
   .delv-icon { font-size: 32px; margin-bottom: 12px; }
   .delv-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
   .delv-card p { font-size: 14px; color: var(--text-sec); }
 
   /* ── CTA ── */
-  .cta { text-align: center; padding: 100px 24px; background: radial-gradient(ellipse at 50% 100%, rgba(48,209,88,0.08) 0%, transparent 60%); }
+  .cta { text-align: center; padding: 100px 24px; background: radial-gradient(ellipse at 50% 100%, rgba(52, 199, 89, 0.04) 0%, transparent 60%); }
   .cta h2 { font-size: clamp(28px,4vw,44px); font-weight: 700; margin-bottom: 16px; }
   .cta p { font-size: 18px; color: var(--text-sec); margin-bottom: 32px; }
   .cta-btn { display: inline-block; padding: 16px 40px; border-radius: 14px; background: var(--blue); color: #fff; font-size: 18px; font-weight: 600; text-decoration: none; transition: transform 0.2s, opacity 0.2s; }
