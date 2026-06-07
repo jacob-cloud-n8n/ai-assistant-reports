@@ -13,6 +13,7 @@
     --text-sec: #6e6e73;
     --blue: #0071e3;
     --green: #248a3d;
+    --purple: #af52de;
     --g1: linear-gradient(135deg, #0071e3, #5e5ce6);
     --g2: linear-gradient(135deg, #34c759, #0071e3);
   }
@@ -22,7 +23,7 @@
     background: var(--bg); color: var(--text);
     min-height: 100vh; display: flex; justify-content: center; align-items: center;
     padding: 40px 24px; -webkit-font-smoothing: antialiased;
-    background: radial-gradient(ellipse at 50% 0%, rgba(0,113,227,0.04) 0%, transparent 60%);
+    background: radial-gradient(ellipse at 50% 0%, rgba(175,82,222,0.03) 0%, transparent 60%);
   }
   .container {
     max-width: 1100px; width: 100%; display: grid;
@@ -33,7 +34,7 @@
   .hero-left { text-align: left; }
   .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(0,113,227,0.08); color: var(--blue); font-size: 14px; font-weight: 600; margin-bottom: 20px; }
   h1 { font-size: clamp(32px, 4.5vw, 48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 12px; }
-  h1 em { font-style: normal; background: var(--g1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  h1 em { font-style: normal; background: linear-gradient(135deg, #af52de, #0071e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   p.sub { font-size: 16px; color: var(--text-sec); margin-bottom: 32px; line-height: 1.6; }
   .img-wrapper {
     position: relative; width: 100%; max-width: 480px; border-radius: 20px;
@@ -53,6 +54,7 @@
   .nav-card::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; }
   .nav-card.report1::before { background: var(--g1); }
   .nav-card.report2::before { background: var(--g2); }
+  .nav-card.course::before { background: linear-gradient(135deg, #af52de, #ff2d55); }
   
   .nav-card:hover {
     transform: translateY(-4px);
@@ -121,9 +123,23 @@
         <span class="card-tag">API實報實銷</span>
       </div>
     </a>
+
+    <!-- Card 3 -->
+    <a href="AI助理運用與教學課程.html" class="nav-card course">
+      <div class="card-header">
+        <div class="card-title">🎓 步驟三：AI 助理運用與教學</div>
+        <span class="card-arrow">→</span>
+      </div>
+      <div class="card-desc">教導您如何透過自然語言（日常白話文）與 AI 溝通，配置您的個人隨身秘書（Hermes）與工作流助理（Codex）。完全免代碼、免程式語法！</div>
+      <div class="card-tags">
+        <span class="card-tag" style="background: rgba(175, 82, 222, 0.08); color: var(--purple);">自然語言溝通</span>
+        <span class="card-tag" style="background: rgba(175, 82, 222, 0.08); color: var(--purple);">1對1陪跑實戰</span>
+        <span class="card-tag" style="background: rgba(175, 82, 222, 0.08); color: var(--purple);">早鳥6折特惠</span>
+      </div>
+    </a>
     
     <footer>
-      <p>© 2026 AI 官方助理方案首頁 ｜ 由 Jacob 團隊提供</p>
+      <p>© 2026 AI 官方助理與課程首頁 ｜ 由 Jacob 團隊提供</p>
     </footer>
   </div>
 </div>
