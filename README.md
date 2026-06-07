@@ -18,3 +18,25 @@
 
 ## 🔒 工作規範
 本專案遵循 `ANTIGRAVITY.md` 中定義的工作流程（包含開工與收工規範）。請在修改時確保中英文版本一致，並注意不要 commit 敏感金鑰。
+
+## 📅 最新更新與線上部署日誌 (2026-06-07)
+
+我們已成功優化簡報內容，並將全部網頁部署至 **Firebase Hosting**，便於客戶線上檢視（配色與佈局皆維持 Apple 風格淡色調設計）：
+
+*   🌐 **首頁傳送門**：[https://jacob-html-slides-2026.web.app](https://jacob-html-slides-2026.web.app)
+*   🌐 **步驟一：模組方案與建置**：[report1.html](https://jacob-html-slides-2026.web.app/report1.html)
+*   🌐 **步驟二：營運管理與費用**：[report2.html](https://jacob-html-slides-2026.web.app/report2.html)
+*   🌐 **步驟三：AI 助理運用與教學課程**：[course.html](https://jacob-html-slides-2026.web.app/course.html)
+
+### 🛠️ 本次優化重點
+1.  **AI 助理運用與教學課程 (步驟三)**：
+    *   **核心業務定位**：調整為「以日常白話文自然語言與 AI 溝通」，移除 Prompt / 語法等字眼，強調免程式碼與複雜語法。
+    *   **早期陪跑稀缺性**：明確標示「目前為推廣早期的一對一/小班制指導，未來將全面改為線上預錄課程（不再提供親自帶練）」，呼籲客戶把握當前黃金期。
+2.  **傳送門更新**：
+    *   更新 `index.html` 導航結構，將「步驟三：AI 助理運用與教學」卡片完美融入 Apple 淡色系排版中。
+3.  **LINE 助理簡報 (步驟一與二)**：
+    *   移除主動推播功能以防後續 Line API 改版收費問題。
+    *   調整 SLA 排除故障的回應時間（乘以 3 倍表示較寬鬆時間）。
+
+---
+*記錄人：AntiGravity 助理*
