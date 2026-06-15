@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>威力馬教育訓練優化提案：超越安利的 AI 與科學化方案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #f5f5f7;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(0, 0, 0, 0.05);
+    --text-primary: #1d1d1f;
+    --text-secondary: #86868b;
+    --accent-blue: #0071e3;
+    --accent-purple: #af52de;
+    --accent-orange: #ff9500;
+    --accent-green: #34c759;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 28px;
+    --transition-swift: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(175, 82, 222, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(0, 113, 227, 0.04) 0%, transparent 40%);
+    background-attachment: fixed;
+    padding-bottom: 80px;
+  }
+
+  .nav-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: var(--transition-swift);
+  }
+
+  .btn-back:hover {
+    color: var(--accent-blue);
+    transform: translateX(-3px);
+  }
+
+  .badge-proposal {
+    background: linear-gradient(135deg, rgba(175, 82, 222, 0.1), rgba(0, 113, 227, 0.1));
+    color: var(--accent-blue);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(0, 113, 227, 0.1);
+  }
+
+  /* ── Hero Section ── */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 60px 20px;
+    text-align: center;
+  }
+
+  h1.hero-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  h1.hero-title em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  p.hero-sub {
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto 36px auto;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* ── Stats Grid ── */
+  .overview-grid {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-swift);
+    text-align: left;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .stat-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--text-primary);
+  }
+
+  .stat-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 10px;
+  }
+
+  /* ── Amway vs Wellma Section ── */
+  .compare-section {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-tag {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .compare-container {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 40px;
+    overflow: hidden;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .compare-table th {
+    padding: 20px 24px;
+    font-size: 18px;
+    font-weight: 800;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .compare-table td {
+    padding: 24px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    vertical-align: top;
+  }
+
+  .compare-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .compare-table .badge-amway {
+    background: rgba(142, 142, 147, 0.1);
+    color: #555;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+  }
+
+  .compare-table .badge-wellma {
+    background: linear-gradient(135deg, rgba(175, 82, 222, 0.1), rgba(0, 113, 227, 0.1));
+    color: var(--accent-blue);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    border: 1px solid rgba(0, 113, 227, 0.1);
+  }
+
+  .painpoint-title {
+    font-weight: 700;
+    color: #e03e2f;
+    margin-bottom: 6px;
+  }
+
+  /* ── Strategy Section ── */
+  .strategy-section {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+  }
+
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .strategy-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-swift);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .strategy-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+  }
+
+  .strategy-card.s1::before { background: var(--accent-blue); }
+  .strategy-card.s2::before { background: var(--accent-purple); }
+  .strategy-card.s3::before { background: var(--accent-orange); }
+  .strategy-card.s4::before { background: var(--accent-green); }
+
+  .strategy-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .strategy-num {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .strategy-card.s2 .strategy-num { color: var(--accent-purple); }
+  .strategy-card.s3 .strategy-num { color: var(--accent-orange); }
+  .strategy-card.s4 .strategy-num { color: var(--accent-green); }
+
+  .strategy-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .strategy-desc {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .strategy-features {
+    list-style: none;
+  }
+
+  .strategy-features li {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .strategy-features li::before {
+    content: '✓';
+    font-weight: 700;
+    color: var(--accent-blue);
+  }
+
+  .strategy-card.s2 .strategy-features li::before { color: var(--accent-purple); }
+  .strategy-card.s3 .strategy-features li::before { color: var(--accent-orange); }
+  .strategy-card.s4 .strategy-features li::before { color: var(--accent-green); }
+
+  /* ── Interactive Tabs for Materials ── */
+  .materials-section {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+  }
+
+  .tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .tab-btn {
+    border: none;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 16px 28px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    color: var(--text-secondary);
+    transition: var(--transition-swift);
+  }
+
+  .tab-btn:hover {
+    color: var(--text-primary);
+    transform: translateY(-2px);
+  }
+
+  .tab-btn.active {
+    background: var(--text-primary);
+    color: #fff;
+    border-color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+  }
+
+  .tab-pane {
+    display: none;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 48px;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .tab-pane.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pane-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 24px;
+  }
+
+  .pane-title {
+    font-size: 26px;
+    font-weight: 800;
+  }
+
+  .pane-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  /* SOP specific styles */
+  .sop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .sop-block {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    border: 1px dashed rgba(0, 0, 0, 0.08);
+  }
+
+  .sop-block-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--accent-blue);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dialogue-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 12px;
+    border-left: 4px solid var(--accent-blue);
+    font-size: 14px;
+    color: var(--text-primary);
+    position: relative;
+  }
+
+  .btn-copy {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 113, 227, 0.08);
+    border: none;
+    color: var(--accent-blue);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-swift);
+  }
+
+  .btn-copy:hover {
+    background: var(--accent-blue);
+    color: #fff;
+  }
+
+  /* Table styling in tab */
+  .sop-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .sop-table th {
+    background: rgba(0,0,0,0.03);
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  .sop-table td {
+    padding: 16px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  /* RAG Script flow */
+  .prompt-box {
+    background: #1d1d1f;
+    color: #f5f5f7;
+    font-family: monospace;
+    padding: 20px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+
+  /* ── Roadmap Section ── */
+  .roadmap-section {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+  }
+
+  .roadmap-timeline {
+    display: flex;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .timeline-step {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+
+  .step-badge {
+    position: absolute;
+    top: -15px;
+    left: 32px;
+    background: var(--text-primary);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .step-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 10px;
+    margin-bottom: 12px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 992px) {
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+    .strategy-grid {
+      grid-template-columns: 1fr;
+    }
+    .sop-grid {
+      grid-template-columns: 1fr;
+    }
+    .roadmap-timeline {
+      flex-direction: column;
+      gap: 32px;
+    }
+    .timeline-step {
+      padding-top: 40px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-header">
+  <a href="index.html" class="btn-back">← 返回首頁</a>
+  <span class="badge-proposal">威力馬專屬提案</span>
+</div>
+
+<div class="hero">
+  <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+    <span class="badge-proposal">WELLMARKET TRAINING ENABLEMENT</span>
+  </div>
+  <h1 class="hero-title">威力馬<em>教育訓練優化方案</em></h1>
+  <p class="hero-sub">以「AI 行動導師」與「科學實證 SOP」雙引擎，打造專業、高效、無痛複製的全新直銷培訓體系，實現對安利的彎道超車。</p>
+</div>
+
+<!-- 三大現況數據 -->
+<div class="overview-grid">
+  <div class="stat-card">
+    <div class="stat-icon">🧬</div>
+    <div class="stat-title">主力痛點科學化</div>
+    <div class="stat-value">科學原理解析</div>
+    <div class="stat-desc">將生理反應改以維生素B3、紅景天及白藜蘆醇微循環機制解釋，瓦解產品疑慮。</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🤖</div>
+    <div class="stat-title">AI 行動化賦能</div>
+    <div class="stat-value">24小時 免費助理</div>
+    <div class="stat-desc">打破安利積分限制，全員免費使用 RAG 即時問答助理，新人成交率大幅提速。</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📈</div>
+    <div class="stat-title">社群引流革命</div>
+    <div class="stat-value">Threads 公域引流</div>
+    <div class="stat-desc">捨棄生硬廣告，以「痛點科普 + 免費手冊」引流至 LINE 私域，創造自動化回購。</div>
+  </div>
+</div>
+
+<!-- 競品分析比較 -->
+<div class="compare-section">
+  <div class="section-header">
+    <div class="section-tag">Competitive Analysis</div>
+    <h2 class="section-title">對標安麗：我們的優化核心</h2>
+  </div>
+  
+  <div class="compare-container">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width: 20%;">比較維度</th>
+          <th style="width: 40%; color: var(--text-secondary);">🇺🇸 安利 (Amway) 培訓系統</th>
+          <th style="width: 40%; color: var(--accent-blue);">🇹🇼 威力馬 (Wellma) 優化策略</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>數位工具</strong></td>
+          <td>
+            <strong>安利行動大學 (Amway Academy)</strong><br>
+            <span style="font-size: 13px; color: var(--text-secondary);">包含百門線上課程與影片，但需要達到特定業績積分才能開通，新人有門檻。</span>
+          </td>
+          <td>
+            <span class="badge-wellma">AI 行動導師</span><br>
+            <strong>全員無門檻即時支援</strong><br>
+            <span style="font-size: 13px;">透過 LINE RAG 助理隨問隨答，包含產品成分、好轉反應與反對話術，即時性更高。</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>專業認證</strong></td>
+          <td>
+            <strong>北醫「健康管理師」認證</strong><br>
+            <span style="font-size: 13px; color: var(--text-secondary);">與知名學術機構合作，經銷商出示證照，專家形象強。</span>
+          </td>
+          <td>
+            <span class="badge-wellma">科學實證 + 證照班</span><br>
+            <strong>與國內抗老學會合作</strong><br>
+            <span style="font-size: 13px;">導入「腺體平衡與健康管理師」認證課程；並在培訓中引進 PubMed 醫學實證。</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>痛點處理</strong></td>
+          <td>
+            <strong>穩健品牌，爭議少</strong><br>
+            <span style="font-size: 13px; color: var(--text-secondary);">產品大多溫和，經銷商主要面臨的是市場飽和與拉人困難。</span>
+          </td>
+          <td>
+            <span class="badge-wellma">好轉反應科學化 SOP</span><br>
+            <strong>轉化危機為信任</strong><br>
+            <span style="font-size: 13px; color: #e03e2f;">針對「激密活凝素」心悸、發熱等生理反應，建立嚴格的售前防禦、售後 72 小時追蹤 SOP。</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>制度應對</strong></td>
+          <td>
+            <strong>每季/每月業績考核</strong><br>
+            <span style="font-size: 13px; color: var(--text-secondary);">有重銷壓力，經銷商迫於考核自發回購或囤貨。</span>
+          </td>
+          <td>
+            <span class="badge-wellma">客戶留存五步驟</span><br>
+            <strong>靠極致客情創造自發重購</strong><br>
+            <span style="font-size: 13px;">發揮「免重銷、免囤貨」的吸粉優勢，以「習慣養成計畫」克服缺乏強迫性消費的缺點。</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 四大策略卡片 -->
+<div class="strategy-section">
+  <div class="section-header">
+    <div class="section-tag">Core Strategies</div>
+    <h2 class="section-title">四大彎道超車策略</h2>
+  </div>
+  
+  <div class="strategy-grid">
+    <div class="strategy-card s1">
+      <div class="strategy-num">Strategy 01</div>
+      <h3 class="strategy-title">AI 行動導師與 RAG 知識庫</h3>
+      <p class="strategy-desc">打破影片學習被動性。為新夥伴提供隨身 LINE 機器人，任何刁鑽客訴或問題，AI 一秒鐘給予合規、標準的科學解答。</p>
+      <ul class="strategy-features">
+        <li>零門檻全員開放使用</li>
+        <li>Notion 雲端知識庫即時更新</li>
+        <li>內建反對意見與拒絕話術演練</li>
+      </ul>
+    </div>
+    
+    <div class="strategy-card s2">
+      <div class="strategy-num">Strategy 02</div>
+      <h3 class="strategy-title">科學實證與抗老證照班</h3>
+      <p class="strategy-desc">擺脫直銷商只會「講療效故事」的形象。開辦權威抗衰老健康管理師認證，以 PubMed 醫學文獻作為產品背書。</p>
+      <ul class="strategy-features">
+        <li>知名大專院校或抗老學會授證</li>
+        <li>以「白藜蘆醇、紅景天」科學數據說話</li>
+        <li>提高社會對「腺體平衡理論」的信任度</li>
+      </ul>
+    </div>
+    
+    <div class="strategy-card s3">
+      <div class="strategy-num">Strategy 03</div>
+      <h3 class="strategy-title">生理反應應對與關懷 SOP</h3>
+      <p class="strategy-desc">將威利馬產品最大的挑戰（排毒反應）轉化為專業服務的展現。提供售前打預防針、售後 72 小時關懷與劑量微調對照表。</p>
+      <ul class="strategy-features">
+        <li>心悸、發熱、頭暈之科學機轉教材</li>
+        <li>售前心理建設話術與確認清單</li>
+        <li>黃金 1-3-7 天關懷跟進腳本</li>
+      </ul>
+    </div>
+    
+    <div class="strategy-card s4">
+      <div class="strategy-num">Strategy 04</div>
+      <h3 class="strategy-title">Threads / IG 痛點科普引流</h3>
+      <p class="strategy-desc">教導經銷商告別垃圾廣告，在公域平台建立「健康IP」。以分享乾貨手冊（+1 索取）為誘餌，將名單引流至 LINE 完成成交。</p>
+      <ul class="strategy-features">
+        <li>不談直銷、專注疲勞與衰老痛點科普</li>
+        <li>設計客製化《抗老腺體保養手冊》</li>
+        <li>LINE 私域自動化漏斗成交與裂變</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 實戰教材展示 (Tabs) -->
+<div class="materials-section">
+  <div class="section-header">
+    <div class="section-tag">Interactive Preview</div>
+    <h2 class="section-title">教育訓練實戰教材預覽</h2>
+  </div>
+
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="switchTab(event, 'tab-sop')">SOP 關懷話術</button>
+    <button class="tab-btn" onclick="switchTab(event, 'tab-rag')">AI 知識庫腳本</button>
+    <button class="tab-btn" onclick="switchTab(event, 'tab-funnel')">社群引流漏斗</button>
+  </div>
+
+  <!-- Tab 1: SOP -->
+  <div id="tab-sop" class="tab-pane active">
+    <div class="pane-header">
+      <div>
+        <h3 class="pane-title">生理反應科學解釋與關懷 SOP</h3>
+        <p class="pane-subtitle">針對主力產品「激密活凝素（Well Age 3+1）」常見生理排毒反應的專業話術</p>
+      </div>
+      <span class="badge-proposal" style="background: rgba(0, 113, 227, 0.08);">SOP 範本</span>
+    </div>
+
+    <div class="sop-grid">
+      <div class="sop-block">
+        <div class="sop-block-title">🔥 身體發熱、泛紅、微癢</div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;"><strong>科學機轉：</strong>維生素B3菸鹼酸潮紅（Niacin Flush）促進微血管擴張，血液循環加速。</p>
+        <div class="dialogue-box">
+          「這代表產品中的活性成分已經快速作用於您的微循環。就像剛跑完步一樣，微血管擴張會帶來溫熱與微癢感，這是一過性的正常生理現象，通常在 30-60 分鐘內會自然消退，請不用擔心，多喝溫開水即可。」
+          <button class="btn-copy" onclick="copyText(this)">複製話術</button>
+        </div>
+      </div>
+      
+      <div class="sop-block">
+        <div class="sop-block-title">💓 心悸、心跳加速、亢奮</div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;"><strong>科學機轉：</strong>紅景天血氧提升、瓜拿納天然咖啡因促使新陳代謝率上升。</p>
+        <div class="dialogue-box">
+          「激密活凝素含有紅景天與瓜拿納成分，能幫助細胞帶氧並提升新陳代謝。如果您平時較少喝咖啡，初期可能會有類似喝了濃茶或黑咖啡的微亢奮感。我們會建議您將服用時間提早，並將劑量減半，讓身體逐步適應。」
+          <button class="btn-copy" onclick="copyText(this)">複製話術</button>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin-bottom: 12px; font-weight: 700;">生理反應與劑量調整對照表</h4>
+    <table class="sop-table">
+      <thead>
+        <tr>
+          <th>客戶反應</th>
+          <th>嚴重程度</th>
+          <th>具體調整方案</th>
+          <th>專業說明邏輯</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>微熱、微癢</strong></td>
+          <td>輕微</td>
+          <td><strong>維持原劑量</strong>，多喝溫開水。</td>
+          <td>這是微血管擴張正常表現，通常 3 天內適應後消退。</td>
+        </tr>
+        <tr>
+          <td><strong>明顯心悸</strong></td>
+          <td>中度</td>
+          <td><strong>立即劑量減半</strong>，飯後服用。</td>
+          <td>減緩吸收速度，降低對瓜拿納與紅景天的敏感反應。</td>
+        </tr>
+        <tr>
+          <td><strong>頭暈、頭痛</strong></td>
+          <td>中度</td>
+          <td><strong>劑量減半</strong>，2小時內補水500cc。</td>
+          <td>新陳代謝加速導致一過性脫水，補水即可緩解。</td>
+        </tr>
+        <tr>
+          <td><strong>嚴重失眠</strong></td>
+          <td>中度</td>
+          <td><strong>改在下午 2 點前服用</strong>。</td>
+          <td>避開睡前 6 小時，防止中樞神經持續興奮。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tab 2: RAG -->
+  <div id="tab-rag" class="tab-pane">
+    <div class="pane-header">
+      <div>
+        <h3 class="pane-title">AI 行動導師 RAG 知識庫腳本</h3>
+        <p class="pane-subtitle">訓練 AI 機器人的問答腳本（產品、制度與反對處理）</p>
+      </div>
+      <span class="badge-proposal" style="background: rgba(175, 82, 222, 0.08);">AI 腳本</span>
+    </div>
+
+    <div class="sop-grid">
+      <div class="sop-block" style="grid-column: 1 / -1;">
+        <div class="sop-block-title" style="color: var(--accent-purple);">🤖 AI 行動導師 - 核心 Prompt 設定</div>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">用於部署至官方 LINE 助理的 System Prompt 設定：</p>
+        <div class="prompt-box">
+你是一位專業、溫和、且深諳直銷心理學的「威力馬 AI 行動導師」。
+針對產品生理反應，一律提供科學性原理解釋（如微血管擴張），嚴禁使用「排毒、繼續吃」等不科學字眼。
+針對制度，強調「免囤貨、免月重銷、終身累積」對比傳統直銷的巨大優勢。
+當經銷商詢問「反對意見處理」時，提供「認同感受 -> 價值對比 -> 預防醫學」的三步驟話術模板。
+        </div>
+      </div>
+
+      <div class="sop-block">
+        <div class="sop-block-title">💡 當客戶嫌產品「太貴」時：</div>
+        <div class="dialogue-box">
+          「我完全理解，當初我看到這個價格也覺得不便宜。但是，一瓶激密活凝素能吃 1-2 個月，換算下來每天只要幾十到一百元，這相當於一杯星巴克的錢，卻能換來全方位的抗衰老與精氣神提升，這是最划算的健康投資。現在把錢花在保養上，絕對比未來把錢花在醫院看病或吃藥來得更有價值。」
+          <button class="btn-copy" onclick="copyText(this)">複製話術</button>
+        </div>
+      </div>
+
+      <div class="sop-block">
+        <div class="sop-block-title">⚔️ 當安利經銷商質疑公司太小：</div>
+        <div class="dialogue-box">
+          「安利確實是非常優秀的老牌公司，我也很尊重他們。不過正因為安利已經60幾年，市場極度飽和，新人要出頭非常困難。再加上安利每個月都有責任額（重銷壓力）。威力馬實行『免囤貨、免重銷』，對新人極為友善；同時配合我們的 AI 數位工具，複製速度更快，這對您來說是一個絕佳的藍海商機！」
+          <button class="btn-copy" onclick="copyText(this)">複製話術</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 3: Funnel -->
+  <div id="tab-funnel" class="tab-pane">
+    <div class="pane-header">
+      <div>
+        <h3 class="pane-title">免重銷模式下的客戶留存與 Threads 引流</h3>
+        <p class="pane-subtitle">如何引導公域流量至 LINE 進行高回購留存</p>
+      </div>
+      <span class="badge-proposal" style="background: rgba(52, 199, 89, 0.08);">行銷漏斗</span>
+    </div>
+
+    <div class="sop-grid">
+      <div class="sop-block">
+        <div class="sop-block-title" style="color: var(--accent-green);">📣 Threads 實戰文案：慢性疲勞痛點</div>
+        <div class="dialogue-box" style="font-family: inherit; line-height: 1.6;">
+          <strong>每天早上叫醒你的不是夢想，而是灌了兩杯黑咖啡還是想睡的空虛感？🥲</strong><br><br>
+          很多人以為累了只要補眠就好，但其實你的身體可能處於「腎上腺疲勞」。這不是病，而是你體內的腺體失衡、細胞缺氧在發出求救訊號。<br>
+          我自己以前也是一到下午就腦霧，自從開始進行「腺體營養調理」後，現在每天下午 3 點精神還是很好，再也沒有咖啡因崩潰的問題了。<br><br>
+          我整理了一份《30天重拾精神的腺體調理法》，裡面有避坑指南跟營養建議。<strong>留言「想改善」，我私訊發給你！</strong>
+          <button class="btn-copy" onclick="copyText(this)">複製文案</button>
+        </div>
+      </div>
+
+      <div class="sop-block">
+        <div class="sop-block-title" style="color: var(--accent-green);">🔄 高留存「五步驟關懷漏斗」</div>
+        <ul style="list-style: none; padding-left: 0; font-size: 14px;">
+          <li style="margin-bottom: 12px;"><strong>Step 1. 社群引流 (Attract)</strong>：在 Threads/IG 發布疲勞、衰老痛點貼文篩選受眾。</li>
+          <li style="margin-bottom: 12px;"><strong>Step 2. 漸進式成交 (Convert)</strong>：提供一組體驗裝，降低首購門檻。</li>
+          <li style="margin-bottom: 12px;"><strong>Step 3. 黃金關懷 (Nurture)</strong>：以 [01] 教材的 SOP 陪伴客戶度過前 7 天生理適應期。</li>
+          <li style="margin-bottom: 12px;"><strong>Step 4. 習慣養成 (Retain)</strong>：在服用第 20 天主動關懷，教育「細胞更新 90 天週期」，引導自發回購。</li>
+          <li style="margin-bottom: 12px;"><strong>Step 5. 轉介紹裂變 (Advocate)</strong>：引導客戶分享氣色，無痛轉化為合夥經銷商。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 落地時程規劃 -->
+<div class="roadmap-section">
+  <div class="section-header">
+    <div class="section-tag">Implementation Roadmap</div>
+    <h2 class="section-title">三階段落地實施計畫</h2>
+  </div>
+
+  <div class="roadmap-timeline">
+    <div class="timeline-step">
+      <span class="step-badge">Phase 01</span>
+      <h3 class="step-title">AI 行動導師上線</h3>
+      <p class="step-desc">將問答腳本匯入 n8n 向量資料庫，完成 LINE 官方帳號的 AI 對話串接。全員免費開通，新人立刻擁有 24 小時隨身專業導師。</p>
+    </div>
+    
+    <div class="timeline-step">
+      <span class="step-badge">Phase 02</span>
+      <h3 class="step-title">科學實務 SOP 培訓</h3>
+      <p class="step-desc">召開團隊線上說明會，宣導「售前防禦、售後 72 小時追蹤與劑量調整對照表」，統一話術，全面降低退貨率與網路負評。</p>
+    </div>
+    
+    <div class="timeline-step">
+      <span class="step-badge">Phase 03</span>
+      <h3 class="step-title">Threads 社群引流啟動</h3>
+      <p class="step-desc">提供經銷商個人 IP 打造課程，利用「痛點科普文案 + 免費保養手冊（+1）」進行公域引流，建立源源不絕的私域成交名單。</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 威力馬教育訓練優化提案首頁 ｜ 由 Jacob AI 團隊設計提供</p>
+</footer>
+
+<script>
+  function switchTab(evt, tabId) {
+    var i, tabContent, tabLinks;
+    tabContent = document.getElementsByClassName("tab-pane");
+    for (i = 0; i < tabContent.length; i++) {
+      tabContent[i].classList.remove("active");
+    }
+    tabLinks = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tabLinks.length; i++) {
+      tabLinks[i].classList.remove("active");
+    }
+    document.getElementById(tabId).classList.add("active");
+    evt.currentTarget.classList.add("active");
+  }
+
+  function copyText(btn) {
+    var dialogueBox = btn.parentElement;
+    // Clone node to manipulate text without button text
+    var tempNode = dialogueBox.cloneNode(true);
+    var buttonInTemp = tempNode.querySelector('.btn-copy');
+    if (buttonInTemp) {
+      tempNode.removeChild(buttonInTemp);
+    }
+    var textToCopy = tempNode.innerText.trim();
+
+    navigator.clipboard.writeText(textToCopy).then(function() {
+      var originalText = btn.innerText;
+      btn.innerText = "已複製！";
+      btn.style.background = "#34c759";
+      btn.style.color = "#fff";
+      setTimeout(function() {
+        btn.innerText = originalText;
+        btn.style.background = "rgba(0, 113, 227, 0.08)";
+        btn.style.color = "var(--accent-blue)";
+      }, 2000);
+    }).catch(function(err) {
+      alert("複製失敗，請手動複製！");
+    });
+  }
+</script>
+
+</body>
+</html>
