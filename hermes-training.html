@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 家教實戰課：為孩子建立專屬隨身書僮 (Hermes)</title>
-<!-- 引入 Mermaid 渲染圖表 -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<title>AI 家教實戰課：Hermes 駕駛指南</title>
 <style>
   :root {
     --bg: #f5f5f7;
@@ -22,6 +20,7 @@
     --red: #ff3b30;
     --red-light: rgba(255, 59, 48, 0.08);
     --green: #34c759;
+    --green-light: rgba(52, 199, 89, 0.08);
   }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -90,82 +89,174 @@
     margin: 0 auto 32px auto;
   }
 
-  /* ── 核心架構圖 ── */
-  .architecture {
+  /* ── Section 標題 ── */
+  .sec-header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .sec-tag {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .sec-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .sec-desc {
+    font-size: 16px;
+    color: var(--text-sec);
+    margin-top: 8px;
+  }
+
+  /* ── Section 容器 ── */
+  section {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  /* ── 小船教學 ── */
+  .sailboat-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .boat-card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 24px;
-    padding: 40px;
-    margin: 40px 0;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
   }
-  .architecture h2 { font-size: 22px; font-weight: 700; margin-bottom: 24px; text-align: center; }
-  .mermaid { display: flex; justify-content: center; }
+  .boat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  }
+  .boat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+  }
+  .boat-card.sun::before { background: var(--orange); }
+  .boat-card.wind::before { background: var(--green); }
+  .boat-card.anchor::before { background: var(--red); }
+  .boat-card.rock::before { background: var(--blue); }
 
-  /* ── 痛點剖析與優勢 ── */
-  .intro-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin: 40px 0;
+  .boat-icon { font-size: 40px; margin-bottom: 16px; }
+  .boat-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .boat-card p { font-size: 13px; color: var(--text-sec); line-height: 1.6; }
+  .boat-questions {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.04);
+    list-style: none;
   }
-  .intro-card {
+  .boat-questions li {
+    font-size: 13px;
+    color: var(--text);
+    padding: 4px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .boat-questions li::before { content: '👉'; }
+
+  /* ── 交通工具 Agent 比較 ── */
+  .vehicle-table-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 24px;
+    overflow-x: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+    margin-top: 40px;
+  }
+  .vehicle-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+  }
+  .vehicle-table th {
+    text-align: left;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-sec);
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .vehicle-table td {
+    padding: 20px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+    vertical-align: middle;
+  }
+  .vehicle-table tr:last-child td { border-bottom: none; }
+  .vehicle-name { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 16px; }
+  .vehicle-icon { font-size: 32px; }
+  .agent-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .agent-badge.purple { background: var(--purple-light); color: var(--purple); }
+  .agent-badge.blue { background: var(--blue-light); color: var(--blue); }
+  .agent-badge.green { background: var(--green-light); color: var(--green); }
+  .agent-badge.orange { background: var(--orange-light); color: var(--orange); }
+
+  /* ── 登入駕駛步驟 ── */
+  .drive-step {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 32px;
+    margin-bottom: 24px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.01);
   }
-  .intro-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-  .intro-card p { font-size: 14px; color: var(--text-sec); }
-
-  /* ── 實戰步驟 ── */
-  .step-section { padding: 60px 0; border-top: 1px solid var(--border); }
-  .step-num {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
+  .drive-step-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .drive-step-num {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
     border-radius: 50%;
     background: var(--purple);
     color: #fff;
     text-align: center;
     font-weight: 700;
     font-size: 16px;
-    margin-bottom: 16px;
   }
-  .step-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.02em; }
-  .step-desc { font-size: 16px; color: var(--text-sec); margin-bottom: 32px; }
+  .drive-step-title { font-size: 20px; font-weight: 700; }
+  .drive-step p { font-size: 14px; color: var(--text-sec); margin-bottom: 16px; }
 
-  /* ── 實戰提示卡片 ── */
-  .alert-card {
-    border-radius: 16px;
-    padding: 24px;
-    margin: 24px 0;
-    border: 1px solid transparent;
-  }
-  .alert-card.warning {
-    background: var(--orange-light);
-    border-color: rgba(255, 149, 0, 0.15);
-  }
-  .alert-card.warning h4 { color: var(--orange); font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-  .alert-card.warning p { font-size: 14px; color: #515154; }
-
-  .alert-card.danger {
-    background: var(--red-light);
-    border-color: rgba(255, 59, 48, 0.15);
-  }
-  .alert-card.danger h4 { color: var(--red); font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-  .alert-card.danger p { font-size: 14px; color: #515154; }
-
-  /* ── Code block ── */
+  /* Code block */
   pre {
     background: #1d1d1f;
     color: #f5f5f7;
     padding: 20px;
     border-radius: 12px;
     font-family: 'SF Mono', Monaco, Consolas, monospace;
-    font-size: 14px;
+    font-size: 13px;
     overflow-x: auto;
     margin: 16px 0;
     position: relative;
@@ -185,28 +276,16 @@
   }
   .copy-btn:hover { background: rgba(255, 255, 255, 0.25); }
 
-  /* ── 列表與勾選 ── */
-  .list-style { list-style: none; margin: 20px 0; }
-  .list-style li { padding: 8px 0; font-size: 15px; display: flex; align-items: flex-start; gap: 10px; }
-  .list-style li .icon { color: var(--purple); font-weight: bold; flex-shrink: 0; }
-
-  /* ── 驗收清單 ── */
-  .checklist-box {
-    background: #ffffff;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px;
-    margin: 40px 0;
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 14px;
   }
-  .checklist-box h3 { font-size: 20px; font-weight: 700; margin-bottom: 20px; text-align: center; }
-  .check-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.03); }
-  .check-item:last-child { border-bottom: none; }
-  .check-item input[type="checkbox"] {
-    width: 20px; height: 20px; accent-color: var(--purple); cursor: pointer;
-  }
-  .check-item label { font-size: 15px; cursor: pointer; color: var(--text); }
+  .checklist-item input { accent-color: var(--purple); width: 16px; height: 16px; }
 
-  /* ── CTA 與收工 ── */
+  /* ── 底部引導 ── */
   .cta-section {
     text-align: center;
     padding: 80px 24px;
@@ -231,11 +310,9 @@
 
   footer { text-align: center; padding: 40px 24px; font-size: 12px; color: var(--text-sec); border-top: 1px solid var(--border); background: #ffffff; }
 
-  /* ── 響應式 ── */
   @media (max-width: 768px) {
-    .hero { padding: 60px 0 30px 0; }
-    .architecture { padding: 20px; }
-    .intro-grid { grid-template-columns: 1fr; }
+    .sailboat-container { grid-template-columns: 1fr; }
+    .drive-step { padding: 20px; }
   }
 </style>
 </head>
@@ -245,13 +322,12 @@
 <header>
   <div class="container nav-bar">
     <div class="logo">
-      ✨ Jacob's Business OS <span>家教課</span>
+      🚗 AI 駕駛學校 <span>第一課：Hermes</span>
     </div>
     <ul class="nav-links">
-      <li><a href="#why-discord">為何用 Discord</a></li>
-      <li><a href="#phase-1">第一階段：帳號準備</a></li>
-      <li><a href="#phase-2">第二階段：實戰部署</a></li>
-      <li><a href="#checklist">驗收與測試</a></li>
+      <li><a href="#sailboat">1. 探索需求 (小船)</a></li>
+      <li><a href="#vehicles">2. 選擇交通工具</a></li>
+      <li><a href="#drive">3. 登入駕駛 (設定)</a></li>
     </ul>
   </div>
 </header>
@@ -259,203 +335,243 @@
 <!-- Hero 封面 -->
 <div class="hero">
   <div class="container">
-    <div class="hero-tag">🎓 AI Agent 實戰家教課程</div>
-    <h1>為孩子建立專屬的<br><em>「隨身書僮」 (Hermes)</em></h1>
-    <p>針對無手機號碼的學齡兒童，以 Discord 為互動介面，手把手部署專屬的 Hermes AI 助理，並設定物理隔離的私有知識庫與防失憶機制，建立安全、受大人監管的學習伴侶。</p>
-    <a href="#phase-1" class="cta-btn">開始實戰課程</a>
+    <div class="hero-tag">🎓 實戰家教培訓課程</div>
+    <h1>AI 私人助理實戰：<br><em>駕馭你的數位特助 Hermes</em></h1>
+    <p>不教無效的聊天指令，而是帶你建立一個具備長期記憶、隱私防護、自動聯網與 Google/Notion 整合能力的 24/7 貼身數位助理。</p>
+    <a href="#sailboat" class="cta-btn">開始第一課</a>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- 為什麼用 Discord -->
-  <section id="why-discord" style="padding: 40px 0;">
-    <div class="intro-grid">
-      <div class="intro-card" style="border-left: 4px solid var(--blue);">
-        <h3>🔑 免手機註冊</h3>
-        <p>Telegram 註冊必須綁定真實手機門號。學齡兒童通常沒有門號，而 Discord 允許純電子信箱（Email）註冊與登入。</p>
+  <!-- ── 1. 出發要有個方向 - 探索客戶的真實需求 (小船教學) ── -->
+  <section id="sailboat">
+    <div class="sec-header">
+      <span class="sec-tag">PART 1</span>
+      <h2 class="sec-title">出發要有個方向 — 探索你的真實需求</h2>
+      <p class="sec-desc">使用「小船分析法」，在開始前盤點你的目標、動力、阻力與潛在風險。</p>
+    </div>
+
+    <div class="sailboat-container">
+      <!-- 太陽：終極目標 -->
+      <div class="boat-card sun">
+        <div class="boat-icon">☀️</div>
+        <h3>目的地 (與理想願景)</h3>
+        <p>當你成功配置出 AI 助理後，你最希望它幫你實現什麼樣的工作型態？</p>
+        <ul class="boat-questions">
+          <li>每天能多出 2 小時陪家人？</li>
+          <li>自動處理掉 80% 瑣碎客服？</li>
+          <li>擁有終身不忘的個人筆記庫？</li>
+        </ul>
       </div>
-      <div class="intro-card" style="border-left: 4px solid var(--purple);">
-        <h3>📂 物理隔離知識庫</h3>
-        <p>每位孩子擁有專屬的 GitHub 私有儲存庫作為大腦。她們的個人筆記、記憶與學習進度完全隔離，不與其他人混雜，安全私密。</p>
+
+      <!-- 推動前進的動力 -->
+      <div class="boat-card wind">
+        <div class="boat-icon">⛵</div>
+        <h3>動力與助力 (Wind)</h3>
+        <p>目前有哪些資源、工具或正面動機，是你可以直接借力來推動自動化的？</p>
+        <ul class="boat-questions">
+          <li>現有的 Notion 或 Gmail？</li>
+          <li>強烈的學習熱忱？</li>
+          <li>可用的 API 免費額度？</li>
+        </ul>
       </div>
-      <div class="intro-card" style="border-left: 4px solid var(--green);">
-        <h3>💾 Volume 防失憶</h3>
-        <p>在雲端服務重啟或版本更新時，透過掛載持久化 Volume，保證機器人的長期記憶不丟失，伴隨孩子長大。</p>
+
+      <!-- 錨：拖累前進的阻力 -->
+      <div class="boat-card anchor">
+        <div class="boat-icon">⚓</div>
+        <h3>痛點與阻力 (Anchor)</h3>
+        <p>目前日常工作中，哪一些重複、瑣碎的事項是你的「時間小偷」與前進障礙？</p>
+        <ul class="boat-questions">
+          <li>回覆客戶基本常見問答？</li>
+          <li>手動整理會議或影片大綱？</li>
+          <li>在不同系統複製貼上資料？</li>
+        </ul>
+      </div>
+
+      <!-- 礁石/鯊魚：潛在風險 -->
+      <div class="boat-card rock">
+        <div class="boat-icon">🦈</div>
+        <h3>礁石與擔憂 (Sharks)</h3>
+        <p>在導入 AI 助理時，你心底最大的顧慮或潛在風險是什麼？</p>
+        <ul class="boat-questions">
+          <li>擔心 AI 胡言亂語 (幻覺)？</li>
+          <li>擔心商業機密與隱私外洩？</li>
+          <li>擔心技術太難自己不會用？</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- 核心架構圖 -->
-  <div class="architecture">
-    <h2>📡 隨身書僮 (Hermes) 物理隔離與部署架構</h2>
-    <div class="mermaid">
-      graph TD
-          A[爸爸的 GitHub 帳號] -->|建立私有庫| B(hermes-junior-kb)
-          A -->|建立私有庫| C(hermes-senior-kb)
-          D[Discord Developer Portal] -->|申請 Bot Token| E(大女兒機器人: 四兒)
-          D -->|申請 Bot Token| F(小女兒機器人: 小齊)
-          G[Zeabur 雲端服務] -->|部署實例 1| H(hermes-junior 服務)
-          G -->|部署實例 2| I(hermes-senior 服務)
-          H -->|Sync 記憶與筆記| B
-          I -->|Sync 記憶與筆記| C
-          E -->|讀寫對話| H
-          F -->|讀寫對話| I
-    </div>
-  </div>
-
-  <!-- 第一階段：帳號準備 -->
-  <section id="phase-1" class="step-section">
-    <div class="step-num">🔑</div>
-    <h2 class="step-title">第一階段：無手機門號申請 Discord 帳號</h2>
-    <p class="step-desc">學齡兒童沒有專屬門號時，如何在大人的監督下順利註冊並通過認證？</p>
-
-    <div class="alert-card warning">
-      <h4>🚨 實戰踩坑 1：Discord 的「13歲年齡限制限制」</h4>
-      <p><strong>問題：</strong>若註冊時填寫真實生日且年齡小於 13 歲，帳號會立刻被官方系統鎖定封鎖。<br>
-      <strong>解法：</strong>家教上課時，請大人填寫大於 13 歲的年份（或由家長親自代持該帳號），以順利完成註冊。</p>
+  <!-- ── 2. 接下來我們要選交通工具 - 分析各 Agent 特色 ── -->
+  <section id="vehicles">
+    <div class="sec-header">
+      <span class="sec-tag">PART 2</span>
+      <h2 class="sec-title">接下來我們要選交通工具</h2>
+      <p class="sec-desc">市場上的 AI Agent 種類繁多，根據你的需求，挑選最適合你的一台出發。</p>
     </div>
 
-    <ul class="list-style">
-      <li><span class="icon">✓</span> <strong>準備專屬 Email</strong>：使用 Gmail 或利用大人的備用 Email 註冊。</li>
-      <li><span class="icon">✓</span> <strong>以信箱而非手機註冊</strong>：點選信箱註冊，並至信箱中點擊「驗證電子信箱」。</li>
-    </ul>
-
-    <div class="alert-card danger">
-      <h4>🚨 實戰踩坑 2：未驗證 Email 會使伺服器邀請「顯示過期」</h4>
-      <p><strong>問題：</strong>如果帳號未點擊信箱驗證信，加入伺服器時會彈出「邀請連結已過期/無效」的誤導性提示。<br>
-      <strong>解法：</strong>加入頻道前，必須 100% 確保 Email 驗證已通過。</p>
+    <div class="vehicle-table-container">
+      <table class="vehicle-table">
+        <thead>
+          <tr>
+            <th>🚗 交通工具類型</th>
+            <th>🤖 代表 Agent / 平台</th>
+            <th>⚡ 核心超能力</th>
+            <th>🎯 適合場景</th>
+            <th>🛠️ 操作難度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="vehicle-name">
+                <span class="vehicle-icon">🚲</span>
+                <div>腳踏車<br><span style="font-size: 11px; font-weight: normal; color: var(--text-sec);">輕量對話</span></div>
+              </div>
+            </td>
+            <td><span class="agent-badge blue">GPTs / Projects</span></td>
+            <td>即時問答、簡單翻譯、文案初稿</td>
+            <td>靈感腦力激盪、一般文字潤飾</td>
+            <td>⭐ (零門檻)</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="vehicle-name">
+                <span class="vehicle-icon">🚗</span>
+                <div>商務休旅車<br><span style="font-size: 11px; font-weight: normal; color: var(--text-sec);">安全與記憶</span></div>
+              </div>
+            </td>
+            <td><span class="agent-badge purple">Hermes Agent</span></td>
+            <td><strong>長期個人記憶</strong>、安全隱私防護、可擴充 Skill 技能包、子代理協作</td>
+            <td><strong>貼身數位秘書</strong>、聯網搜尋、Google / Notion 生產力整合</td>
+            <td>⭐⭐ (簡單上手)</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="vehicle-name">
+                <span class="vehicle-icon">🏎️</span>
+                <div>越野跑車<br><span style="font-size: 11px; font-weight: normal; color: var(--text-sec);">執行實作</span></div>
+              </div>
+            </td>
+            <td><span class="agent-badge orange">OpenCode / Codex</span></td>
+            <td>本機程式撰寫、自動執行腳本、改 code 除錯</td>
+            <td>工程實作、原型開發、系統命令執行</td>
+            <td>⭐⭐⭐ (中階)</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="vehicle-name">
+                <span class="vehicle-icon">✈️</span>
+                <div>自動駕駛高鐵<br><span style="font-size: 11px; font-weight: normal; color: var(--text-sec);">自動化中樞</span></div>
+              </div>
+            </td>
+            <td><span class="agent-badge green">n8n / Dify</span></td>
+            <td>背景自動流轉、API 無縫串接、定時觸發與監控</td>
+            <td>企業工作流自動化、大規模數據同步</td>
+            <td>⭐⭐⭐⭐ (高階)</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- 第二階段：實戰部署 -->
-  <section id="phase-2" class="step-section">
-    <div class="step-num">🛠️</div>
-    <h2 class="step-title">第二階段：為孩子建立隨身書僮端到端部署</h2>
-    <p class="step-desc">家長跟著帶練的 5 大實戰技術步驟。</p>
-
-    <!-- 步驟 1 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 1</span>
-        在 GitHub 上建立專屬私有知識庫 (KB-Vault)
-      </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">使用 GitHub CLI 建立孩子的私有 Repo。這將作為她專屬的記憶與筆記庫。</p>
-      <pre><code id="code-git"># 建立大女兒的私有知識庫
-gh repo create jacob-cloud-n8n/hermes-junior-kb --private --add-readme
-
-# 建立小女兒的私有知識庫
-gh repo create jacob-cloud-n8n/hermes-senior-kb --private --add-readme</code><button class="copy-btn" onclick="copyCode('code-git')">複製</button></pre>
+  <!-- ── 3. 登入駕駛 - 開始基本設定 ── -->
+  <section id="drive">
+    <div class="sec-header">
+      <span class="sec-tag">PART 3</span>
+      <h2 class="sec-title">登入駕駛 — 開始設定你的貼身助理</h2>
+      <p class="sec-desc">確定選擇專屬休旅車 <strong>Hermes Agent</strong> 後，跟著以下步驟發動引擎、上路試駕！</p>
     </div>
 
-    <!-- 步驟 2 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 2</span>
-        在 Discord Application Portal 申請 Bot Token
-      </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">進入開發者後台，註冊 Bot 並開啟必要的對話讀取權限。</p>
-      <ul class="list-style" style="margin-left: 20px;">
-        <li><span class="icon">1.</span> 登入 <a href="https://discord.com/developers/applications" target="_blank" style="color: var(--blue); text-decoration: none;">Discord Developer Portal</a> 點擊 <strong>New Application</strong>。</li>
-        <li><span class="icon">2.</span> 點選左側 <strong>Bot</strong> ➔ 點擊 <strong>Reset Token</strong> 取得 <code>DISCORD_BOT_TOKEN</code>。</li>
-        <li><span class="icon">3.</span> <strong>⚠️ 核心開關：</strong>下拉至 <strong>Privileged Gateway Intents</strong>，開啟 <strong>Presence</strong>、<strong>Server Members</strong>、與 <strong>Message Content Intent</strong> (沒開 Bot 會讀不到訊息！)。</li>
-        <li><span class="icon">4.</span> 點選左側 <strong>OAuth2</strong> -> <strong>URL Generator</strong>，Scopes 勾選 <code>bot</code>、<code>applications.commands</code>，並在權限勾選發送、讀取、上傳檔案，用產出的連結把 Bot 邀請進伺服器。</li>
-      </ul>
+    <!-- Step 1 -->
+    <div class="drive-step">
+      <div class="drive-step-header">
+        <div class="drive-step-num">1</div>
+        <div class="drive-step-title">建立 Telegram 互動介面 (設定目的地)</div>
+      </div>
+      <p>我們使用普及率極高、支援跨平台且免費的 Telegram 作為與 Hermes 的互動介面。</p>
+      <div class="checklist-item">
+        <input type="checkbox" id="step1-1">
+        <label for="step1-1">下載並登入 Telegram App</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="step1-2">
+        <label for="step1-2">在搜尋欄尋找官方機器人老爹 <code>@BotFather</code></label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="step1-3">
+        <label for="step1-3">對牠發送 <code>/newbot</code> 指令，並為你的助理取名 (例如：小齊)</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="step1-4">
+        <label for="step1-4"><strong>記錄憑證</strong>：複製 BotFather 回傳的 <strong>HTTP API Token</strong> (格式如 <code>738210928:AAH...</code>)</label>
+      </div>
     </div>
 
-    <!-- 步驟 3 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 3</span>
-        在 Zeabur 部署並配置專屬服務
-      </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">切換至本機專案部署目錄，使用 CLI 一鍵部署至雲端，並設定物理隔離環境變數。</p>
-      <pre><code id="code-zeabur">cd "/Users/jacob/Projects/2026 hermes/deploy/hermes-agent"
-npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --interactive=false</code><button class="copy-btn" onclick="copyCode('code-zeabur')">複製</button></pre>
-      <p style="font-size: 14px; color: var(--text-sec); margin-top: 12px; margin-bottom: 8px;">在 Zeabur 控制台環境變數（Environment Variables）中配置以下關鍵安全變數：</p>
-      <ul class="list-style" style="margin-left: 20px; font-size: 14px;">
-        <li><code>DISCORD_BOT_TOKEN</code> = <code>(步驟二獲取的 Bot Token)</code></li>
-        <li><code>KB_VAULT_REPO</code> = <code>jacob-cloud-n8n/hermes-junior-kb.git</code> (指向步驟一建立的私有知識庫)</li>
-        <li><code>GITHUB_PAT</code> = <code>(您的 GitHub PAT)</code> (用於 Bot 推送更新至 Repo)</li>
-        <li><code>DISCORD_ALLOWED_USERS</code> = <code>您的DiscordID</code> (先填寫您的 ID，以便進行初步驗證與測試)</li>
-      </ul>
+    <!-- Step 2 -->
+    <div class="drive-step">
+      <div class="drive-step-header">
+        <div class="drive-step-num">2</div>
+        <div class="drive-step-title">申請 OpenRouter 統一模型路由 (拿到鑰匙)</div>
+      </div>
+      <p>OpenRouter 可以讓你免去管理多個 AI 帳號的麻煩，一個 API 就能依需求自由切換 GPT-4o、Claude 或 Gemini 模型。</p>
+      <div class="checklist-item">
+        <input type="checkbox" id="step2-1">
+        <label for="step2-1">瀏覽器開啟並註冊 <a href="https://openrouter.ai/" target="_blank" style="color: var(--blue); text-decoration: none; font-weight: 600;">OpenRouter 官網</a></label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="step2-2">
+        <label for="step2-2">進入 Dashboard ➔ 點選 <strong>Keys</strong> ➔ 建立一個新的 API Key</label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="step2-3">
+        <label for="step2-3"><strong>記錄憑證</strong>：複製並安全妥善保存您的 OpenRouter API Key (格式以 <code>sk-or-v1-</code> 開頭)</label>
+      </div>
     </div>
 
-    <!-- 步驟 4 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 4</span>
-        掛載持久化磁碟 (Volume) 以防重啟忘記記憶
-      </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">避免雲端容器重新啟動或部署時，本地的臨時 SQLite 資料庫遺失。</p>
-      <ul class="list-style" style="margin-left: 20px;">
-        <li><span class="icon">1.</span> 開啟 <strong>Zeabur 控制台</strong> ➔ 點入剛部署好的服務頁面。</li>
-        <li><span class="icon">2.</span> 找到 <strong>磁碟 (Volumes)</strong> 區塊，點擊新增磁碟。</li>
-        <li><span class="icon">3.</span> <strong>掛載路徑 (Mount Path) 必須填寫為：</strong> <code>/root/.hermes</code>。</li>
-      </ul>
-    </div>
+    <!-- Step 3 -->
+    <div class="drive-step">
+      <div class="drive-step-header">
+        <div class="drive-step-num">3</div>
+        <div class="drive-step-title">第一次點火啟動 (基本試駕對話)</div>
+      </div>
+      <p>將 Token 寫入 Hermes 設定中，發動引擎並在 Telegram 進行初次對答測試。</p>
+      <pre><code id="code-start"># 本機啟動您的 Hermes 助理
+npm install
+npm run dev
 
-    <!-- 步驟 5 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 5</span>
-        頻道綁定與加入孩子的白名單防禦
-      </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">將 Bot 鎖定在指定的聊天頻道，並將孩子加入白名單，防止非白名單成員惡意發話呼叫。</p>
-      <ul class="list-style" style="margin-left: 20px;">
-        <li><span class="icon">1.</span> 在預計對話的 Discord 頻道中輸入 <code>/sethome</code> 進行主頻道綁定。</li>
-        <li><span class="icon">2.</span> 複製孩子的 Discord 使用者 ID (需在 Discord 設定 ➔ 進階 ➔ 開啟「開發者模式」，對頭像點右鍵複製)。</li>
-        <li><span class="icon">3.</span> 修改 Zeabur 環境變數 <code>DISCORD_ALLOWED_USERS</code> 為 <code>您的ID,孩子的ID</code> (以英文逗號分隔)，儲存並重啟。</li>
-      </ul>
-    </div>
-
-  </section>
-
-  <!-- 課程驗收與測試 -->
-  <section id="checklist" class="checklist-box">
-    <h3>✅ 現場家教課驗收清單 (Checklist)</h3>
-    <p style="text-align: center; color: var(--text-sec); font-size: 14px; margin-bottom: 24px;">家長在課程結束前，應能順利完成以下項目的勾選與測試：</p>
-    
-    <div class="check-item">
-      <input type="checkbox" id="c-online">
-      <label for="c-online"><strong>Bot 線上狀態</strong>：機器人在 Discord 伺服器成員清單中顯示綠色「線上」狀態。</label>
-    </div>
-    <div class="check-item">
-      <input type="checkbox" id="c-chat">
-      <label for="c-chat"><strong>對話測試</strong>：在頻道中發送任何文字，Bot 能正常回覆。</label>
-    </div>
-    <div class="check-item">
-      <input type="checkbox" id="c-home">
-      <label for="c-home"><strong>Home 綁定</strong>：輸入 <code>/sethome</code> 成功回傳 <code>Home channel set</code> 訊息。</label>
-    </div>
-    <div class="check-item">
-      <input type="checkbox" id="c-save">
-      <label for="c-save"><strong>防失憶存檔</strong>：對 Bot 輸入「收工」或存檔指令後，前往孩子的 GitHub 私有庫，能看到自動推送的新 commit。</label>
-    </div>
-    <div class="check-item">
-      <input type="checkbox" id="c-security">
-      <label for="c-security"><strong>安全防禦</strong>：使用非白名單帳號對 Bot 發話，Bot 拒絕回覆並提供警告。</label>
+# 或是透過 CLI 啟動 runtime
+hermes start --bot telegram</code><button class="copy-btn" onclick="copyCode('code-start')">複製</button></pre>
+      <div class="checklist-item">
+        <input type="checkbox" id="step3-1">
+        <label for="step3-1">在 Telegram 對你的新 Bot 發送 <code>/start</code></label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="step3-2">
+        <label for="step3-2">發送測試語法：<code>@Bot 你今天好嗎？請用繁體中文自我介紹。</code></label>
+      </div>
+      <div class="checklist-item">
+        <input type="checkbox" id="step3-3">
+        <label for="step3-3">確認 Bot 能回覆，並記住您是牠的主人，代表發動點火成功！</label>
+      </div>
     </div>
   </section>
 
 </div>
 
-<!-- 底部 CTA 區 -->
+<!-- 底部引導 -->
 <section class="cta-section">
-  <h2>讓 AI 伴隨孩子一起健康成長</h2>
-  <p>建立不只是陪伴，更是具備專屬記憶的長期知識儲備書僮。</p>
-  <a href="#" class="cta-btn" onclick="alert('恭喜！您已成功完成本堂隨身書僮家教課！')">完成教學</a>
+  <h2>第一階段已解鎖 — 準備好進入下一階段了嗎？</h2>
+  <p>我們已經探索了需求、選好了交通工具、並完成了首次點火發動。接下來，我們將學習如何教牠擴充技能！</p>
+  <a href="#" class="cta-btn" onclick="alert('第一堂引導課程完成！')">完成第一課引導</a>
 </section>
 
-<!-- Footer -->
 <footer>
   <p>© 2026 Jacob's Business OS. Deployed on Firebase Hosting.</p>
 </footer>
 
 <script>
-  // 初始化 Mermaid
-  mermaid.initialize({ startOnLoad: true, theme: 'default' });
-
   // 複製 Code 實作
   function copyCode(id) {
     const code = document.getElementById(id).innerText;
