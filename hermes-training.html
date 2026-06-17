@@ -310,9 +310,37 @@
 
   footer { text-align: center; padding: 40px 24px; font-size: 12px; color: var(--text-sec); border-top: 1px solid var(--border); background: #ffffff; }
 
+  /* ── 純 HTML/CSS 流程圖 ── */
+  .flow-chart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .flow-node {
+    flex: 1;
+    min-width: 160px;
+    background: #f5f5f7;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+  }
+  .flow-node .flow-icon { font-size: 28px; margin-bottom: 8px; }
+  .flow-node .flow-label { font-weight: 700; font-size: 15px; color: var(--text); }
+  .flow-node .flow-desc { font-size: 12px; color: var(--text-sec); margin-top: 4px; }
+  .flow-arrow { font-size: 24px; color: var(--purple); font-weight: bold; }
+
   @media (max-width: 768px) {
     .sailboat-container { grid-template-columns: 1fr; }
     .drive-step { padding: 20px; }
+    .hero { padding: 60px 0 30px 0; }
+    .architecture { padding: 20px; }
+    .flow-chart { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); margin: 8px 0; }
   }
 </style>
 </head>
@@ -409,6 +437,36 @@
       <span class="sec-tag">PART 2</span>
       <h2 class="sec-title">接下來我們要選交通工具</h2>
       <p class="sec-desc">市場上的 AI Agent 種類繁多，根據你的需求，挑選最適合你的一台出發。</p>
+    </div>
+    
+    <!-- 核心架構圖 -->
+    <div class="architecture">
+      <h2>📡 Hermes AI 助理運行機制</h2>
+      <div class="flow-chart">
+        <div class="flow-node">
+          <div class="flow-icon">👤</div>
+          <div class="flow-label">互動介面</div>
+          <div class="flow-desc">Telegram Bot</div>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-node">
+          <div class="flow-icon">🤖</div>
+          <div class="flow-label">運作中樞</div>
+          <div class="flow-desc">Hermes Agent</div>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-node">
+          <div class="flow-icon">🧠</div>
+          <div class="flow-label">智能大腦</div>
+          <div class="flow-desc">OpenRouter LLM</div>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-node">
+          <div class="flow-icon">💾</div>
+          <div class="flow-label">記憶與聯網</div>
+          <div class="flow-desc">Durable DB & Tavily</div>
+        </div>
+      </div>
     </div>
 
     <div class="vehicle-table-container">
