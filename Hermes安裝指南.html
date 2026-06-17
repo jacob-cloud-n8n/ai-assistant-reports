@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hermes AI 助理安裝指南</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <style>
+    :root {
+      --accent:  #e8643a;
+      --accent2: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+    }
+
+    .reveal {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.5em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.55em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: #888; }
+
+    .stat-row { display: flex; gap: 20px; justify-content: center; margin-top: 1em; }
+    .stat-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 20px 26px;
+      text-align: center;
+      flex: 1;
+    }
+    .stat-card .num   { font-size: 1.8em; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-card .label { font-size: 0.42em; color: #ccc; margin-top: 6px; }
+
+    .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.6em; }
+    .adv-card {
+      background: rgba(255,255,255,0.05);
+      border-top: 4px solid var(--accent2);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .adv-card .adv-title { font-size: 0.5em; font-weight: 700; color: var(--accent2); margin-bottom: 6px; }
+    .adv-card .adv-desc  { font-size: 0.4em; color: #bbb; line-height: 1.6; }
+
+    .vs-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: start; margin-top: 0.6em; }
+    .vs-col { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 18px; }
+    .vs-col.left-col  { border-top: 3px solid var(--accent2); }
+    .vs-col.right-col { border-top: 3px solid var(--warn); }
+    .vs-label { font-size: 0.7em; font-weight: 700; margin-bottom: 10px; letter-spacing: 0.05em; }
+    .vs-label.left  { color: var(--accent2); }
+    .vs-label.right { color: var(--warn); }
+    .vs-center { display: flex; align-items: center; justify-content: center; font-size: 1.4em; font-weight: 900; color: #555; }
+    .vs-col ul { font-size: 0.42em; list-style: none; padding: 0; margin: 0; }
+    .vs-col ul li { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .vs-col ul li:last-child { border-bottom: none; }
+    .vs-col ul li::before { content: "✦ "; opacity: 0.5; }
+
+    .step-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 0.8em;
+      flex-wrap: wrap;
+    }
+    .step-item {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .step-item .step-num {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.9em;
+      margin-bottom: 8px;
+    }
+    .step-item .step-title { font-size: 0.45em; font-weight: 700; color: #fff; }
+    .step-item .step-desc { font-size: 0.35em; color: #aaa; margin-top: 4px; }
+    .step-arrow { font-size: 1.2em; color: #555; }
+
+    .env-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.6em;
+      font-size: 0.42em;
+    }
+    .env-table th {
+      background: rgba(79,195,247,0.2);
+      color: var(--accent2);
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 2px solid rgba(79,195,247,0.4);
+    }
+    .env-table td {
+      padding: 8px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #ccc;
+    }
+    .env-table tr:hover td {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .code-block {
+      background: rgba(0,0,0,0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 0.6em;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.42em;
+      color: #e0e0e0;
+      text-align: left;
+      overflow-x: auto;
+    }
+    .code-block .comment { color: #888; }
+    .code-block .cmd { color: var(--accent2); }
+
+    .conclusion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 0.8em; }
+    .conclusion-card { border-radius: 10px; padding: 18px; font-size: 0.44em; }
+    .conclusion-card.positive {
+      background: rgba(79,195,247,0.12);
+      border: 1px solid rgba(79,195,247,0.35);
+    }
+    .conclusion-card.caution {
+      background: rgba(255,183,77,0.1);
+      border: 1px solid rgba(255,183,77,0.3);
+    }
+    .conclusion-card .cc-title { font-size: 1.3em; font-weight: 700; margin-bottom: 8px; }
+    .conclusion-card.positive .cc-title { color: var(--accent2); }
+    .conclusion-card.caution  .cc-title { color: var(--warn); }
+    .conclusion-card ul { list-style: none; padding: 0; margin: 0; color: #ccc; line-height: 1.8; }
+    .conclusion-card ul li::before { content: "→ "; opacity: 0.6; }
+
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; }
+    .end-slide .tagline { font-size: 0.65em; color: #aaa; }
+
+    .highlight { color: var(--accent); font-weight: 700; }
+    .note-box {
+      background: rgba(255,183,77,0.1);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 0.6em;
+      font-size: 0.42em;
+      color: #ddd;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 封面 -->
+    <section data-background-color="#1a1a2e">
+      <div class="title-slide">
+        <div class="tag">AI 助理解決方案</div>
+        <h1>Hermes AI 助理</h1>
+        <h2 style="color:var(--accent); margin-top:0.2em;">安裝與部署指南</h2>
+        <p class="subtitle">從零開始，5 分鐘建立您的專屬 AI 助理</p>
+        <p class="author">小牧人技術團隊 · 2026 年 6 月</p>
+      </div>
+    </section>
+
+    <!-- 什麼是 Hermes -->
+    <section>
+      <h2>什麼是 Hermes？</h2>
+      <div class="stat-row fragment">
+        <div class="stat-card">
+          <div class="num">192k</div>
+          <div class="label">GitHub Stars</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">14+</div>
+          <div class="label">訊息平台支援</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">40+</div>
+          <div class="label">內建工具</div>
+        </div>
+      </div>
+      <div class="adv-grid fragment" style="margin-top:0.8em;">
+        <div class="adv-card">
+          <div class="adv-title">持久記憶</div>
+          <div class="adv-desc">跨對話記住您的偏好與上下文</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-title">技能學習</div>
+          <div class="adv-desc">從經驗中自動建立與改進技能</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-title">多平台</div>
+          <div class="adv-desc">Telegram、Discord、Slack、WhatsApp</div>
+        </div>
+        <div class="adv-card">
+          <div class="adv-title">排程任務</div>
+          <div class="adv-desc">內建 cron 排程器，自動化工作流程</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 兩種部署方式 -->
+    <section>
+      <h2>兩種部署方式</h2>
+      <div class="vs-grid">
+        <div class="vs-col left-col">
+          <div class="vs-label left">☁️ 雲端部署（推薦）</div>
+          <ul>
+            <li>Zeabur 一鍵部署</li>
+            <li>無需技術背景</li>
+            <li>自動擴展與備份</li>
+            <li>月費制，穩定運行</li>
+            <li>5 分鐘完成設定</li>
+          </ul>
+        </div>
+        <div class="vs-center">VS</div>
+        <div class="vs-col right-col">
+          <div class="vs-label right">🖥️ 自架部署</div>
+          <ul>
+            <li>需要伺服器</li>
+            <li>需具備基礎技術能力</li>
+            <li>完全自主控制</li>
+            <li>一次性成本</li>
+            <li>需自行維護</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 方案 A：Zeabur 雲端部署 -->
+    <section data-background-color="#1a1a2e">
+      <div class="title-slide">
+        <div class="tag">方案 A</div>
+        <h1>Zeabur 雲端部署</h1>
+        <h2 style="color:var(--accent); margin-top:0.2em;">一鍵完成，無需技術背景</h2>
+        <p class="subtitle">適合絕大多數客戶</p>
+      </div>
+    </section>
+
+    <!-- Zeabur 部署流程 -->
+    <section>
+      <h2>Zeabur 部署流程</h2>
+      <div class="step-flow">
+        <div class="step-item fragment">
+          <div class="step-num">1</div>
+          <div class="step-title">建立 Bot</div>
+          <div class="step-desc">Telegram BotFather</div>
+        </div>
+        <div class="step-arrow fragment">→</div>
+        <div class="step-item fragment">
+          <div class="step-num">2</div>
+          <div class="step-title">Zeabur 部署</div>
+          <div class="step-desc">選擇 Hermes 模板</div>
+        </div>
+        <div class="step-arrow fragment">→</div>
+        <div class="step-item fragment">
+          <div class="step-num">3</div>
+          <div class="step-title">設定變數</div>
+          <div class="step-desc">填入 API 金鑰</div>
+        </div>
+        <div class="step-arrow fragment">→</div>
+        <div class="step-item fragment">
+          <div class="step-num">4</div>
+          <div class="step-title">完成！</div>
+          <div class="step-desc">開始使用</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟一：建立 Telegram Bot -->
+    <section>
+      <h2>步驟一：建立 Telegram Bot</h2>
+      <div class="code-block">
+        <span class="comment">1. 開啟 Telegram，搜尋 @BotFather</span><br>
+        <span class="comment">2. 發送指令：</span><br>
+        <span class="cmd">/newbot</span><br><br>
+        <span class="comment">3. 輸入機器人名稱（如：我的AI助理）</span><br>
+        <span class="comment">4. 輸入機器人帳號（如：my_ai_assistant_bot）</span><br><br>
+        <span class="comment">5. 記錄獲得的 Bot Token</span><br>
+        <span style="color:var(--warn);">⚠️ 請妥善保管，不要分享給他人</span>
+      </div>
+    </section>
+
+    <!-- 步驟二：Zeabur 部署 -->
+    <section>
+      <h2>步驟二：Zeabur 一鍵部署</h2>
+      <div class="step-flow" style="flex-direction:column; gap:16px;">
+        <div class="step-item" style="width:80%; text-align:left; padding:20px;">
+          <div class="step-num">1</div>
+          <div class="step-title">登入 Zeabur</div>
+          <div class="step-desc">前往 <span class="highlight">zeabur.com</span>，使用 Google 或 GitHub 帳號登入</div>
+        </div>
+        <div class="step-item" style="width:80%; text-align:left; padding:20px;">
+          <div class="step-num">2</div>
+          <div class="step-title">新增服務</div>
+          <div class="step-desc">點選「新增服務」→「模板」</div>
+        </div>
+        <div class="step-item" style="width:80%; text-align:left; padding:20px;">
+          <div class="step-num">3</div>
+          <div class="step-title">搜尋 Hermes Agent</div>
+          <div class="step-desc">選擇第一個模板（約 1300+ 次部署）</div>
+        </div>
+        <div class="step-item" style="width:80%; text-align:left; padding:20px;">
+          <div class="step-num">4</div>
+          <div class="step-title">確認部署</div>
+          <div class="step-desc">點選「確認」，等待 1-2 分鐘</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟三：設定環境變數 -->
+    <section>
+      <h2>步驟三：設定環境變數</h2>
+      <p style="font-size:0.5em; color:#aaa;">在 Zeabur 服務 → 環境變數頁面新增</p>
+      <table class="env-table">
+        <thead>
+          <tr>
+            <th>變數名稱</th>
+            <th>值</th>
+            <th>說明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>TELEGRAM_BOT_TOKEN</code></td>
+            <td>你的 Bot Token</td>
+            <td>從 BotFather 取得</td>
+          </tr>
+          <tr>
+            <td><code>HERMES_INFERENCE_PROVIDER</code></td>
+            <td><code>deepseek</code></td>
+            <td>LLM 供應商</td>
+          </tr>
+          <tr>
+            <td><code>HERMES_INFERENCE_MODEL</code></td>
+            <td><code>deepseek-v4-flash</code></td>
+            <td>模型名稱</td>
+          </tr>
+          <tr>
+            <td><code>HERMES_INFERENCE_API_KEY</code></td>
+            <td>你的 API Key</td>
+            <td>從 DeepSeek 平台取得</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note-box fragment">
+        💡 可選設定：<code>ALLOWED_TELEGRAM_USER_IDS</code> 限制只有特定用戶可以使用
+      </div>
+    </section>
+
+    <!-- 步驟四：驗證部署 -->
+    <section>
+      <h2>步驟四：驗證部署</h2>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-title">1. 檢查服務狀態</div>
+          <div class="adv-desc">在 Zeabur 後台確認服務狀態為「運作中」</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-title">2. 測試 Telegram</div>
+          <div class="adv-desc">在 Telegram 搜尋你的機器人，發送訊息測試</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-title">3. 檢查日誌</div>
+          <div class="adv-desc">在 Zeabur「日誌」頁面確認無錯誤訊息</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-title">4. 健康檢查</div>
+          <div class="adv-desc">瀏覽器訪問 <code>https://你的網址/health</code></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 方案 B：自架部署 -->
+    <section data-background-color="#1a1a2e">
+      <div class="title-slide">
+        <div class="tag">方案 B</div>
+        <h1>自架部署</h1>
+        <h2 style="color:var(--warn); margin-top:0.2em;">進階選項，完全自主控制</h2>
+        <p class="subtitle">適合有技術團隊的客戶</p>
+      </div>
+    </section>
+
+    <!-- 自架部署方式 -->
+    <section>
+      <h2>自架部署方式</h2>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-title">一鍵安裝</div>
+          <div class="adv-desc">
+            <div class="code-block" style="margin-top:8px; font-size:0.9em;">
+              <span class="cmd">curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</span>
+            </div>
+            <div style="margin-top:8px;">適用 Linux / macOS / WSL2</div>
+          </div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-title">Docker Compose</div>
+          <div class="adv-desc">
+            <div class="code-block" style="margin-top:8px; font-size:0.9em;">
+              <span class="cmd">docker compose up -d</span>
+            </div>
+            <div style="margin-top:8px;">需要 Docker 環境</div>
+          </div>
+        </div>
+      </div>
+      <div class="note-box fragment" style="margin-top:1em;">
+        ⚠️ 自架部署需要：Linux 伺服器、基本命令列操作能力、網路設定知識
+      </div>
+    </section>
+
+    <!-- 自架部署流程 -->
+    <section>
+      <h2>自架部署流程</h2>
+      <div class="step-flow">
+        <div class="step-item fragment">
+          <div class="step-num">1</div>
+          <div class="step-title">準備伺服器</div>
+          <div class="step-desc">Linux VPS 或本機</div>
+        </div>
+        <div class="step-arrow fragment">→</div>
+        <div class="step-item fragment">
+          <div class="step-num">2</div>
+          <div class="step-title">安裝 Hermes</div>
+          <div class="step-desc">執行安裝腳本</div>
+        </div>
+        <div class="step-arrow fragment">→</div>
+        <div class="step-item fragment">
+          <div class="step-num">3</div>
+          <div class="step-title">設定模型</div>
+          <div class="step-desc">hermes setup</div>
+        </div>
+        <div class="step-arrow fragment">→</div>
+        <div class="step-item fragment">
+          <div class="step-num">4</div>
+          <div class="step-title">啟動閘道</div>
+          <div class="step-desc">hermes gateway</div>
+        </div>
+      </div>
+      <div class="code-block fragment" style="margin-top:1em;">
+        <span class="comment"># 安裝後設定</span><br>
+        <span class="cmd">hermes setup</span>      <span class="comment"># 互動式設定精靈</span><br>
+        <span class="cmd">hermes model</span>      <span class="comment"># 選擇 LLM 供應商</span><br>
+        <span class="cmd">hermes gateway</span>    <span class="comment"># 啟動 Telegram 閘道</span>
+      </div>
+    </section>
+
+    <!-- 方案比較 -->
+    <section>
+      <h2>方案比較</h2>
+      <table class="env-table" style="font-size:0.45em;">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th style="color:var(--accent2);">Zeabur 雲端</th>
+            <th style="color:var(--warn);">自架部署</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>技術門檻</td>
+            <td>無需技術背景</td>
+            <td>需要基礎技術能力</td>
+          </tr>
+          <tr>
+            <td>部署時間</td>
+            <td>5 分鐘</td>
+            <td>30-60 分鐘</td>
+          </tr>
+          <tr>
+            <td>月費成本</td>
+            <td>約 $5-20 USD/月</td>
+            <td>伺服器費用（依方案）</td>
+          </tr>
+          <tr>
+            <td>維護需求</td>
+            <td>零維護</td>
+            <td>需自行維護更新</td>
+          </tr>
+          <tr>
+            <td>擴展性</td>
+            <td>自動擴展</td>
+            <td>需手動擴展</td>
+          </tr>
+          <tr>
+            <td>資料控制</td>
+            <td>雲端托管</td>
+            <td>完全自主</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 常見問題 -->
+    <section>
+      <h2>常見問題</h2>
+      <div class="conclusion-grid">
+        <div class="conclusion-card positive">
+          <div class="cc-title">Q：需要多少費用？</div>
+          <ul>
+            <li>Zeabur 免費方案可開始使用</li>
+            <li>進階方案約 $5-20 USD/月</li>
+            <li>LLM API 費用另計（約 $1-10/月）</li>
+          </ul>
+        </div>
+        <div class="conclusion-card caution">
+          <div class="cc-title">Q：資料安全嗎？</div>
+          <ul>
+            <li>對話記錄儲存在雲端</li>
+            <li>可設定存取權限限制用戶</li>
+            <li>自架部署可完全掌控資料</li>
+          </ul>
+        </div>
+        <div class="conclusion-card positive">
+          <div class="cc-title">Q：可以更換模型嗎？</div>
+          <ul>
+            <li>支援 DeepSeek、MiMo、OpenAI 等</li>
+            <li>修改環境變數即可切換</li>
+            <li>無需重新部署</li>
+          </ul>
+        </div>
+        <div class="conclusion-card caution">
+          <div class="cc-title">Q：遇到問題怎麼辦？</div>
+          <ul>
+            <li>檢查 Zeabur 日誌</li>
+            <li>確認環境變數設定正確</li>
+            <li>聯繫技術支援</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯繫資訊 -->
+    <section data-background-color="#1a1a2e">
+      <div class="end-slide">
+        <div class="big">🚀</div>
+        <h1 style="color:var(--accent2);">開始您的 AI 助理之旅</h1>
+        <p class="tagline">如有任何問題，歡迎隨時聯繫我們</p>
+        <p class="tagline" style="margin-top:1em;">
+          <span class="highlight">技術支援</span>：support@example.com<br>
+          <span class="highlight">文件中心</span>：hermes-agent.nousresearch.com/docs
+        </p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+</script>
+
+</body>
+</html>

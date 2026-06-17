@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏢 企業級 AI Agent 展示中心</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --container-bg: rgba(17, 24, 39, 0.6);
+            --accent-primary: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(147, 51, 234, 0.08) 0px, transparent 50%);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism Container */
+        .chat-container {
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            background: var(--container-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px var(--accent-glow);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Header */
+        .chat-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        /* Message Area */
+        .message-area {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        .message-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .message-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .message-area::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        /* Chat Bubbles */
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .message.assistant {
+            align-self: flex-start;
+        }
+
+        .bubble {
+            padding: 16px 20px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .user .bubble {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .assistant .bubble {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+        }
+
+        .sender-name {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            margin-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .user .sender-name {
+            align-self: flex-end;
+            margin-right: 4px;
+        }
+
+        /* Quick actions */
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            padding: 0 32px 16px 32px;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+        }
+
+        .quick-actions::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for clean UI */
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .action-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-primary);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Input Panel */
+        .input-panel {
+            padding: 24px 32px 32px 32px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 16px;
+        }
+
+        .text-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: #ffffff;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .text-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .send-btn {
+            background: #2563eb;
+            border: none;
+            color: white;
+            padding: 0 28px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .send-btn:hover {
+            background: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .send-btn:disabled {
+            background: #1f2937;
+            color: var(--text-muted);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* Thinking indicator */
+        .thinking {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-title">
+                🏢 企業級 AI Agent 展示中心
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="status-dot"></div>
+                <span style="font-size: 12px; color: #10b981; font-weight: 500;">連線正常</span>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="message-area" id="messageArea">
+            <div class="message assistant">
+                <div class="sender-name">AI Assistant</div>
+                <div class="bubble">您好！我是您的企業數位轉型 AI 特助。
+在此您可以測試我讀寫 Google Sheets 並與 AI 結合進行分析的完整能力。
+
+建議您可以先點擊下方的 **「🔄 初始化模擬數據」** 建立 Google 試算表，接著即可向我提問！</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="quickSend('初始化數據')">🔄 初始化模擬數據</button>
+            <button class="action-btn" onclick="quickSend('請問今年哪款產品銷售額最高？')">📊 查詢銷售統計</button>
+            <button class="action-btn" onclick="quickSend('請查一下出差報銷的住宿標準是多少？')">📜 查詢出差規章</button>
+            <button class="action-btn" onclick="quickSend('幫我把差旅住宿上限改為 3000 元，並更新制度。')">✏️ 修改出差上限</button>
+        </div>
+
+        <!-- Input Panel -->
+        <div class="input-panel">
+            <input type="text" class="text-input" id="userInput" placeholder="輸入您的指令或提問..." onkeydown="if(event.key === 'Enter') sendMessage()">
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">送出</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://littlesheep.zeabur.app/webhook/sales-agent-web-api';
+        const messageArea = document.getElementById('messageArea');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function appendMessage(sender, text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'sender-name';
+            nameDiv.innerText = sender === 'user' ? 'You' : 'AI Assistant';
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            bubbleDiv.innerText = text;
+
+            msgDiv.appendChild(nameDiv);
+            msgDiv.appendChild(bubbleDiv);
+            messageArea.appendChild(msgDiv);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        function appendThinking() {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message assistant';
+            msgDiv.id = 'thinkingDiv';
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'sender-name';
+            nameDiv.innerText = 'AI Assistant';
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble thinking';
+            bubbleDiv.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+            msgDiv.appendChild(nameDiv);
+            msgDiv.appendChild(bubbleDiv);
+            messageArea.appendChild(msgDiv);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        function removeThinking() {
+            const thinkingDiv = document.getElementById('thinkingDiv');
+            if (thinkingDiv) {
+                thinkingDiv.remove();
+            }
+        }
+
+        async function quickSend(text) {
+            userInput.value = text;
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            // Disable inputs
+            userInput.value = '';
+            userInput.disabled = true;
+            sendBtn.disabled = true;
+
+            // Display user message
+            appendMessage('user', text);
+
+            // Display thinking
+            appendThinking();
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userQuery: text })
+                });
+
+                removeThinking();
+
+                if (response.ok) {
+                    const data = await response.json();
+                    appendMessage('assistant', data.output || 'AI 回覆格式錯誤。');
+                } else {
+                    const errText = await response.text();
+                    appendMessage('assistant', `⚠️ 連線錯誤 (HTTP ${response.status})。 請確認您的 n8n 後台 credentials「OpenAi account」是否有正確填入 DeepSeek API Key。`);
+                }
+            } catch (err) {
+                removeThinking();
+                appendMessage('assistant', `❌ 無法連線至 AI 伺服器：${err.message}。請確認您的伺服器是否在線。`);
+            } finally {
+                // Enable inputs
+                userInput.disabled = false;
+                sendBtn.disabled = false;
+                userInput.focus();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -124,8 +124,8 @@
   /* ── 小船教學 ── */
   .sailboat-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); /* 放大卡片最小寬度，使其在平板上呈現為舒適的 2x2 佈局 */
+    gap: 24px;
     margin-top: 40px;
   }
   .boat-card {
@@ -372,39 +372,29 @@
 
 <div class="container">
 
-  <!-- ── 1. 出發要有個方向 - 探索客戶的真實需求 (小船教學) ── -->
+  <!-- ── 1. 出發要有個方向 - 探索客戶的真實需求 ── -->
   <section id="sailboat">
     <div class="sec-header">
-      <span class="sec-tag">PART 1</span>
-      <h2 class="sec-title">出發要有個方向 — 探索你的真實需求</h2>
-      <p class="sec-desc">使用「小船分析法」，在開始前盤點你的目標、動力、阻力與潛在風險。</p>
+      <span class="sec-tag">第一步</span>
+      <h2 class="sec-title">出發要有個方向 — 探索您的真實需求</h2>
+      <p class="sec-desc">在正式配置助理前，我們一起盤點您的理想願景、現有優勢、時間阻力與您的顧慮。</p>
     </div>
 
     <div class="sailboat-container">
-      <!-- 太陽：終極目標 -->
+      <!-- 太陽：理想願景 -->
       <div class="boat-card sun">
-        <div class="boat-icon">☀️</div>
-        <h3>目的地 (與理想願景)</h3>
-        <p>當你成功配置出 AI 助理後，你最希望它幫你實現什麼樣的工作型態？</p>
+        <div class="boat-icon">🎯</div>
+        <h3>目的地（理想願景）</h3>
+        <p>當您成功配置出 AI 助理後，最希望幫您實現什麼樣的工作型態？</p>
         <ul class="boat-questions">
-          <li>每天能多出 2 小時陪家人？</li>
-          <li>自動處理掉 80% 瑣碎客服？</li>
-          <li>擁有終身不忘的個人筆記庫？</li>
+          <li>每天能多出 2 小時陪伴家人？</li>
+          <li>自動化處理掉 80% 瑣碎客服？</li>
+          <li>建立一套終身不忘的個人大腦？</li>
         </ul>
       </div>
 
-      <!-- 推動前進的動力 -->
+      <!-- 風帆：現有優勢 -->
       <div class="boat-card wind">
-        <div class="boat-icon">⛵</div>
-        <h3>動力與助力 (Wind)</h3>
-        <p>目前有哪些資源、工具或正面動機，是你可以直接借力來推動自動化的？</p>
-        <ul class="boat-questions">
-          <li>現有的 Notion 或 Gmail？</li>
-          <li>強烈的學習熱忱？</li>
-          <li>可用的 API 免費額度？</li>
-        </ul>
-      </div>
-
       <!-- 錨：拖累前進的阻力 -->
       <div class="boat-card anchor">
         <div class="boat-icon">⚓</div>

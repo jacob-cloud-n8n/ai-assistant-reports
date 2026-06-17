@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏢 企業級 AI 官方助理 - 方案展示簡報</title>
+  <!-- Reveal.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/black.min.css" id="theme">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #070a13;
+      --gold-primary: #d4af37;
+      --gold-light: #f3e5ab;
+      --accent-blue: #3b82f6;
+      --card-bg: rgba(17, 24, 39, 0.65);
+      --border-gold: rgba(212, 175, 55, 0.2);
+      --border-blue: rgba(59, 130, 246, 0.2);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+
+    body {
+      background-color: var(--bg-dark) !important;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(212, 175, 55, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.08) 0px, transparent 50%) !important;
+      font-family: 'Inter', 'Outfit', -apple-system, sans-serif;
+    }
+
+    .reveal {
+      color: var(--text-main);
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Outfit', sans-serif;
+      text-transform: none;
+      letter-spacing: -0.02em;
+    }
+
+    .reveal h1 {
+      font-size: 2.2em;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    .reveal h2 {
+      font-size: 1.6em;
+      font-weight: 600;
+      color: var(--gold-light);
+      border-bottom: 2px solid var(--border-gold);
+      padding-bottom: 10px;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+
+    .reveal h3 {
+      font-size: 1.1em;
+      color: var(--gold-primary);
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.85em;
+      font-weight: 300;
+      margin-top: 10px;
+    }
+
+    /* Glassmorphism Slide Styles */
+    .slide-container {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-gold);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      max-width: 950px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .slide-container.blue-theme {
+      border-color: var(--border-blue);
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--gold-primary);
+      transform: translateY(-5px);
+    }
+
+    .card.blue:hover {
+      border-color: var(--accent-blue);
+    }
+
+    .card-title {
+      font-size: 1em;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card.blue .card-title {
+      color: #93c5fd;
+    }
+
+    .card-desc {
+      font-size: 0.75em;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 0.6em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 15px;
+    }
+    
+    .badge.gold {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold-primary);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .badge.blue {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    /* Lists */
+    ul.custom-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul.custom-list li {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 12px;
+      font-size: 0.8em;
+      color: var(--text-main);
+    }
+
+    ul.custom-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--gold-primary);
+      font-weight: bold;
+    }
+
+    ul.custom-list.blue-list li::before {
+      color: var(--accent-blue);
+    }
+
+    /* Architecture Box */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .arch-node {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 15px;
+      width: 25%;
+      text-align: center;
+    }
+
+    .arch-node.highlight {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+    }
+
+    .arch-arrow {
+      color: var(--text-muted);
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    .footer-note {
+      font-size: 0.55em;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Cover -->
+      <section data-transition="fade-in slide-out">
+        <div class="slide-container" style="text-align: center; padding: 60px 40px;">
+          <div class="badge gold">企業級 AI 展示方案</div>
+          <h1>企業級 AI 官方助理</h1>
+          <p style="font-size: 1.1em; color: var(--gold-light); font-weight: 500;">n8n MVC 智慧 Agent 落地評估報告</p>
+          <div class="subtitle" style="font-size: 0.75em; margin-top: 40px;">
+            報告人：AI 導入特助組 | 運行環境：Zeabur Cloud + Google Sheets API
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: 解決的核心痛點 -->
+      <section data-transition="slide-in slide-out">
+        <div class="slide-container">
+          <div class="badge gold">挑戰與現況</div>
+          <h2>為什麼需要 AI 數據助理？</h2>
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">❌ 傳統系統痛點</div>
+              <ul class="custom-list">
+                <li><strong>後台查詢不便</strong>：業務數據與制度散落，手機難以隨手查詢。</li>
+                <li><strong>管理成本高昂</strong>：修改一條出差規定需層層傳簽通知。</li>
+                <li><strong>架構死板難更換</strong>：一般聊天機器人無法靈活對接企業內網。</li>
+              </ul>
+            </div>
+            <div class="card blue">
+              <div class="card-title">💡 本方案解決方案</div>
+              <ul class="custom-list blue-list">
+                <li><strong>對話即大腦</strong>：用白話文直接發問，AI 即時進行商業計算。</li>
+                <li><strong>無感維護數據</strong>：直接在 LINE 或網頁修改制度，即刻生效。</li>
+                <li><strong>MVC 松耦合架構</strong>：Model 子流程共用，未來升級無痛。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: 系統架構：MVC 設計 -->
+      <section data-transition="slide-in slide-out">
+        <div class="slide-container blue-theme">
+          <div class="badge blue">架構設計</div>
+          <h2>n8n MVC 多端共享架構</h2>
+          <p style="font-size: 0.75em; color: var(--text-muted);">
+            主程序（Controller）與通用工具子流程（Model）分離。相同的資料庫查詢與更新邏輯，同時服務 LINE、網頁客戶端與 API 介面。
+          </p>
+          
+          <div class="arch-flow">
+            <div class="arch-node">
+              <h4 style="margin: 0; color: #fff; font-size: 0.9em;">多端輸入端</h4>
+              <p style="font-size: 0.6em; margin: 5px 0 0 0; color: var(--text-muted);">LINE Bot / Web App / n8n Form</p>
+            </div>
+            <div class="arch-arrow">➔</div>
+            <div class="arch-node highlight">
+              <h4 style="margin: 0; color: var(--gold-light); font-size: 0.9em;">AI Controller</h4>
+              <p style="font-size: 0.6em; margin: 5px 0 0 0; color: var(--text-muted);">大腦判斷、對話上下文記億</p>
+            </div>
+            <div class="arch-arrow">➔</div>
+            <div class="arch-node">
+              <h4 style="margin: 0; color: #fff; font-size: 0.9em;">Model 子流程</h4>
+              <p style="font-size: 0.6em; margin: 5px 0 0 0; color: var(--text-muted);">雙向分流、Google Sheets 讀寫</p>
+            </div>
+          </div>
+          <div class="footer-note">優勢：未來就算更換通訊軟體 (如改為 Teams)，後台 Model 邏輯完全不用重寫！</div>
+        </div>
+      </section>
+
+      <!-- Slide 4: 核心功能 1：銷售數據分析 -->
+      <section data-transition="slide-in slide-out">
+        <div class="slide-container">
+          <div class="badge gold">核心功能之一</div>
+          <h2>Google Sheets 銷售數據分析</h2>
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">📊 功能描述</div>
+              <p class="card-desc">
+                當使用者詢問「哪款產品成長最多？」或「北部和中部銷售對比」時，AI Agent 會自動調用工具讀取 Google Sheets 試算表（Demo_Sales 標籤），在背景完成小計與對比後給出直觀的分析。
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">✨ 展示亮點</div>
+              <ul class="custom-list">
+                <li><strong>免資料庫維護</strong>：客戶最熟悉的 Google Sheets 即是資料庫。</li>
+                <li><strong>智慧商業分析 (BI)</strong>：AI 回覆具備專業經理人語氣，條列數據並歸納出結論。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-note">試算表ID: 1oQPDeZOyBhhnOOGahqVZTIVGxRVJkilCjjJ5e0GXT38</div>
+        </div>
+      </section>
+
+      <!-- Slide 5: 核心功能 2：管理規章查詢與「寫入維護」 -->
+      <section data-transition="slide-in slide-out">
+        <div class="slide-container">
+          <div class="badge gold">核心功能之二</div>
+          <h2>规章制度問答與「對話式修改」</h2>
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">📖 程序書自動查詢</div>
+              <p class="card-desc">
+                員工詢問「出差報銷標準是多少？」時，AI 自動讀取制度頁面，並過濾出對應條款精確回應，不用翻閱厚重的 PDF 程序書。
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">✍️ 對話即寫入 (核心難點)</div>
+              <p class="card-desc">
+                主管說：「請把出差住宿上限改為 2500 元。」AI 將自動組合現行制度，重寫該條文，調用更新 API 寫回試算表，並自動將修訂日期更新為今天。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: 核心功能 3：Demo 資料一鍵自癒 -->
+      <section data-transition="slide-in slide-out">
+        <div class="slide-container">
+          <div class="badge gold">展示亮點</div>
+          <h2>一鍵數據初始化與自癒能力</h2>
+          <p style="font-size: 0.75em; color: var(--text-muted);">
+            專為 Demo 演示而設計的安全防護機制：
+          </p>
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">🔄 數據回復</div>
+              <p class="card-desc">輸入「重設數據」或「重置 demo」，系統會自動將試算表回復至預設的初始假資料狀態。</p>
+            </div>
+            <div class="card">
+              <div class="card-title">🛡️ 容錯建立</div>
+              <p class="card-desc">若 Google Sheets 內的 Demo_Sales 或 Company_Policies 被整頁刪除，初始化功能會自動重新建立該工作表。</p>
+            </div>
+            <div class="card">
+              <div class="card-title">⚡ 免除設定</div>
+              <p class="card-desc">展示前不需手動操作任何資料表，用對話即可準備好乾淨的演示環境。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: 技術特點 - 雙大腦備援與高可用 -->
+      <section data-transition="slide-in slide-out">
+        <div class="slide-container blue-theme">
+          <div class="badge blue">技術指標</div>
+          <h2>雙大腦與自癒高可用防護</h2>
+          <div class="grid-2">
+            <div class="card blue">
+              <div class="card-title">⚡ 雙大腦備援</div>
+              <p class="card-desc">
+                AI 核心同時支援 OpenAI 的 <strong>DeepSeek</strong> 引擎與 <strong>Google Gemini</strong> 大腦。當其中一個平台遭遇伺服器擁堵或暫停服務時，可隨時在後台一秒切換，確保 99.9% 演示高可用。
+              </p>
+            </div>
+            <div class="card blue">
+              <div class="card-title">🔌 雙通道相容</div>
+              <p class="card-desc">
+                通用工具子流程中內建「Webhook 模式」與「子工作流直接調用」雙通道，解決了自託管代理限制，保證主程序運行不卡死、不陷入無效重試的死循環（Looping）。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: 實機演示步驟 -->
+      <section data-transition="slide-in slide-out">
+        <div class="slide-container">
+          <div class="badge gold">準備演示</div>
+          <h2>向客戶實機演示的 3 個步驟</h2>
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Step 1. 重設</div>
+              <p class="card-desc">
+                雙擊開啟 <code>sales_demo_web_app.html</code>，在對話框輸入：<br>
+                <strong>「初始化數據」</strong><br>
+                讓 AI 在雲端重建乾淨的展示資料庫。
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">Step 2. 查詢</div>
+              <p class="card-desc">
+                詢問：<br>
+                <strong>「幫我查國內出差標準？」</strong><br>
+                展示 AI 自動調用 Google Sheets 工具並提煉條款的精準回答。
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-title">Step 3. 增修</div>
+              <p class="card-desc">
+                命令：<br>
+                <strong>「請把出差報銷住宿標準改為新台幣 2500 元」</strong><br>
+                演示對話直接修改資料表的自動更新能力。
+              </p>
+            </div>
+          </div>
+          <div class="footer-note" style="margin-top:25px;">💡 打開您的 Google Sheets 試算表，能當著客戶的面看到表格資料即時被改寫！</div>
+        </div>
+      </section>
+
+      <!-- Slide 9: 結尾 -->
+      <section data-transition="fade-in">
+        <div class="slide-container" style="text-align: center; padding: 60px 40px;">
+          <h1>謝謝觀看</h1>
+          <p style="font-size: 1.1em; color: var(--gold-light); font-weight: 500; margin-top: 20px;">
+            一次建置 ‧ 永久自動化運作
+          </p>
+          <div class="subtitle" style="font-size: 0.75em; margin-top: 40px;">
+            請打開 <span style="color:var(--gold-primary);">sales_demo_web_app.html</span> 開始您的展示吧！
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js JS & Dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+  <script>
+    // Initialize Reveal.js
+    Reveal.initialize({
+      hash: true,
+      center: true,
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+      backgroundTransition: 'fade',
+      plugins: []
+    });
+  </script>
+</body>
+</html>
