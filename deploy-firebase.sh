@@ -47,6 +47,16 @@ fi
 
 echo "Deploying $FILE_COUNT allowlisted files to Firebase project $PROJECT_ID"
 
+# Verify all internal links in index.html exist in deploy dir
+if [[ -f "$DEPLOY_DIR/index.html" ]]; then
+  LINK_CHECK=$(bash "$SCRIPT_DIR/verify-links.sh" 2>&1) || {
+    echo "$LINK_CHECK"
+    echo "🚫 Deploy blocked by link verification." >&2
+    exit 1
+  }
+  echo "$LINK_CHECK"
+fi
+
 set +e
 DEPLOY_OUTPUT="$(firebase deploy \
   --config "$SCRIPT_DIR/firebase.json" \
