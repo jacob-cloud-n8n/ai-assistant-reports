@@ -1,4 +1,7 @@
 .DS_Store
 *.log
+.firebase/
+.firebase-deploy/
+firepit-log.txt
 .gemini/
 .system_generated/

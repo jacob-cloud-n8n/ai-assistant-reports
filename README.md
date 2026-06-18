@@ -12,9 +12,16 @@
 
 ## 🚀 部署資訊
 
-*   本簡報託管於 GitHub Pages。
-*   主分支：`main`
-*   修改後只需 push 至 `main` 分支即可自動更新部署。
+*   正式站託管於 Firebase Hosting：`jacob-html-slides-2026`。
+*   正式網址：[https://jacob-html-slides-2026.web.app](https://jacob-html-slides-2026.web.app)
+*   GitHub repo 的 `main` 分支負責版本管理；push 不等同 Firebase 正式站部署。
+*   正式部署只能在本目錄執行：
+
+```bash
+./deploy-firebase.sh
+```
+
+部署腳本會依靜態資產白名單重建 `.firebase-deploy/`，固定使用本目錄的 `firebase.json`，並強制指定 `--project jacob-html-slides-2026`。禁止直接執行裸指令 `firebase deploy`，避免誤用父目錄的 `codex-jacob` 設定或發布 repo 內部檔案。
 
 ## 🔒 工作規範
 本專案遵循 `ANTIGRAVITY.md` 中定義的工作流程（包含開工與收工規範）。請在修改時確保中英文版本一致，並注意不要 commit 敏感金鑰。
