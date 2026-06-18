@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jacob's Business OS — AG Agent 團隊與專案架構藍圖</title>
+  
+  <!-- 引入高級 Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #070a0f;
+      --border-dim: #1e293b;
+      --border-active: #f8fafc;
+      --text-primary: #f8fafc;
+      --text-secondary: #64748b;
+      --text-highlight: #e2e8f0;
+      
+      /* 乾淨、低調且具層次感的冷調配色，拒絕 AI 漸變 */
+      --color-user: #2563eb;
+      --color-agent: #8b5cf6;
+      --color-hub: #10b981;
+      --color-project: #0284c7;
+      --color-tool: #f59e0b;
+      
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: linear-gradient(to bottom, #05070a 0%, #0c1017 100%);
+    }
+
+    .wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 50px 24px;
+    }
+
+    /* ── Header 區 ── */
+    header {
+      text-align: left;
+      margin-bottom: 40px;
+      border-left: 2px solid var(--text-primary);
+      padding-left: 20px;
+    }
+    
+    .subtitle {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', 'Noto Sans TC', serif;
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .desc {
+      font-size: 14.5px;
+      color: var(--text-secondary);
+      max-width: 800px;
+      font-weight: 300;
+    }
+
+    .tip-bar {
+      margin-top: 15px;
+      font-size: 12.5px;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 400;
+    }
+
+    /* ── 互動式架構網格 (Grid Columns) ── */
+    .blueprint-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    @media (max-width: 1024px) {
+      .blueprint-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    /* ── 層級欄位 ── */
+    .blueprint-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-dim);
+      border-radius: 4px;
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .blueprint-col:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .col-header {
+      border-bottom: 1px solid var(--border-dim);
+      padding-bottom: 12px;
+      margin-bottom: 8px;
+    }
+
+    .col-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-secondary);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .col-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+    }
+
+    /* ── 卡片設計 (Nodes) ── */
+    .node-card {
+      background-color: #0f172a;
+      border: 1px solid var(--border-dim);
+      border-radius: 2px;
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    /* 不同角色的色彩識別指示線 */
+    .node-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 3px;
+      transition: var(--transition);
+    }
+
+    .node-card.user::before { background-color: var(--color-user); }
+    .node-card.agent::before { background-color: var(--color-agent); }
+    .node-card.hub::before { background-color: var(--color-hub); }
+    .node-card.project::before { background-color: var(--color-project); }
+    .node-card.tool::before { background-color: var(--color-tool); }
+
+    .node-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      transition: var(--transition);
+    }
+
+    .node-desc {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+      transition: var(--transition);
+    }
+
+    /* 關係指示小標籤 */
+    .rel-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-top: 10px;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: var(--transition);
+    }
+
+    /* ── 核心互動狀態 (Hover States) ── */
+    
+    /* 1. 當某個卡片被啟用 (Active) */
+    .node-card.active {
+      border-color: var(--border-active);
+      background-color: #1e293b;
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .node-card.active .node-title {
+      color: #ffffff;
+    }
+
+    .node-card.active .node-desc {
+      color: var(--text-highlight);
+    }
+
+    .node-card.active .rel-badge {
+      opacity: 1;
+      transform: translateY(0);
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    /* 2. 當其他卡片被淡化 (Dimmed) */
+    .node-card.dimmed {
+      opacity: 0.15;
+      transform: scale(0.98);
+      filter: blur(0.5px);
+    }
+
+    /* ── 底部控制 ── */
+    .controls {
+      display: flex;
+      justify-content: flex-start;
+      gap: 16px;
+      border-top: 1px solid var(--border-dim);
+      padding-top: 30px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 20px;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background-color: var(--text-primary);
+      color: var(--bg-main);
+      border: 1px solid var(--text-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: transparent;
+      color: var(--text-primary);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-dim);
+    }
+
+    .btn-secondary:hover {
+      color: var(--text-primary);
+      border-color: var(--text-secondary);
+    }
+
+    footer {
+      margin-top: 80px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- Header -->
+  <header>
+    <div class="subtitle">Jacob's Business OS</div>
+    <h1>AG Agent 團隊與專案架構藍圖</h1>
+    <p class="desc">四層架構運算模型。滑鼠移入任何一個卡片，即可自動突顯其上下游關聯專案、指派對象與所屬工具，關係一目了然。</p>
+    <div class="tip-bar">
+      <span>💡 操作提示：請將滑鼠指標懸停在任意卡片上以探索其關聯脈絡。</span>
+    </div>
+  </header>
+
+  <!-- 互動式架構網格 -->
+  <main class="blueprint-grid">
+    
+    <!-- Column 1: Layer 1 -->
+    <section class="blueprint-col">
+      <div class="col-header">
+        <div class="col-num">01</div>
+        <div class="col-title">Layer 1: 決策與互動層</div>
+      </div>
+      
+      <div class="node-card user" id="jacob">
+        <div class="node-title">Jacob (雅各老師 / 決策者)</div>
+        <div class="node-desc">系統的最高指令發起人。透過團隊專區派發任務，接收每日自動化晨報，並擁有 Obsidian 專案駕駛艙。</div>
+        <div class="rel-badge" id="lbl-jacob">主導核心</div>
+      </div>
+      
+      <div class="node-card user" id="users">
+        <div class="node-title">學員 / 家人 (如：愛恩)</div>
+        <div class="node-desc">一線系統的使用者。透過 Discord / Telegram 接收隨身助理的學習陪伴與知識檢索服務。</div>
+        <div class="rel-badge" id="lbl-users">服務對象</div>
+      </div>
+      
+      <div class="node-card agent" id="hermes">
+        <div class="node-title">Hermes / 四兒 (隨身書僮)</div>
+        <div class="node-desc">一線互動端 Agent。提供手機端 (TG/Discord) 陪伴、知識庫檢索與防失憶 Volume 自動備份。</div>
+        <div class="rel-badge" id="lbl-hermes">一線助理</div>
+      </div>
+    </section>
+
+    <!-- Column 2: Layer 2 -->
+    <section class="blueprint-col">
+      <div class="col-header">
+        <div class="col-num">02</div>
+        <div class="col-title">Layer 2: 協同中樞與 AI 引擎</div>
+      </div>
+      
+      <div class="node-card hub" id="n8n">
+        <div class="node-title">n8n 核心流程中樞</div>
+        <div class="node-desc">自動化神經中樞。定時讀取任務、寫入 Notion 數據庫，並分析日報發送至 Telegram。</div>
+        <div class="rel-badge" id="lbl-n8n">流程中樞</div>
+      </div>
+      
+      <div class="node-card hub" id="notion">
+        <div class="node-title">Notion CRM & 任務看板</div>
+        <div class="node-desc">任務快照與客戶 CRM 資料庫。與 n8n 雙向同步，作為團隊日常任務的實體管理看板。</div>
+        <div class="rel-badge" id="lbl-notion">任務看板</div>
+      </div>
+      
+      <div class="node-card hub" id="github">
+        <div class="node-title">GitHub Private KB-Vaults</div>
+        <div class="node-desc">物理隔離的私有知識庫與程式碼倉庫。儲存一線對答歷史，確保敏感變數安全不外洩。</div>
+        <div class="rel-badge" id="lbl-github">安全儲存</div>
+      </div>
+
+      <div class="node-card agent" id="ag">
+        <div class="node-title">AntiGravity (AG)</div>
+        <div class="node-desc">架構分析與 UI 設計 Agent。負責大局架構設計、銷售網頁視覺拋光與合約 PDF 自動編譯。</div>
+        <div class="rel-badge" id="lbl-ag">架構規劃</div>
+      </div>
+
+      <div class="node-card agent" id="codex">
+        <div class="node-title">Codex</div>
+        <div class="node-desc">代碼重構與測試 Agent。專注於本地 Rust/TS (tolaria) 測試健康度，以及 n8n JS 代碼開發。</div>
+        <div class="rel-badge" id="lbl-codex">程式與測試</div>
+      </div>
+
+      <div class="node-card agent" id="opencode">
+        <div class="node-title">OpenCode / MiMo</div>
+        <div class="node-desc">自動部署與營運 Agent。負責 Zeabur 雲端環境變數配置與 Astro 5 網站自動化部署。</div>
+        <div class="rel-badge" id="lbl-opencode">自動部署</div>
+      </div>
+    </section>
+
+    <!-- Column 3: Layer 3 -->
+    <section class="blueprint-col">
+      <div class="col-header">
+        <div class="col-num">03</div>
+        <div class="col-title">Layer 3: 工作區專案地圖</div>
+      </div>
+      
+      <div class="node-card project" id="p1">
+        <div class="node-title">1. Open Design 專案</div>
+        <div class="node-desc">Vite + PostgreSQL 設計專案，由 AI 陣容進行代碼維護與庫結構設計。</div>
+        <div class="rel-badge" id="lbl-p1">專案維護</div>
+      </div>
+      
+      <div class="node-card project" id="p2">
+        <div class="node-title">2. meidi-home-site</div>
+        <div class="node-desc">美地居家收納官網 (Astro 5 + Zeabur SSR)，資料由 Notion 同步，OpenCode 負責自動部署。</div>
+        <div class="rel-badge" id="lbl-p2">官網建置</div>
+      </div>
+      
+      <div class="node-card project" id="p3">
+        <div class="node-title">3. Skills 共享技能庫</div>
+        <div class="node-desc">團隊共享 Markdown 技能包。Agent 透過 CLI 一鍵下載，達到技能快速同步與複用。</div>
+        <div class="rel-badge" id="lbl-p3">技能包</div>
+      </div>
+      
+      <div class="node-card project" id="p4">
+        <div class="node-title">4. Star 專案 (範本)</div>
+        <div class="node-desc">React + Vite 快速開發範本。作為新專案初始化的腳手架。</div>
+        <div class="rel-badge" id="lbl-p4">開發範本</div>
+      </div>
+      
+      <div class="node-card project" id="p5">
+        <div class="node-title">5. Tolaria App</div>
+        <div class="node-desc">Tauri 2 + Rust + React 本地知識庫 App。由 Codex 負責本地單元測試健康度把關。</div>
+        <div class="rel-badge" id="lbl-p5">軟體重構</div>
+      </div>
+      
+      <div class="node-card project" id="p6">
+        <div class="node-title">6. 進銷存系統</div>
+        <div class="node-desc">React 19 庫存系統。由 Hermes 追蹤收集客戶反饋，Codex 進行核心修正。</div>
+        <div class="rel-badge" id="lbl-p6">系統優化</div>
+      </div>
+      
+      <div class="node-card project" id="p7">
+        <div class="node-title">7. 威力馬方案</div>
+        <div class="node-desc">經銷商教育訓練方案。內建 RAG 常見問答與引流漏斗，由 Hermes 提供一線對答支援。</div>
+        <div class="rel-badge" id="lbl-p7">訓練支援</div>
+      </div>
+      
+      <div class="node-card project" id="p8">
+        <div class="node-title">8. 銷售專案 (Slide)</div>
+        <div class="node-desc">靜態 HTML 簡報與銷售網頁。由 AG 進行 UI 微動效拋光，並部署至 Firebase。</div>
+        <div class="rel-badge" id="lbl-p8">銷售包裝</div>
+      </div>
+    </section>
+
+    <!-- Column 4: Layer 4 -->
+    <section class="blueprint-col">
+      <div class="col-header">
+        <div class="col-num">04</div>
+        <div class="col-title">Layer 4: 技術與工具箱</div>
+      </div>
+      
+      <div class="node-card tool" id="obsidian">
+        <div class="node-title">Obsidian</div>
+        <div class="node-desc">雅各老師的人工專案駕駛艙。不連接自動化插件，保留純粹個人反思與任務指派。</div>
+        <div class="rel-badge" id="lbl-obsidian">個人隨身庫</div>
+      </div>
+      
+      <div class="node-card tool" id="notebooklm">
+        <div class="node-title">NotebookLM</div>
+        <div class="node-desc">Google 科學文獻與長文本分析大腦。用來輔助 Jacob 進行深度學術研究與大綱消化。</div>
+        <div class="rel-badge" id="lbl-notebooklm">研究大腦</div>
+      </div>
+      
+      <div class="node-card tool" id="firebase">
+        <div class="node-title">Firebase Hosting</div>
+        <div class="node-desc">靜態網頁與簡報託管服務。銷售專案的發布目的地，具備安全與極速 CDN 特性。</div>
+        <div class="rel-badge" id="lbl-firebase">部署託管</div>
+      </div>
+      
+      <div class="node-card tool" id="playwright">
+        <div class="node-title">Playwright / Chrome</div>
+        <div class="node-desc">合約 PDF 自動渲染轉換器。呼叫 Headless 瀏覽器將 Markdown 客製化文件完美轉換為列印格式。</div>
+        <div class="rel-badge" id="lbl-playwright">文件轉檔</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn btn-primary" onclick="window.print()">列印網頁 / 另存 PDF</button>
+    <a class="btn btn-secondary" href="file:///Users/jacob/Desktop/給ai%20agent團隊/給jacob/課程文件/">開啟課程文件資料夾</a>
+  </div>
+
+  <footer>
+    Jacob's Business OS ｜ 團隊協同與專案架構藍圖
+  </footer>
+</div>
+
+<script>
+  // 核心關係對照圖 (定義卡片之間的雙向脈絡與高亮標籤字樣)
+  const relationships = {
+    'jacob': {
+      targets: ['n8n', 'notion', 'obsidian', 'github', 'ag', 'codex', 'hermes', 'notebooklm'],
+      labels: {
+        'n8n': '1. 任務派發與日報接收', 'notion': '團隊任務看板', 'obsidian': '個人專案駕駛艙', 
+        'github': '專案代碼主控', 'ag': '架構分析與交付審核', 'codex': '程式開發與測試審核', 
+        'hermes': '一線狀況同步', 'notebooklm': '研究文獻分析'
+      }
+    },
+    'users': {
+      targets: ['hermes'],
+      labels: { 'hermes': '使用隨身書僮服務' }
+    },
+    'hermes': {
+      targets: ['jacob', 'users', 'github', 'p6', 'p7'],
+      labels: {
+        'jacob': '定期同步備忘', 'users': '提供陪伴與答詢', 'github': '私有對答庫備份', 
+        'p6': '追蹤客戶體驗測試反饋', 'p7': '提供經銷商訓練支援'
+      }
+    },
+    'n8n': {
+      targets: ['jacob', 'notion', 'github', 'ag', 'codex', 'opencode'],
+      labels: {
+        'jacob': 'Telegram 推送日報', 'notion': '雙向同步任務資料', 'github': '讀取 Private 任務檔', 
+        'ag': '串接流程開發', 'codex': '腳本代碼支援', 'opencode': '自動部署監控'
+      }
+    },
+    'notion': {
+      targets: ['jacob', 'n8n'],
+      labels: { 'jacob': '任務進度視覺看板', 'n8n': '同步數據集' }
+    },
+    'github': {
+      targets: ['jacob', 'n8n', 'hermes'],
+      labels: { 'jacob': '代碼版控', 'n8n': '提供任務原始檔', 'hermes': '備份防失憶數據' }
+    },
+    'ag': {
+      targets: ['p8', 'playwright', 'firebase', 'jacob', 'n8n'],
+      labels: {
+        'p8': '網頁 UI 拋光與優化', 'playwright': '呼叫 PDF 合約列印', 'firebase': '簡報與網頁發布', 
+        'jacob': '提報架構藍圖', 'n8n': '中樞流程分析規劃'
+      }
+    },
+    'codex': {
+      targets: ['p5', 'p6', 'notion', 'jacob', 'n8n'],
+      labels: {
+        'p5': '單元與 E2E 測試把關', 'p6': '系統功能系測修正', 'notion': 'Notion API 串接開發', 
+        'jacob': '技術健康度提報', 'n8n': 'JS 腳本代碼重構'
+      }
+    },
+    'opencode': {
+      targets: ['p2', 'n8n', 'jacob'],
+      labels: { 'p2': '官網 Astro 部署', 'n8n': '雲端環境變數配置', 'jacob': '運營部署提報' }
+    },
+    'p1': {
+      targets: ['ag', 'codex', 'opencode'],
+      labels: { 'ag': '設計審查', 'codex': '代碼審查', 'opencode': '自動部署' }
+    },
+    'p2': {
+      targets: ['opencode', 'n8n'],
+      labels: { 'opencode': '自動部署至 Zeabur', 'n8n': 'Notion 資料庫橋接' }
+    },
+    'p3': {
+      targets: ['ag', 'codex', 'hermes', 'opencode'],
+      labels: { 'ag': '發布技能', 'codex': '技術共享', 'hermes': '技能複用', 'opencode': '自動化安裝' }
+    },
+    'p4': {
+      targets: ['ag', 'codex'],
+      labels: { 'ag': '初始化模板', 'codex': '模板代碼驗證' }
+    },
+    'p5': {
+      targets: ['codex'],
+      labels: { 'codex': 'Vitest/TS 測試健康度' }
+    },
+    'p6': {
+      targets: ['hermes', 'codex'],
+      labels: { 'hermes': '追蹤客戶體驗測試反饋', 'codex': '修正稅金/信用卡/權限等功能' }
+    },
+    'p7': {
+      targets: ['hermes'],
+      labels: { 'hermes': '提供 RAG 常見問答對話服務' }
+    },
+    'p8': {
+      targets: ['ag', 'firebase', 'playwright'],
+      labels: { 'ag': '動態數據流動畫拋光', 'firebase': '託管發布', 'playwright': 'PDF 自動合約印製' }
+    },
+    'obsidian': {
+      targets: ['jacob'],
+      labels: { 'jacob': '人工專案駕駛艙與筆記' }
+    },
+    'notebooklm': {
+      targets: ['jacob'],
+      labels: { 'jacob': '文獻閱讀與長文本大腦' }
+    },
+    'firebase': {
+      targets: ['p8', 'ag'],
+      labels: { 'p8': '託管簡報網頁', 'ag': '部署發布' }
+    },
+    'playwright': {
+      targets: ['p8', 'ag'],
+      labels: { 'p8': '自動化合約渲染', 'ag': '合約 PDF 列印工具' }
+    }
+  };
+
+  // 獲取所有卡片節點
+  const cards = document.querySelectorAll('.node-card');
+
+  // 為所有卡片綁定滑鼠懸停事件
+  cards.forEach(card => {
+    const id = card.id;
+    
+    card.addEventListener('mouseenter', () => {
+      const relation = relationships[id];
+      if (!relation) return;
+
+      // 1. 設自己為 active
+      card.classList.add('active');
+
+      // 2. 設關聯卡片為 active，並動態填入關係標籤說明
+      relation.targets.forEach(targetId => {
+        const targetCard = document.getElementById(targetId);
+        if (targetCard) {
+          targetCard.classList.add('active');
+          
+          // 動態顯示對應關係說明
+          const labelText = relation.labels[targetId];
+          const badge = document.getElementById(`lbl-${targetId}`);
+          if (badge && labelText) {
+            badge.textContent = labelText;
+          }
+        }
+      });
+
+      // 3. 將其他不相干的卡片設為 dimmed (淡化)
+      cards.forEach(c => {
+        if (!c.classList.contains('active')) {
+          c.classList.add('dimmed');
+        }
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      // 1. 清除所有狀態 class
+      cards.forEach(c => {
+        c.classList.remove('active', 'dimmed');
+      });
+
+      // 2. 還原所有關係標籤為預設值
+      cards.forEach(c => {
+        const badge = document.getElementById(`lbl-${c.id}`);
+        if (badge) {
+          // 還原預設標籤
+          const defaultLabels = {
+            'jacob': '主導核心', 'users': '服務對象', 'hermes': '一線助理',
+            'n8n': '流程中樞', 'notion': '任務看板', 'github': '安全儲存',
+            'ag': '架構規劃', 'codex': '程式與測試', 'opencode': '自動部署',
+            'p1': '專案維護', 'p2': '官網建置', 'p3': '技能包', 'p4': '開發範本',
+            'p5': '軟體重構', 'p6': '系統優化', 'p7': '訓練支援', 'p8': '銷售包裝',
+            'obsidian': '個人隨身庫', 'notebooklm': '研究大腦', 'firebase': '部署託管',
+            'playwright': '文件轉檔'
+          };
+          badge.textContent = defaultLabels[c.id] || '';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
