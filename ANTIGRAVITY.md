@@ -32,6 +32,7 @@ GitHub Repo：`https://github.com/jacob-cloud-n8n/ai-assistant-reports.git`
 - Firebase project：`jacob-html-slides-2026`
 - 唯一允許的部署方式：在本目錄執行 `./deploy-firebase.sh`。
 - 腳本只會把白名單內的 HTML、CSS、JS、JSON 與圖片複製到 `.firebase-deploy/` 後發布；禁止把 repo 根目錄直接設為 Hosting public。
+- `course-docs/` 是唯一允許發布 Markdown/PDF 的受控目錄，由 `/Users/jacob/Projects/2026 html簡報製作/export-public-course-assets.sh` 產生；禁止手動修改或公開其他 repo 文件。
 - 禁止直接執行裸指令 `firebase deploy`；禁止使用父目錄的 `firebase.json` 或 `.firebaserc`。
 - 父目錄 Firebase project 是 `codex-jacob`，且父目錄 `public/` 含其他應用，兩者不可混用。
 - 部署後必須檢查正式網址，確認頁面內容與本地檔案一致。

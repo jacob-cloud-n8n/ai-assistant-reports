@@ -22,6 +22,8 @@ find "$DEPLOY_DIR" -mindepth 1 -delete
 rsync -a \
   --exclude='.*' \
   --exclude='/firebase.json' \
+  --include='/course-docs/' \
+  --include='/course-docs/**' \
   --include='*/' \
   --include='*.html' \
   --include='*.css' \

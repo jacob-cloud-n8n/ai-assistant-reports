@@ -23,6 +23,10 @@
 
 部署腳本會依靜態資產白名單重建 `.firebase-deploy/`，固定使用本目錄的 `firebase.json`，並強制指定 `--project jacob-html-slides-2026`。禁止直接執行裸指令 `firebase deploy`，避免誤用父目錄的 `codex-jacob` 設定或發布 repo 內部檔案。
 
+### 課程文件
+
+公開課程文件位於 [course-docs/](https://jacob-html-slides-2026.web.app/course-docs/)。該目錄由 `2026 html簡報製作/public-course-docs/` 匯出，只包含核准的客戶文件、PDF、教材目錄與試閱簡報；完整付費教材與內部專案文件不公開。
+
 ## 🔒 工作規範
 本專案遵循 `ANTIGRAVITY.md` 中定義的工作流程（包含開工與收工規範）。請在修改時確保中英文版本一致，並注意不要 commit 敏感金鑰。
 
