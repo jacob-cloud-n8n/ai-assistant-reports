@@ -11,21 +11,25 @@ This directory is an independent Git repository. Read `ANTIGRAVITY.md` before ed
 
 ## Firebase deployment (mandatory)
 
-Deploy only through:
+Deploy **only** through:
 
 ```bash
 ./deploy-firebase.sh
 ```
 
-The script fixes the working directory, config path, and Firebase project ID. It also rebuilds `.firebase-deploy/` from an allowlist of web asset extensions so repository files cannot be published. Agents must not run a bare `firebase deploy` from this directory or any parent directory.
+The script rebuilds `.firebase-deploy/` from an allowlist, **verifies all internal links in index.html exist**, then deploys to `jacob-html-slides-2026`. Agents must not run a bare `firebase deploy`.
 
-`course-docs/` is generated from `/Users/jacob/Projects/2026 html簡報製作/public-course-docs/` by that repo's `export-public-course-assets.sh`. Do not hand-edit generated course documents here. Only `course-docs/` may publish Markdown/PDF files; other repository documentation remains private.
+**⚠️ 已知踩坑紀錄（所有 Agent 必讀）：**
 
-Never deploy these slides with the parent repository's Firebase files. The parent `.firebaserc` targets `codex-jacob`, and the parent `public/` directory also contains unrelated applications.
+1. **連結断掉上線**：改 index.html 卡片順序或檔名後，沒有驗證連結是否指向實際檔案 → 部署後 404。**現在 deploy-firebase.sh 會自動跑 verify-links.sh，有断link就阻止部署。**
+2. **Firebase 部署到錯誤專案**：從父目錄 `2026 antig2/` 跑 deploy 會偵測到 root `.firebaserc`（指向 `codex-jacob`）。**必須從銷售專案目錄跑 deploy-firebase.sh。**
+3. **中文檔名 URL 編碼錯誤**：手動寫 `%E7%82%BA...` 容易編碼错误，導致断link。**改用中文檔名直接寫 href，瀏覽器會自動編碼。**
+4. **覆蓋原始檔案**：`hermes-training.html` 原本是「為孩子建立隨身書僮」，被覆蓋成「數位秘書銷售頁」後，原始內容差点遺失。**改名或覆蓋前，先在 git 確認舊版有 commit 記錄。**
 
 ## Safety
 
 - Never commit Firebase tokens, API keys, cookies, or service-account files.
 - Never use `git add .`; stage only files related to the current task.
 - Keep paired Chinese and English HTML files synchronized.
+- **改 index.html 後，先跑 `bash verify-links.sh` 確認連結無誤再部署。**
 - Verify the production URL after deployment.
