@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 家教實戰課：為孩子建立專屬隨身書僮 (Hermes)</title>
-<!-- 引入 Mermaid 渲染圖表 -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<!-- 移除未使用的 Mermaid 載入 -->
 <style>
   :root {
     --bg: #f5f5f7;
@@ -296,10 +295,9 @@
   .price-header h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
   .price-header .duration { font-size: 13px; color: var(--text-sec); margin-bottom: 24px; }
   
-  .price-amount { margin-bottom: 28px; }
-  .price-amount .original { font-size: 14px; color: var(--text-sec); text-decoration: line-through; margin-bottom: 4px; }
-  .price-amount .current { font-size: 36px; font-weight: 800; color: var(--purple); }
-  .price-amount .unit { font-size: 14px; color: var(--text-sec); font-weight: 500; }
+  .price-amount .original { font-size: 15px; color: var(--text-sec); text-decoration: line-through; margin-bottom: 6px; display: block; }
+  .price-amount .current { font-size: 38px; font-weight: 800; color: var(--purple); background: linear-gradient(135deg, var(--purple), #ff2d55); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .price-amount .unit { font-size: 14px; color: var(--text-sec); font-weight: 600; }
   
   .price-features {
     list-style: none;
@@ -459,21 +457,26 @@
     </div>
   </section>
 
-  <!-- 核心架構圖 -->
-  <div class="architecture">
-    <h2>📡 隨身書僮 (Hermes) 物理隔離與部署架構</h2>
-    <div class="mermaid">
-      graph TD
-          A[爸爸的 GitHub 帳號] -->|建立私有庫| B(hermes-junior-kb)
-          A -->|建立私有庫| C(hermes-senior-kb)
-          D[Discord Developer Portal] -->|申請 Bot Token| E(大女兒機器人: 四兒)
-          D -->|申請 Bot Token| F(小女兒機器人: 小齊)
-          G[Zeabur 雲端服務] -->|部署實例 1| H(hermes-junior 服務)
-          G -->|部署實例 2| I(hermes-senior 服務)
-          H -->|Sync 記憶與筆記| B
-          I -->|Sync 記憶與筆記| C
-          E -->|讀寫對話| H
-          F -->|讀寫對話| I
+  <!-- 課程開設初衷 (招生簡章內容) -->
+  <div class="architecture" style="text-align: left;">
+    <h2 style="font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 24px;">💡 【招生簡章】為什麼我們開設這門課程？</h2>
+    <p style="font-size: 16px; color: var(--text); margin-bottom: 24px; line-height: 1.6; text-align: center; font-weight: 600;">
+      「孩子拿到手機平板，總是點開遊戲或抖音，怎麼可能拿來讀書？」<br>
+      「AI 工具聽起來很強，但不知道怎麼安全引導，怕孩子抄答案或洩露個資？」
+    </p>
+    <div class="intro-grid" style="margin-top: 20px;">
+      <div style="background: var(--purple-light); padding: 24px; border-radius: 16px; border: 1px solid rgba(134, 48, 255, 0.08); border-left: 4px solid var(--purple);">
+        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">🎯 1. 轉娛樂為學習利器</h4>
+        <p style="font-size: 13px; color: var(--text-sec); line-height: 1.5;">這不是教孩子「寫程式碼」的技術課，而是一門重塑學習習慣、培養自主提問與邏輯思辨的思維引導課。我們教導孩子將科技設備轉化為專屬的「學習秘書」，而非遊戲玩具。</p>
+      </div>
+      <div style="background: var(--purple-light); padding: 24px; border-radius: 16px; border: 1px solid rgba(134, 48, 255, 0.08); border-left: 4px solid var(--blue);">
+        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">🔑 2. 養成一輩子的自主習慣</h4>
+        <p style="font-size: 13px; color: var(--text-sec); line-height: 1.5;">結合「上學囉！/放學囉！」的每日儀式感，搭配實體習慣養成小卡，引導孩子在讀書前自主拆解任務、設定計畫，課後主動對話備份。將抽象的自主管理化為日常物理習慣。</p>
+      </div>
+      <div style="background: var(--purple-light); padding: 24px; border-radius: 16px; border: 1px solid rgba(134, 48, 255, 0.08); border-left: 4px solid var(--orange);">
+        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">🛡️ 3. 安全無干擾的監管環境</h4>
+        <p style="font-size: 13px; color: var(--text-sec); line-height: 1.5;">帳號由家長共管，孩子不需要專屬手機。Bot 僅在封閉、乾淨的頻道中互動，並具備強大的敏感個資保護與不良內容過濾機制。對話歷史完整存入 GitHub，資訊透明且安全防失憶。</p>
+      </div>
     </div>
   </div>
 
@@ -648,29 +651,29 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
     </div>
 
     <!-- 單堂課時間表 -->
-    <h3 style="text-align:center; font-size:22px; font-weight:700; margin-top:40px; margin-bottom:24px;">⏱️ 單堂課程時間表 (90 分鐘黃金流程)</h3>
+    <h3 style="text-align:center; font-size:22px; font-weight:700; margin-top:40px; margin-bottom:24px;">⏱️ 單堂課程時間表 (60 分鐘黃金流程)</h3>
     <div style="background: var(--purple-light); border: 1px solid rgba(134, 48, 255, 0.1); border-radius: 20px; padding: 32px; margin-bottom: 48px; text-align: left;">
-      <p style="font-size:15px; color: var(--text); margin-bottom: 20px; font-weight: 600; text-align: center;">我們不浪費孩子一分一秒，透過結構化的黃金流程引導孩子主動學習：</p>
+      <p style="font-size:15px; color: var(--text); margin-bottom: 20px; font-weight: 600; text-align: center;">考量國小學員專注力，我們將單堂課精簡至 60 分鐘，透過結構化的高效流程引導自主學習：</p>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
         <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">00 - 15 mins</div>
-          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">上學儀式與目標設定</div>
-          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">孩子實體操作「習慣養成卡」，輸入「上學囉！」，由書僮引導回顧並設定今日學習目標。</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">00 - 10 mins</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">上學儀式與計畫設定</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">孩子實體操作「習慣養成卡」，對書僮說「上學囉！」，引導回顧上次進度並設定今日目標。</div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">15 - 45 mins</div>
-          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">核心引導與對話基本功</div>
-          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">老師解說當日 AI 觀念（Prompt要素/個資防禦），引導學生與書僮練習。</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">10 - 25 mins</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">核心觀念與對話素養</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">老師帶領孩子解說當日 AI 觀念（例如 Prompt 三要素、個資防禦安全），進行引導性互動。</div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">45 - 75 mins</div>
-          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">心法實戰與 AI 協作</div>
-          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">學員親自操作書僮進行「狩獵法/費曼法/辯論法」實彈演練，將 AI 真正運用於課業。</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">25 - 50 mins</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">心法實戰與學科演練</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">學員使用教材，實際操作書僮進行「狩獵法/費曼法/辯論法」實彈練習，將 AI 當學科助手。</div>
         </div>
         <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">75 - 90 mins</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">50 - 60 mins</div>
           <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">放學存檔與成就發放</div>
-          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">輸入「放學囉！」，書僮將今日進度備份至 GitHub 庫，頒發學習勳章，並推送週報。</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">孩子輸入「放學囉！」，書僮自動備份成果至 GitHub，發放 Emoji 勳章並推送家長日報。</div>
         </div>
       </div>
     </div>
@@ -722,39 +725,43 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
       <div class="price-card">
         <div class="price-header">
           <h3>同儕小班制</h3>
-          <div class="duration">適合 4~6 人共學 ｜ 每堂 1.5 小時</div>
+          <div class="duration">適合 4~6 人共學 ｜ 每堂 1.0 小時 (60分鐘)</div>
         </div>
         <div class="price-amount">
           <div class="original">原價 NT$ 7,000</div>
-          <div class="current">NT$ 4,900<span class="unit"> / 人</span></div>
+          <div class="current" style="background: linear-gradient(135deg, var(--purple), #ff2d55); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">NT$ 4,900<span class="unit"> / 人</span></div>
         </div>
         <ul class="price-features">
-          <li>5 堂精緻互動小班課</li>
+          <li>5 堂精緻互動小班課 (每堂 60 分鐘)</li>
           <li>同儕互動與勳章良性競爭</li>
           <li>AI 書僮專屬部署與設定</li>
           <li>發放實體習慣養成口訣卡</li>
           <li>一個月課後進度追蹤</li>
+          <li style="color: var(--purple); font-weight: 600;">🎁 內含 NT$ 1,500 事前建置部署費</li>
+          <li style="color: var(--orange); font-weight: 600;">⚡ 次月起 NT$ 300 / 月系統維護費</li>
         </ul>
         <a href="#" class="price-btn" onclick="alert('已為您預約小班制方案！後續將有專人與您聯繫。')">立即預約</a>
       </div>
 
       <!-- 方案 2 -->
       <div class="price-card popular">
-        <div class="price-badge">熱門推薦</div>
+        <div class="price-badge">熱門推薦 ｜ 限時 7 折</div>
         <div class="price-header">
           <h3>親子共學班</h3>
-          <div class="duration">適合 1 大 1 小 ｜ 每堂 1.5 小時</div>
+          <div class="duration">適合 1 大 1 小 ｜ 每堂 1.0 小時 (60分鐘)</div>
         </div>
         <div class="price-amount">
           <div class="original">原價 NT$ 9,000</div>
-          <div class="current">NT$ 6,300<span class="unit"> / 組</span></div>
+          <div class="current" style="background: linear-gradient(135deg, var(--purple), #ff2d55); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">NT$ 6,300<span class="unit"> / 組</span></div>
         </div>
         <ul class="price-features">
-          <li>5 堂親子共學引導課程</li>
-          <li>建立家長與孩子的 AI 共感</li>
-          <li>AI 書僮專屬部署與設定</li>
-          <li>發放實體習慣養成口訣卡</li>
-          <li>一個月課後進度追蹤</li>
+          <li>5 堂親子共學引導課程 (每堂 60 分鐘)</li>
+          <li>建立家長與孩子的 AI 共感與管理</li>
+          <li>AI 書僮專屬部署與設定 (雙帳號)</li>
+          <li>發放實體習慣養成口訣卡 (親子雙卡)</li>
+          <li>一個月課後進度與家長周報追蹤</li>
+          <li style="color: var(--purple); font-weight: 600;">🎁 內含 NT$ 1,500 事前建置部署費</li>
+          <li style="color: var(--orange); font-weight: 600;">⚡ 次月起 NT$ 400 / 月系統維護費</li>
         </ul>
         <a href="#" class="price-btn" onclick="alert('已為您預約親子共學班！後續將有專人與您聯繫。')">立即預約</a>
       </div>
@@ -763,18 +770,20 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
       <div class="price-card">
         <div class="price-header">
           <h3>1 對 1 客製班</h3>
-          <div class="duration">完全專屬家教 ｜ 每堂 1.0 小時</div>
+          <div class="duration">完全專屬家教 ｜ 每堂 1.0 小時 (60分鐘)</div>
         </div>
         <div class="price-amount">
           <div class="original">原價 NT$ 15,000</div>
-          <div class="current">NT$ 10,500<span class="unit"> / 人</span></div>
+          <div class="current" style="background: linear-gradient(135deg, var(--purple), #ff2d55); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">NT$ 10,500<span class="unit"> / 人</span></div>
         </div>
         <ul class="price-features">
-          <li>5 堂 1 對 1 實體專屬家教</li>
+          <li>5 堂 1 對 1 實體專屬家教 (每堂 60 分鐘)</li>
           <li>依據學生學習風格完全客製</li>
-          <li>AI 書僮專屬部署與設定</li>
-          <li>發放實體習慣養成口訣卡</li>
-          <li>一個月課後進度追蹤</li>
+          <li>AI 書僮專屬部署與設定 (旗艦版)</li>
+          <li>發放實體習慣養成口訣卡 (精裝卡牌)</li>
+          <li>一個月課後進度與專屬對話診斷</li>
+          <li style="color: var(--purple); font-weight: 600;">🎁 內含 NT$ 1,500 事前建置部署費</li>
+          <li style="color: var(--green); font-weight: 600;">✨ 尊榮贈送前 6 個月系統維護費</li>
         </ul>
         <a href="#" class="price-btn" onclick="alert('已為您預約 1 對 1 客製方案！後續將有專人與您聯繫。')">立即預約</a>
       </div>
@@ -796,8 +805,7 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
 </footer>
 
 <script>
-  // 初始化 Mermaid
-  mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  // Mermaid 模組已移除，無需初始化
 
   // 複製 Code 實作
   function copyCode(id) {
