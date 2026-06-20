@@ -401,6 +401,31 @@
     color: #6e1de3;
   }
 
+  /* 卡片專屬列表樣式 (避免 Flexbox 拆碎 inline 元素) */
+  .card-list {
+    list-style: none;
+    margin: 12px 0;
+    padding: 0;
+  }
+  .card-list li {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    position: relative;
+    padding-left: 24px;
+    color: var(--text);
+  }
+  .card-list li .num-badge {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    color: var(--purple);
+    font-weight: 800;
+  }
+  .card-list.blue-style li .num-badge {
+    color: var(--blue);
+  }
+
   /* ── 響應式 ── */
   @media (max-width: 768px) {
     .hero { padding: 60px 0 30px 0; }
@@ -727,18 +752,18 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
       <div class="intro-grid">
         <div style="background: var(--bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); border-top: 4px solid var(--purple);">
           <h4 style="font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">☀️ 上學囉！(正面：開工與學習)</h4>
-          <ul class="list-style" style="margin: 0; font-size: 13px;">
-            <li><span class="icon">1.</span> <strong>一鍵開工</strong>：對書僮說「<code>上學囉！</code>」開啟今日學習對話。</li>
-            <li><span class="icon">2.</span> <strong>目標引導</strong>：依提示回顧上次、設定今天計畫，建立讀書儀式感。</li>
-            <li><span class="icon">3.</span> <strong>對話口訣</strong>：內含卡關魔法口令（如「<code>用簡單的方式重新解釋</code>」），讓孩子掌握對話主控權，學會引導 AI。</li>
+          <ul class="card-list">
+            <li><span class="num-badge">1.</span> <strong>一鍵開工</strong>：對書僮說「<code>上學囉！</code>」開啟今日學習對話。</li>
+            <li><span class="num-badge">2.</span> <strong>目標引導</strong>：依提示回顧上次、設定今天計畫，建立讀書儀式感。</li>
+            <li><span class="num-badge">3.</span> <strong>對話口訣</strong>：內含卡關魔法口令（如「<code>用簡單的方式重新解釋</code>」），讓孩子掌握對話主控權，學會引導 AI。</li>
           </ul>
         </div>
         <div style="background: var(--bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); border-top: 4px solid var(--blue);">
           <h4 style="font-size: 16px; font-weight: 700; color: var(--blue); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">🌙 放學囉！(背面：收工與備份)</h4>
-          <ul class="list-style" style="margin: 0; font-size: 13px;">
-            <li><span class="icon">1.</span> <strong>自我總結</strong>：對書僮說「<code>放學囉！</code>」，報告今日所學與自我評分。</li>
-            <li><span class="icon">2.</span> <strong>記憶備份</strong>：書僮自動將今日精華上傳至學生的私有 GitHub 庫，大腦防失憶。</li>
-            <li><span class="icon">3.</span> <strong>激勵推送</strong>：書僮發放 Emoji 學習勳章，並於每週五自動發送學習週報給家長。</li>
+          <ul class="card-list blue-style">
+            <li><span class="num-badge">1.</span> <strong>自我總結</strong>：對書僮說「<code>放學囉！</code>」，報告今日所學與自我評分。</li>
+            <li><span class="num-badge">2.</span> <strong>記憶備份</strong>：書僮自動將今日精華上傳至學生的私有 GitHub 庫，大腦防失憶。</li>
+            <li><span class="num-badge">3.</span> <strong>激勵推送</strong>：書僮發放 Emoji 學習勳章，並於每週五自動發送學習週報給家長。</li>
           </ul>
         </div>
         <div style="background: var(--bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); border-left: 4px solid var(--orange); grid-column: 1 / -1;">
@@ -828,7 +853,7 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
 <section class="cta-section">
   <h2>讓 AI 伴隨孩子一起健康成長</h2>
   <p>建立不只是陪伴，更是具備專屬記憶的長期知識儲備書僮。</p>
-  <a href="#pricing" class="cta-btn">立即報名體驗</a>
+  <a href="index.html" class="cta-btn">觀看更多課程</a>
 </section>
 
 <!-- Footer -->
