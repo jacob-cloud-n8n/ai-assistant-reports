@@ -229,6 +229,152 @@
   }
   .cta-btn:hover { transform: scale(1.02); opacity: 0.95; }
 
+  /* ── 方案費用與大綱 ── */
+  .pricing-section { padding: 60px 0; border-top: 1px solid var(--border); }
+  .pricing-title { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .pricing-subtitle { text-align: center; font-size: 16px; color: var(--text-sec); margin-bottom: 48px; }
+  
+  /* 課程亮點卡片 */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+    text-align: left;
+    transition: transform 0.2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); }
+  .feature-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .feature-card p { font-size: 14px; color: var(--text-sec); line-height: 1.5; }
+  
+  /* 課程方案卡片 */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .price-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  }
+  .price-card.popular {
+    border-color: var(--purple);
+    background: linear-gradient(180deg, #ffffff 0%, rgba(134, 48, 255, 0.02) 100%);
+  }
+  .price-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--purple);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .price-header h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+  .price-header .duration { font-size: 13px; color: var(--text-sec); margin-bottom: 24px; }
+  
+  .price-amount { margin-bottom: 28px; }
+  .price-amount .original { font-size: 14px; color: var(--text-sec); text-decoration: line-through; margin-bottom: 4px; }
+  .price-amount .current { font-size: 36px; font-weight: 800; color: var(--purple); }
+  .price-amount .unit { font-size: 14px; color: var(--text-sec); font-weight: 500; }
+  
+  .price-features {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 32px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding-top: 24px;
+  }
+  .price-features li {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .price-features li::before {
+    content: '✓';
+    color: var(--purple);
+    font-weight: 700;
+  }
+  .price-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--purple);
+    background: transparent;
+    color: var(--purple);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+  }
+  .price-card.popular .price-btn {
+    background: var(--purple);
+    color: #fff;
+  }
+  .price-btn:hover {
+    background: var(--purple);
+    color: #fff;
+  }
+  
+  /* 課堂大綱時程表 */
+  .timeline {
+    margin: 48px 0;
+    position: relative;
+    text-align: left;
+  }
+  .timeline-item {
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .timeline-badge {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--purple);
+    background: var(--purple-light);
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .timeline-content h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .timeline-content p { font-size: 13px; color: var(--text-sec); line-height: 1.5; }
+
   footer { text-align: center; padding: 40px 24px; font-size: 12px; color: var(--text-sec); border-top: 1px solid var(--border); background: #ffffff; }
 
   /* ── 響應式 ── */
@@ -249,6 +395,7 @@
     </div>
     <ul class="nav-links">
       <li><a href="#why-discord">為何用 Discord</a></li>
+      <li><a href="#pricing">課程方案</a></li>
       <li><a href="#phase-1">第一階段：帳號準備</a></li>
       <li><a href="#phase-2">第二階段：實戰部署</a></li>
       <li><a href="#checklist">驗收與測試</a></li>
@@ -438,13 +585,140 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
     </div>
   </section>
 
+  <!-- 課程特色與方案費用 (招生區) -->
+  <section id="pricing" class="pricing-section">
+    <h2 class="pricing-title">🎓 【AI 隨身書僮】課程特色與方案費用</h2>
+    <p class="pricing-subtitle">不只是學習工具，更是幫孩子養成一輩子受用的黃金自主學習習慣！</p>
+
+    <!-- 特色亮點 -->
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h4>🛡️ 專屬學習頻道</h4>
+        <p>家長共管帳號模式，免去給孩子手機的煩惱。專屬無遊戲干擾的對話環境，讓孩子專注學習，大人安心監管。</p>
+      </div>
+      <div class="feature-card">
+        <h4>🔒 去個資隱私白名單</h4>
+        <p>系統絕不記錄學員真名、學校等敏感隱私，僅以暱稱互動；家長享有對話記錄完全透明查閱與完全刪除權。</p>
+      </div>
+      <div class="feature-card">
+        <h4>🧠 三大學習心法與實體卡</h4>
+        <p>融入「狩獵法、費曼法、辯論法」三大學習法，引導主動思辨；搭配「實體習慣養成小卡」，讓儀式感物理化。</p>
+      </div>
+    </div>
+
+    <!-- 課程大綱 (5堂課) -->
+    <h3 style="text-align:center; font-size:22px; font-weight:700; margin-bottom:24px;">📅 5 堂實戰課程大綱</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-badge">1</div>
+        <div class="timeline-content">
+          <h4>第一堂：認識 AI 與個資安全防線</h4>
+          <p>了解 AI 的能力與幻覺，學會數位素養與隱私防護，建立合規帳號與完成書僮初始化命名。</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">2</div>
+        <div class="timeline-content">
+          <h4>第二堂：Prompt 指令基本功與追問</h4>
+          <p>掌握與書僮對話的「角色、限制、格式」三大要素，並熟練與 AI 連續追問修正的互動技巧。</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">3</div>
+        <div class="timeline-content">
+          <h4>第三堂：三大學習心法實務體驗</h4>
+          <p>實作體驗「狩獵法（提煉重點）、費曼法（說給書僮聽）、辯論法（思辨挑戰）」的學習魔力。</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">4</div>
+        <div class="timeline-content">
+          <h4>第四堂：自主規劃大目標拆解</h4>
+          <p>用 AI 書僮將大科目的段考範圍拆解成每日學習計畫，實作「上學囉！/放學囉！」的每日存檔 SOP。</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-badge">5</div>
+        <div class="timeline-content">
+          <h4>第五堂：成果展示與習慣卡建立</h4>
+          <p>展示自主規劃成果，發放「實體習慣養成卡」，教導使用指南，設定家長週報與後續追蹤計畫。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 報名方案 -->
+    <h3 style="text-align:center; font-size:22px; font-weight:700; margin-top:40px; margin-bottom:24px;">💰 課程方案與報名</h3>
+    <div class="pricing-grid">
+      <!-- 方案 1 -->
+      <div class="price-card">
+        <div class="price-header">
+          <h3>同儕小班制</h3>
+          <div class="duration">適合 4~6 人共學 ｜ 每堂 1.5 小時</div>
+        </div>
+        <div class="price-amount">
+          <div class="original">原價 NT$ 7,000</div>
+          <div class="current">NT$ 4,900<span class="unit"> / 人</span></div>
+        </div>
+        <ul class="price-features">
+          <li>5 堂精緻互動小班課</li>
+          <li>同儕互動與勳章良性競爭</li>
+          <li>AI 書僮專屬部署與設定</li>
+          <li>發放實體習慣養成口訣卡</li>
+          <li>一個月課後進度追蹤</li>
+        </ul>
+        <a href="#" class="price-btn" onclick="alert('已為您預約小班制方案！後續將有專人與您聯繫。')">立即預約</a>
+      </div>
+
+      <!-- 方案 2 -->
+      <div class="price-card popular">
+        <div class="price-badge">熱門推薦</div>
+        <div class="price-header">
+          <h3>親子共學班</h3>
+          <div class="duration">適合 1 大 1 小 ｜ 每堂 1.5 小時</div>
+        </div>
+        <div class="price-amount">
+          <div class="original">原價 NT$ 9,000</div>
+          <div class="current">NT$ 6,300<span class="unit"> / 組</span></div>
+        </div>
+        <ul class="price-features">
+          <li>5 堂親子共學引導課程</li>
+          <li>建立家長與孩子的 AI 共感</li>
+          <li>AI 書僮專屬部署與設定</li>
+          <li>發放實體習慣養成口訣卡</li>
+          <li>一個月課後進度追蹤</li>
+        </ul>
+        <a href="#" class="price-btn" onclick="alert('已為您預約親子共學班！後續將有專人與您聯繫。')">立即預約</a>
+      </div>
+
+      <!-- 方案 3 -->
+      <div class="price-card">
+        <div class="price-header">
+          <h3>1 對 1 客製班</h3>
+          <div class="duration">完全專屬家教 ｜ 每堂 1.0 小時</div>
+        </div>
+        <div class="price-amount">
+          <div class="original">原價 NT$ 15,000</div>
+          <div class="current">NT$ 10,500<span class="unit"> / 人</span></div>
+        </div>
+        <ul class="price-features">
+          <li>5 堂 1 對 1 實體專屬家教</li>
+          <li>依據學生學習風格完全客製</li>
+          <li>AI 書僮專屬部署與設定</li>
+          <li>發放實體習慣養成口訣卡</li>
+          <li>一個月課後進度追蹤</li>
+        </ul>
+        <a href="#" class="price-btn" onclick="alert('已為您預約 1 對 1 客製方案！後續將有專人與您聯繫。')">立即預約</a>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 <!-- 底部 CTA 區 -->
 <section class="cta-section">
   <h2>讓 AI 伴隨孩子一起健康成長</h2>
   <p>建立不只是陪伴，更是具備專屬記憶的長期知識儲備書僮。</p>
-  <a href="#" class="cta-btn" onclick="alert('恭喜！您已成功完成本堂隨身書僮家教課！')">完成教學</a>
+  <a href="#pricing" class="cta-btn">立即報名體驗</a>
 </section>
 
 <!-- Footer -->
