@@ -377,6 +377,32 @@
 
   footer { text-align: center; padding: 40px 24px; font-size: 12px; color: var(--text-sec); border-top: 1px solid var(--border); background: #ffffff; }
 
+  /* 折疊技術細節 accordion */
+  details.tech-detail {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 12px;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  details.tech-detail summary {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--purple);
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+  }
+  details.tech-detail[open] {
+    background: var(--card);
+    border-color: rgba(134, 48, 255, 0.2);
+  }
+  details.tech-detail summary:hover {
+    color: #6e1de3;
+  }
+
   /* ── 響應式 ── */
   @media (max-width: 768px) {
     .hero { padding: 60px 0 30px 0; }
@@ -482,78 +508,93 @@
     <p class="step-desc">家長跟著帶練的 5 大實戰技術步驟。</p>
 
     <!-- 步驟 1 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 1</span>
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 12px;">Step 1</span>
         在 GitHub 上建立專屬私有知識庫 (KB-Vault)
       </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">使用 GitHub CLI 建立孩子的私有 Repo。這將作為她專屬的記憶與筆記庫。</p>
-      <pre><code id="code-git"># 建立大女兒的私有知識庫
+      <details class="tech-detail">
+        <summary>🔧 點擊查看 Step 1 詳細操作步驟與代碼指令</summary>
+        <p style="font-size: 14px; color: var(--text-sec); margin: 12px 0;">使用 GitHub CLI 建立孩子的私有 Repo。這將作為她專屬的記憶與筆記庫。</p>
+        <pre><code id="code-git"># 建立大女兒的私有知識庫
 gh repo create jacob-cloud-n8n/hermes-junior-kb --private --add-readme
 
 # 建立小女兒的私有知識庫
 gh repo create jacob-cloud-n8n/hermes-senior-kb --private --add-readme</code><button class="copy-btn" onclick="copyCode('code-git')">複製</button></pre>
+      </details>
     </div>
 
     <!-- 步驟 2 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 2</span>
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 12px;">Step 2</span>
         在 Discord Application Portal 申請 Bot Token
       </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">進入開發者後台，註冊 Bot 並開啟必要的對話讀取權限。</p>
-      <ul class="list-style" style="margin-left: 20px;">
-        <li><span class="icon">1.</span> 登入 <a href="https://discord.com/developers/applications" target="_blank" style="color: var(--blue); text-decoration: none;">Discord Developer Portal</a> 點擊 <strong>New Application</strong>。</li>
-        <li><span class="icon">2.</span> 點選左側 <strong>Bot</strong> ➔ 點擊 <strong>Reset Token</strong> 取得 <code>DISCORD_BOT_TOKEN</code>。</li>
-        <li><span class="icon">3.</span> <strong>⚠️ 核心開關：</strong>下拉至 <strong>Privileged Gateway Intents</strong>，開啟 <strong>Presence</strong>、<strong>Server Members</strong>、與 <strong>Message Content Intent</strong> (沒開 Bot 會讀不到訊息！)。</li>
-        <li><span class="icon">4.</span> 點選左側 <strong>OAuth2</strong> -> <strong>URL Generator</strong>，Scopes 勾選 <code>bot</code>、<code>applications.commands</code>，並在權限勾選發送、讀取、上傳檔案，用產出的連結把 Bot 邀請進伺服器。</li>
-      </ul>
+      <details class="tech-detail">
+        <summary>🔧 點擊查看 Step 2 詳細操作步驟與權限勾選設定</summary>
+        <p style="font-size: 14px; color: var(--text-sec); margin: 12px 0;">進入開發者後台，註冊 Bot 並開啟必要的對話讀取權限。</p>
+        <ul class="list-style" style="margin-left: 20px;">
+          <li><span class="icon">1.</span> 登入 <a href="https://discord.com/developers/applications" target="_blank" style="color: var(--blue); text-decoration: none;">Discord Developer Portal</a> 點擊 <strong>New Application</strong>。</li>
+          <li><span class="icon">2.</span> 點選左側 <strong>Bot</strong> ➔ 點擊 <strong>Reset Token</strong> 取得 <code>DISCORD_BOT_TOKEN</code>。</li>
+          <li><span class="icon">3.</span> <strong>⚠️ 核心開關：</strong>限制開啟 <strong>Presence</strong>、<strong>Server Members</strong>、與 <strong>Message Content Intent</strong> (沒開 Bot 會讀不到訊息！)。</li>
+          <li><span class="icon">4.</span> 點選左側 <strong>OAuth2</strong> -> <strong>URL Generator</strong>，Scopes 勾選 <code>bot</code>、<code>applications.commands</code>，並在權限勾選發送、讀取、上傳檔案，用產出的連結把 Bot 邀請進伺服器。</li>
+        </ul>
+      </details>
     </div>
 
     <!-- 步驟 3 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 3</span>
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 12px;">Step 3</span>
         在 Zeabur 部署並配置專屬服務
       </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">切換至本機專案部署目錄，使用 CLI 一鍵部署至雲端，並設定物理隔離環境變數。</p>
-      <pre><code id="code-zeabur">cd "/Users/jacob/Projects/2026 hermes/deploy/hermes-agent"
+      <details class="tech-detail">
+        <summary>🔧 點擊查看 Step 3 詳細一鍵部署指令與變數設定</summary>
+        <p style="font-size: 14px; color: var(--text-sec); margin: 12px 0;">切換至本機專案部署目錄，使用 CLI 一鍵部署至雲端，並設定物理隔離環境變數。</p>
+        <pre><code id="code-zeabur">cd "/Users/jacob/Projects/2026 hermes/deploy/hermes-agent"
 npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --interactive=false</code><button class="copy-btn" onclick="copyCode('code-zeabur')">複製</button></pre>
-      <p style="font-size: 14px; color: var(--text-sec); margin-top: 12px; margin-bottom: 8px;">在 Zeabur 控制台環境變數（Environment Variables）中配置以下關鍵安全變數：</p>
-      <ul class="list-style" style="margin-left: 20px; font-size: 14px;">
-        <li><code>DISCORD_BOT_TOKEN</code> = <code>(步驟二獲取的 Bot Token)</code></li>
-        <li><code>KB_VAULT_REPO</code> = <code>jacob-cloud-n8n/hermes-junior-kb.git</code> (指向步驟一建立的私有知識庫)</li>
-        <li><code>GITHUB_PAT</code> = <code>(您的 GitHub PAT)</code> (用於 Bot 推送更新至 Repo)</li>
-        <li><code>DISCORD_ALLOWED_USERS</code> = <code>您的DiscordID</code> (先填寫您的 ID，以便進行初步驗證與測試)</li>
-      </ul>
+        <p style="font-size: 14px; color: var(--text-sec); margin-top: 12px; margin-bottom: 8px;">在 Zeabur 控制台環境變數（Environment Variables）中配置以下關鍵安全變數：</p>
+        <ul class="list-style" style="margin-left: 20px; font-size: 14px;">
+          <li><code>DISCORD_BOT_TOKEN</code> = <code>(步驟二獲取的 Bot Token)</code></li>
+          <li><code>KB_VAULT_REPO</code> = <code>jacob-cloud-n8n/hermes-junior-kb.git</code> (指向步驟一建立的私有庫)</li>
+          <li><code>GITHUB_PAT</code> = <code>(您的 GitHub PAT)</code> (用於 Bot 推送更新)</li>
+          <li><code>DISCORD_ALLOWED_USERS</code> = <code>您的DiscordID</code> (先填寫您的 ID，以便進行測試)</li>
+        </ul>
+      </details>
     </div>
 
     <!-- 步驟 4 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 4</span>
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 12px;">Step 4</span>
         掛載持久化磁碟 (Volume) 以防重啟忘記記憶
       </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">避免雲端容器重新啟動或部署時，本地的 SQLite 資料庫遺失。</p>
-      <ul class="list-style" style="margin-left: 20px;">
-        <li><span class="icon">1.</span> 開啟 <strong>Zeabur 控制台</strong> ➔ 點入剛部署好的服務頁面。</li>
-        <li><span class="icon">2.</span> 找到 <strong>磁碟 (Volumes)</strong> 區塊，點擊新增磁碟。</li>
-        <li><span class="icon">3.</span> <strong>掛載路徑 (Mount Path) 必須填寫為：</strong> <code>/root/.hermes</code>。</li>
-      </ul>
+      <details class="tech-detail">
+        <summary>🔧 點擊查看 Step 4 詳細持久磁碟掛載路徑與步驟</summary>
+        <p style="font-size: 14px; color: var(--text-sec); margin: 12px 0;">避免雲端容器重新啟動或部署時，本地的 SQLite 資料庫遺失。</p>
+        <ul class="list-style" style="margin-left: 20px;">
+          <li><span class="icon">1.</span> 開啟 <strong>Zeabur 控制台</strong> ➔ 點入剛部署好的服務頁面。</li>
+          <li><span class="icon">2.</span> 找到 <strong>磁碟 (Volumes)</strong> 區塊，點擊新增磁碟。</li>
+          <li><span class="icon">3.</span> <strong>掛載路徑 (Mount Path) 必須填寫為：</strong> <code>/root/.hermes</code>。</li>
+        </ul>
+      </details>
     </div>
 
     <!-- 步驟 5 -->
-    <div style="margin-bottom: 48px;">
-      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 14px;">Step 5</span>
+    <div style="margin-bottom: 32px;">
+      <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        <span style="background: var(--blue-light); color: var(--blue); padding: 2px 10px; border-radius: 6px; font-size: 12px;">Step 5</span>
         頻道綁定與加入孩子的白名單防禦
       </h3>
-      <p style="font-size: 14px; color: var(--text-sec); margin-bottom: 12px;">將 Bot 鎖定在指定的聊天頻道，並將孩子加入白名單，防止非白名單成員惡意發話呼叫。</p>
-      <ul class="list-style" style="margin-left: 20px;">
-        <li><span class="icon">1.</span> 在預計對話的 Discord 頻道中輸入 <code>/sethome</code> 進行主頻道綁定。</li>
-        <li><span class="icon">2.</span> 複製孩子的 Discord 使用者 ID (需在 Discord 設定 ➔ 進階 ➔ 開啟「開發者模式」，對頭像點右鍵複製)。</li>
-        <li><span class="icon">3.</span> 修改 Zeabur 環境變數 <code>DISCORD_ALLOWED_USERS</code> 為 <code>您的ID,孩子的ID</code> (以英文逗號分隔)，儲存並重啟。</li>
-      </ul>
+      <details class="tech-detail">
+        <summary>🔧 點擊查看 Step 5 詳細頻道綁定與 Allowed Users 設定</summary>
+        <p style="font-size: 14px; color: var(--text-sec); margin: 12px 0;">將 Bot 鎖定在指定的聊天頻道，並將孩子加入白名單，防止非白名單成員惡意發話呼叫。</p>
+        <ul class="list-style" style="margin-left: 20px;">
+          <li><span class="icon">1.</span> 在預計對話的 Discord 頻道中輸入 <code>/sethome</code> 進行主頻道綁定。</li>
+          <li><span class="icon">2.</span> 複製孩子的 Discord 使用者 ID (需在 Discord 設定 ➔ 進階 ➔ 開啟「開發者模式」，對頭像點右鍵複製)。</li>
+          <li><span class="icon">3.</span> 修改 Zeabur 環境變數 <code>DISCORD_ALLOWED_USERS</code> 為 <code>您的ID,孩子的ID</code> (以英文逗號分隔)，儲存並重啟。</li>
+        </ul>
+      </details>
     </div>
 
   </section>
@@ -603,6 +644,34 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
       <div class="feature-card">
         <h4>🧠 三大學習心法與實體卡</h4>
         <p>融入「狩獵法、費曼法、辯論法」三大學習法，引導主動思辨；搭配「實體習慣養成小卡」，讓儀式感物理化。</p>
+      </div>
+    </div>
+
+    <!-- 單堂課時間表 -->
+    <h3 style="text-align:center; font-size:22px; font-weight:700; margin-top:40px; margin-bottom:24px;">⏱️ 單堂課程時間表 (90 分鐘黃金流程)</h3>
+    <div style="background: var(--purple-light); border: 1px solid rgba(134, 48, 255, 0.1); border-radius: 20px; padding: 32px; margin-bottom: 48px; text-align: left;">
+      <p style="font-size:15px; color: var(--text); margin-bottom: 20px; font-weight: 600; text-align: center;">我們不浪費孩子一分一秒，透過結構化的黃金流程引導孩子主動學習：</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+        <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">00 - 15 mins</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">上學儀式與目標設定</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">孩子實體操作「習慣養成卡」，輸入「上學囉！」，由書僮引導回顧並設定今日學習目標。</div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">15 - 45 mins</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">核心引導與對話基本功</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">老師解說當日 AI 觀念（Prompt要素/個資防禦），引導學生與書僮練習。</div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">45 - 75 mins</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">心法實戰與 AI 協作</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">學員親自操作書僮進行「狩獵法/費曼法/辯論法」實彈演練，將 AI 真正運用於課業。</div>
+        </div>
+        <div style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
+          <div style="font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px;">75 - 90 mins</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">放學存檔與成就發放</div>
+          <div style="font-size: 12px; color: var(--text-sec); line-height: 1.4;">輸入「放學囉！」，書僮將今日進度備份至 GitHub 庫，頒發學習勳章，並推送週報。</div>
+        </div>
       </div>
     </div>
 
