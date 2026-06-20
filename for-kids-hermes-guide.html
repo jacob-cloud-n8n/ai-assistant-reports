@@ -439,27 +439,9 @@
 
 <div class="container">
 
-  <!-- 為什麼用 Discord -->
-  <section id="why-discord" style="padding: 40px 0;">
-    <div class="intro-grid">
-      <div class="intro-card" style="border-left: 4px solid var(--blue);">
-        <h3>🔑 免手機註冊</h3>
-        <p>Telegram 註冊必須綁定真實手機門號。學齡兒童通常沒有門號，而 Discord 允許純電子信箱（Email）註冊與登入。</p>
-      </div>
-      <div class="intro-card" style="border-left: 4px solid var(--purple);">
-        <h3>📂 物理隔離知識庫</h3>
-        <p>每位孩子擁有專屬的 GitHub 私有儲存庫作為大腦。她們的個人筆記、記憶與學習進度完全隔離，不與其他人混雜，安全私密。</p>
-      </div>
-      <div class="intro-card" style="border-left: 4px solid var(--green);">
-        <h3>💾 Volume 防失憶</h3>
-        <p>在雲端服務重啟或版本更新時，透過掛載持久化 Volume，保證機器人的長期記憶不丟失，伴隨孩子長大。</p>
-      </div>
-    </div>
-  </section>
-
   <!-- 課程開設初衷 (招生簡章內容) -->
-  <div class="architecture" style="text-align: left;">
-    <h2 style="font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 24px;">💡 【招生簡章】為什麼我們開設這門課程？</h2>
+  <div class="architecture" style="text-align: left; margin-top: 40px;">
+    <h2 style="font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 24px;">💡 為什麼我們開設這門課程？</h2>
     <p style="font-size: 16px; color: var(--text); margin-bottom: 24px; line-height: 1.6; text-align: center; font-weight: 600;">
       「孩子拿到手機平板，總是點開遊戲或抖音，怎麼可能拿來讀書？」<br>
       「AI 工具聽起來很強，但不知道怎麼安全引導，怕孩子抄答案或洩露個資？」
@@ -479,6 +461,24 @@
       </div>
     </div>
   </div>
+
+  <!-- 為什麼用 Discord -->
+  <section id="why-discord" style="padding: 40px 0;">
+    <div class="intro-grid">
+      <div class="intro-card" style="border-left: 4px solid var(--blue);">
+        <h3>🔑 免手機註冊</h3>
+        <p>Telegram 註冊必須綁定真實手機門號。學齡兒童通常沒有門號，而 Discord 允許純電子信箱（Email）註冊與登入。</p>
+      </div>
+      <div class="intro-card" style="border-left: 4px solid var(--purple);">
+        <h3>📂 物理隔離知識庫</h3>
+        <p>每位孩子擁有專屬的 GitHub 私有儲存庫作為大腦。她們的個人筆記、記憶與學習進度完全隔離，不與其他人混雜，安全私密。</p>
+      </div>
+      <div class="intro-card" style="border-left: 4px solid var(--green);">
+        <h3>💾 Volume 防失憶</h3>
+        <p>在雲端服務重啟或版本更新時，透過掛載持久化 Volume，保證機器人的長期記憶不丟失，伴隨孩子長大。</p>
+      </div>
+    </div>
+  </section>
 
   <!-- 第一階段：帳號準備 -->
   <section id="phase-1" class="step-section">
@@ -714,6 +714,38 @@ npx zeabur deploy --project-id <專案ID> --create --name hermes-junior --intera
         <div class="timeline-content">
           <h4>第五堂：成果展示與習慣卡建立</h4>
           <p>展示自主規劃成果，發放「實體習慣養成卡」，教導使用指南，設定家長週報與後續追蹤計畫。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 實體習慣養成卡介紹 -->
+    <h3 style="text-align:center; font-size:22px; font-weight:700; margin-top:40px; margin-bottom:24px;">💡 核心教具：隨課贈送的「實體習慣養成小卡」有何妙用？</h3>
+    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 40px; margin-bottom: 48px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); text-align: left;">
+      <p style="font-size:15px; color: var(--text); margin-bottom: 24px; text-align: center; font-weight: 500;">
+        這不是一張普通的紙卡，而是我們為孩子設計的<strong>「物理學習魔法小抄 (名片大小，方便攜帶)」</strong>。擺在平板或電腦旁，讓孩子零門檻建立與 AI 的長期協作習慣。
+      </p>
+      <div class="intro-grid">
+        <div style="background: var(--bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); border-top: 4px solid var(--purple);">
+          <h4 style="font-size: 16px; font-weight: 700; color: var(--purple); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">☀️ 上學囉！(正面：開工與學習)</h4>
+          <ul class="list-style" style="margin: 0; font-size: 13px;">
+            <li><span class="icon">1.</span> <strong>一鍵開工</strong>：對書僮說「<code>上學囉！</code>」開啟今日學習對話。</li>
+            <li><span class="icon">2.</span> <strong>目標引導</strong>：依提示回顧上次、設定今天計畫，建立讀書儀式感。</li>
+            <li><span class="icon">3.</span> <strong>對話口訣</strong>：內含卡關魔法口令（如「<code>用簡單的方式重新解釋</code>」），讓孩子掌握對話主控權，學會引導 AI。</li>
+          </ul>
+        </div>
+        <div style="background: var(--bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); border-top: 4px solid var(--blue);">
+          <h4 style="font-size: 16px; font-weight: 700; color: var(--blue); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">🌙 放學囉！(背面：收工與備份)</h4>
+          <ul class="list-style" style="margin: 0; font-size: 13px;">
+            <li><span class="icon">1.</span> <strong>自我總結</strong>：對書僮說「<code>放學囉！</code>」，報告今日所學與自我評分。</li>
+            <li><span class="icon">2.</span> <strong>記憶備份</strong>：書僮自動將今日精華上傳至學生的私有 GitHub 庫，大腦防失憶。</li>
+            <li><span class="icon">3.</span> <strong>激勵推送</strong>：書僮發放 Emoji 學習勳章，並於每週五自動發送學習週報給家長。</li>
+          </ul>
+        </div>
+        <div style="background: var(--bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); border-left: 4px solid var(--orange); grid-column: 1 / -1;">
+          <h4 style="font-size: 16px; font-weight: 700; color: var(--orange); margin-bottom: 8px;">👨‍👩‍👧 家長無痛引導：省時省力，完全不需懂 AI！</h4>
+          <p style="font-size: 13px; color: var(--text-sec); line-height: 1.6;">
+            家長不需要懂得如何操作 Prompt。孩子讀書時，您只需指著桌上的這張實體小卡，問孩子：<strong>「你今天照著小卡跟書僮報到（上學囉）了嗎？放學前有跟書僮交代進度（放學囉）嗎？」</strong> 透過最簡單的物理卡片暗示，家長即可零門檻輔助孩子在 5 堂課內快速內化這套高難度的自主學習習慣。這也是本課程最核心的實體交付物價值所在！
+          </p>
         </div>
       </div>
     </div>
