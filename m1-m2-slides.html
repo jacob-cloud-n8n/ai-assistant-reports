@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1+M2：AI 的失憶症與建立第二大腦 — 第二堂課</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+<style>
+  :root {
+    --bg-main: #f4f1ea;       /* 燕麥米背景 */
+    --text-main: #1a2b49;     /* 沉穩科技深藍 */
+    --text-sec: #4a5d78;      /* 次要文字，深灰藍 */
+    --accent: #1a2b49;        /* 主色為科技深藍 */
+    --accent2: #c08a3e;       /* 暖色點綴為麥芽金/焦糖黃 */
+    --success: #3f8a4f;       /* 柔和綠 */
+    --warn: #d4a373;          /* 麥芽金 */
+    --card-bg: #ffffff;       /* 卡片純白底色 */
+    --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04); /* 細微陰影 */
+    --card-border: 1px solid rgba(26, 43, 73, 0.06); /* 細緻深藍灰色框線 */
+  }
+  .reveal {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    text-transform: none;
+  }
+  .reveal h1 { font-size: 2em; color: var(--accent); }
+  .reveal h2 { font-size: 1.4em; color: var(--accent); }
+  .reveal h3 { font-size: 1.1em; color: var(--accent2); }
+  .reveal .progress { color: var(--accent); }
+  .reveal .controls { color: var(--accent); }
+  .reveal .fragment { opacity: 0.2; }
+  .reveal .fragment.visible { opacity: 1; }
+
+  .title-slide { text-align: center; }
+  .title-slide .tag {
+    display: inline-block; background: var(--accent2); color: #fff;
+    padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
+    letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+  }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+  .checklist { list-style: none; text-align: left; font-size: 0.6em; }
+  .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(26,43,73,0.06); display: flex; align-items: center; gap: 12px; color: var(--text-main); }
+  .checklist li::before { content: "☐"; font-size: 1.2em; color: var(--accent); }
+  .checklist li.done::before { content: "☑"; color: var(--success); }
+
+  .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
+  .step-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px;
+    border-top: 4px solid var(--accent);
+    box-shadow: var(--card-shadow);
+    border-left: var(--card-border);
+    border-right: var(--card-border);
+    border-bottom: var(--card-border);
+    text-align: left;
+  }
+  .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
+  .step-card p { color: var(--text-sec); line-height: 1.6; }
+
+  .code-block {
+    background: #2d3748;
+    border-radius: 8px; padding: 16px 20px;
+    font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.5em;
+    color: #e2e8f0; text-align: left; margin: 1em 0;
+  }
+  .code-block .comment { color: #a0aec0; }
+  .code-block .cmd { color: #63b3ed; }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
+  .compare-table th { background: rgba(26,43,73,0.08); color: var(--accent); padding: 12px; text-align: left; }
+  .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); }
+
+  .tip-box {
+    background: rgba(192,138,62,0.06);
+    border-left: 4px solid var(--accent2);
+    border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em;
+    font-size: 0.5em; color: var(--text-main); text-align: left;
+  }
+
+  .end-slide { text-align: center; }
+  .end-slide .big { font-size: 3em; margin-bottom: 0.2em; }
+  .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
+
+  .highlight { color: var(--accent2); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 封面 -->
+    <section data-background-color="#1a2b49">
+      <div class="title-slide">
+        <div class="tag" style="background: var(--accent2);">第二堂課</div>
+        <h1 style="color: #ffffff;">AI 的失憶症與建立第二大腦</h1>
+        <p class="subtitle" style="color: #cbd5e0;">解決忘記背景的痛點 + 建構您的數位知識庫</p>
+        <p class="author" style="color: #a0aec0;">Jacob Business OS · AI 助理運用與實戰課程</p>
+      </div>
+    </section>
+
+    <!-- 今天會學到什麼 -->
+    <section>
+      <h2>今天你會學到</h2>
+      <div class="step-grid">
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <h4>1. 認識「失憶症」</h4>
+          <p>了解 AI 上下文限制 (Context Window) 的底層運作與塌陷痛點</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <h4>2. 痛點自檢與試算</h4>
+          <p>找出並記錄日常與 AI 的重複廢話，試算浪費的時間與 Token</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <h4>3. 第二大腦結構</h4>
+          <p>了解「輸入 ➔ 消化 ➔ 輸出」的三層知識沉澱管理架構</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <h4>4. Obsidian 與說明書</h4>
+          <p>部署 Obsidian 本地筆記，為 AI 特助撰寫第一份 `CLAUDE.md` 工作說明書</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- M1 痛點剖析 -->
+    <section>
+      <h2>痛點：為什麼 AI 每次開新對話都失憶？</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">這不是 AI 笨，而是「上下文視窗 (Context Window)」的物理限制</p>
+      <div style="font-size: 0.5em; text-align: left; margin-top: 1.2em; display: flex; flex-direction: column; gap: 12px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent);">
+          <strong>🌊 沙灘上的腳印效應：</strong>
+          <p style="margin-top: 4px;">AI 助理的「當前對話框」就像沙灘，每發送一句話，就在沙灘上踩下一個腳印。一旦對話太長、或是重新開啟新視窗，海浪一來（Context 滿了或刷新），所有的腳印與記憶都會被無情抹平。</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <strong>💸 重複溝通的隱形成本：</strong>
+          <p style="margin-top: 4px;">你每一次都要重複解釋：「我是行銷經理、我們公司的產品是...、請用繁體中文回答...」。這不僅消耗耐心，也極大浪費了溝通效率與 API 額度。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Token 與 Context -->
+    <section>
+      <h2>底層原理：Token 與 Context Window</h2>
+      <div class="fragment" style="margin-top: 0.8em;">
+        <table class="compare-table">
+          <tr><th>名詞</th><th>直白解釋</th><th>企業比喻</th></tr>
+          <tr><td class="highlight">Token</td><td>AI 處理文字的「字詞單位」（1 個中文字約 1~2 Token）</td><td>員工打字計件的工資單位</td></tr>
+          <tr><td class="highlight">Context Window</td><td>AI 能一次「同時記住」的字數上限（通常為 8k~200k）</td><td>員工辦公桌的桌面大小（桌上放不下就得丟掉）</td></tr>
+          <tr><td class="highlight">上下文塌陷 (Collapse)</td><td>當對話超出桌子大小，AI 會「自動忘記最開始」的設定</td><td>員工開始丟棄桌底舊文件以塞入新文件</td></tr>
+        </table>
+      </div>
+      <div class="fragment tip-box" style="margin-top: 1em;">
+        💡 <strong>這也是為什麼我們需要 Business OS 協作規範：</strong><br>
+        每次對話開始時輸入「開工」（Start Work），就是讓 AI 主動把核心檔案重新放到「辦公桌最顯眼處」，避免失憶！
+      </div>
+    </section>
+
+    <!-- 動手做：痛點自檢 -->
+    <section>
+      <h2>動手做：重複溝通痛點自檢</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">算算你浪費了多少時間在對 AI 說廢話？</p>
+      <div style="font-size: 0.5em; text-align: left; margin-top: 1.2em; display: flex; flex-direction: column; gap: 10px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <strong>📝 任務 1：列出你對 AI 說過超過 3 次的重複指令</strong><br>
+          <span style="font-size: 0.9em; color: var(--text-sec);">例如：「請用繁體中文」、「請幫我寫信，格式要分三段」、「我的品牌客群是...」</span>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <strong>⏳ 任務 2：估算重複溝通浪費的時間</strong><br>
+          <span style="font-size: 0.9em; color: var(--text-sec);">每天重複打這些字 / 複製貼上 5 次 ➔ 浪費約 15 分鐘 ➔ 一年累積浪費 90 個小時！</span>
+        </div>
+        <div class="tip-box">
+          📌 我們需要一份 **「單一真相來源 (SSOT)」** 檔案，將這些固定背景資訊寫下來，讓 AI 自己去讀取，而不是每次都靠你人工輸入！
+        </div>
+      </div>
+    </section>
+
+    <!-- M2 什麼是第二大腦 -->
+    <section>
+      <h2>第二大腦：為你的 AI 團隊建置「共用檔案庫」</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">AI 只是「運算核心」，第二大腦才是「長效記憶庫」</p>
+      <div style="font-size: 0.5em; text-align: left; margin-top: 1.2em; display: flex; flex-direction: column; gap: 12px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent);">
+          <strong>🧠 Karpathy 的 AI 筆記流：</strong>
+          <p style="margin-top: 4px;">AI 領域大師 Andrej Karpathy 指出，最頂尖的 AI 使用者，都會建立一套高度組織化的本地筆記系統。讓 AI 可以讀取這些文件，直接站在已有成果上工作，避免每次重新發明輪子。</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <strong>📂 數據主權與自主權 (Data Sovereignty)：</strong>
+          <p style="margin-top: 4px;">不把資料託管在雲端平台（隨時會被關閉、收費、或改版）。我們的知識資產、工作流程與大腦記憶，必須安全地保存在本地端（.md 檔案），由自己 100% 掌控。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 第二大腦三層結構 -->
+    <section>
+      <h2>第二大腦：三層知識管理結構</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">流暢的資訊處理閉環，讓知識可以自然滾動</p>
+      <div style="margin-top: 1em;">
+        <table class="compare-table" style="font-size: 0.45em;">
+          <tr><th>層級</th><th>主要作用</th><th>存放檔案類型</th></tr>
+          <tr style="background: rgba(26,43,73,0.02);">
+            <td><strong style="color: var(--accent2);">📥 1. Clippings (輸入)</strong></td>
+            <td>收集別人的精采文章、原始參考資料、法規或研究報告。</td>
+            <td>網頁剪貼、PDF、微信/Line 複製文章</td>
+          </tr>
+          <tr>
+            <td><strong style="color: var(--accent);">🧠 2. 知識庫 (消化)</strong></td>
+            <td>經過 AI 協助整理提煉、或是你自己的心得與摘要。 **只留精華**。</td>
+            <td>讀書筆記、概念卡片、SOP 說明書</td>
+          </tr>
+          <tr style="background: rgba(26,43,73,0.02);">
+            <td><strong style="color: var(--success);">⚔️ 3. 創作庫 (輸出)</strong></td>
+            <td>你準備發表的作品、向主管匯報的報告、或是專案的規格書。</td>
+            <td>行銷文案、產品規格、已完成合約</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- 為什麼是 Obsidian -->
+    <section>
+      <h2>為什麼選擇 Obsidian 作為大腦載體？</h2>
+      <div class="step-grid">
+        <div class="step-card">
+          <h4>💾 本地優先</h4>
+          <p>所有筆記都是純文字 Markdown (.md) 檔，存在你自己的電腦中。完全自主，平台倒閉也帶不走。</p>
+        </div>
+        <div class="step-card">
+          <h4>🔗 關聯網狀結構</h4>
+          <p>使用雙向連結 [[Note]]，像人類大腦神經元一樣建立關聯，而非傳統僵硬的資料夾層級。</p>
+        </div>
+        <div class="step-card">
+          <h4>🤖 AI 讀寫極佳相性</h4>
+          <p>AI 最擅長讀寫純文字 Markdown。你可以直接讓 Agent 掃描你的資料夾，實時更新你的大腦。</p>
+        </div>
+        <div class="step-card">
+          <h4>🔄 自動同步</h4>
+          <p>透過 GitHub 私有 Repo 或雲端硬碟，實現 Mac/Windows/iPhone 多端實時無縫同步。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLAUDE.md / AGENTS.md -->
+    <section>
+      <h2>大腦的說明書：CLAUDE.md 與 AGENTS.md</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">如何教導 AI 遵守你的工作規矩？</p>
+      <div style="font-size: 0.5em; text-align: left; margin-top: 1.2em; display: flex; flex-direction: column; gap: 10px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent);">
+          <strong>📝 給 AI 特助的「員工守則」：</strong><br>
+          在你的大腦根目錄下，建立一個叫 `CLAUDE.md`（或 `AGENTS.md`）的檔案。裡面詳細記錄你的開發流程、常用指令、程式風格以及審核標準。
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <strong>🎯 自動化讀取機制：</strong><br>
+          當 AI 特助一開工，它會優先讀取這個檔案。它會立刻知道自己目前的「角色定位、不准踩的雷區、以及驗收標準」，不用你每次囉唆。
+        </div>
+        <div class="tip-box">
+          💡 這就是 **「Business OS」** 的核心！把規則寫成程式碼/說明書，實現團隊開發協作的自律禮儀。
+        </div>
+      </div>
+    </section>
+
+    <!-- 動手做：建立大腦與配置 -->
+    <section>
+      <h2>動手做：建立你的第一個第二大腦</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">建立三層架構並放入說明書，演練完整開收工閉環</p>
+      <div style="font-size: 0.45em; text-align: left; margin-top: 0.8em; display: flex; flex-direction: column; gap: 10px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent); padding: 12px 16px;">
+          <strong>📂 1. 建立本地資料夾目錄</strong> — 在電腦中新建以下目錄結構：<br>
+          <code style="color: #b3d4ff; display: block; margin-top: 6px; background: #2d3748; padding: 10px 14px; border-radius: 6px; font-family: monospace;">第二大腦/<br>├── 📥 Clippings/<br>├── 🧠 知識庫/<br>└── ⚔️ 創作庫/</code>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2); padding: 12px 16px;">
+          <strong>📝 2. 配置工作規則說明書</strong> — 在根目錄下建立 `CLAUDE.md`：<br>
+          <code style="color: #e9d8a6; display: block; margin-top: 6px; background: #2d3748; padding: 10px 14px; border-radius: 6px; font-family: monospace;"># CLAUDE.md 工作規則<br>- 角色：資深 AI 營運特助<br>- 回覆語氣：專業、簡潔，使用繁體中文 (Taiwan)<br>- 規範：不擅自更改 code 註解，修改後需手動驗證</code>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--success); padding: 12px 16px;">
+          <strong>🌅 3. 開工演練</strong> — 對 Bot 輸入開工口訣，測試它是否成功讀取大腦規則並對齊背景！
+        </div>
+      </div>
+    </section>
+
+    <!-- 今天的成果 -->
+    <section>
+      <h2>今天的成果</h2>
+      <ul class="checklist">
+        <li class="done">理解 AI 的失憶限制 (Context Window & Token)</li>
+        <li class="done">完成了重複指令的痛點自檢與時間估算</li>
+        <li class="done">學習了第二大腦「輸入-消化-輸出」三層結構</li>
+        <li class="done">實作建立了 Obsidian 大腦結構與第一個 CLAUDE.md</li>
+      </ul>
+      <div class="tip-box" style="margin-top: 1em;">
+        ✅ 您已經為您的 AI 特助打下了最紮實的記憶根基！
+      </div>
+    </section>
+
+    <!-- 下堂課預告 -->
+    <section>
+      <h2>下堂課預告</h2>
+      <h3 style="color: var(--accent2);">M3 + M4：Agent 全覽與部署你的第一個 AI 助理</h3>
+      <p style="font-size: 0.65em; color: var(--text-sec); margin-top: 1em;">
+        我們將帶您遍覽市面上常見的 Agent 工具與平台，<br>
+        並手把手帶您部署好專屬的 Telegram 數位秘書！
+      </p>
+    </section>
+
+    <!-- 結束 -->
+    <section data-background-color="#1a2b49">
+      <div class="end-slide">
+        <div class="big">🧠</div>
+        <h1 style="color: #ffffff;">第二堂課完成！</h1>
+        <p class="tagline" style="color: #cbd5e0;">你已成功為 AI 特助安裝了第二大腦</p>
+        <p class="tagline" style="margin-top: 1em; color: var(--accent2);">
+          <strong>回去記得開啟你的 Obsidian 寫下今天的筆記喔！</strong>
+        </p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+</script>
+</body>
+</html>
