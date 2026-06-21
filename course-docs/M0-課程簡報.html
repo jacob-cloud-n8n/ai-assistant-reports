@@ -93,16 +93,16 @@
           <p>怎麼跟 AI 說話，讓它聽懂你、幫到你</p>
         </div>
         <div class="step-card">
-          <h4>2. 設備準備</h4>
-          <p>確認你的電腦和軟體都準備好了</p>
+          <h4>2. 設備與安全</h4>
+          <p>確認軟硬體準備，並理解隱私與金鑰安全</p>
         </div>
         <div class="step-card">
-          <h4>3. 帳號申請</h4>
-          <p>申請必要的帳號和 API Key</p>
+          <h4>3. 協作自律禮儀</h4>
+          <p>學習開工與收工 SOP、單一真相來源 (SSOT)</p>
         </div>
         <div class="step-card">
-          <h4>4. 動手實做</h4>
-          <p>用費曼法體驗 AI 的威力</p>
+          <h4>4. 動手實作</h4>
+          <p>進行第一個「開工-費曼法練習-收工」完整閉環</p>
         </div>
       </div>
     </section>
@@ -130,6 +130,32 @@
       <div class="fragment tip-box" style="margin-top: 1em;">
         💡 <strong>範例：</strong><br>
         「你是資深行銷專家（角色），幫我寫一封活動邀請 email（任務），用 150 字以內、分三段（格式），語氣要專業但親切（限制）」
+      </div>
+    </section>
+
+    <!-- AI 協作自律禮儀 -->
+    <section>
+      <h2>AI 協作黃金自律禮儀</h2>
+      <p style="font-size: 0.65em; color: #aaa;">AI 不是隨問隨答的玩具，而是有工作規範的虛擬員工</p>
+      <div class="step-grid" style="margin-top: 0.8em;">
+        <div class="step-card" style="border-top: 3px solid var(--accent);">
+          <h4>🌅 1. 開工對齊 (Start Work)</h4>
+          <p>每次對話開始時無條件輸入「開工」（或執行開工腳本）。讓 AI 自動對齊目前的狀態與歷史，防止 AI 遺忘進度，避免你每次都重新解釋。</p>
+        </div>
+        <div class="step-card" style="border-top: 3px solid var(--success);">
+          <h4>🌃 2. 收工備份 (Finish Work)</h4>
+          <p>對話結束前，主動執行「收工」流程。請 AI 總結今日成果寫入記憶檔案、主動排除金鑰等敏感資料（防洩漏），並安全關閉對話。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 單一真相來源 SSOT -->
+    <section>
+      <h2>單一真相來源 (SSOT)</h2>
+      <p style="font-size: 0.65em; color: #aaa;">AI 的對話框就像沙灘上的腳印，隨時會被潮水沖走</p>
+      <div class="tip-box" style="margin-top: 1.2em;">
+        📌 <strong>Single Source of Truth (SSOT)：</strong><br>
+        AI 助理有失憶症（上下文長度限制）。重要的點子、程式碼或決策，**絕對不要只留在對話框裡**！必須立刻整理到你的<strong>「實體學習小卡」</strong>或個人的<strong>「第二大腦筆記庫 (如 Obsidian)」</strong>。只有寫下來的，才是唯一真實的知識資產。
       </div>
     </section>
 
@@ -214,13 +240,20 @@
     <!-- 費曼法體驗 -->
     <section>
       <h2>動手做：費曼法體驗</h2>
-      <p style="font-size: 0.6em; color: #aaa;">讓 AI 反問你，逼你用自己的話解釋</p>
-      <div class="tip-box" style="margin-top: 1em;">
-        📝 <strong>現在打開 Telegram，對你的 Bot 說：</strong><br><br>
-        「請扮演蘇格拉底式的思維教練。用最簡單、連六歲小孩都能聽懂的邏輯不斷向我追問：<br>
-        1. 先讓我用一句話解釋「什麼是 AI 助理」<br>
-        2. 找出我理解中的漏洞，挑戰我的結論<br>
-        3. 直到我能用最白話的方式完美解釋為止」
+      <p style="font-size: 0.65em; color: #aaa;">體驗完整 AI 協作閉環（開工 → 費曼法對話 → 收工）</p>
+      <div style="font-size: 0.45em; text-align: left; margin-top: 0.8em; display: flex; flex-direction: column; gap: 10px;">
+        <div class="step-card" style="border-top: 3px solid var(--accent); padding: 12px 16px;">
+          <strong>🌅 1. 開工對齊</strong> — 對 Bot 發送：<br>
+          <code style="color: var(--accent); display: block; margin-top: 4px; background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 4px;">開工！今天我要用費曼法練習解釋『AI 助理』。請扮演蘇格拉底式的思維教練。用最簡單、連六歲小孩都能聽懂的邏輯向我追問，先讓我用一句話解釋『什麼是 AI 助理』，並找出我理解中的漏洞，挑戰我的結論。</code>
+        </div>
+        <div class="step-card" style="border-top: 3px solid var(--accent2); padding: 12px 16px;">
+          <strong>🧠 2. 費曼法對決</strong> — 跟著 Bot 的追問，用你自己的白話回答它，直到能完美解釋。
+        </div>
+        <div class="step-card" style="border-top: 3px solid var(--success); padding: 12px 16px;">
+          <strong>🌌 3. 收工存檔 (SSOT)</strong> — 對話結束時發送：<br>
+          <code style="color: var(--success); display: block; margin-top: 4px; background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 4px;">收工！請幫我整理今天理解的重點與盲點到我的 SSOT 小卡中，並清理暫存。</code>
+          <span style="font-size: 0.9em; color: #aaa; display: block; margin-top: 4px;">*別忘了將產出複製到你的實體卡片或筆記中！</span>
+        </div>
       </div>
     </section>
 
