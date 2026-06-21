@@ -6,68 +6,93 @@
 <title>M0：AI 素養與環境準備 — 第一堂課</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
 <style>
   :root {
-    --accent:  #af52de;
-    --accent2: #0071e3;
-    --success: #34c759;
-    --warn:    #ff9500;
+    --bg-main: #f9f8f6;       /* 暖沙背景 */
+    --text-main: #2c3e50;     /* 深藍灰字體 (專業) */
+    --text-sec: #5a6e7f;      /* 次要文字灰色 */
+    --accent: #8e7cc3;        /* 莫蘭迪紫色 (專業) */
+    --accent2: #e89e78;       /* 溫暖珊瑚粉橘 (溫馨) */
+    --success: #6bb070;       /* 柔和綠色 */
+    --warn: #e09e3e;          /* 柔和橘黃色 */
+    --card-bg: #ffffff;       /* 卡片白色底色 */
+    --card-shadow: 0 8px 24px rgba(142, 124, 195, 0.04); /* 輕微紫調柔和陰影 */
+    --card-border: 1px solid rgba(142, 124, 195, 0.08); /* 細緻微紫邊框 */
   }
-  .reveal { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif; }
-  .reveal h1, .reveal h2, .reveal h3 { font-weight: 700; letter-spacing: -0.02em; }
-  .reveal h1 { font-size: 2em; }
-  .reveal h2 { font-size: 1.4em; color: var(--accent2); }
-  .reveal h3 { font-size: 1.1em; color: var(--accent); }
+  .reveal {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    text-transform: none; /* 移除 Reveal.js 預設的大寫轉換 */
+  }
+  .reveal h1 { font-size: 2em; color: var(--accent); }
+  .reveal h2 { font-size: 1.4em; color: var(--accent); }
+  .reveal h3 { font-size: 1.1em; color: var(--accent2); }
   .reveal .progress { color: var(--accent); }
+  .reveal .controls { color: var(--accent); }
   .reveal .fragment { opacity: 0.2; }
   .reveal .fragment.visible { opacity: 1; }
 
   .title-slide { text-align: center; }
   .title-slide .tag {
-    display: inline-block; background: var(--accent); color: #fff;
+    display: inline-block; background: var(--accent2); color: #fff;
     padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
     letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
   }
-  .title-slide .subtitle { font-size: 0.75em; color: #aaa; margin-top: 0.5em; }
-  .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: #888; }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide .author   { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
 
   .checklist { list-style: none; text-align: left; font-size: 0.6em; }
-  .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 12px; }
+  .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(142,124,195,0.08); display: flex; align-items: center; gap: 12px; color: var(--text-main); }
   .checklist li::before { content: "☐"; font-size: 1.2em; color: var(--accent); }
   .checklist li.done::before { content: "☑"; color: var(--success); }
 
   .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
   .step-card {
-    background: rgba(255,255,255,0.05); border-radius: 12px; padding: 16px;
-    border-top: 3px solid var(--accent2);
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px;
+    border-top: 4px solid var(--accent);
+    box-shadow: var(--card-shadow);
+    border-left: var(--card-border);
+    border-right: var(--card-border);
+    border-bottom: var(--card-border);
+    text-align: left;
   }
-  .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent2); }
-  .step-card p { color: #ccc; line-height: 1.6; }
+  .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
+  .step-card p { color: var(--text-sec); line-height: 1.6; }
 
   .code-block {
-    background: rgba(0,0,0,0.4); border-radius: 8px; padding: 16px 20px;
+    background: #2d3748;
+    border-radius: 8px; padding: 16px 20px;
     font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.5em;
-    color: #e0e0e0; text-align: left; margin: 1em 0;
+    color: #e2e8f0; text-align: left; margin: 1em 0;
   }
-  .code-block .comment { color: #888; }
-  .code-block .cmd { color: var(--accent2); }
+  .code-block .comment { color: #a0aec0; }
+  .code-block .cmd { color: #63b3ed; }
 
   .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
-  .compare-table th { background: rgba(175,82,222,0.2); color: var(--accent); padding: 12px; text-align: left; }
-  .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .compare-table th { background: rgba(142,124,195,0.1); color: var(--accent); padding: 12px; text-align: left; }
+  .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(142,124,195,0.08); color: var(--text-main); }
 
   .tip-box {
-    background: rgba(175,82,222,0.1); border-left: 4px solid var(--accent);
-    border-radius: 0 8px 8px 0; padding: 14px 18px; margin-top: 1em;
-    font-size: 0.5em; color: #ddd; text-align: left;
+    background: rgba(232,158,120,0.08);
+    border-left: 4px solid var(--accent2);
+    border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em;
+    font-size: 0.5em; color: var(--text-main); text-align: left;
   }
 
   .end-slide { text-align: center; }
   .end-slide .big { font-size: 3em; margin-bottom: 0.2em; }
-  .end-slide .tagline { font-size: 0.65em; color: #aaa; }
+  .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
 
-  .highlight { color: var(--accent); font-weight: 700; }
+  .highlight { color: var(--accent2); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -110,7 +135,7 @@
     <!-- 為什麼要學 AI 素養 -->
     <section>
       <h2>為什麼要學 AI 素養？</h2>
-      <p style="font-size: 0.7em; color: #aaa;">多數人只會問「幫我寫...」，學完差別巨大</p>
+      <p style="font-size: 0.7em; color: var(--text-sec);">多數人只會問「幫我寫...」，學完差別巨大</p>
       <div class="fragment" style="margin-top: 1em;">
         <table class="compare-table">
           <tr><th>之前</th><th>之後</th></tr>
@@ -136,7 +161,7 @@
     <!-- AI 協作自律禮儀 -->
     <section>
       <h2>AI 協作黃金自律禮儀</h2>
-      <p style="font-size: 0.65em; color: #aaa;">AI 不是隨問隨答的玩具，而是有工作規範的虛擬員工</p>
+      <p style="font-size: 0.65em; color: var(--text-sec);">AI 不是隨問隨答的玩具，而是有工作規範的虛擬員工</p>
       <div class="step-grid" style="margin-top: 0.8em;">
         <div class="step-card" style="border-top: 3px solid var(--accent);">
           <h4>🌅 1. 開工對齊 (Start Work)</h4>
@@ -152,7 +177,7 @@
     <!-- 單一真相來源 SSOT -->
     <section>
       <h2>單一真相來源 (SSOT)</h2>
-      <p style="font-size: 0.65em; color: #aaa;">AI 的對話框就像沙灘上的腳印，隨時會被潮水沖走</p>
+      <p style="font-size: 0.65em; color: var(--text-sec);">AI 的對話框就像沙灘上的腳印，隨時會被潮水沖走</p>
       <div class="tip-box" style="margin-top: 1.2em;">
         📌 <strong>Single Source of Truth (SSOT)：</strong><br>
         AI 助理有失憶症（上下文長度限制）。重要的點子、程式碼或決策，**絕對不要只留在對話框裡**！必須立刻整理到你的<strong>「實體學習小卡」</strong>或個人的<strong>「第二大腦筆記庫 (如 Obsidian)」</strong>。只有寫下來的，才是唯一真實的知識資產。
@@ -200,12 +225,12 @@
         <div class="step-card">
           <h4>Mac</h4>
           <p>應用程式 → 工具程式 → <strong>終端機</strong></p>
-          <p style="font-size: 0.9em; color: #888;">或按 ⌘ + 空白鍵，搜尋「終端機」</p>
+          <p style="font-size: 0.9em; color: var(--text-sec);">或按 ⌘ + 空白鍵，搜尋「終端機」</p>
         </div>
         <div class="step-card">
           <h4>Windows</h4>
           <p>按 Windows 鍵，搜尋 <strong>PowerShell</strong></p>
-          <p style="font-size: 0.9em; color: #888;">或按 Win + R，輸入 powershell</p>
+          <p style="font-size: 0.9em; color: var(--text-sec);">或按 Win + R，輸入 powershell</p>
         </div>
       </div>
     </section>
@@ -240,19 +265,19 @@
     <!-- 費曼法體驗 -->
     <section>
       <h2>動手做：費曼法體驗</h2>
-      <p style="font-size: 0.65em; color: #aaa;">體驗完整 AI 協作閉環（開工 → 費曼法對話 → 收工）</p>
+      <p style="font-size: 0.65em; color: var(--text-sec);">體驗完整 AI 協作閉環（開工 → 費曼法對話 → 收工）</p>
       <div style="font-size: 0.45em; text-align: left; margin-top: 0.8em; display: flex; flex-direction: column; gap: 10px;">
-        <div class="step-card" style="border-top: 3px solid var(--accent); padding: 12px 16px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent); padding: 12px 16px;">
           <strong>🌅 1. 開工對齊</strong> — 對 Bot 發送：<br>
-          <code style="color: var(--accent); display: block; margin-top: 4px; background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 4px;">開工！今天我要用費曼法練習解釋『AI 助理』。請扮演蘇格拉底式的思維教練。用最簡單、連六歲小孩都能聽懂的邏輯向我追問，先讓我用一句話解釋『什麼是 AI 助理』，並找出我理解中的漏洞，挑戰我的結論。</code>
+          <code style="color: #c3bbf2; display: block; margin-top: 6px; background: #2d3748; padding: 10px 14px; border-radius: 6px; font-family: monospace; line-height: 1.5;">開工！今天我要用費曼法練習解釋『AI 助理』。請扮演蘇格拉底式的思維教練。用最簡單、連六歲小孩都能聽懂的邏輯向我追問，先讓我用一句話解釋『什麼是 AI 助理』，並找出我理解中的漏洞，挑戰我的結論。</code>
         </div>
-        <div class="step-card" style="border-top: 3px solid var(--accent2); padding: 12px 16px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent2); padding: 12px 16px;">
           <strong>🧠 2. 費曼法對決</strong> — 跟著 Bot 的追問，用你自己的白話回答它，直到能完美解釋。
         </div>
-        <div class="step-card" style="border-top: 3px solid var(--success); padding: 12px 16px;">
+        <div class="step-card" style="border-top: 4px solid var(--success); padding: 12px 16px;">
           <strong>🌌 3. 收工存檔 (SSOT)</strong> — 對話結束時發送：<br>
-          <code style="color: var(--success); display: block; margin-top: 4px; background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 4px;">收工！請幫我整理今天理解的重點與盲點到我的 SSOT 小卡中，並清理暫存。</code>
-          <span style="font-size: 0.9em; color: #aaa; display: block; margin-top: 4px;">*別忘了將產出複製到你的實體卡片或筆記中！</span>
+          <code style="color: #a3e8b0; display: block; margin-top: 6px; background: #2d3748; padding: 10px 14px; border-radius: 6px; font-family: monospace; line-height: 1.5;">收工！請幫我整理今天理解的重點與盲點到我的 SSOT 小卡中，並清理暫存。</code>
+          <span style="font-size: 0.9em; color: var(--text-sec); display: block; margin-top: 6px;">*別忘了將產出複製到你的實體卡片或筆記中！</span>
         </div>
       </div>
     </section>
@@ -294,7 +319,7 @@
     <section>
       <h2>下堂課預告</h2>
       <h3 style="color: var(--success);">M1 + M2：AI 的失憶症 + 建立第二大腦</h3>
-      <p style="font-size: 0.65em; color: #aaa; margin-top: 1em;">
+      <p style="font-size: 0.65em; color: var(--text-sec); margin-top: 1em;">
         我們會教你如何建立一個「會記住你」的 AI 助理，<br>
         以及如何打造你自己的第二大腦。
       </p>
