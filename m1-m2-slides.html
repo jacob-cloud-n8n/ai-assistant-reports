@@ -166,6 +166,38 @@
       </div>
     </section>
 
+    <!-- 對話解耦與對話壓縮 -->
+    <section>
+      <h2>🧠 對話解耦與壓縮寫回心法</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">別讓 AI 陪你漫聊，用工程思維管理對話</p>
+      <div style="font-size: 0.5em; text-align: left; margin-top: 1.2em; display: flex; flex-direction: column; gap: 12px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <strong>🎯 心法 1：對話解耦 (一對話一任務)</strong>
+          <p style="margin-top: 4px;">嚴禁一個對話框做到底。把任務拆開，例如「對話 A 專做規格分析」、「對話 B 專門寫扣」，專注能減少雜訊，提升 AI 專注度與程式碼品質。</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--success);">
+          <strong>📦 心法 2：對話變笨時立即「壓縮寫回」</strong>
+          <p style="margin-top: 4px;">長對話中 AI 會因為 Context 混亂而變笨。此時直接命令 AI：「將目前結論整理成一張 SSOT 小卡」，然後<strong>開新對話</strong>並丟給它，以乾淨的 Context 繼續高效工作！</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模型 S/A/B 分級 -->
+    <section>
+      <h2>💸 省錢大作戰：S/A/B 級模型分工</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">以高 CP 值的模型配置，最大化節省你的 Token 費用</p>
+      <div style="font-size: 0.5em; text-align: left; margin-top: 1.2em; display: flex; flex-direction: column; gap: 12px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent);">
+          <strong>🏗️ B 級模型做粗工（如 DeepSeek, Claude Haiku）</strong>
+          <p style="margin-top: 4px;">成本極便宜（僅為高階模型的 1/10 甚至免費），適合用來做大量代碼搜尋、寫測試、執行輔助腳本與跑基礎程式修補。</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <strong>🧠 S 級模型做規劃（如 Claude Sonnet, Gemini Pro）</strong>
+          <p style="margin-top: 4px;">邏輯與分析力極強但費用較貴，適合留給第一步的「系統架構規劃」、複雜 Bug 的「深度重構」以及最後的「品質審查與 QA 驗收」。</p>
+        </div>
+      </div>
+    </section>
+
     <!-- 動手做：痛點自檢 -->
     <section>
       <h2>動手做：重複溝通痛點自檢</h2>
@@ -266,6 +298,26 @@
       </div>
       <div class="tip-box">
         💡 這就是 **「Business OS」** 的核心！把規則寫成程式碼/說明書，實現團隊開發協作的自律禮儀。
+      </div>
+    </section>
+
+    <!-- 記憶與說明書分級 -->
+    <section>
+      <h2>🎯 記憶分級：全域規則 vs 專案規則</h2>
+      <p style="font-size: 0.65em; color: var(--text-sec);">讓 AI 自適應不同的工作環境，實現獨立治理</p>
+      <div class="step-grid" style="margin-top: 0.8em; font-size: 0.55em;">
+        <div class="step-card" style="border-top: 3px solid var(--accent);">
+          <h4>🌍 全域規則 (Global Config)</h4>
+          <p>存放在系統全域目錄下（例如 <code>~/.config/</code>）。用來定義 AI 特助的通用習慣（如語系偏好、常用的全域指令、基礎安全防範）。這適用於所有專案。</p>
+        </div>
+        <div class="step-card" style="border-top: 3px solid var(--accent2);">
+          <h4>📂 專案規則 (Project Context)</h4>
+          <p>存放在特定專案的根目錄下（例如 Obsidian 中的 <code>CLAUDE.md</code> 或 <code>AGENTS.md</code>）。用於定義專屬的開發規範、測試驗收標準與該專案的 SSOT 單一真相。</p>
+        </div>
+      </div>
+      <div class="tip-box" style="font-size: 0.55em; margin-top: 0.5em;">
+        💡 <strong>優先權讀取機制：</strong><br>
+        AI Agent 一開工，會優先讀取當前目錄下的專案說明書，如果沒有才去讀取全域說明書。這能讓 AI 在處理不同客戶專案時，自動轉換成正確的角色語氣與商業邏輯，實現精準的「獨立治理」！
       </div>
     </section>
 
