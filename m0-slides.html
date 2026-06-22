@@ -282,17 +282,26 @@
     <section>
       <h2>動手做：防禦性專案初始化</h2>
       <p style="font-size: 0.65em; color: var(--text-sec);">在開始與 AI 協作前，為你的目錄裝上安全護欄</p>
-      <div style="font-size: 0.5em; text-align: left; margin-top: 0.8em; display: flex; flex-direction: column; gap: 10px;">
-        <div class="step-card" style="border-top: 4px solid var(--accent); padding: 12px 16px;">
-          <strong>📂 1. 建立專案目錄與 Git 初始化</strong> — 打開終端機輸入：<br>
-          <code class="code-block" style="margin: 6px 0; font-size: 0.85em;">mkdir my-ai-project && cd my-ai-project<br>git init</code>
+      <div style="font-size: 0.55em; text-align: left; margin-top: 0.6em; display: flex; flex-direction: column; gap: 8px;">
+        <div class="step-card" style="border-top: 4px solid var(--accent); padding: 10px 16px;">
+          <strong>📂 1. 建立專案目錄與 Git 初始化</strong> — 打開終端機輸入：
+          <div class="code-block" style="margin: 6px 0; font-size: 0.75em; line-height: 1.4;">
+            mkdir my-ai-project && cd my-ai-project<br>
+            git init
+          </div>
         </div>
-        <div class="step-card" style="border-top: 4px solid var(--accent2); padding: 12px 16px;">
-          <strong>🛡️ 2. 配置防禦性 .gitignore</strong> — 建立並編輯 <code>.gitignore</code>，防止敏感檔案外流：<br>
-          <code class="code-block" style="margin: 6px 0; font-size: 0.85em;"><span class="comment"># 寫入以下過濾規則</span><br>.env<br>*key*<br>*.json<br>.DS_Store</code>
+        <div class="step-card" style="border-top: 4px solid var(--accent2); padding: 10px 16px;">
+          <strong>🛡️ 2. 配置防禦性 .gitignore</strong> — 建立並編輯 <code>.gitignore</code>，防止敏感檔案外流：
+          <div class="code-block" style="margin: 6px 0; font-size: 0.75em; line-height: 1.4;">
+            <span class="comment"># 寫入以下過濾規則</span><br>
+            .env<br>
+            *key*<br>
+            *.json<br>
+            .DS_Store
+          </div>
         </div>
       </div>
-      <div class="tip-box" style="margin-top: 0.5em;">
+      <div class="tip-box" style="margin-top: 0.5em; font-size: 0.55em;">
         💡 這樣即使 Agent 自動執行 Git 提交，也絕對不會把您的 OpenRouter Key 或是敏感憑證上傳到 GitHub！
       </div>
     </section>
