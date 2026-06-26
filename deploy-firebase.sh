@@ -36,6 +36,7 @@ rsync -a \
   --include='*.gif' \
   --include='*.svg' \
   --include='*.ico' \
+  --include='*.m4a' \
   --exclude='*' \
   "$SCRIPT_DIR/" "$DEPLOY_DIR/"
 

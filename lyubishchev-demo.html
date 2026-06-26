@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一人公司自動化與時間審計 — 柳比歇夫法實戰評估</title>
+<!-- 載入 Google Fonts (襯線字 Playfair Display 做 display 標題，無襯線 Outfit 做內文) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #121214;
+    --text-primary: #f5f5f7;
+    --text-secondary: #86868b;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --accent: #0071e3;
+    --accent-glow: rgba(0, 113, 227, 0.4);
+    --success: #34c759;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'PingFang TC', sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 24px;
+    -webkit-font-smoothing: antialiased;
+    /* 背景極簡冷灰漸變，頂部微弱冷色發光 */
+    background: radial-gradient(circle at 50% 0%, rgba(0, 113, 227, 0.08) 0%, var(--bg-base) 70%);
+  }
+
+  .wrapper {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* ── Header (極簡襯線字體標題) ── */
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    transition: color 0.3s;
+  }
+  .back-link:hover {
+    color: var(--accent);
+  }
+  .back-link svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform 0.3s;
+  }
+  .back-link:hover svg {
+    transform: translateX(-4px);
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  h1 span {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
+  p.lead {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── Glassmorphism Card Style ── */
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  /* ── Audio Card (播客播放器) ── */
+  .audio-card {
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    position: relative;
+  }
+  .audio-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.03));
+    pointer-events: none;
+  }
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--text-primary);
+    color: var(--bg-base);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+  .play-btn:hover {
+    transform: scale(1.05);
+    background-color: #ffffff;
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+  .play-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+  .audio-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .audio-title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .audio-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .audio-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  .time-lbl {
+    font-size: 12px;
+    color: var(--text-secondary);
+    min-width: 35px;
+    font-variant-numeric: tabular-nums;
+  }
+  .slider-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+  }
+
+  /* ── Slideshow Section (純 JS 平滑 Slider) ── */
+  .slides-card {
+    position: relative;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+  }
+  .slides-viewport {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+  }
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .slide-num {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .slide h2 {
+    font-size: clamp(24px, 3vw, 30px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .slide h3 {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .slide p {
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    max-width: 720px;
+  }
+
+  /* Slider Controls */
+  .slider-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+    margin-top: 16px;
+  }
+  .dot-indicators {
+    display: flex;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .dot.active {
+    background: var(--accent);
+  }
+  .nav-btns {
+    display: flex;
+    gap: 12px;
+  }
+  .ctrl-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  .ctrl-btn:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .ctrl-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+  }
+
+  /* ── Report Section (展開式全文閱讀) ── */
+  .report-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .toggle-btn:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text-primary);
+  }
+  .toggle-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform 0.3s;
+  }
+  .toggle-btn.expanded svg {
+    transform: rotate(180deg);
+  }
+  .report-content-wrapper {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .report-content {
+    padding-top: 32px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .report-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 12px;
+    border-left: 3px solid var(--accent);
+    padding-left: 12px;
+  }
+  .report-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 8px;
+  }
+  .report-content ul {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .report-content code {
+    font-family: monospace;
+    background: rgba(255,255,255,0.06);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  
+  <!-- Back Link -->
+  <a href="index.html" class="back-link">
+    <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    返回助理方案首頁
+  </a>
+
+  <!-- Header -->
+  <header>
+    <h1>一人公司自動化<span>與工時審計</span></h1>
+    <p class="lead">結合 NotebookLM RAG 系統、AI Agent 效能審計與雙人 Podcast 語音摘要，實時量化您的專案開發成本與自動化計價體系。</p>
+  </header>
+
+  <!-- HTML5 Audio element -->
+  <audio id="podcast-audio" src="images/lyubishchev_podcast.m4a"></audio>
+
+  <!-- 1. Audio Card (播客播放面板) -->
+  <div class="glass-card audio-card">
+    <button class="play-btn" id="play-btn" aria-label="播放音訊">
+      <!-- Play Icon -->
+      <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <!-- Pause Icon (Hidden by default) -->
+      <svg id="pause-icon" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+    <div class="audio-info">
+      <div class="audio-title-bar">
+        <span class="audio-subtitle">NotebookLM Deep Dive</span>
+        <span class="audio-title">柳比歇夫時間統計與團隊 OS 整合評估</span>
+      </div>
+      <div class="progress-container">
+        <span class="time-lbl" id="current-time">0:00</span>
+        <div class="slider-wrapper">
+          <input type="range" id="progress-bar" value="0" min="0" step="1">
+        </div>
+        <span class="time-lbl" id="duration">0:00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Slideshow Card (投影片展示) -->
+  <div class="glass-card slides-card">
+    <div class="slides-viewport">
+      
+      <!-- Slide 1 -->
+      <div class="slide active">
+        <span class="slide-num">Slide 01</span>
+        <h2>用 AI 自動化重塑營運與工時審計</h2>
+        <h3>—— 一人公司的「柳比歇夫時間統計法」實戰評估</h3>
+        <p>基於《奇特的一生》核心精神，將「純時間」概念與 AI Agent 的「純 Token/運算消耗」相結合，打造無感、客觀的專案工時決策與計價體系。</p>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide">
+        <span class="slide-num">Slide 02</span>
+        <h2>方案 A - AI Agent 效能定量審計</h2>
+        <h3>解決 AI 暗地裡重複嘗試造成的 Token 浪費</h3>
+        <p>在去中心化 Task.md 的 Execution Log 中，記錄 Net Time (純運算時間) 與實際 Token 消耗。將 API 429 或死鎖 Debug 步驟標記為「時間黑洞」，收工時由 Claude 彙整並生成日誌，自動估算 AI 開發成本。</p>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide">
+        <span class="slide-num">Slide 03</span>
+        <h2>方案 B - 草屯 AI 書僮時間自律</h2>
+        <h3>引導學員（如 12 歲兒童）建立內在時間感</h3>
+        <p>由 Hermes 擔任隨身書僮，於 Discord Bot 中新增 `/focus` 與 `/done` 指令。在完成時進行引導式詢問，扣除喝水玩手機等干擾，記錄最真實的「純專注時間」，培養自律與健康睡眠原則。</p>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide">
+        <span class="slide-num">Slide 04</span>
+        <h2>方案 C - Jacob's OS 決策面板</h2>
+        <h3>用數據驅動未來報價與精準估時</h3>
+        <p>利用 n8n 工作流定時抓取 Git repository 中的 `_worklog.md`，單向投影至 Notion 資料庫。視覺化分析主業（新開發）、輔業（維護）與時間垃圾佔比，作為商業報價的科學基準。</p>
+      </div>
+
+    </div>
+
+    <!-- Slider Controls -->
+    <div class="slider-controls">
+      <div class="dot-indicators" id="dot-indicators">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div class="nav-btns">
+        <button class="ctrl-btn" id="prev-btn" aria-label="上一張">
+          <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button class="ctrl-btn" id="next-btn" aria-label="下一張">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Report Section (展開式全文) -->
+  <div class="report-section">
+    <button class="toggle-btn" id="toggle-report-btn">
+      閱讀完整評估報告全文
+      <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    
+    <div class="report-content-wrapper" id="report-wrapper">
+      <div class="report-content">
+        <h2>一、 柳比歇夫法核心價值與團隊痛點對齊</h2>
+        <p>柳比歇夫法本質是<strong>以客觀數據對抗主觀偏見，透過對「純時間」(Net Time) 的無情誠實記錄，建立精準的自我控制與決策感。</strong></p>
+        <p>目前團隊與學習系統存在以下可優化痛點：</p>
+        <ul>
+          <li><strong>Agent 的「時間/運算垃圾」未被定量</strong>：當 Agent 遭遇網路 Rate Limit、API 429、死循環或 Debug 挫敗時，常因「Token 止損線」（3 次重試）而在暗中消耗大量 Token 與運算時間，但這些「時間黑洞」缺乏客觀統計，無法回溯分析。</li>
+          <li><strong>學員（如 12 歲草屯班）缺乏時間感</strong>：初學程式的孩子容易高估自己的專注力，或因挫折而中途放棄，缺乏精確評估「寫出一段程式碼需要多少純時間」的「時間感」。</li>
+          <li><strong>專案管理缺乏歷史預算數據</strong>：Jacob 在評估新任務時，缺乏歷史「純開發時間」做為量化決策依據。</li>
+        </ul>
+
+        <h2>二、 結合方案詳細規劃</h2>
+        <h3>方案 A：AI Agent 效能審計與 Token 量化統計 (個人/團隊 OS)</h3>
+        <p><strong>目標</strong>：定量追蹤 Agent 的「純工作時間」與「運算垃圾（黑洞）」，評估 Agent 的效能產出比。</p>
+        <ul>
+          <li><strong>實作細節 — Task 檔擴充</strong>：在 <code>.tasks/&lt;task-id&gt;.md</code> 的執行日誌中，強制加入 <code>⏱️ 純運算時間 (Net Time)</code> 與 <code>🪙 實際 Token 消耗</code> 欄位。</li>
+          <li><strong>純運算時間</strong>：刨除 Agent 閒置或等待 Jacob 批准指令的「牆鐘時間」，僅計算 Agent 在背後「思考與執行工具呼叫」的純運算時間。</li>
+          <li><strong>識別時間垃圾 (時間黑洞)</strong>：凡是重試失敗、API 429、或代碼編譯/Lint 錯誤而重來的步驟，在 Task 日誌中必須明確標記為 <code>[時間黑洞]</code>。收工時由 Claude 彙整，寫入每日學習盤點日誌。</li>
+        </ul>
+
+        <h3>方案 B：草屯 AI 書僮班時間自律引導 (學習系統)</h3>
+        <p><strong>目標</strong>：以 Hermes 擔任隨身書僮的角色，引導 12 歲學員建立「時間自律」與精準的「時間感」。</p>
+        <ul>
+          <li><strong>實作細節 — Discord 時間記帳書僮功能</strong>：在草屯班 Discord 機器人中，新增 <code>/focus [任務名稱]</code> 與 <code>/done</code> 指令。當學員輸入完成時，AI 書僮（Hermes）發起引導式詢問扣除分心時間，記錄最真實的「純專注時間」。</li>
+          <li><strong>建立「內在時間感」(Inner Clock)</strong>：每週五自動為學員產出「時間大師週報」，分析學員的純專注比例。並利用歷史數據給予預算建議。</li>
+          <li><strong>生活原則融入</strong>：貫徹柳比歇夫「累了立刻休息」的精神，主動提示學員離座活動，拒絕無效的疲勞學習。</li>
+        </ul>
+
+        <h3>方案 C：Jacob's Business OS 時間決策儀表板 (團隊管理)</h3>
+        <p><strong>目標</strong>：透過 n8n 與 Notion，將 Jacob 與 Agent 團隊花費的純時間可視化，作為商業決策依據。</p>
+        <ul>
+          <li><strong>數據流自動化</strong>：n8n 工作流定期抓取 Git 倉庫中的 <code>_worklog.md</code> 數據，並將解析後的純時間單向投影至 Notion。</li>
+          <li><strong>Notion 決策儀表板</strong>：圖表化呈現「第一類工作 (主業)」、「第二類工作 (輔業)」與「時間垃圾 (黑洞)」的結構分析，輔助 Jacob 進行新專案的報價與預算評估。</li>
+        </ul>
+
+        <h2>三、 落地實施路徑與優先級</h2>
+        <ul>
+          <li><strong>Phase 1：AI Agent 統計試點 (P0 · 本日啟動)</strong>：由 AG 率先在接下來的任務中，於 Task 日誌與收工回報中加入 <code>⏱️ 純時間</code> 與 <code>🪙 Token</code>（或工具呼叫次數）的統計。</li>
+          <li><strong>Phase 2：草屯班 Discord 書僮規格設計 (P1)</strong>：若 Jacob 同意此引導方案，將此規格寫入 Task 中，由 OpenCode/AG 實作。</li>
+          <li><strong>Phase 3：n8n Notion 同步管線擴充 (P2)</strong>：修改 n8n 日報與 Notion 同步腳本，自動解析 Task.md 中的工時資料。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 AI 官方助理與課程首頁 ｜ 由 Jacob 團隊與 AI Agent 協作提供</p>
+  </footer>
+
+</div>
+
+<!-- 播放器與 Slider 控制 JS -->
+<script>
+  // ── Audio Player Setup ──
+  const audio = document.getElementById('podcast-audio');
+  const playBtn = document.getElementById('play-btn');
+  const playIcon = document.getElementById('play-icon');
+  const pauseIcon = document.getElementById('pause-icon');
+  const progressBar = document.getElementById('progress-bar');
+  const currentTimeLbl = document.getElementById('current-time');
+  const durationLbl = document.getElementById('duration');
+
+  function formatTime(secs) {
+    if (isNaN(secs)) return '0:00';
+    const minutes = Math.floor(secs / 60);
+    const seconds = Math.floor(secs % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  // Audio events
+  audio.addEventListener('loadedmetadata', () => {
+    progressBar.max = Math.floor(audio.duration);
+    durationLbl.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    progressBar.value = Math.floor(audio.currentTime);
+    currentTimeLbl.textContent = formatTime(audio.currentTime);
+  });
+
+  audio.addEventListener('ended', () => {
+    playIcon.style.display = 'block';
+    pauseIcon.style.display = 'none';
+  });
+
+  // Play/Pause Click
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playIcon.style.display = 'none';
+      pauseIcon.style.display = 'block';
+    } else {
+      audio.pause();
+      playIcon.style.display = 'block';
+      pauseIcon.style.display = 'none';
+    }
+  });
+
+  // Seek bar input
+  progressBar.addEventListener('input', () => {
+    audio.currentTime = progressBar.value;
+  });
+
+  // ── Slider Setup ──
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    
+    currentSlide = (index + slides.length) % slides.length;
+    
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+  }
+
+  prevBtn.addEventListener('click', () => {
+    showSlide(currentSlide - 1);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    showSlide(currentSlide + 1);
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+    });
+  });
+
+  // ── Toggle Report Section ──
+  const toggleReportBtn = document.getElementById('toggle-report-btn');
+  const reportWrapper = document.getElementById('report-wrapper');
+
+  toggleReportBtn.addEventListener('click', () => {
+    toggleReportBtn.classList.toggle('expanded');
+    if (reportWrapper.style.maxHeight && reportWrapper.style.maxHeight !== '0px') {
+      reportWrapper.style.maxHeight = '0px';
+    } else {
+      reportWrapper.style.maxHeight = reportWrapper.scrollHeight + 'px';
+    }
+  });
+</script>
+
+</body>
+</html>
