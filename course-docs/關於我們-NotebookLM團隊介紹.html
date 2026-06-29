@@ -1,380 +1,445 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>關於我們 — NotebookLM 實驗版本</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
-<style>
-  :root {
-    --bg-main: #f8fafc; /* 冷灰底色 */
-    --text-main: #0f172a; /* 深灰文字 */
-    --text-sec: #475569; /* 中灰文字 */
-    --accent: #0f172a;
-    --accent2: #64748b; /* 灰調點綴 */
-    --success: #16a34a;
-    --warn: #ea580c;
-    --card-bg: #ffffff;
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-    --card-border: 1px solid #e2e8f0;
-  }
-  .reveal {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-main);
-  }
-  .reveal h1, .reveal h2, .reveal h3 {
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text-main);
-    text-transform: none;
-  }
-  .reveal h1 { font-size: 2.2em; color: var(--accent); line-height: 1.2; }
-  .reveal h2 { font-size: 1.5em; color: var(--accent); margin-bottom: 0.8em; }
-  .reveal h3 { font-size: 1.2em; color: var(--accent2); }
-  .reveal .progress { color: var(--accent); }
-  .reveal .controls { color: var(--accent); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>關於我們 — NotebookLM 實驗版本 (Sleek Dark Mode)</title>
+    
+    <!-- Reveal.js 核心 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    
+    <!-- Google Fonts 引入極簡無襯線與雅緻襯線字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 現代科技暗黑風格 Sleek Dark Mode & 冷灰色調 */
+        :root {
+            --bg-color: hsl(220, 20%, 8%);
+            --text-primary: hsl(220, 15%, 90%);
+            --text-muted: hsl(220, 10%, 65%);
+            --accent-gradient: linear-gradient(135deg, hsl(200, 80%, 75%), hsl(270, 70%, 75%));
+            --accent-gradient-text: linear-gradient(135deg, hsl(200, 80%, 80%), hsl(270, 70%, 80%));
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --r-main-font: 'Inter', 'Noto Sans TC', sans-serif;
+            --r-heading-font: 'Noto Serif TC', 'Noto Sans TC', serif;
+        }
 
-  /* Hero Section (大面積留白，深灰/冷灰色調) */
-  .hero-slide { text-align: center; padding: 40px; }
-  .hero-slide h1 { font-size: 2.5em; margin-bottom: 0.2em; }
-  .hero-slide .subtitle { font-size: 0.9em; color: var(--text-sec); margin-bottom: 1.5em; font-weight: 500; }
-  .hero-slide .desc { font-size: 0.6em; color: var(--text-sec); max-width: 800px; margin: 0 auto; line-height: 1.8; text-align: justify; }
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(120, 140, 200, 0.06), transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(180, 140, 220, 0.06), transparent 30%);
+            color: var(--text-primary);
+        }
 
-  /* 引言區塊 (Blockquote) */
-  .philosophy-blockquote {
-    background: var(--card-bg);
-    border-radius: 12px; padding: 32px 40px;
-    box-shadow: var(--card-shadow);
-    border-left: 6px solid var(--accent2);
-    text-align: left; max-width: 800px; margin: 0 auto;
-    font-size: 0.65em; line-height: 1.8;
-  }
-  .philosophy-blockquote .quote-title {
-    font-size: 1.3em; font-weight: 700; color: var(--accent);
-    margin-bottom: 16px; display: block;
-  }
+        .reveal {
+            font-family: var(--r-main-font);
+        }
 
-  /* 數據與架構 */
-  .split-layout { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 24px; font-size: 0.52em; text-align: left; }
-  .stats-list { display: flex; flex-direction: column; gap: 10px; }
-  .stat-item {
-    background: var(--card-bg);
-    border-radius: 8px; padding: 10px 16px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .stat-item .num { font-size: 1.4em; font-weight: 800; color: var(--accent); }
-  .stat-item .lbl { color: var(--text-sec); }
+        /* 漸層標題 */
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: var(--r-heading-font);
+            text-transform: none;
+            letter-spacing: 0.03em;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .gradient-text {
+            background: var(--accent-gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
 
-  .arch-box {
-    background: var(--card-bg);
-    border-radius: 12px; padding: 20px 24px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    font-family: 'SF Mono', Monaco, Consolas, monospace;
-    line-height: 1.7;
-  }
-  .arch-box .hl { color: var(--accent); font-weight: 700; }
-  .arch-box .hl2 { color: var(--text-sec); font-weight: 600; }
+        /* 磨砂玻璃 (Glassmorphism) 效果 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
 
-  /* 案例網格 (Cards) */
-  .case-cards-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; font-size: 0.42em; margin-top: 0.5em; }
-  .case-card-minimal {
-    background: var(--card-bg);
-    border-radius: 10px; padding: 18px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    text-align: left; display: flex; flex-direction: column; justify-content: space-between;
-  }
-  .case-card-minimal h4 { font-size: 1.2em; color: var(--accent); margin-bottom: 8px; font-weight: 700; }
-  .case-card-minimal p { color: var(--text-sec); line-height: 1.6; }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.6);
+        }
 
-  /* 故事卡片 */
-  .story-card-minimal {
-    background: var(--card-bg);
-    border-radius: 12px; padding: 32px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    text-align: left; font-size: 0.58em; line-height: 1.8;
-    max-width: 800px; margin: 0 auto;
-  }
-  .story-card-minimal .highlight { font-weight: 700; color: var(--accent); border-bottom: 2px solid var(--accent2); }
+        /* 網格與列表排版 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
 
-  /* 時間軸工作流 */
-  .timeline-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; font-size: 0.52em; margin-top: 1em; }
-  .timeline-card {
-    background: var(--card-bg);
-    border-radius: 10px; padding: 20px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    border-top: 4px solid var(--accent2);
-    text-align: left;
-  }
-  .timeline-card h4 { font-size: 1.1em; color: var(--accent); margin-bottom: 8px; font-weight: 700; }
-  .timeline-card p { color: var(--text-sec); line-height: 1.6; }
+        .reveal ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
 
-  /* 對比表格 */
-  .compare-container { max-width: 900px; margin: 0 auto; font-size: 0.48em; }
-  .compare-table-minimal { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: var(--card-shadow); border: var(--card-border); }
-  .compare-table-minimal th { background: #f1f5f9; color: var(--accent); padding: 16px; text-align: left; font-weight: 700; border-bottom: 2px solid #e2e8f0; }
-  .compare-table-minimal td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; color: var(--text-main); line-height: 1.5; }
-  .compare-table-minimal tr:last-child td { border-bottom: none; }
-  .compare-table-minimal td.cross { color: #94a3b8; }
-  .compare-table-minimal td.check { font-weight: 600; }
+        .reveal li {
+            margin-bottom: 0.8rem;
+            font-size: 0.9em;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: 1.5rem;
+            line-height: 1.6;
+        }
 
-  /* 適合誰 / 交付價值 */
-  .flex-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.5em; max-width: 960px; margin: 0 auto; }
-  .flex-card {
-    background: var(--card-bg);
-    border-radius: 10px; padding: 20px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    text-align: left;
-  }
-  .flex-card h4 { font-size: 1.1em; color: var(--accent); margin-bottom: 6px; font-weight: 700; }
-  .flex-card p { color: var(--text-sec); line-height: 1.6; }
+        .reveal li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: hsl(200, 80%, 75%);
+            font-size: 0.8em;
+            top: 0.15em;
+        }
 
-  .end-slide { text-align: center; }
-  .end-slide .title { font-size: 2.2em; font-weight: 700; color: var(--accent); margin-bottom: 0.2em; }
-  .end-slide .tagline { font-size: 0.7em; color: var(--text-sec); margin-bottom: 2em; }
-  .end-slide .footer { font-size: 0.5em; color: var(--accent2); font-weight: 600; letter-spacing: 0.05em; }
-</style>
+        /* 表格微調 */
+        .glass-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+        
+        .glass-table th, .glass-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            text-align: left;
+        }
+
+        .glass-table th {
+            color: hsl(200, 80%, 85%);
+            font-weight: 700;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-table td {
+            color: var(--text-primary);
+        }
+
+        /* 數據高亮 */
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: var(--accent-gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 0.2rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* 微動畫 */
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 引言區塊 */
+        .reveal blockquote {
+            background: var(--glass-bg);
+            border-left: 4px solid hsl(200, 80%, 75%);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            font-style: normal;
+            box-shadow: none;
+            width: 100%;
+            font-size: 1.15em;
+            color: var(--text-primary);
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        .footnote {
+            font-size: 0.4em;
+            color: var(--text-muted);
+            margin-top: 3rem !important;
+        }
+        
+        .highlight-accent {
+            color: hsl(200, 80%, 75%);
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-<div class="reveal">
-  <div class="slides">
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- 1. 封面 -->
+            <section data-background-color="hsl(220, 20%, 6%)">
+                <div class="glass-card fade-up" style="max-width: 900px; margin: 0 auto;">
+                    <h1 class="gradient-text" style="font-size: 2.8em; margin-bottom: 0.2em;">關於我們</h1>
+                    <h3 style="color: var(--text-muted); font-size: 1.25em; font-weight: 300; margin-top: 0.5rem;">Jacob Business OS — AI 原生協作團隊</h3>
+                    <div style="width: 80px; height: 2px; background: var(--accent-gradient); margin: 2rem auto;"></div>
+                    <p style="font-size: 1em; letter-spacing: 0.05em; color: var(--text-primary);">不只學工具，學一整套思考與協作的方式</p>
+                </div>
+            </section>
 
-    <!-- Hero Section / 首屏視覺區 -->
-    <section data-background-color="#0f172a">
-      <div class="hero-slide" style="color: #f8fafc;">
-        <h1 style="color: #f8fafc;">Jacob Business OS</h1>
-        <p class="subtitle" style="color: #94a3b8;">AI 原生協作團隊</p>
-        <p style="font-size: 0.6em; color: #cbd5e1; margin-bottom: 2em;">不只學工具操作，學一整套思考與協作的方式</p>
-        <p class="desc" style="color: #64748b;">
-          成立於 2026 年 5 月。這不是紙上談兵。我們每天都在與 AI 團隊協作，累積了真實的開發歷程與踩坑經驗。現在，我們把這套日常運作轉化為課程——教你讓 AI 成為陪著你一起成長的教練。
-        </p>
-      </div>
-    </section>
+            <!-- 2. 我們在做什麼 -->
+            <section>
+                <h2 class="gradient-text">我們在做什麼</h2>
+                <div class="glass-card" style="margin-top: 2rem; text-align: left; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <p style="font-size: 1.1em; line-height: 1.8;">我們自己每天都在用 AI agent 團隊協作，累積了真實的開發歷程與踩坑經驗。</p>
+                    <p class="fragment" style="font-size: 1.1em; line-height: 1.8; margin-top: 1.5rem;">現在，我們把這套經驗轉化為課程——教你讓 AI 成為陪著你一起成長的教練。</p>
+                    <div style="border-top: 1px solid var(--glass-border); margin-top: 2rem; padding-top: 1.5rem;">
+                        <p style="color: var(--text-muted); font-size: 0.85em;">（成立於 2026 年 5 月，每天持續運作中）</p>
+                    </div>
+                </div>
+            </section>
 
-    <!-- Section 1: 核心哲學 -->
-    <section>
-      <h2>我們相信</h2>
-      <div class="philosophy-blockquote">
-        <span class="quote-title">「工具會過時，但核心思維不會。」</span>
-        <p>AI 進步得太快，今天學的操作，三個月後可能就無效了。</p>
-        <p style="margin-top: 10px;">所以我們不教你「按哪個按鈕」，我們教「怎麼思考」。</p>
-        <p style="margin-top: 10px;">就像為你配備一個學僮，不是丟一本手冊給你，而是陪在你旁邊，知道你的進度，並在你卡住時推你一把。當你的核心思維建立起來，工具的進步將不再是威脅——而是更大的助力。</p>
-      </div>
-    </section>
+            <!-- 3. 核心哲學 -->
+            <section>
+                <h2 class="gradient-text">我們相信</h2>
+                <div class="glass-card" style="margin-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <blockquote>
+                        <strong>「工具會過時，但核心思維不會。」</strong>
+                    </blockquote>
+                    <div style="text-align: left; margin-top: 1.8rem; font-size: 0.9em; line-height: 1.8;">
+                        <p class="fragment" style="margin-bottom: 1rem;">AI 工具進步太快——今天學的操作，三個月後可能就被取代。</p>
+                        <p class="fragment" style="margin-bottom: 1rem;">所以我們不教「按哪個按鈕」，我們教「怎麼思考」。</p>
+                        <p class="fragment" style="margin-bottom: 1rem;">就像一個學僮，不是丟一本手冊給你，而是陪在你旁邊、知道你的進度、在你卡住時推你一把。</p>
+                        <p class="fragment highlight-accent" style="margin-top: 1.5rem; font-size: 1.05em;">當你的核心思維建立起來，工具進步不是威脅——是更大的助力。</p>
+                    </div>
+                </div>
+            </section>
 
-    <!-- Section 2: 真實實績與團隊架構 -->
-    <section>
-      <h2>真實實績與團隊架構</h2>
-      <div class="split-layout">
-        <!-- 左側：數據 -->
-        <div class="stats-list">
-          <div style="font-weight: 700; margin-bottom: 8px; font-size: 1.1em; color: var(--accent);">以數字說話的日常：</div>
-          <div class="stat-item"><span class="lbl">GitHub 提交</span><span class="num">174 次</span></div>
-          <div class="stat-item"><span class="lbl">專職 AI Agent</span><span class="num">7 位</span></div>
-          <div class="stat-item"><span class="lbl">可安裝 AI 技能</span><span class="num">25 個</span></div>
-          <div class="stat-item"><span class="lbl">知識庫文章</span><span class="num">100+ 篇</span></div>
-          <div class="stat-item"><span class="lbl">商業網站與系統</span><span class="num">6 個</span></div>
-        </div>
-        <!-- 右側：架構 -->
-        <div class="arch-box">
-          <div style="font-weight: 700; margin-bottom: 8px; color: var(--accent);">去中心化協作網絡：</div>
-          <div style="margin-left: 0px;"><span class="hl">Jacob</span> (創辦人/教練) ➔ 定義方向</div>
-          <div style="margin-left: 20px; margin-top: 4px;"><span class="hl">Claude</span> (核心大腦) ➔ 需求理解 · 任務編排</div>
-          <div style="margin-left: 40px; margin-top: 4px; color: var(--text-sec);">執行層 Agents：</div>
-          <div style="margin-left: 50px;"><span class="hl2">AG</span> ➔ 專案管理與設計 (架構/UI)</div>
-          <div style="margin-left: 50px;"><span class="hl2">Codex</span> ➔ 技術負責人 (審查/測試/PR)</div>
-          <div style="margin-left: 50px;"><span class="hl2">OpenCode / MiMoCode</span> ➔ 部署與原型開發</div>
-          <div style="margin-left: 50px;"><span class="hl2">Hermes</span> ➔ 客戶溝通、文件與陪伴</div>
-          <div style="margin-left: 50px;"><span class="hl2">n8n</span> ➔ 自動化血管 (日報/通知/同步)</div>
-        </div>
-      </div>
-    </section>
+            <!-- 4. 運作實績 -->
+            <section>
+                <h2 class="gradient-text" style="margin-bottom: 2rem;">我們的運作實績</h2>
+                <div class="grid-3" style="max-width: 1000px; margin: 0 auto;">
+                    <div class="glass-card fragment">
+                        <span class="stat-number">174 次</span>
+                        <span class="stat-label">GitHub 提交</span>
+                    </div>
+                    <div class="glass-card fragment">
+                        <span class="stat-number">7 位</span>
+                        <span class="stat-label">AI Agent 成員</span>
+                    </div>
+                    <div class="glass-card fragment">
+                        <span class="stat-number">25 個</span>
+                        <span class="stat-label">可安裝 AI 技能</span>
+                    </div>
+                    <div class="glass-card fragment">
+                        <span class="stat-number">100+ 篇</span>
+                        <span class="stat-label">知識庫文章</span>
+                    </div>
+                    <div class="glass-card fragment">
+                        <span class="stat-number">6 個</span>
+                        <span class="stat-label">商業網站與系統</span>
+                    </div>
+                    <div class="glass-card fragment">
+                        <span class="stat-number">3 門</span>
+                        <span class="stat-label">開設中課程</span>
+                    </div>
+                </div>
+                <p class="fragment" style="margin-top: 2rem; font-size: 0.85em; color: var(--text-muted);">包含 4 項部署服務 × 自動化，以及桌面 ↔ 雲端雙向同步。</p>
+            </section>
 
-    <!-- Section 3: 實戰案例 -->
-    <section>
-      <h2>我們實際交付過什麼？</h2>
-      <div class="case-cards-grid">
-        <div class="case-card-minimal">
-          <h4>企業官網建置</h4>
-          <p>從設計到上線，現代化 Astro SSR 架構與 SEO 優化，助力品牌專業呈現。</p>
-        </div>
-        <div class="case-card-minimal">
-          <h4>進銷存管理系統</h4>
-          <p>為零售業打造，客戶回饋直接轉化為系統功能，如進貨自動換算單位成本。</p>
-        </div>
-        <div class="case-card-minimal">
-          <h4>LINE 官方助理</h4>
-          <p>利用 n8n 串接 LINE 自動回覆系統，即時精準地接住客戶詢問。</p>
-        </div>
-        <div class="case-card-minimal">
-          <h4>AI 知識庫系統</h4>
-          <p>100+ 篇文章的語意搜尋引擎，讓知識不再沉入資料夾底層，隨手可查。</p>
-        </div>
-        <div class="case-card-minimal">
-          <h4>AI 系列課程</h4>
-          <p>開設多堂 AI 實戰課程，覆蓋 12 歲到成人，包含專屬 Discord 書僮部署。</p>
-        </div>
-        <div class="case-card-minimal">
-          <h4>課程創作方法論</h4>
-          <p>80 份檔案系統化重整，結合費曼學習法實戰內化，從概念到成果交付。</p>
-        </div>
-      </div>
-    </section>
+            <!-- 5. 團隊架構 -->
+            <section>
+                <h2 class="gradient-text">團隊協作架構</h2>
+                <div class="glass-card" style="text-align: left; margin-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <p style="font-weight: 600; font-size: 1.05em; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; color: hsl(200, 80%, 85%);">
+                        Jacob (創辦人/教練) → Claude (大腦：需求理解、任務編排、居中協調) → 執行層
+                    </p>
+                    <ul style="margin-top: 1.5rem;">
+                        <li class="fragment"><strong>AG：</strong>PM + 設計（架構、UI、簡報）</li>
+                        <li class="fragment"><strong>Codex：</strong>Tech Lead（審查、測試、PR 合併）</li>
+                        <li class="fragment"><strong>OpenCode / MiMoCode：</strong>部署與原型開發</li>
+                        <li class="fragment"><strong>Hermes：</strong>陪伴、客戶溝通、文件撰寫</li>
+                        <li class="fragment"><strong>n8n：</strong>自動化血管（日報、通知、同步）</li>
+                    </ul>
+                    <p class="fragment" style="margin-top: 1.5rem; font-size: 0.85em; color: var(--text-muted); border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+                        7 個 AI agent，各有專業領域，彼此協作。我們每天都這樣工作。
+                    </p>
+                </div>
+            </section>
 
-    <!-- Section 3: 真實故事 -->
-    <section>
-      <h2>一個關於改變的故事</h2>
-      <div class="story-card-minimal">
-        <p>不久前，有一位企業主，原本只是請我們進行<span class="highlight">系統展示</span>。</p>
-        <p style="margin-top: 14px;">但在展示過程中，他看到的不僅僅是一個工具，而是看到：</p>
-        <p style="font-style: italic; color: var(--accent); font-weight: 600;">「原來 AI 可以這樣實實在在地陪著我做事。」</p>
-        <p style="margin-top: 14px;">展示結束後，他沒有問常見的「這套系統報價多少」，他問的是：</p>
-        <p style="font-weight: 700; color: var(--accent); font-size: 1.1em;">「我可以跟你們學這個嗎？」</p>
-        <p style="margin-top: 14px;">後來，他成為了我們 AI 教學班的學員。這正是我們想傳遞的價值：</p>
-        <p style="font-weight: 600; color: var(--accent2);">與其單純賣一個工具給你，不如讓你學會怎麼駕馭它。</p>
-      </div>
-    </section>
+            <!-- 6. 實戰案例 -->
+            <section>
+                <h2 class="gradient-text">我們做過什麼</h2>
+                <div class="grid-2" style="margin-top: 2rem; max-width: 960px; margin-left: auto; margin-right: auto;">
+                    <div class="glass-card fragment" style="padding: 2rem; text-align: left; height: 100%;">
+                        <h4 style="font-size: 1.25em; color: hsl(200, 80%, 85%); margin-bottom: 1.2rem; font-weight: 600;">系統與開發</h4>
+                        <ul>
+                            <li><strong>企業官網建置：</strong>SSR 架構、SEO 優化、從設計到上線全流程</li>
+                            <li><strong>進銷存管理系統：</strong>客製庫存工具，客戶回饋直接轉化為功能</li>
+                            <li><strong>LINE 官方助理：</strong>串接 n8n × LINE 自動回覆系統，詢問不漏接</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card fragment" style="padding: 2rem; text-align: left; height: 100%;">
+                        <h4 style="font-size: 1.25em; color: hsl(200, 80%, 85%); margin-bottom: 1.2rem; font-weight: 600;">知識與教育</h4>
+                        <ul>
+                            <li><strong>AI 系列課程：</strong>多堂實戰課程，含 12 歲學員 Discord 書僮部署</li>
+                            <li><strong>課程創作方法論：</strong>80 份檔案重整與費曼學習法實戰內化</li>
+                            <li><strong>AI 知識庫系統：</strong>100+ 篇文章語意搜尋，資訊隨手可查</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
-    <!-- Section 4: 開發流程 -->
-    <section>
-      <h2>我們的日常協作方式</h2>
-      <div class="timeline-grid">
-        <div class="timeline-card">
-          <h4>1. 開工</h4>
-          <p>Git 同步 ➔ 讀取治理文件 ➔ 確認今日重點 ➔ 回報狀態 ➔ 等待確認 ➔ 動手執行。</p>
-        </div>
-        <div class="timeline-card">
-          <h4>2. 執行</h4>
-          <p>任務去中心化。每個任務一個獨立檔案，狀態透明，誰都能接手。</p>
-        </div>
-        <div class="timeline-card">
-          <h4>3. 收工</h4>
-          <p>安全掃描 ➔ 撰寫筆記 ➔ 編譯知識庫 ➔ Stage 產出 ➔ Commit/Push 確保安全。</p>
-        </div>
-        <div class="timeline-card">
-          <h4>4. 復盤</h4>
-          <p>每日 Session Log ➔ 每週自動 Health Lint ➔ 雙 AI 交叉審查持續優化。</p>
-        </div>
-      </div>
-      <p style="font-size: 0.45em; color: var(--text-sec); margin-top: 1.5em;">這套流程，就是你在課程中會學到的核心協作思維。</p>
-    </section>
+            <!-- 7. 一個真實的故事 -->
+            <section>
+                <h2 class="gradient-text">一個真實的故事</h2>
+                <div class="glass-card" style="text-align: left; margin-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto; line-height: 1.8;">
+                    <p class="fragment" style="margin-bottom: 1rem;">有一位企業主，原本只是請我們做系統展示。</p>
+                    <p class="fragment" style="margin-bottom: 1.5rem;">展示過程中，他看到的不只是一個工具——他看到的是<span class="highlight-accent">「原來 AI 可以這樣陪我做事」</span>。</p>
+                    <p class="fragment" style="font-size: 1.15em; color: hsl(200, 80%, 85%); font-weight: 600; margin-bottom: 1.5rem;">
+                        展示結束後，他沒有說「報價多少」，他說的是「我可以學這個嗎」。
+                    </p>
+                    <p class="fragment" style="font-weight: 600; margin-bottom: 1.5rem;">→ 後來，他成為我們 AI 教學班的學員。</p>
+                    <p class="fragment" style="color: var(--text-muted); font-size: 0.9em; border-top: 1px solid var(--glass-border); padding-top: 1rem; margin-top: 1.5rem;">
+                        這正是我們想傳遞的：不是賣工具給你，是讓你學會怎麼駕馭它。
+                    </p>
+                </div>
+            </section>
 
-    <!-- Section 4: 為什麼跟我們學 -->
-    <section>
-      <h2>為什麼跟我們學？</h2>
-      <div class="compare-container">
-        <table class="compare-table-minimal">
-          <thead>
-            <tr>
-              <th style="width: 45%;">❌ 一般 AI 課程</th>
-              <th style="width: 55%;">✅ Jacob Business OS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="cross">教你用 ChatGPT 寫文案</td>
-              <td class="check">教你建立自己的 AI 協作流程</td>
-            </tr>
-            <tr>
-              <td class="cross">單一工具操作教學</td>
-              <td class="check">25 個可複用技能 + 核心思維方法論</td>
-            </tr>
-            <tr>
-              <td class="cross">僅憑講師的個人經驗</td>
-              <td class="check">174 次 Git Commit 的真實團隊開發歷程</td>
-            </tr>
-            <tr>
-              <td class="cross">遇到踩坑只能靠自己摸索</td>
-              <td class="check">每個坑都有歷史記錄，你不用再重複踩一遍</td>
-            </tr>
-            <tr>
-              <td class="cross">工具一更新就容易掉隊</td>
-              <td class="check">核心思維建立後，工具進步是你的助力而非威脅</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+            <!-- 8. 協作方式 -->
+            <section>
+                <h2 class="gradient-text">我們的協作方式</h2>
+                <div class="glass-card" style="text-align: left; margin-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <ul>
+                        <li class="fragment"><strong>開工：</strong>Git 同步 → 讀治理文件 → 看今日重點 → 回報狀態 → 等確認 → 動手</li>
+                        <li class="fragment"><strong>執行：</strong>任務去中心化，每任務一個檔案，狀態透明，誰都能接手</li>
+                        <li class="fragment"><strong>收工：</strong>安全掃描 → 寫筆記 → 編譯知識庫 → stage 產出 → commit/push</li>
+                        <li class="fragment"><strong>復盤：</strong>每日 session log + 每週自動 health lint + 雙 AI 交叉審查</li>
+                    </ul>
+                    <p class="fragment highlight-accent" style="margin-top: 1.8rem; font-size: 0.95em; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+                        這套流程，就是學員在課程中會學到的核心協作思維。
+                    </p>
+                </div>
+            </section>
 
-    <!-- Section 5: 適合誰 -->
-    <section>
-      <h2>這趟旅程適合誰？</h2>
-      <div class="flex-grid">
-        <div class="flex-card">
-          <h4>想入門但不知從何開始</h4>
-          <p>你不需要先懂技術，你需要的是一個有系統的起點與能陪著你走的人。</p>
-        </div>
-        <div class="flex-card">
-          <h4>有專業想做成課程的人</h4>
-          <p>你懂你的專業領域，我們教你如何利用 AI 將知識規模化輸出。</p>
-        </div>
-        <div class="flex-card">
-          <h4>已經在用 AI 但卡關的人</h4>
-          <p>一個人做卡住了，你需要的是協作思維的重塑，而不是更多工具指令。</p>
-        </div>
-        <div class="flex-card">
-          <h4>擔心被 AI 時代拋下的人</h4>
-          <p>工具會變，但學會如何與 AI 團隊協作，你就永遠不會掉隊。</p>
-        </div>
-      </div>
-    </section>
+            <!-- 9. 為什麼跟我們學 -->
+            <section>
+                <h2 class="gradient-text">為什麼跟我們學？</h2>
+                <div class="glass-card" style="margin-top: 2rem; padding: 1.5rem; max-width: 1000px; margin-left: auto; margin-right: auto;">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 45%; color: var(--text-muted);">一般 AI 課程</th>
+                                <th style="width: 55%; color: hsl(200, 80%, 85%);">Jacob Business OS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fragment">
+                                <td style="color: var(--text-muted); border-bottom: 1px solid var(--glass-border);">教你用 ChatGPT 寫文案</td>
+                                <td style="border-bottom: 1px solid var(--glass-border);">教你建立自己的 AI 協作流程</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="color: var(--text-muted); border-bottom: 1px solid var(--glass-border);">單一工具操作教學</td>
+                                <td style="border-bottom: 1px solid var(--glass-border);">25 個可複用技能 + 核心思維方法論</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="color: var(--text-muted); border-bottom: 1px solid var(--glass-border);">講師的個人經驗</td>
+                                <td style="border-bottom: 1px solid var(--glass-border);">174 次 git commit 的真實團隊开发歷程</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="color: var(--text-muted); border-bottom: 1px solid var(--glass-border);">踩坑靠自己摸索</td>
+                                <td style="border-bottom: 1px solid var(--glass-border);">每個坑都有記錄，你不用再踩一次</td>
+                            </tr>
+                            <tr class="fragment">
+                                <td style="color: var(--text-muted); border-bottom: 1px solid var(--glass-border);">工具更新就掉隊</td>
+                                <td style="border-bottom: 1px solid var(--glass-border);">核心思維建立後，工具進步是助力不是威脅</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-    <!-- Section 5: 交付價值 -->
-    <section>
-      <h2>跟我們學，你會得到</h2>
-      <div class="flex-grid" style="grid-template-columns: 1fr 1fr 1fr; max-width: 1080px;">
-        <div class="flex-card" style="text-align: center;">
-          <div style="font-size: 2em; margin-bottom: 10px;">🧠</div>
-          <h4>核心協作思維</h4>
-          <p style="font-size: 0.9em; color: var(--text-sec); line-height: 1.5;">不是背指令，是學會如何與 AI 對話、拆解任務、編排流程。</p>
-        </div>
-        <div class="flex-card" style="text-align: center;">
-          <div style="font-size: 2em; margin-bottom: 10px;">🤝</div>
-          <h4>專屬 AI 學僮</h4>
-          <p style="font-size: 0.9em; color: var(--text-sec); line-height: 1.5;">裝一個陪著你成長 of Agent，知道你的進度，在卡關時推你一把。</p>
-        </div>
-        <div class="flex-card" style="text-align: center;">
-          <div style="font-size: 2em; margin-bottom: 10px;">🔄</div>
-          <h4>持續進化的系統</h4>
-          <p style="font-size: 0.9em; color: var(--text-sec); line-height: 1.5;">內化思維後，未來任何工具的進步，都將自動轉為你的助力。</p>
-        </div>
-      </div>
-      <p style="font-size: 0.45em; color: var(--text-sec); margin-top: 2em;">從入門到協作，從協作到內化——你的 AI 教練陪著你走。</p>
-    </section>
+            <!-- 10. 適合誰 -->
+            <section>
+                <h2 class="gradient-text">這趟旅程適合誰？</h2>
+                <div class="glass-card" style="text-align: left; margin-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <ul>
+                        <li class="fragment" style="margin-bottom: 1.2rem;"><strong>想入門但不知從何開始的人：</strong>你不需要先懂技術，你需要一個有系統的起點和陪著你的人。</li>
+                        <li class="fragment" style="margin-bottom: 1.2rem;"><strong>有專業想做成課程的人：</strong>你懂你的領域，我們教你怎麼用 AI 把知識規模化。</li>
+                        <li class="fragment" style="margin-bottom: 1.2rem;"><strong>已經在用 AI 但卡關的人：</strong>一個人做卡住了，你需要的是協作思維，不是更多工具教學。</li>
+                        <li class="fragment" style="margin-bottom: 1.2rem;"><strong>擔心被 AI 時代拋下的人：</strong>工具會一直變，但學會怎麼跟 AI 協作，你不會掉隊。</li>
+                    </ul>
+                </div>
+            </section>
 
-    <!-- 結尾 -->
-    <section data-background-color="#0f172a">
-      <div class="end-slide">
-        <div class="title" style="color: #f8fafc;">不是教你用一個工具</div>
-        <p class="tagline" style="color: #94a3b8;">是陪你建立一整套跟 AI 協作的核心思維</p>
-        <p class="footer" style="color: #64748b;">Jacob Business OS · 讓 AI 陪著你一起成長</p>
-      </div>
-    </section>
+            <!-- 11. 交付價值 -->
+            <section>
+                <h2 class="gradient-text">跟我們學，你會得到</h2>
+                <div class="grid-3" style="margin-top: 2rem; max-width: 1000px; margin-auto: auto;">
+                    <div class="glass-card fragment" style="padding: 1.8rem 1.5rem; text-align: center;">
+                        <h4 style="font-size: 1.2em; color: hsl(200, 80%, 85%); margin-bottom: 1rem; font-weight: 600;">1. 核心協作思維</h4>
+                        <p style="font-size: 0.85em; color: var(--text-muted); text-align: left; line-height: 1.6;">不是背指令，是學會怎麼跟 AI 對話、拆解任務、編排流程。</p>
+                    </div>
+                    <div class="glass-card fragment" style="padding: 1.8rem 1.5rem; text-align: center;">
+                        <h4 style="font-size: 1.2em; color: hsl(200, 80%, 85%); margin-bottom: 1rem; font-weight: 600;">2. 自己的 AI 學僮</h4>
+                        <p style="font-size: 0.85em; color: var(--text-muted); text-align: left; line-height: 1.6;">裝一個陪著你成長的 agent，知道你的進度，在你卡住時推你一把。</p>
+                    </div>
+                    <div class="glass-card fragment" style="padding: 1.8rem 1.5rem; text-align: center;">
+                        <h4 style="font-size: 1.2em; color: hsl(200, 80%, 85%); margin-bottom: 1rem; font-weight: 600;">3. 持續進化的系統</h4>
+                        <p style="font-size: 0.85em; color: var(--text-muted); text-align: left; line-height: 1.6;">核心思維內化後，工具進步不是威脅——是更大的助力。</p>
+                    </div>
+                </div>
+                <p class="fragment highlight-accent" style="margin-top: 2.2rem; font-size: 1em;">
+                    從入門到協作，從協作到內化——你的 AI 教練陪著你走。
+                </p>
+            </section>
 
-  </div>
-</div>
+            <!-- 12. 結尾 -->
+            <section data-background-color="hsl(220, 20%, 6%)">
+                <div class="glass-card fade-up" style="max-width: 900px; margin: 0 auto; padding: 3.5rem 2.5rem;">
+                    <p style="font-size: 1.3em; line-height: 1.7; margin-bottom: 2.5rem; font-weight: 300; font-family: 'Noto Serif TC', serif;">
+                        不是教你用一個工具，<br>是陪你建立一整套跟 AI 協作的核心思維。
+                    </p>
+                    <div style="width: 50px; height: 1px; background: rgba(255, 255, 255, 0.15); margin: 0 auto 2rem auto;"></div>
+                    <h2 class="gradient-text" style="font-size: 2.5em; margin-bottom: 0;">Jacob Business OS</h2>
+                    <p style="color: hsl(200, 80%, 75%); font-size: 1.05em; margin-top: 0.5rem; font-weight: 500; letter-spacing: 0.05em;">讓 AI 陪著你一起成長</p>
+                </div>
+            </section>
 
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-<script>
-  Reveal.initialize({
-    hash: true,
-    center: true,
-    progress: true,
-    controls: true,
-    transition: 'fade', /* 淡入淡出切換 */
-    width: 1280,
-    height: 720,
-    margin: 0.1,
-  });
-</script>
+        </div>
+    </div>
+
+    <!-- Reveal.js 核心腳本 -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
+            transition: 'fade', // 平滑淡入淡出轉場
+            backgroundTransition: 'fade',
+            // RWD 響應式設定
+            width: 1080,
+            height: 720,
+            margin: 0.1,
+            minScale: 0.2,
+            maxScale: 2.0
+        });
+    </script>
 </body>
 </html>

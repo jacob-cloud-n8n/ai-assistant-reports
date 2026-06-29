@@ -7,158 +7,161 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg-main: #f4f1ea;
-    --text-main: #1a2b49;
-    --text-sec: #4a5d78;
-    --accent: #1a2b49;
-    --accent2: #c08a3e;
-    --success: #3f8a4f;
-    --warn: #d4a373;
-    --card-bg: #ffffff;
-    --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
-    --card-border: 1px solid rgba(26, 43, 73, 0.06);
-    --dark-bg: #0f172a;
+    --bg-warm: #ede8dc;
+    --text-main: #2b2825;
+    --text-sec: #6b665e;
+    --accent: #2b2825;
+    --accent2: #b06d2a;
+    --line: #d8d2c5;
+    --card-bg: #faf8f3;
   }
   .reveal {
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+    font-family: 'Inter', 'PingFang TC', -apple-system, sans-serif;
     background-color: var(--bg-main);
     color: var(--text-main);
   }
   .reveal h1, .reveal h2, .reveal h3 {
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-family: 'Noto Serif TC', 'PingFang TC', serif;
+    font-weight: 600;
+    letter-spacing: 0;
     color: var(--text-main);
     text-transform: none;
   }
   .reveal h1 { font-size: 2em; color: var(--accent); }
-  .reveal h2 { font-size: 1.4em; color: var(--accent); }
+  .reveal h2 { font-size: 1.5em; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 0.3em; display: inline-block; }
   .reveal h3 { font-size: 1.1em; color: var(--accent2); }
-  .reveal .progress { color: var(--accent); }
-  .reveal .controls { color: var(--accent); }
+  .reveal .progress { color: var(--accent2); }
+  .reveal .controls { color: var(--accent2); }
 
   .title-slide { text-align: center; }
-  .title-slide .tag {
-    display: inline-block; background: var(--accent2); color: #fff;
-    padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
-    letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
-  }
-  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide h1 { font-family: 'Noto Serif TC', serif; }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; letter-spacing: 0.05em; }
   .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
 
   .oneliner {
-    font-size: 0.8em; color: var(--text-main); line-height: 1.8;
+    font-size: 0.8em; color: var(--text-main); line-height: 1.9;
     max-width: 680px; margin: 0 auto; text-align: center;
   }
 
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; font-size: 0.5em; margin-top: 1em; }
-  .stat-card {
-    background: var(--card-bg);
-    border-radius: 16px; padding: 24px 16px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    text-align: center;
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0; font-size: 0.5em; margin-top: 1em; }
+  .stat-item {
+    text-align: center; padding: 20px 12px;
+    border-right: 1px solid var(--line);
   }
-  .stat-card .number {
-    font-size: 2.2em; font-weight: 800; color: var(--accent);
+  .stat-item:last-child { border-right: none; }
+  .stat-item .number {
+    font-family: 'Noto Serif TC', serif; font-size: 2em; font-weight: 700; color: var(--accent2);
     display: block; line-height: 1.2;
   }
-  .stat-card .label { color: var(--text-sec); margin-top: 6px; font-size: 0.9em; }
+  .stat-item .label { color: var(--text-sec); margin-top: 4px; font-size: 0.85em; letter-spacing: 0.02em; }
 
-  .step-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
-  .step-card {
-    background: var(--card-bg);
-    border-radius: 16px;
+  .step-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; font-size: 0.55em; margin-top: 1em; }
+  .step-item {
     padding: 24px 20px;
-    border-top: 4px solid var(--accent);
-    box-shadow: var(--card-shadow);
-    border-left: var(--card-border);
-    border-right: var(--card-border);
-    border-bottom: var(--card-border);
+    border-right: 1px solid var(--line);
     text-align: left;
   }
-  .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
-  .step-card p { color: var(--text-sec); line-height: 1.6; }
-  .step-card .pain { color: #c0392b; font-size: 0.85em; margin-bottom: 6px; }
-  .step-card .fix { color: var(--success); font-size: 0.85em; }
+  .step-item:last-child { border-right: none; }
+  .step-item h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); font-family: 'Noto Serif TC', serif; font-weight: 600; }
+  .step-item p { color: var(--text-sec); line-height: 1.7; }
 
   .arch-diagram {
-    background: var(--card-bg);
-    border-radius: 16px; padding: 28px 24px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
     text-align: center; font-size: 0.55em;
-    font-family: 'SF Mono', Monaco, Consolas, monospace;
-    line-height: 1.8; color: var(--text-main);
+    line-height: 2; color: var(--text-main);
   }
   .arch-diagram .hl { color: var(--accent); font-weight: 700; }
   .arch-diagram .hl2 { color: var(--accent2); font-weight: 700; }
 
-  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 0.5em; margin-top: 1em; }
-  .case-card {
-    background: var(--card-bg);
-    border-radius: 12px; padding: 18px;
-    box-shadow: var(--card-shadow);
-    border-left: 4px solid var(--accent2);
+  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; font-size: 0.5em; margin-top: 1em; }
+  .case-item {
+    padding: 18px 20px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
     text-align: left;
   }
-  .case-card h4 { font-size: 1em; color: var(--accent); margin-bottom: 6px; }
-  .case-card p { color: var(--text-sec); line-height: 1.5; font-size: 0.9em; }
+  .case-item:nth-child(even) { border-right: none; }
+  .case-item:nth-last-child(-n+2) { border-bottom: none; }
+  .case-item h4 { font-size: 1em; color: var(--accent); margin-bottom: 6px; font-family: 'Noto Serif TC', serif; font-weight: 600; }
+  .case-item p { color: var(--text-sec); line-height: 1.6; font-size: 0.9em; }
 
   .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
-  .compare-table th { background: rgba(26,43,73,0.06); color: var(--accent); padding: 12px; text-align: left; }
-  .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); }
+  .compare-table th { color: var(--accent2); padding: 12px 8px; text-align: left; font-family: 'Noto Serif TC', serif; font-weight: 600; border-bottom: 2px solid var(--accent2); }
+  .compare-table td { padding: 10px 8px; border-bottom: 1px solid var(--line); color: var(--text-sec); }
+  .compare-table td:last-child { color: var(--text-main); font-weight: 500; }
 
   .end-slide { text-align: center; }
-  .end-slide .big { font-size: 2.4em; margin-bottom: 0.2em; color: var(--accent); }
+  .end-slide .big { font-family: 'Noto Serif TC', serif; font-size: 2.2em; margin-bottom: 0.2em; color: var(--accent); }
   .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); margin-bottom: 1em; }
 
-  .highlight { color: var(--accent2); font-weight: 700; }
-  .meta { font-size: 0.45em; color: var(--text-sec); margin-top: 1em; }
+  .highlight { color: var(--accent2); font-weight: 600; }
+  .meta { font-size: 0.45em; color: var(--text-sec); margin-top: 1em; letter-spacing: 0.03em; }
 
-  /* 教練哲學大卡 */
-  .philosophy-card {
-    background: var(--card-bg);
-    border-radius: 16px; padding: 32px 28px;
-    box-shadow: var(--card-shadow);
-    border-left: 5px solid var(--accent2);
+  .philosophy-section {
     text-align: left; max-width: 760px; margin: 0 auto;
-    font-size: 0.6em; line-height: 1.9;
+    font-size: 0.6em; line-height: 2;
   }
-  .philosophy-card .quote {
-    font-size: 1.3em; font-weight: 700; color: var(--accent);
-    margin-bottom: 16px; font-style: italic;
+  .philosophy-section .quote {
+    font-family: 'Noto Serif TC', serif; font-size: 1.4em; font-weight: 600; color: var(--accent);
+    margin-bottom: 16px;
   }
 
-  /* 故事卡片 */
-  .story-card {
-    background: var(--card-bg);
-    border-radius: 16px; padding: 24px 22px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
-    text-align: left; font-size: 0.55em; line-height: 1.8;
+  .story-section {
+    text-align: left; font-size: 0.55em; line-height: 2;
     max-width: 700px; margin: 0 auto;
   }
-  .story-card .arrow { color: var(--accent2); font-weight: 700; }
+  .story-section .arrow { color: var(--accent2); font-weight: 700; }
 
-  /* 流程 */
   .flow-row {
-    display: flex; gap: 20px; justify-content: center; align-items: stretch;
+    display: flex; gap: 0; justify-content: center; align-items: stretch;
     font-size: 0.55em; margin-top: 0.5em;
   }
   .flow-step {
-    background: var(--card-bg);
-    border-radius: 12px; padding: 28px 24px;
-    box-shadow: var(--card-shadow);
-    border: var(--card-border);
+    padding: 28px 24px;
     text-align: center; flex: 1 1 0; min-width: 0; max-width: 280px;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    border-right: 1px solid var(--line);
   }
-  .flow-step .icon { font-size: 1.6em; margin-bottom: 12px; display: block; }
-  .flow-step .text { color: var(--text-main); font-weight: 700; font-size: 1.15em; margin-bottom: 10px; white-space: nowrap; }
+  .flow-step:last-child { border-right: none; }
+  .flow-step .text { color: var(--text-main); font-family: 'Noto Serif TC', serif; font-weight: 600; font-size: 1.15em; margin-bottom: 10px; white-space: nowrap; }
   .flow-step .desc { color: var(--text-sec); line-height: 1.75; font-size: 0.9em; flex: 1; }
-  .flow-arrow { color: var(--accent2); font-size: 1.4em; font-weight: 700; align-self: center; flex-shrink: 0; }
+  .flow-arrow { color: var(--accent2); font-size: 1.2em; font-weight: 400; align-self: center; flex-shrink: 0; padding: 0 8px; }
+
+  /* ========== RWD ========== */
+  @media (max-width: 768px) {
+    .reveal { font-size: 0.7em; }
+    .reveal h1 { font-size: 1.6em; }
+    .reveal h2 { font-size: 1.2em; }
+    .oneliner { font-size: 0.7em; max-width: 100%; padding: 0 4%; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .step-grid { grid-template-columns: 1fr !important; gap: 12px; }
+    .case-grid { grid-template-columns: 1fr; gap: 10px; }
+    .flow-row { flex-direction: column; gap: 12px; }
+    .flow-arrow { transform: rotate(90deg); }
+    .compare-table { font-size: 0.45em; }
+    .arch-diagram { font-size: 0.5em; padding: 16px 12px; }
+    .philosophy-card { font-size: 0.55em; padding: 20px 16px; max-width: 100%; }
+    .story-card { font-size: 0.5em; padding: 16px 14px; max-width: 100%; }
+    .title-slide .tag { font-size: 0.55em; }
+    .title-slide .subtitle { font-size: 0.65em; }
+    .end-slide .big { font-size: 1.8em; }
+    .end-slide .tagline { font-size: 0.55em; }
+  }
+  @media (max-width: 480px) {
+    .reveal { font-size: 0.6em; }
+    .reveal h1 { font-size: 1.4em; }
+    .stats-grid { grid-template-columns: 1fr; gap: 8px; }
+    .stat-card .number { font-size: 1.8em; }
+    .compare-table { font-size: 0.4em; }
+    .arch-diagram { font-size: 0.42em; }
+  }
+  /* RWD: reveal.js 簡報尺寸在小螢幕自動縮放 */
+  @media (max-width: 768px) and (orientation: portrait) {
+    .reveal .slides section { padding: 20px 10px; }
+  }
 </style>
 </head>
 <body>
@@ -166,12 +169,11 @@
   <div class="slides">
 
     <!-- 封面 -->
-    <section data-background-color="#0f172a">
-      <div class="title-slide" style="color: #e2e8f0;">
-        <div class="tag">ABOUT</div>
-        <h1 style="color: #e2e8f0;">關於我們</h1>
-        <p class="subtitle" style="color: #94a3b8;">Jacob Business OS — AI 原生協作團隊</p>
-        <p class="author" style="color: #64748b;">不只學工具，學一整套思考與協作的方式</p>
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <h1 style="color: #2b2825;">關於我們</h1>
+        <p class="subtitle" style="color: #6b665e;">Jacob Business OS — AI 原生協作團隊</p>
+        <p class="author" style="color: #8a847a;">不只學工具，學一整套思考與協作的方式</p>
       </div>
     </section>
 
@@ -184,17 +186,17 @@
         <p>現在，我們把這套經驗轉化為課程——</p>
         <p>教你讓 AI 成為<span class="highlight">陪著你一起成長的教練</span>。</p>
       </div>
-      <p class="meta">成立於 2026 年 5 月 · 每天持續運作中</p>
+      <p class="meta">累計燃燒的 token 數為 84.7 億</p>
     </section>
 
     <!-- 核心哲學：教練，不是工具 -->
     <section>
       <h2>我們相信</h2>
-      <div class="philosophy-card">
+      <div class="philosophy-section">
         <p class="quote">工具會過時，但核心思維不會。</p>
         <p>AI 工具進步太快——今天學的操作，三個月後可能就被取代。</p>
         <p>所以我們不教<span class="highlight">「按哪個按鈕」</span>，我們教<span class="highlight">「怎麼思考」</span>。</p>
-        <p style="margin-top: 14px;">就像一個<span class="highlight">學僮</span>，不是丟一本手冊給你，</p>
+        <p style="margin-top: 14px;">就像一個<span class="highlight">教練</span>，不是丟一本手冊給你，</p>
         <p>而是陪在你旁邊、知道你的進度、在你卡住時推你一把。</p>
         <p style="margin-top: 14px;">當你的<span class="highlight">核心思維建立起來</span>，</p>
         <p>工具進步不是威脅——<span class="highlight">是更大的助力</span>。</p>
@@ -205,37 +207,37 @@
     <section>
       <h2>我們的運作實績</h2>
       <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-item">
           <span class="number">174</span>
           <span class="label">GitHub 提交</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-item">
           <span class="number">7</span>
           <span class="label">AI Agent 成員</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-item">
           <span class="number">25</span>
           <span class="label">可安裝 AI 技能</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-item">
           <span class="number">100+</span>
           <span class="label">知識庫文章</span>
         </div>
       </div>
-      <div class="stats-grid" style="margin-top: 12px;">
-        <div class="stat-card">
+      <div class="stats-grid" style="margin-top: 0;">
+        <div class="stat-item">
           <span class="number">6</span>
           <span class="label">商業網站與系統</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-item">
           <span class="number">3</span>
           <span class="label">開設中課程</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-item">
           <span class="number">4</span>
           <span class="label">部署服務 × 自動化</span>
         </div>
-        <div class="stat-card">
+        <div class="stat-item">
           <span class="number">桌面↔雲端</span>
           <span class="label">雙向同步</span>
         </div>
@@ -245,15 +247,42 @@
     <!-- 團隊架構 -->
     <section>
       <h2>團隊架構</h2>
-      <div class="arch-diagram">
-        <div style="margin-bottom: 8px; color: var(--text-sec);">Jacob（創辦人/教練）</div>
-        <div style="margin-bottom: 4px;">│</div>
-        <div style="margin-bottom: 4px; color: var(--accent2);">└── <span class="hl2">Claude</span>（大腦）— 需求理解 · 任務編排 · 居中協調</div>
-        <div style="margin-bottom: 4px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="hl">AG</span>（PM + 設計）— 架構 · UI · 簡報</div>
-        <div style="margin-bottom: 4px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="hl">Codex</span>（Tech Lead）— 審查 · 測試 · PR 合併</div>
-        <div style="margin-bottom: 4px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="hl">OpenCode / MiMoCode</span> — 部署 · 原型開發</div>
-        <div style="margin-bottom: 4px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="hl">Hermes</span> — 陪伴 · 客戶溝通 · 文件</div>
-        <div style="margin-bottom: 4px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="hl">n8n</span> — 自動化血管（日報 · 通知 · 同步）</div>
+      <div style="font-size: 0.55em; margin-top: 0.8em; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <div style="text-align: center; margin-bottom: 12px;">
+          <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; font-size: 1.15em; color: var(--accent);">Jacob</span>
+          <span style="color: var(--text-sec); margin-left: 8px;">創辦人 / 教練</span>
+        </div>
+        <div style="border-top: 1px solid var(--line); margin: 0 20% 16px 20%;"></div>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent2);">Claude AI</span>
+            <span style="color: var(--text-sec);">by Anthropic · 需求理解 · 任務編排 · 居中協調</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">AntiGravity</span>
+            <span style="color: var(--text-sec);">架構設計 · UI 拋光 · 全局調度</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">Codex</span>
+            <span style="color: var(--text-sec);">by OpenAI · 技術審查 · 測試把關 · PR 合併</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">OpenCode</span>
+            <span style="color: var(--text-sec);">執行開發 · 原型實作 · 部署</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">MiMoCode</span>
+            <span style="color: var(--text-sec);">by Xiaomi · 執行開發 · 原型實作</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">Hermes</span>
+            <span style="color: var(--text-sec);">隨身陪伴 · 客戶溝通 · 文件研究</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">n8n</span>
+            <span style="color: var(--text-sec);">自動化血管 · 日報 · 通知 · 同步</span>
+          </div>
+        </div>
       </div>
       <p class="meta">7 個 AI agent，各有專業領域，彼此協作。我們每天都這樣工作。</p>
     </section>
@@ -262,27 +291,27 @@
     <section>
       <h2>我們做過什麼</h2>
       <div class="case-grid">
-        <div class="case-card">
+        <div class="case-item">
           <h4>企業官網建置</h4>
           <p>為多家中小企業建置現代化官網：SSR 架構、SEO 優化、聯絡表單，從設計到上線全流程</p>
         </div>
-        <div class="case-card">
+        <div class="case-item">
           <h4>LINE 官方助理</h4>
           <p>為農產品牌夥伴串接 n8n × LINE 自動回覆系統，客戶詢問不再漏接</p>
         </div>
-        <div class="case-card">
+        <div class="case-item">
           <h4>進銷存管理系統</h4>
           <p>為零售業者打造庫存管理工具，客戶回饋直接轉化為功能：進貨自動換算單位成本</p>
         </div>
-        <div class="case-card">
+        <div class="case-item">
           <h4>AI 系列課程</h4>
           <p>開設多堂 AI 實戰課程，從 12 歲到成人，含 AI 書僮部署、Google 日曆同步等實作</p>
         </div>
-        <div class="case-card">
+        <div class="case-item">
           <h4>課程創作方法論</h4>
           <p>80 份課程檔案系統化重整 + 費曼學習法實戰內化，從「照 SOP 走」到「能評估效果」</p>
         </div>
-        <div class="case-card">
+        <div class="case-item">
           <h4>AI 知識庫系統</h4>
           <p>100+ 篇文章語意搜尋引擎，任何 AI agent 都能查詢——知識不再沉在資料夾底層</p>
         </div>
@@ -292,7 +321,7 @@
     <!-- 故事：從客戶到學員 -->
     <section>
       <h2>一個真實的故事</h2>
-      <div class="story-card">
+      <div class="story-section">
         <p>有一位企業主，原本只是請我們做<span class="highlight">系統展示</span>。</p>
         <p style="margin-top: 10px;">展示過程中，他看到的不只是一個工具——</p>
         <p>他看到的是<span class="highlight">「原來 AI 可以這樣陪我做事」</span>。</p>
@@ -307,19 +336,19 @@
     <section>
       <h2>我們的協作方式</h2>
       <div class="step-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="step-card">
+        <div class="step-item">
           <h4>開工</h4>
           <p>Git 同步 → 讀治理文件 → 看今日重點 → 回報狀態 → 等確認 → 動手</p>
         </div>
-        <div class="step-card">
+        <div class="step-item">
           <h4>執行</h4>
-          <p>任務去中心化——每任務一個檔案，狀態透明，誰都能接手</p>
+          <p>任務去中心化——每任務一個務一個檔案，狀態透明，誰都能接手</p>
         </div>
-        <div class="step-card">
+        <div class="step-item">
           <h4>收工</h4>
           <p>安全掃描 → 寫筆記 → 編譯知識庫 → stage 產出 → commit/push</p>
         </div>
-        <div class="step-card">
+        <div class="step-item">
           <h4>復盤</h4>
           <p>每日 session log + 每週自動 health lint + 雙 AI 交叉審查</p>
         </div>
@@ -345,19 +374,19 @@
     <section>
       <h2>適合誰</h2>
       <div class="step-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="step-card">
+        <div class="step-item">
           <h4>想入門但不知從何開始</h4>
           <p>你不需要先懂技術——你需要一個有系統的起點和陪著你的人</p>
         </div>
-        <div class="step-card">
+        <div class="step-item">
           <h4>有專業想做成課程的人</h4>
           <p>你懂你的領域，我們教你怎麼用 AI 把知識規模化</p>
         </div>
-        <div class="step-card">
+        <div class="step-item">
           <h4>已經在用 AI 但卡關的人</h4>
           <p>一個人做卡住了，你需要的是協作思維，不是更多工具教學</p>
         </div>
-        <div class="step-card">
+        <div class="step-item">
           <h4>擔心被 AI 時代拋下的人</h4>
           <p>工具會一直變，但學會怎麼跟 AI 協作，你不會掉隊</p>
         </div>
@@ -369,19 +398,16 @@
       <h2>跟我們學，你會得到</h2>
       <div class="flow-row">
         <div class="flow-step">
-          <span class="icon">🧠</span>
           <div class="text">核心協作思維</div>
           <p class="desc">不是背指令，是學會怎麼跟 AI 對話、拆解任務、編排流程</p>
         </div>
         <div class="flow-arrow">→</div>
         <div class="flow-step">
-          <span class="icon">🤝</span>
-          <div class="text">自己的 AI 學僮</div>
-          <p class="desc">裝一個陪著你成長的 agent，知道你的進度，在你卡住時推你一把</p>
+          <div class="text">全能的 AI 教練</div>
+          <p class="desc">裝一個陪著你成長的 agent，知道你的進度，在你卡住時<br>推你一把</p>
         </div>
         <div class="flow-arrow">→</div>
         <div class="flow-step">
-          <span class="icon">🔄</span>
           <div class="text">持續進化的系統</div>
           <p class="desc">核心思維內化後，工具進步不是威脅——是更大的助力</p>
         </div>
@@ -390,11 +416,11 @@
     </section>
 
     <!-- 結尾 -->
-    <section data-background-color="#0f172a">
+    <section data-background-color="#ede8dc">
       <div class="end-slide">
-        <div class="big" style="color: #e2e8f0;">不是教你用一個工具</div>
-        <p class="tagline" style="color: #94a3b8;">是陪你建立一整套跟 AI 協作的核心思維</p>
-        <p style="font-size: 0.5em; color: var(--accent2); margin-top: 2em;">Jacob Business OS · 讓 AI 陪著你一起成長</p>
+        <div class="big" style="color: #2b2825;">不是教你用一個工具</div>
+        <p class="tagline" style="color: #6b665e;">是陪你建立一整套跟 AI 協作的核心思維</p>
+        <p style="font-size: 0.5em; color: var(--accent2); margin-top: 2em; letter-spacing: 0.05em;">Jacob Business OS · 讓 AI 陪著你一起成長</p>
       </div>
     </section>
 
