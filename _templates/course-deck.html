@@ -1,0 +1,198 @@
+<!doctype html>
+<!--
+  課程簡報母模板 (course-deck.html) — reveal.js 5.1.0
+  ─────────────────────────────────────────────────────────
+  用法（見 skills/26-course-slide-pipeline）：
+    1. 複製本檔成 銷售專案/<你的簡報>.html
+    2. 內容從既有大綱取材：STAR 框架（痛點→金句→原理→方法→目標）+ course-docs/課程大綱.md
+    3. 只填 <section> 內容，**不要動 <style>**（設計 token 單一來源，改樣式改這裡一處全體受益）
+    4. 部署：cd 銷售專案 && ./deploy-firebase.sh（禁裸 firebase deploy）
+  設計系統萃取自 m1-m2-slides.html（Jacob/AG 已驗證的花叔美學：燕麥米底＋深藍＋麥芽金）。
+  下方 7 張為「slide 類型積木」範例，各對應 skill 26 映射表。複製需要的、刪不用的。
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>課程簡報母模板</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+  <style>
+    /* ===== 單一設計 token 來源（要改風格改這裡） ===== */
+    :root {
+      --bg-main: #f4f1ea;       /* 燕麥米背景 */
+      --text-main: #1a2b49;     /* 沉穩科技深藍 */
+      --text-sec: #4a5d78;      /* 次要文字 深灰藍 */
+      --accent: #1a2b49;        /* 主色 科技深藍 */
+      --accent2: #c08a3e;       /* 點綴 麥芽金/焦糖 */
+      --success: #3f8a4f;       /* 柔和綠 */
+      --warn: #d4a373;          /* 麥芽金 */
+      --card-bg: #ffffff;
+      --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+      --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    }
+    .reveal {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
+    }
+    .reveal h1 { font-size: 2em; color: var(--accent); }
+    .reveal h2 { font-size: 1.4em; color: var(--accent); }
+    .reveal h3 { font-size: 1.1em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .controls { color: var(--accent); }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block; background: var(--accent2); color: #fff;
+      padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
+      letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+    .checklist { list-style: none; text-align: left; font-size: 0.6em; }
+    .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(26,43,73,0.06); display: flex; align-items: center; gap: 12px; color: var(--text-main); }
+    .checklist li::before { content: "\2610"; font-size: 1.2em; color: var(--accent); }
+    .checklist li.done::before { content: "\2611"; color: var(--success); }
+
+    .points { list-style: none; text-align: left; font-size: 0.62em; margin-top: 0.6em; }
+    .points li { padding: 12px 0; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); line-height: 1.5; }
+    .points li strong { color: var(--accent2); }
+
+    .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
+    .step-card {
+      background: var(--card-bg); border-radius: 16px; padding: 20px;
+      border-top: 4px solid var(--accent); box-shadow: var(--card-shadow);
+      border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+      text-align: left;
+    }
+    .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
+    .step-card p { color: var(--text-sec); line-height: 1.6; }
+
+    .code-block {
+      background: #2d3748; border-radius: 8px; padding: 16px 20px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.5em;
+      color: #e2e8f0; text-align: left; margin: 1em 0;
+    }
+    .code-block .comment { color: #a0aec0; }
+    .code-block .cmd { color: #63b3ed; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
+    .compare-table th { background: rgba(26,43,73,0.08); color: var(--accent); padding: 12px; text-align: left; }
+    .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); }
+
+    .tip-box {
+      background: rgba(192,138,62,0.06); border-left: 4px solid var(--accent2);
+      border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em;
+      font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5;
+    }
+
+    /* 咒語卡 / Prompt 卡：你們課程特色的「一句話 prompt」 */
+    .prompt-card {
+      background: var(--card-bg); border-radius: 14px; padding: 20px 24px;
+      box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2);
+      text-align: left; margin: 0.8em auto; max-width: 80%;
+    }
+    .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+    .prompt-card .spell {
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em;
+      color: var(--text-main); margin-top: 8px; line-height: 1.6;
+    }
+
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; color: var(--accent); }
+    .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
+
+    .highlight { color: var(--accent2); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ① 封面｜大綱元素：模組標題 + 堂次 -->
+      <section class="title-slide">
+        <div class="tag">第 N 堂課</div>
+        <h1>這堂課的標題</h1>
+        <p class="subtitle">一句話副標，講清楚學完能幹嘛</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </section>
+
+      <!-- ② 議程 / 學習階梯｜大綱元素：你會學到 / 學習路徑 -->
+      <section>
+        <h2>這堂課的路徑</h2>
+        <ul class="checklist">
+          <li class="done">L1 認識：知道它能做什麼、不能做什麼</li>
+          <li>L2 會用：跟著做出第一個成果</li>
+          <li>L3 帶走：拿到可重複用的模板/小卡</li>
+        </ul>
+      </section>
+
+      <!-- ③ 概念頁｜大綱元素：STAR 重要性(金句) + 原理。一概念一頁，要點≤3，fragment 逐點揭示 -->
+      <section>
+        <h2>金句當大標，一句就記住</h2>
+        <ul class="points">
+          <li class="fragment"><strong>要點一</strong>：用一行講清楚原理</li>
+          <li class="fragment"><strong>要點二</strong>：再一行，別塞第四點（超過就拆頁）</li>
+          <li class="fragment"><strong>要點三</strong>：收在學員能行動的結論</li>
+        </ul>
+      </section>
+
+      <!-- ④ 對比表｜大綱元素：這樣做 vs 那樣做 / B級 vs A級 vs S級 -->
+      <section>
+        <h2>對比：一眼看出差別</h2>
+        <table class="compare-table">
+          <thead><tr><th>情境</th><th>沒用對的做法</th><th>用對的做法</th></tr></thead>
+          <tbody>
+            <tr><td>提問</td><td>一句「幫我做」</td><td>給脈絡 + 目標 + 限制</td></tr>
+            <tr><td>檔案</td><td>手動一個個改</td><td>一句 prompt 批次處理</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ⑤ 實作示範｜大綱元素：STAR 方法 / 實做項目。步驟卡 + code -->
+      <section>
+        <h2>動手做：跟著這幾步</h2>
+        <div class="step-grid">
+          <div class="step-card"><h4>Step 1</h4><p>先做什麼，一句話說清楚。</p></div>
+          <div class="step-card"><h4>Step 2</h4><p>再做什麼，附關鍵注意點。</p></div>
+        </div>
+        <div class="code-block"><span class="comment"># 範例指令</span><br><span class="cmd">./start-work.sh</span></div>
+      </section>
+
+      <!-- ⑥ 咒語卡 / Prompt 卡｜大綱元素：課程特色的一句話 prompt -->
+      <section>
+        <h2>今天的咒語卡</h2>
+        <div class="prompt-card">
+          <div class="label">複製即用 PROMPT</div>
+          <div class="spell">「幫我把這份 Excel 依 A 欄分組，各組小計後輸出成新檔，並附一段中文摘要。」</div>
+        </div>
+        <div class="tip-box">咒語卡是學員帶走的即戰力——一堂放 1~2 張，貼上就能用。</div>
+      </section>
+
+      <!-- ⑦ 回顧 + 回家功課｜大綱元素：STAR 目標 / 學員帶走 -->
+      <section class="end-slide">
+        <p class="big">今天帶走什麼</p>
+        <ul class="checklist" style="max-width:70%;margin:0 auto;">
+          <li class="done">學會了：______</li>
+          <li>回家做：______（下堂帶來）</li>
+        </ul>
+        <p class="tagline">下一堂：______</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade' });
+  </script>
+</body>
+</html>
