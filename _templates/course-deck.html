@@ -18,9 +18,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+  <!-- 載入 Google Fonts 以實現精緻的花叔美學字體系統（排除 Arial 等 AI Slop 字體） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
   <style>
     /* ===== 單一設計 token 來源（要改風格改這裡） ===== */
     :root {
+      /* 預設為淺色 (燕麥米底花叔美學) */
       --bg-main: #f4f1ea;       /* 燕麥米背景 */
       --text-main: #1a2b49;     /* 沉穩科技深藍 */
       --text-sec: #4a5d78;      /* 次要文字 深灰藍 */
@@ -32,12 +37,28 @@
       --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
       --card-border: 1px solid rgba(26, 43, 73, 0.06);
     }
+
+    /* 深色花叔美學 (?theme=dark) */
+    :root.theme-dark {
+      --bg-main: #0b0f19;       /* 極深藍灰背景 */
+      --text-main: #f3f4f6;     /* 亮灰白文字 */
+      --text-sec: #9ca3af;      /* 次要文字 淺灰 */
+      --accent: #38bdf8;        /* 主色 天空藍 */
+      --accent2: #fbbf24;       /* 點綴 琥珀金 */
+      --success: #34d399;       /* 柔和綠 */
+      --warn: #fbbf24;          /* 橘黃 */
+      --card-bg: #111827;       /* 深灰卡片底色 */
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
     .reveal {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
       background-color: var(--bg-main);
       color: var(--text-main);
     }
     .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
       font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
     }
     .reveal h1 { font-size: 2em; color: var(--accent); }
@@ -45,6 +66,7 @@
     .reveal h3 { font-size: 1.1em; color: var(--accent2); }
     .reveal .progress { color: var(--accent); }
     .reveal .controls { color: var(--accent); }
+    .reveal .slide-number { color: var(--text-sec); background-color: transparent; }
     .reveal .fragment { opacity: 0.2; }
     .reveal .fragment.visible { opacity: 1; }
 
@@ -192,6 +214,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
   <script>
+    // 檢查 URL 參數是否指定深色主題 (?theme=dark)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('theme') === 'dark') {
+      document.documentElement.classList.add('theme-dark');
+    }
     Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade' });
   </script>
 </body>
