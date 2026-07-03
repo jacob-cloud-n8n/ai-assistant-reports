@@ -1,0 +1,54 @@
+# =========================================================================
+# n8n Docker Compose 部署配置檔 (docker-compose.yml)
+# =========================================================================
+# 說明：
+# 1. 本配置檔用於在本地端（您的電腦）使用 Docker 快速啟動 n8n 自動化工作流環境。
+# 2. 啟動指令：在包含此檔案的資料夾下，打開終端機輸入：`docker compose up -d`
+# 3. 停止指令：在同一資料夾下輸入：`docker compose down`
+# 4. 啟動後，瀏覽器輸入 `http://localhost:5678` 即可進入 n8n 控制台。
+# 5. 本配置已預先整合 PostgreSQL 資料庫，確保自動化排程與歷史紀錄能妥善保存。
+# =========================================================================
+
+version: '3.8'
+
+services:
+  # 數據庫服務：儲存 n8n 的工作流、執行紀錄等資料
+  db:
+    image: postgres:16-alpine
+    container_name: n8n-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: n8n_user
+      POSTGRES_PASSWORD: n8n_secure_password_123  # ⚠️ 本地測試可維持預設，若部署至公網請修改此密碼
+      POSTGRES_DB: n8n_database
+    volumes:
+      # 掛載本地 Persistent Volume，確保資料庫重啟時資料不遺失
+      - db_storage:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # n8n 自動化服務
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n-app
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=db
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n_database
+      - DB_POSTGRESDB_USER=n8n_user
+      - DB_POSTGRESDB_PASSWORD=n8n_secure_password_123
+      - N8N_SECURE_COOKIE=false  # 本地 HTTP 測試時需設為 false，避免 cookie 傳輸受限
+    volumes:
+      # 掛載 n8n 的配置資料夾，確保憑證與工作流狀態持久化
+      - n8n_storage:/home/node/.n8n
+    depends_on:
+      - db
+
+# 定義持久化硬碟磁碟區 (Volumes)
+volumes:
+  db_storage:
+  n8n_storage:

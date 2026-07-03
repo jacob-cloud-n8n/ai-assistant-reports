@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多 Agent 協作狀態機與 DoD 交叉校對流程圖 (Swimlane Diagram)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #f4f1ea;
+      --text-main: #1a2b49;
+      --text-sec: #4a5d78;
+      --accent: #1a2b49;
+      --accent2: #c08a3e;
+      --card-bg: #ffffff;
+      --card-shadow: 0 12px 32px rgba(26, 43, 73, 0.06);
+      --card-border: 1px solid rgba(26, 43, 73, 0.08);
+      --success: #3f8a4f;
+      --warn: #d4a373;
+      --gray: #718096;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      padding: 40px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      border-bottom: 1px solid rgba(26, 43, 73, 0.08);
+      padding-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.8em;
+      margin: 0 0 8px 0;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      color: var(--text-sec);
+      font-size: 0.95em;
+      margin: 0;
+    }
+
+    .tag {
+      background: var(--accent2);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    /* 泳道圖表格設計 */
+    .swimlane-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .swimlane-table th {
+      background-color: #fcfbfa;
+      color: var(--accent);
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      padding: 16px;
+      border: 1px solid rgba(26, 43, 73, 0.1);
+      font-size: 1em;
+      width: 25%;
+    }
+
+    .swimlane-table td {
+      padding: 20px 16px;
+      border: 1px solid rgba(26, 43, 73, 0.08);
+      vertical-align: top;
+      position: relative;
+    }
+
+    /* 流程節點設計 */
+    .flow-node {
+      background: var(--card-bg);
+      border: 1px solid rgba(26, 43, 73, 0.12);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(26, 43, 73, 0.03);
+      position: relative;
+      z-index: 2;
+      transition: all 0.2s;
+    }
+
+    .flow-node:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(26, 43, 73, 0.06);
+    }
+
+    .node-header {
+      font-size: 0.8em;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    .node-header.todo { background-color: var(--gray); }
+    .node-header.active { background-color: var(--warn); }
+    .node-header.review { background-color: var(--accent2); }
+    .node-header.done { background-color: var(--success); }
+
+    .node-title {
+      font-weight: 600;
+      font-size: 0.9em;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .node-desc {
+      font-size: 0.78em;
+      color: var(--text-sec);
+      line-height: 1.4;
+    }
+
+    /* 連接線路徑 */
+    .connector-line {
+      text-align: center;
+      color: var(--accent2);
+      font-size: 1.2em;
+      margin: 12px 0;
+      font-weight: 700;
+    }
+
+    .btn-print {
+      background: transparent;
+      border: 1px solid var(--text-sec);
+      color: var(--text-sec);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-print:hover {
+      background: var(--text-main);
+      color: #fff;
+      border-color: var(--text-main);
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .container { box-shadow: none; border: none; padding: 0; }
+      .btn-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title-area">
+        <h1>多 Agent 協作狀態機與 DoD 流程</h1>
+        <p class="subtitle">Multi-Agent Workflow & Definition of Done (DoD)</p>
+      </div>
+      <div>
+        <button class="btn-print" onclick="window.print()">🖨️ 儲存為 PDF / 列印</button>
+      </div>
+    </header>
+
+    <table class="swimlane-table">
+      <thead>
+        <tr>
+          <th>💬 Claude (任務編排)</th>
+          <th>🛠️ OpenCode (工兵實作)</th>
+          <th>🔍 Codex (品質把關)</th>
+          <th>🚀 AG (全局打包)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 步驟 1 -->
+        <tr>
+          <td>
+            <div class="flow-node">
+              <span class="node-header todo">1. [📋 已指派]</span>
+              <div class="node-title">任務規劃與指派</div>
+              <div class="node-desc">Claude 理解人類需求，將大任務拆解並指派，建立獨立的 <code>.tasks/&lt;task-id&gt;.md</code> 檔案。</div>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <!-- 步驟 2 -->
+        <tr>
+          <td></td>
+          <td>
+            <div class="flow-node">
+              <span class="node-header active">2. [/] 執行中</span>
+              <div class="node-title">工兵實作開發</div>
+              <div class="node-desc">OpenCode 在獨立分支上執行代碼修改，並完成本地測試、Lint 檢查。</div>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <!-- 步驟 3 -->
+        <tr>
+          <td></td>
+          <td>
+            <div class="flow-node">
+              <span class="node-header review">3. [📤 移交]</span>
+              <div class="node-title">建立 PR 與前置報告</div>
+              <div class="node-desc">實作完成後，OpenCode 產出 Pre-review Report 並建立 PR，移交給 Codex 審核。</div>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <!-- 步驟 4 -->
+        <tr>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="flow-node">
+              <span class="node-header review">4. [/] 驗證中</span>
+              <div class="node-title">DoD 技術審查官</div>
+              <div class="node-desc">Codex 進行安全掃描、自動化 E2E 測試與程式碼 Review。若通過則簽署 <code>Codex Review = accepted</code>，否則退回。</div>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <!-- 步驟 5 -->
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <div class="flow-node">
+              <span class="node-header done">5. [✅ 完成]</span>
+              <div class="node-title">二腦同步與 Commit / Push</div>
+              <div class="node-desc">AG 執行二腦增量編譯，並進行 git diff 安全二次確認，統整並 commit 到 main 分支關閉任務。</div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 提示詞黃金公式圖卡 (Prompt Cheat Sheet)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #f4f1ea;
+      --text-main: #1a2b49;
+      --text-sec: #4a5d78;
+      --accent: #1a2b49;
+      --accent2: #c08a3e;
+      --card-bg: #ffffff;
+      --card-shadow: 0 12px 32px rgba(26, 43, 73, 0.06);
+      --card-border: 1px solid rgba(26, 43, 73, 0.08);
+      --bg-bad: #fff5f5;
+      --border-bad: #feb2b2;
+      --text-bad: #c53030;
+      --bg-good: #f0fff4;
+      --border-good: #9ae6b4;
+      --text-good: #22543d;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    /* 16:9 卡片本體 */
+    .sheet-card {
+      background: var(--card-bg);
+      border: var(--card-border);
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      padding: 48px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sheet-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 36px;
+    }
+
+    .title-area h1 {
+      font-family: 'Playfair Display', 'Noto Serif TC', serif;
+      font-size: 2.2em;
+      margin: 0 0 8px 0;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .title-area p {
+      margin: 0;
+      color: var(--text-sec);
+      font-size: 0.95em;
+      letter-spacing: 0.05em;
+    }
+
+    .tag {
+      background: var(--accent2);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    /* 核心公式區 */
+    .formula-section {
+      text-align: center;
+      margin-bottom: 40px;
+      background: #fdfdfc;
+      border: 1px dashed var(--accent2);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .formula-title {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.1em;
+      color: var(--accent2);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .formula-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .formula-element {
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.1em;
+      box-shadow: 0 4px 12px rgba(26, 43, 73, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .formula-element:hover {
+      transform: translateY(-2px);
+    }
+
+    .formula-element.r { background-color: #1a2b49; }
+    .formula-element.t { background-color: #2b4c7e; }
+    .formula-element.f { background-color: #4a77b4; }
+    .formula-element.c { background-color: #c08a3e; }
+
+    .formula-plus {
+      font-size: 1.2em;
+      font-weight: 700;
+      color: var(--text-sec);
+    }
+
+    /* 對比區 */
+    .compare-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .compare-section {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .compare-box {
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid;
+    }
+
+    .compare-box.bad {
+      background: var(--bg-bad);
+      border-color: var(--border-bad);
+      color: var(--text-bad);
+    }
+
+    .compare-box.good {
+      background: var(--bg-good);
+      border-color: var(--border-good);
+      color: var(--text-good);
+    }
+
+    .compare-header {
+      font-weight: 700;
+      font-size: 1.1em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .compare-content {
+      line-height: 1.6;
+      font-size: 0.95em;
+    }
+
+    .compare-content span.highlight {
+      background-color: rgba(192, 138, 62, 0.15);
+      border-bottom: 2px solid var(--accent2);
+      font-weight: 600;
+      color: var(--text-main);
+      padding: 0 4px;
+      border-radius: 2px;
+    }
+
+    /* 列印/儲存控制 */
+    .btn-print {
+      position: absolute;
+      top: 48px;
+      right: 48px;
+      background: transparent;
+      border: 1px solid var(--text-sec);
+      color: var(--text-sec);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85em;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-print:hover {
+      background: var(--text-main);
+      color: #fff;
+      border-color: var(--text-main);
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+      .sheet-card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+      .btn-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sheet-card">
+      <button class="btn-print" onclick="window.print()">🖨️ 儲存為 PDF / 列印</button>
+      <header>
+        <div class="title-area">
+          <h1>Prompt 提示詞黃金公式</h1>
+          <p>AI 協作技能包 · 打造高品質生成結果</p>
+        </div>
+        <div>
+          <span class="tag">模組 1 · AI 素養</span>
+        </div>
+      </header>
+
+      <div class="formula-section">
+        <div class="formula-title">💡 提示詞四大黃金元素</div>
+        <div class="formula-box">
+          <div class="formula-element r">角色 (Role)</div>
+          <div class="formula-plus">+</div>
+          <div class="formula-element t">任務 (Task)</div>
+          <div class="formula-plus">+</div>
+          <div class="formula-element f">格式 (Format)</div>
+          <div class="formula-plus">+</div>
+          <div class="formula-element c">限制 (Constraint)</div>
+        </div>
+      </div>
+
+      <div class="compare-section">
+        <div class="compare-box bad">
+          <div class="compare-header">❌ 一般直覺問法 (低效)</div>
+          <div class="compare-content">
+            「幫我寫一封回信給客戶。」<br>
+            <em style="font-size: 0.85em; display:block; margin-top:12px; color: #742a2a;">
+              * 缺點：AI 沒有上下文，容易寫出罐頭、空洞、語氣不合適的內容，需要來回修改數次。
+            </em>
+          </div>
+        </div>
+        <div class="compare-box good">
+          <div class="compare-header">✅ 結構化高手問法 (高效)</div>
+          <div class="compare-content">
+            「你是<span class="highlight">資深客戶關係行銷專家 (角色)</span>，幫我寫一封<span class="highlight">回覆客戶詢價的 Email (任務)</span>，字數在 <span class="highlight">150 字以內並分三段 (格式)</span>，語氣要<span class="highlight">專業、親切且有禮貌 (限制)</span>。」
+            <em style="font-size: 0.85em; display:block; margin-top:12px; color: #276749;">
+              * 優點：AI 一次就生成完全符合期待的文案，直接複製即可使用。
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

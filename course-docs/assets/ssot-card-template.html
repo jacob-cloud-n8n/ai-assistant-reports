@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 協作開工/收工閉環小卡 (SSOT Card)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #f4f1ea;
+      --text-main: #1a2b49;
+      --text-sec: #4a5d78;
+      --accent: #1a2b49;
+      --accent2: #c08a3e;
+      --card-bg: #ffffff;
+      --card-shadow: 0 12px 32px rgba(26, 43, 73, 0.06);
+    }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 1.8em;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .desc {
+      color: var(--text-sec);
+      font-size: 0.95em;
+      margin-bottom: 40px;
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .btn-print {
+      margin-bottom: 30px;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 0.9em;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .btn-print:hover {
+      background: var(--accent2);
+      border-color: var(--accent2);
+    }
+
+    /* 卡片展示區 */
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .cards-container {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    /* 名片標準尺寸 90mm x 54mm (在網頁上以像素等比放大，約 340px x 204px) */
+    .business-card {
+      width: 360px;
+      height: 216px;
+      background: var(--card-bg);
+      border: 1px solid rgba(26, 43, 73, 0.15);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      padding: 24px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .business-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* 裝飾線條 */
+    .business-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 60px;
+      height: 60px;
+      border-bottom: 6px solid var(--accent2);
+      border-right: 6px solid var(--accent2);
+      border-bottom-right-radius: 12px;
+      opacity: 0.8;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(26, 43, 73, 0.08);
+      padding-bottom: 8px;
+    }
+
+    .card-title {
+      font-family: 'Noto Serif TC', serif;
+      font-weight: 700;
+      font-size: 1.1em;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-subtitle {
+      font-size: 0.7em;
+      color: var(--text-sec);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+    }
+
+    .prompt-text {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.85em;
+      line-height: 1.6;
+      color: var(--text-main);
+      font-style: italic;
+      margin: 0;
+    }
+
+    .prompt-text span {
+      color: var(--accent2);
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    .card-footer {
+      font-size: 0.7em;
+      color: var(--text-sec);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .desc, .btn-print, h1 {
+        display: none;
+      }
+      .cards-container {
+        flex-direction: row;
+        gap: 20px;
+      }
+      .business-card {
+        box-shadow: none;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>開工與收工閉環小卡 (SSOT Card)</h1>
+  <p class="desc">
+    本卡片採用 90mm x 54mm 標準名片比例設計。印製或將此指令存入您個人第二大腦。開工時複製正面引導對齊，收工時執行背面指令歸檔，是您與 AI 建立高效協作閉環的必備工具。
+  </p>
+  <button class="btn-print" onclick="window.print()">🖨️ 列印小卡模板 (A4 / 實體裁切)</button>
+
+  <div class="cards-container">
+    <!-- 正面：開工卡 -->
+    <div class="business-card">
+      <div class="card-header">
+        <div class="card-title">🌅 開工儀式</div>
+        <div class="card-subtitle">Start Work</div>
+      </div>
+      <div class="card-body">
+        <p class="prompt-text">
+          「開工！今天我要處理 <span>[具體工作任務]</span>，請扮演 <span>[專屬協作角色]</span>，讓我們依據 SSOT 單一真相原則展開協作。」
+        </p>
+      </div>
+      <div class="card-footer">
+        <span>AI Assistant Course</span>
+        <span>SSOT Card · Front</span>
+      </div>
+    </div>
+
+    <!-- 背面：收工卡 -->
+    <div class="business-card">
+      <div class="card-header">
+        <div class="card-title">🌃 收工儀式</div>
+        <div class="card-subtitle">Close Work</div>
+      </div>
+      <div class="card-body">
+        <p class="prompt-text">
+          「收工！請幫我總結今日產出、未完事項與明日下一步，並排除任何敏感資訊，格式化輸出為 Markdown 規格的收工小卡。」
+        </p>
+      </div>
+      <div class="card-footer">
+        <span>AI Assistant Course</span>
+        <span>SSOT Card · Back</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
