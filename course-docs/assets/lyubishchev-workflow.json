@@ -1,0 +1,209 @@
+{
+  "name": "Lyubishchev Time Audit Demo",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "replace-with-your-demo-path",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "lyu-webhook",
+      "name": "Webhook - receive time log",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first()?.json || {};\nconst body = input.body || input;\nconst text = String(body.text || body.message || body.note || '').trim();\nconst now = new Date().toISOString();\nconst match = text.match(/(\\d+(?:\\.\\d+)?)\\s*(小時|hr|h|分鐘|分|min|m)/i);\nconst value = match ? Number(match[1]) : 0;\nconst unit = match ? match[2] : '';\nconst minutes = match ? (/(小時|hr|h)/i.test(unit) ? value * 60 : value) : 0;\nconst tagMatch = text.match(/#([\\p{Script=Han}\\w-]+)/u);\nconst category = tagMatch ? tagMatch[1] : (text.includes('閱讀') || text.toLowerCase().includes('learn') ? '學習' : '未分類');\nconst cleanActivity = text\n  .replace(/\\d+(?:\\.\\d+)?\\s*(小時|hr|h|分鐘|分|min|m)/ig, '')\n  .replace(/#[\\p{Script=Han}\\w-]+/gu, '')\n  .trim() || '未命名活動';\nreturn [{\n  json: {\n    raw_text: text,\n    activity: cleanActivity,\n    category,\n    minutes,\n    hours: Math.round((minutes / 60) * 100) / 100,\n    started_at: body.started_at || now,\n    source: body.source || 'demo-webhook',\n    note: body.note || ''\n  }\n}];"
+      },
+      "id": "lyu-parse",
+      "name": "Parse time log",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst minutes = Number(item.minutes || 0);\nlet quality = '待確認';\nif (minutes >= 25 && minutes <= 120) quality = '有效專注';\nif (minutes > 120) quality = '過長，建議拆段';\nif (minutes > 0 && minutes < 25) quality = '短段紀錄';\nreturn [{\n  json: {\n    ...item,\n    quality,\n    title: `${item.category} - ${item.activity}`.slice(0, 80),\n    summary: `${item.activity}，${minutes || '?'} 分鐘，分類：${item.category}，判定：${quality}`\n  }\n}];"
+      },
+      "id": "lyu-classify",
+      "name": "AI-style classify net time",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        0
+      ],
+      "notes": "Demo-safe classifier. Replace with an AI Agent or LLM node after students add their own credentials."
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_NOTION_DATABASE_ID",
+          "mode": "id"
+        },
+        "title": "={{ $json.title }}",
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "活動內容|rich_text",
+              "textContent": "={{ $json.activity }}"
+            },
+            {
+              "key": "分類|select",
+              "selectValue": "={{ $json.category }}"
+            },
+            {
+              "key": "分鐘|number",
+              "numberValue": "={{ $json.minutes }}"
+            },
+            {
+              "key": "小時|number",
+              "numberValue": "={{ $json.hours }}"
+            },
+            {
+              "key": "時間區段|date",
+              "date": "={{ $json.started_at }}"
+            },
+            {
+              "key": "品質判定|select",
+              "selectValue": "={{ $json.quality }}"
+            },
+            {
+              "key": "原始輸入|rich_text",
+              "textContent": "={{ $json.raw_text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "lyu-notion",
+      "name": "Create Notion time record",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        0
+      ],
+      "notes": "Add your own Notion credential and replace REPLACE_WITH_NOTION_DATABASE_ID before activating."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { success: true, message: 'Time log parsed and ready for Notion.', summary: $('AI-style classify net time').item.json.summary } }}",
+        "options": {}
+      },
+      "id": "lyu-response",
+      "name": "Respond to test sender",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        960,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_WITH_TELEGRAM_CHAT_ID",
+        "text": "={{ '✅ 柳比歇夫時間紀錄完成：' + $('AI-style classify net time').item.json.summary }}",
+        "additionalFields": {}
+      },
+      "id": "lyu-telegram",
+      "name": "Optional Telegram confirmation",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        180
+      ],
+      "disabled": true,
+      "notes": "Optional. Enable only after adding your own Telegram credential and chat id."
+    },
+    {
+      "parameters": {
+        "content": "## Demo setup\n\n1. Import this workflow into a local n8n instance.\n2. Add your own Notion credential.\n3. Replace `REPLACE_WITH_NOTION_DATABASE_ID` with a demo database containing: 活動內容, 分類, 分鐘, 小時, 時間區段, 品質判定, 原始輸入.\n4. Click `Listen for test event` on the Webhook node.\n5. Send JSON such as:\n\n```json\n{\"text\":\"閱讀 AI 書籍 45 分鐘 #學習\"}\n```\n\nNo production credentials, credential IDs, real webhook paths, or personal data are included in this file.",
+        "height": 360,
+        "width": 520,
+        "color": 4
+      },
+      "id": "lyu-sticky",
+      "name": "Import instructions",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -360
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook - receive time log": {
+      "main": [
+        [
+          {
+            "node": "Parse time log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse time log": {
+      "main": [
+        [
+          {
+            "node": "AI-style classify net time",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI-style classify net time": {
+      "main": [
+        [
+          {
+            "node": "Create Notion time record",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Optional Telegram confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Notion time record": {
+      "main": [
+        [
+          {
+            "node": "Respond to test sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {},
+  "versionId": "demo-sanitized",
+  "triggerCount": 0,
+  "tags": []
+}

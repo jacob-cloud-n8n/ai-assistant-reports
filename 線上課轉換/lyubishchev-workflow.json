@@ -1,0 +1,152 @@
+{
+  "name": "柳比歇夫時間統計自動化",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "time-audit",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        0,
+        240
+      ],
+      "id": "webhook-trigger",
+      "name": "Webhook"
+    },
+    {
+      "parameters": {
+        "model": "models/gemini-2.5-flash",
+        "prompt": "=請解析以下時間記錄文字：\n\n\"{{ $json.body.message }}\"\n\n請將其解析並輸出為純 JSON 物件。不要 markdown 標記（如 ```json ... ```），不要任何多餘的解釋或說明文字。必須包含以下三個欄位：\n- activity (活動內容，例：閱讀 AI 書籍)\n- duration (專注時間，為整數，單位為分鐘，例：45)\n- category (分類，例：學習)",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        220,
+        240
+      ],
+      "id": "gemini-parser",
+      "name": "Google Gemini"
+    },
+    {
+      "parameters": {
+        "jsCode": "let text = $json.text || '';\n// 移除可能存在的 Markdown 程式碼框標記\ntext = text.replace(/```json/gi, '').replace(/```/g, '').trim();\ntry {\n  const parsed = JSON.parse(text);\n  return {\n    activity: parsed.activity || '未命名活動',\n    duration: parseInt(parsed.duration) || 0,\n    category: parsed.category || '未分類'\n  };\n} catch (e) {\n  // 容錯的正則表達式提取方式\n  const activityMatch = text.match(/\"activity\"\\s*:\\s*\"([^\"]+)\"/);\n  const durationMatch = text.match(/\"duration\"\\s*:\\s*(\\d+)/);\n  const categoryMatch = text.match(/\"category\"\\s*:\\s*\"([^\"]+)\"/);\n  return {\n    activity: activityMatch ? activityMatch[1] : '解析失敗項目',\n    duration: durationMatch ? parseInt(durationMatch[1]) : 0,\n    category: categoryMatch ? categoryMatch[1] : '未分類'\n  };\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        240
+      ],
+      "id": "code-cleaner",
+      "name": "JSON 清理與解析"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": ""
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "活動內容|title",
+              "title": "={{ $json.activity }}"
+            },
+            {
+              "key": "專注時間|number",
+              "numberValue": "={{ $json.duration }}"
+            },
+            {
+              "key": "分類|select",
+              "selectValue": "={{ $json.category }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        240
+      ],
+      "id": "notion-writer",
+      "name": "寫入 Notion"
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=🔔 **柳比歇夫時間日誌已成功寫入 Notion！**\n\n📝 活動：{{ $json.activity }}\n⏱️ 時間：{{ $json.duration }} 分鐘\n🏷️ 分類：{{ $json.category }}",
+        "additionalFields": {
+          "parseMode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        240
+      ],
+      "id": "telegram-notifier",
+      "name": "Telegram 通知"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini": {
+      "main": [
+        [
+          {
+            "node": "JSON 清理與解析",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON 清理與解析": {
+      "main": [
+        [
+          {
+            "node": "寫入 Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "寫入 Notion": {
+      "main": [
+        [
+          {
+            "node": "Telegram 通知",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
