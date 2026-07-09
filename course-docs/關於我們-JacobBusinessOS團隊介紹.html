@@ -200,6 +200,46 @@
     .story-section { font-size: 0.48em; }
   }
 
+  /* ===== 故事時間軸積木與畫布 (AG v2 導入) ===== */
+  .canvas { position: relative; height: 600px; text-align: left; }
+  .kicker {
+    position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+    font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+  }
+  .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+  .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+  
+  .head { padding-top: 52px; }
+  .head h2 { margin: 0 0 6px; }
+  .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+  .src-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    border-top: 1px solid var(--line); padding-top: 10px;
+    display: flex; justify-content: space-between;
+    font-size: 0.36em; color: var(--text-sec);
+  }
+
+  .timeline { position: relative; margin-top: 40px; }
+  .timeline .tl-track { position: absolute; top: 21px; left: 4%; right: 4%; height: 2px; background: var(--line); }
+  .timeline .tl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; }
+  .tl-step { text-align: left; }
+  .tl-step .tl-dot {
+    width: 44px; height: 44px; border-radius: 50%; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+    border: 4px solid var(--bg-main); position: relative;
+  }
+  .tl-step:nth-child(2) .tl-dot { background: var(--accent2); }
+  .tl-step:nth-child(3) .tl-dot { background: var(--accent2); }
+  .tl-step:nth-child(4) .tl-dot { background: var(--accent2); }
+  .tl-step b { display: block; font-size: 0.52em; margin-bottom: 4px; }
+  .tl-step p { font-size: 0.4em; color: var(--text-sec); line-height: 1.6; margin: 0; }
+  .tl-quote {
+    margin-top: 26px; border-left: 3px solid var(--accent2); padding: 10px 18px;
+    font-size: 0.55em; line-height: 1.6; color: var(--text-main); font-style: italic;
+  }
+
   /* RWD: reveal.js 簡報尺寸在小螢幕自動縮放 */
   @media (max-width: 768px) and (orientation: portrait) {
     .reveal .slides section { padding: 20px 10px; }
@@ -242,6 +282,44 @@
         <p>讓不同的 Agent 按照「狀態機」與「DoD 驗收標準」自動運轉時，</p>
         <p style="margin-top: 14px;">AI 工具的升級對你而言不再是威脅——</p>
         <p>而是<span class="highlight">瞬間釋放更大生產力的加速引擎</span>。</p>
+      </div>
+    </section>
+
+    <!-- ⑤ Jacob 故事時間軸：目標→阻礙→努力→結果 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">OUR FOUNDER</span><span class="zh">創辦人的故事</span></div>
+        <div class="head">
+          <h2>腰閃到扛 50kg 羊奶桶，痛著拉訂單 ➔ 一句話自動化運行</h2>
+          <p class="sub">真實不虛構：從送羊奶的傳統產業，到多智慧體 (Multi-Agents) 原生開發</p>
+        </div>
+        <div class="timeline">
+          <div class="tl-track"></div>
+          <div class="tl-grid">
+            <div class="tl-step">
+              <div class="tl-dot">目標</div>
+              <b>曾經的渴望</b>
+              <p>老爸年紀大了，裸辭學校工作回來銷售羊奶。渴望能自由安排時間、多陪家人出門。</p>
+            </div>
+            <div class="tl-step">
+              <div class="tl-dot">阻礙</div>
+              <b>最痛的時刻</b>
+              <p>為了時間自由創業，假日卻成了最忙的營業日。閃到腰痛得要死，仍得為帳單打電話拉客。</p>
+            </div>
+            <div class="tl-step">
+              <div class="tl-dot">努力</div>
+              <b>轉折與嘗試</b>
+              <p>花錢買教訓、代理夢碎、自己架站撞牆。轉折：不學寫程式，改學怎麼當 AI 助理的老闆。</p>
+            </div>
+            <div class="tl-step">
+              <div class="tl-dot">結果</div>
+              <b>現在的樣子</b>
+              <p>人在送羊奶，AI 在店裡接單。6 個 AI 特助分工協作，每天為團隊自動省下 2 小時。</p>
+            </div>
+          </div>
+        </div>
+        <div class="tl-quote">「我人在路上送奶，我的『員工』在店裡接單。」</div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>傳統產業的 AI 自動化救贖</span></div>
       </div>
     </section>
 
