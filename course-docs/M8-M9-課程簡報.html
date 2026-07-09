@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M8-M9 課程簡報 — Jacob Business OS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+  /* ===== 單一設計 token 來源 ===== */
+  :root {
+    --bg-main: #f4f1ea;
+    --text-main: #1a2b49;
+    --text-sec: #4a5d78;
+    --accent: #1a2b49;
+    --accent2: #c08a3e;
+    --success: #3f8a4f;
+    --warn: #d4a373;
+    --card-bg: #ffffff;
+    --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+    --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    --hairline: rgba(26, 43, 73, 0.12);
+    --fill-accent: rgba(26, 43, 73, 0.06);
+    --fill-accent2: rgba(192, 138, 62, 0.10);
+    --fill-success: rgba(63, 138, 79, 0.10);
+  }
+  :root.theme-dark {
+    --bg-main: #0b0f19;
+    --text-main: #f3f4f6;
+    --text-sec: #9ca3af;
+    --accent: #38bdf8;
+    --accent2: #fbbf24;
+    --success: #34d399;
+    --warn: #fbbf24;
+    --card-bg: #111827;
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    --hairline: #1e293b;
+    --fill-accent: rgba(56, 189, 248, 0.10);
+    --fill-accent2: rgba(251, 191, 36, 0.10);
+    --fill-success: rgba(52, 211, 153, 0.10);
+  }
+
+  .reveal {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    text-transform: none;
+  }
+  .reveal h1 { font-size: 2em; color: var(--accent); }
+  .reveal h2 { font-size: 1.3em; color: var(--accent); }
+  .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+  .reveal .slide-number { color: var(--text-sec); background: transparent; }
+  .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
+
+  /* ===== 資訊圖表畫布 ===== */
+  .canvas { position: relative; height: 600px; text-align: left; }
+
+  /* 章節標籤 */
+  .kicker {
+    position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+    font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+  }
+  .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+  .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+
+  /* 頁首標題區 */
+  .head { padding-top: 52px; }
+  .head h2 { margin: 0 0 6px; }
+  .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+  /* 來源註腳 */
+  .src-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    border-top: 1px solid var(--hairline); padding-top: 10px;
+    display: flex; justify-content: space-between;
+    font-size: 0.36em; color: var(--text-sec);
+  }
+
+  /* 內建 SVG 圖示座 */
+  .icon-seat {
+    width: 44px; height: 44px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--hairline);
+  }
+  .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+  .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+  .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+  /* 價值面板 */
+  .value-panel {
+    flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+    background: var(--card-bg); padding: 18px 20px; display: flex; flex-direction: column;
+  }
+  .value-panel .vp-title { font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .value-panel .vp-row { display: flex; gap: 14px; align-items: center; padding: 10px 0; }
+  .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+  .value-panel .vp-row b { display: block; font-size: 0.5em; }
+  .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  /* 三柱能力頁 */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+  .pillar {
+    border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .pillar .p-head { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+  .pillar .p-num {
+    width: 26px; height: 26px; border-radius: 50%; flex: none; align-self: center;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+  }
+  .pillar .p-head b { font-size: 0.6em; } .pillar .p-head small { font-size: 0.36em; color: var(--text-sec); letter-spacing: 0.1em; }
+  .pillar .p-item { display: flex; gap: 10px; align-items: center; }
+  .pillar .p-item b { display: block; font-size: 0.44em; }
+  .pillar .p-item small { font-size: 0.36em; color: var(--text-sec); }
+  .pillar .p-goal {
+    margin-top: auto; border: 1px solid var(--hairline); border-radius: 6px;
+    background: var(--fill-accent); font-size: 0.38em; text-align: center; padding: 7px; color: var(--text-main);
+  }
+
+  /* 雙欄與大數字 KPI 磚 */
+  .duo { display: flex; gap: 24px; margin-top: 18px; align-items: stretch; }
+  .duo .main { flex: 1.2; position: relative; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .stat-tile {
+    border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+    padding: 22px; text-align: left;
+  }
+  .stat-tile .num { font-family: 'Playfair Display', serif; font-size: 1.6em; font-weight: 700; color: var(--accent); line-height: 1.1; }
+  .stat-tile .num span { font-size: 0.45em; color: var(--accent2); }
+  .stat-tile b { display: block; font-size: 0.46em; margin-top: 6px; }
+  .stat-tile small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  /* 統一排版 */
+  .title-slide { text-align: center; }
+  .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 12px; }
+  .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--accent); }
+  .compare-table td { padding: 10px; border-bottom: 1px solid var(--hairline); color: var(--text-sec); }
+  .compare-table td strong { color: var(--accent2); }
+  
+  .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 12px; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+  .prompt-card { background: var(--card-bg); border-radius: 14px; padding: 20px 24px; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); text-align: left; margin: 0.8em auto; max-width: 85%; }
+  .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+  .prompt-card .spell { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em; color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+  .highlight { color: var(--accent2); font-weight: 700; }
+
+  .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+  .step-card {
+    background: var(--card-bg); border-radius: 12px; padding: 18px;
+    border-top: 4px solid var(--accent); border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+    box-shadow: var(--card-shadow); text-align: left;
+  }
+  .step-card h4 { font-size: 0.6em; margin-bottom: 6px; color: var(--accent); }
+  .step-card p { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+  .case-item { padding: 14px; border: 1px solid var(--hairline); border-radius: 8px; background: var(--card-bg); }
+  .case-item h4 { font-size: 0.55em; color: var(--accent); margin-bottom: 4px; font-weight: 600; }
+  .case-item p { font-size: 0.36em; color: var(--text-sec); line-height: 1.5; margin: 0; }
+
+  /* ========== RWD ========== */
+  @media (max-width: 768px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .step-grid { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+    .duo { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ==================== 第 9 堂 ==================== -->
+
+    <!-- M8 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 9 堂課</div>
+        <h1>Agent 團隊藍圖</h1>
+        <p class="subtitle">從個人痛點出發，漸進式擴展繪製出高收益的 AI 特助生產線畫布</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M8-2 規劃方法論 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">METHODOLOGY</span><span class="zh">痛點導向</span></div>
+        <div class="head">
+          <h2>規劃第一步：痛點是什麼，才配置什麼</h2>
+          <p class="sub">嚴禁盲目引進一堆 Agent。遵守「漸進式擴展」鐵則，先解決眼前最痛的一處繁重工作</p>
+        </div>
+        <div class="duo" style="margin-top: 30px; gap: 24px;">
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">🔴 先問痛點，再配特助</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              1. **盤點痛點**：找出每天花超過 1 小時做、重複且規則明確的體力活（例如手動對帳、手動複製貼上格式化教材）。<br>
+              2. **先求有、再求好**：不要幻想第一天就拉起 5 個 Agent。先用 1 個 Hermes 解決基本的日常記錄與提醒，穩固後再加。
+            </div>
+          </div>
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent); text-align: left; margin-bottom: 12px;">📊 漸進式擴展示意</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              * <strong>Phase 1 (1-2週)</strong>：1位 Hermes 記帳、做日常紀要。<br>
+              * <strong>Phase 2 (3-4週)</strong>：引入 n8n 自動將記帳轉移至 Google Sheet。<br>
+              * <strong>Phase 3 (第5週起)</strong>：導入 Codex/OpenCode 實現產品代碼與發布自動化。
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>規劃方法論</span></div>
+      </div>
+    </section>
+
+    <!-- M8-3 畫布工具 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">CANVAS</span><span class="zh">產線畫布</span></div>
+        <div class="head">
+          <h2>產線規劃畫布：將工作流實體化</h2>
+          <p class="sub">每一條自動化產線都必須明確定義：Owner（特助）、標準化流程、以及可重複套用的模板</p>
+        </div>
+        <div class="step-grid" style="margin-top: 30px;">
+          <div class="step-card">
+            <h4>1. 痛點與投入盤點</h4>
+            <p>列出要消滅的繁瑣業務（例如訂閱配送排程），並計算預期投入的開發時間與 API 預算。</p>
+          </div>
+          <div class="step-card">
+            <h4>2. 配置 Owner 與流程</h4>
+            <p>指派負責此環節的專屬 Agent，並將它每天要執行的動作，拆解成機器可跑的 SOP。</p>
+          </div>
+          <div class="step-card">
+            <h4>3. 固化成重複模板</h4>
+            <p>設計標準的 XML/JSON/Markdown 格式。每一次觸發，都套用同一套格式，消除 LLM 亂吐格式的不確定性。</p>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>畫布工具三要素</span></div>
+      </div>
+    </section>
+
+    <!-- M8-4 現金流視角 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">BUSINESS VIEW</span><span class="zh">現金流視角</span></div>
+        <div class="head">
+          <h2>您的 AI 特助，必須切實接軌您的生意</h2>
+          <p class="sub">別把 AI 當玩具，用「產線」思維衡量每一個特助的導入，它們必須為您省下時間或創造營收</p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-tile">
+            <div class="num">10<span> x</span></div>
+            <b>訂閱配送產線</b>
+            <small>n8n + Hermes 自動撈取訂單、整理分組並發送派工</small>
+          </div>
+          <div class="stat-tile">
+            <div class="num">0<span> 秒</span></div>
+            <b>課程交付產線</b>
+            <small>學員繳費後，自動開通權限、發送合約並生成行前通知</small>
+          </div>
+          <div class="stat-tile">
+            <div class="num">85<span> %</span></div>
+            <b>官網更新產線</b>
+            <small>只更新 Notion，自動發送審查，一鍵安全發布，站端零施工</small>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 商業思維：Agent 導入三部曲 ── <strong>穩固本地工作流 ➔ 擴展串接自動化 ➔ 實現完全規模化</strong>。寧願做一條真能省下 30 分鐘的產線，也不要設計十條華而不實的玩具。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>商業落地案例</span></div>
+      </div>
+    </section>
+
+    <!-- M8-5 實做完成 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：填寫您的第一份 AI 產線規劃畫布</h2>
+          <p class="sub">盤點您明天最想消滅的重複性工作，畫出您的第一條特助產線</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [產線規劃畫布v2.md] (含痛點矩陣、預算分配表、特助配對決策表與 SOP 固化清單)<br>
+            2. 本日產線實戰案例 (走讀老師的「課程自動化行銷與簡報生成產線」)
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M8 實作帶走</span></div>
+      </div>
+    </section>
+
+    <!-- ==================== 第 10 堂 ==================== -->
+
+    <!-- M9 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 10 堂課</div>
+        <h1>AI 閱讀三大心法</h1>
+        <p class="subtitle">告別資訊焦慮：掌握狩獵法、費曼法與辯論法，將海量文件轉化為即戰力</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M9-2 狩獵法 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">HUNTING METHOD</span><span class="zh">狩獵法</span></div>
+        <div class="head">
+          <h2>狩獵法：帶有極強目的性的「精準狙擊」</h2>
+          <p class="sub">不求把資料從頭到尾讀完，只求尋找解決當前局面的那一個「解藥」</p>
+        </div>
+        <div class="duo" style="margin-top: 30px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p>1. **獵物定位**：開始閱讀前，先對 Agent 下達明確的狩獵指令。例如：「在這份 300 頁的開車法規中，我只想找出『酒駕罰款與吊扣扣分條款』」。</p>
+            <p style="margin-top: 14px;">2. **拿到答案就停**：找到關鍵點，立刻退出，拒絕被其餘無關的背景雜訊和理論衍生帶走注意力。</p>
+            <p style="margin-top: 14px;">3. **破局高於完整**：商場如戰場，解決問題的速度比追求學術上的「讀完」更有價值。</p>
+          </div>
+          <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">狩獵法提示詞配置</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>設定特定靶心</b><small>指令限縮：只針對特定痛點進行萃取</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span><b>強制停止條件</b><small>明確告知：找到解答，立即結束對話</small></span></div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>狩獵式閱讀</span></div>
+      </div>
+    </section>
+
+    <!-- M9-3 費曼法 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">FEYNMAN METHOD</span><span class="zh">費曼法</span></div>
+        <div class="head">
+          <h2>費曼法：用您自己的話，解釋給小學生聽</h2>
+          <p class="sub">如果不能用最白話的中文解釋清楚一個概念，就說明您還沒有真正理解它</p>
+        </div>
+        <table class="compare-table" style="margin-top: 30px;">
+          <thead>
+            <tr>
+              <th style="width: 50%;">❌ 傳統的「自以為懂了」</th>
+              <th style="width: 50%;">✅ 費曼法引導交互學習</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>讀完一份 Docker 教學，點點頭覺得邏輯通暢，但自己開終端機寫不出半行命令。</td>
+              <td>讓 Agent 扮演「不懂技術的小孩」，要求你用最直白的譬喻（如把 Docker 比喻成貨櫃）向它解釋。</td>
+            </tr>
+            <tr>
+              <td>把文案從頭到尾死記硬背，但一旦遇到客戶提問，無法靈活拆解或重組。</td>
+              <td>讓 Agent 在你解釋完之後，反過來針對「漏洞」對你進行追問與挑戰，直到毫無死角。</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="src-footer"><span>Jacob Business OS</span><span>費曼法對比</span></div>
+      </div>
+    </section>
+
+    <!-- M9-4 辯論法 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">DEBATE METHOD</span><span class="zh">辯論法</span></div>
+        <div class="head">
+          <h2>辯論法：激發 AI 的對立人格做壓力測試</h2>
+          <p class="sub">做重大商業或技術決策前，命令 AI 扮演反對者角色，對您的方案進行無情的漏洞挑選</p>
+        </div>
+        <div class="duo" style="margin-top: 30px; gap: 24px;">
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent); text-align: left; margin-bottom: 12px;">🔵 辯論對立設置</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              1. **正方 (您或支持 AI)**：列舉該方案的所有優勢。<br>
+              2. **反方 (挑刺 AI)**：無情指責技術風險、成本超標與安全漏洞（如：憑證暴露風險）。
+            </div>
+          </div>
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--warn); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--warn); text-align: left; margin-bottom: 12px;">⚖️ 最終辯證與決策</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              透過正反兩方 2-3 輪的激烈辯論，最脆弱的假設會被撕碎，逼著您在真正執行前，拿出最防呆的備用方案（如：Volumes 持久化）。
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>辯論法決策鏈</span></div>
+      </div>
+    </section>
+
+    <!-- M9-5 實做完成 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：體驗三大心法，狙擊並消化一篇文章</h2>
+          <p class="sub">請在您的對話中複製以下提示詞，對您的目標資料展開極速消化</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [三大心法提示詞.md] (包含極速狩獵提示詞、費曼反問提示詞、多角色辯論提示詞模板)<br>
+            2. 本日真實案例走讀 (看老師如何用狩獵法從 STAR 57 筆記中一秒定位出核心規格)
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 註：這份在老師系統裡的真實版本 —— Jacob 團隊用狩獵法快速消化系統日誌，用費曼法驗證學員是否具備部署能力，並在面臨 Zeabur v.s. 本地自架的決策時，使用辯論法進行架構壓力測試。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M9 實作帶走</span></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  var isMobile = window.innerWidth <= 768;
+  Reveal.initialize({
+    hash: true,
+    center: true,
+    progress: true,
+    controls: true,
+    transition: 'slide',
+    width: isMobile ? window.innerWidth : 1280,
+    height: isMobile ? window.innerHeight : 720,
+    margin: isMobile ? 0.02 : 0.1,
+  });
+</script>
+</body>
+</html>

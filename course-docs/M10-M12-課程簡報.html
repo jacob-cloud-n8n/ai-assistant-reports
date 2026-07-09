@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M10-M12 課程簡報 — Jacob Business OS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+  /* ===== 單一設計 token 來源 ===== */
+  :root {
+    --bg-main: #f4f1ea;
+    --text-main: #1a2b49;
+    --text-sec: #4a5d78;
+    --accent: #1a2b49;
+    --accent2: #c08a3e;
+    --success: #3f8a4f;
+    --warn: #d4a373;
+    --card-bg: #ffffff;
+    --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+    --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    --hairline: rgba(26, 43, 73, 0.12);
+    --fill-accent: rgba(26, 43, 73, 0.06);
+    --fill-accent2: rgba(192, 138, 62, 0.10);
+    --fill-success: rgba(63, 138, 79, 0.10);
+  }
+  :root.theme-dark {
+    --bg-main: #0b0f19;
+    --text-main: #f3f4f6;
+    --text-sec: #9ca3af;
+    --accent: #38bdf8;
+    --accent2: #fbbf24;
+    --success: #34d399;
+    --warn: #fbbf24;
+    --card-bg: #111827;
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    --hairline: #1e293b;
+    --fill-accent: rgba(56, 189, 248, 0.10);
+    --fill-accent2: rgba(251, 191, 36, 0.10);
+    --fill-success: rgba(52, 211, 153, 0.10);
+  }
+
+  .reveal {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    text-transform: none;
+  }
+  .reveal h1 { font-size: 2em; color: var(--accent); }
+  .reveal h2 { font-size: 1.3em; color: var(--accent); }
+  .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+  .reveal .slide-number { color: var(--text-sec); background: transparent; }
+  .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
+
+  /* ===== 資訊圖表畫布 ===== */
+  .canvas { position: relative; height: 600px; text-align: left; }
+
+  /* 章節標籤 */
+  .kicker {
+    position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+    font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+  }
+  .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+  .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+
+  /* 頁首標題區 */
+  .head { padding-top: 52px; }
+  .head h2 { margin: 0 0 6px; }
+  .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+  /* 來源註腳 */
+  .src-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    border-top: 1px solid var(--hairline); padding-top: 10px;
+    display: flex; justify-content: space-between;
+    font-size: 0.36em; color: var(--text-sec);
+  }
+
+  /* 內建 SVG 圖示座 */
+  .icon-seat {
+    width: 44px; height: 44px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--hairline);
+  }
+  .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+  .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+  .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+  /* 價值面板 */
+  .value-panel {
+    flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+    background: var(--card-bg); padding: 18px 20px; display: flex; flex-direction: column;
+  }
+  .value-panel .vp-title { font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .value-panel .vp-row { display: flex; gap: 14px; align-items: center; padding: 10px 0; }
+  .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+  .value-panel .vp-row b { display: block; font-size: 0.5em; }
+  .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  /* 三柱能力頁 */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+  .pillar {
+    border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .pillar .p-head { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+  .pillar .p-num {
+    width: 26px; height: 26px; border-radius: 50%; flex: none; align-self: center;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+  }
+  .pillar .p-head b { font-size: 0.6em; } .pillar .p-head small { font-size: 0.36em; color: var(--text-sec); letter-spacing: 0.1em; }
+  .pillar .p-item { display: flex; gap: 10px; align-items: center; }
+  .pillar .p-item b { display: block; font-size: 0.44em; }
+  .pillar .p-item small { font-size: 0.36em; color: var(--text-sec); }
+  .pillar .p-goal {
+    margin-top: auto; border: 1px solid var(--hairline); border-radius: 6px;
+    background: var(--fill-accent); font-size: 0.38em; text-align: center; padding: 7px; color: var(--text-main);
+  }
+
+  /* 雙欄與大數字 KPI 磚 */
+  .duo { display: flex; gap: 24px; margin-top: 18px; align-items: stretch; }
+  .duo .main { flex: 1.2; position: relative; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .stat-tile {
+    border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+    padding: 22px; text-align: left;
+  }
+  .stat-tile .num { font-family: 'Playfair Display', serif; font-size: 1.6em; font-weight: 700; color: var(--accent); line-height: 1.1; }
+  .stat-tile .num span { font-size: 0.45em; color: var(--accent2); }
+  .stat-tile b { display: block; font-size: 0.46em; margin-top: 6px; }
+  .stat-tile small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  /* 統一排版 */
+  .title-slide { text-align: center; }
+  .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 12px; }
+  .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--accent); }
+  .compare-table td { padding: 10px; border-bottom: 1px solid var(--hairline); color: var(--text-sec); }
+  .compare-table td strong { color: var(--accent2); }
+  
+  .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 12px; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+  .prompt-card { background: var(--card-bg); border-radius: 14px; padding: 20px 24px; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); text-align: left; margin: 0.8em auto; max-width: 85%; }
+  .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+  .prompt-card .spell { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em; color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+  .highlight { color: var(--accent2); font-weight: 700; }
+
+  .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+  .step-card {
+    background: var(--card-bg); border-radius: 12px; padding: 18px;
+    border-top: 4px solid var(--accent); border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+    box-shadow: var(--card-shadow); text-align: left;
+  }
+  .step-card h4 { font-size: 0.6em; margin-bottom: 6px; color: var(--accent); }
+  .step-card p { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+  .case-item { padding: 14px; border: 1px solid var(--hairline); border-radius: 8px; background: var(--card-bg); }
+  .case-item h4 { font-size: 0.55em; color: var(--accent); margin-bottom: 4px; font-weight: 600; }
+  .case-item p { font-size: 0.36em; color: var(--text-sec); line-height: 1.5; margin: 0; }
+
+  /* ========== RWD ========== */
+  @media (max-width: 768px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .step-grid { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+    .duo { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ==================== 第 11 堂 ==================== -->
+
+    <!-- M10 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 11 堂課</div>
+        <h1>踩坑紀錄與防呆</h1>
+        <p class="subtitle">前人血淚結晶：防範 API 外洩、上下文塌陷、自動化誤觸發與止損機制</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M10-2 常見踩坑 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">ACCIDENTS</span><span class="zh">常見事故</span></div>
+        <div class="head">
+          <h2>營運 AI 團隊必知的六大深坑</h2>
+          <p class="sub">這些都是真實發生過的事故，提前了解，能幫您省下十萬元的額度與無形的時間成本</p>
+        </div>
+        <div class="case-grid" style="margin-top: 24px;">
+          <div class="case-item">
+            <h4>1. Token 金鑰外洩</h4>
+            <p>API Key 未經遮罩誤傳到 Github 公開倉庫，被黑客在 3 分鐘內盜刷數千美元。</p>
+          </div>
+          <div class="case-item">
+            <h4>2. 長對話變笨 (塌陷)</h4>
+            <p>歷史對話過長，超出模型 Context 上下文限制，導致 Agent 邏輯錯亂、忘記規則。</p>
+          </div>
+          <div class="case-item">
+            <h4>3. 自動化誤觸發</h4>
+            <p>未對測試環境隔離，執行測試腳本時，直接向 Production 正式客戶發送了付款通知。</p>
+          </div>
+          <div class="case-item">
+            <h4>4. 同 Bug 重複死鎖燒錢</h4>
+            <p>Agent 在同一個 bug 上瘋狂自動嘗試十幾次未果，不知停手，極速燒乾單日 API 額度。</p>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>AI營運事故大綱</span></div>
+      </div>
+    </section>
+
+    <!-- M10-3 解法對比 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">RESOLUTIONS</span><span class="zh">解法速查</span></div>
+        <div class="head">
+          <h2>六大踩坑的快速處置指南</h2>
+          <p class="sub">防呆重於救援，將安全閥固化進您的啟動與收工腳本中</p>
+        </div>
+        <table class="compare-table" style="margin-top: 24px;">
+          <thead>
+            <tr>
+              <th style="width: 25%;">踩坑場景</th>
+              <th style="width: 35%;">❌ 錯誤且危險的做法</th>
+              <th style="width: 40%;">✅ 規範的防呆處置</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>金鑰外洩防禦</strong></td>
+              <td>出事才去 Github 刪除 commit</td>
+              <td>本機設置敏感詞自動掃描，<code>.env</code> 嚴禁脫離 <code>.gitignore</code></td>
+            </tr>
+            <tr>
+              <td><strong>長對話變笨</strong></td>
+              <td>繼續在同一個長對話裡死磕</td>
+              <td>主動整理出「壓縮知識卡」，重開全新 Session 重新載入</td>
+            </tr>
+            <tr>
+              <td><strong>同 Bug 燃燒額度</strong></td>
+              <td>任由 Agent 自主無限循環 debug</td>
+              <td><strong>「止損三次原則」</strong>：同一 Bug 嘗試 3 次失敗必須停手並紅燈預警</td>
+            </tr>
+            <tr>
+              <td><strong>誤觸正式環境</strong></td>
+              <td>共用同一個 API Token 與帳號</td>
+              <td>測試環境與正式環境完全隔離，部署前必須經由 Jacob 拍板</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="src-footer"><span>Jacob Business OS</span><span>防呆處置規範</span></div>
+      </div>
+    </section>
+
+    <!-- M10-4 實做 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：走讀您的防呆檢核清單</h2>
+          <p class="sub">將防呆 SOP 實體化，為您的 Agent 裝上緊急剎車閥</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [事故案例集v1.md] (收錄真實發生的 API 被盜刷、自動化誤觸事故與覆盤報告)<br>
+            2. [止損三次卡.md] (如何寫防死鎖監聽器，只要出錯 3 次立刻強制殺掉進程的命令列工具)
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M10 實作帶走</span></div>
+      </div>
+    </section>
+
+    <!-- ==================== 第 12 堂 ==================== -->
+
+    <!-- M11 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 12 堂課</div>
+        <h1>成本優化術</h1>
+        <p class="subtitle">讓每一分錢花在刀口上：機械檢查、粗工與判斷模型混用之省錢策略</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M11-2 成本結構 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">COST STRUCTURE</span><span class="zh">成本結構</span></div>
+        <div class="head">
+          <h2>您的 AI 特助花多少錢？</h2>
+          <p class="sub">建立清晰的成本視角，了解 AI 營運過程中的三項主要開銷</p>
+        </div>
+        <div class="pillar-grid">
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">1</span><b>固定工具費用</b><small>FIXED</small></div>
+            <div class="p-item"><span><b>訂閱費</b><small>例如 Claude Pro、ChatGPT Plus 或 Zeabur 基礎部署月費。</small></span></div>
+            <div class="p-goal">預期：約 $20~$30 USD / 月</div>
+          </div>
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">2</span><b>動態 API 消耗</b><small>DYNAMIC</small></div>
+            <div class="p-item"><span><b>Token 計費</b><small>按輸入與輸出字數計費，受 Agent 運行次數影響最大。</small></span></div>
+            <div class="p-goal">預期：浮動，需嚴防死循環燒錢</div>
+          </div>
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">3</span><b>基礎設施部署</b><small>HOSTING</small></div>
+            <div class="p-item"><span><b>主機費</b><small>伺服器、資料庫 (Postgres)、n8n 雲端託管與 Domain 續約費。</small></span></div>
+            <div class="p-goal">預期：約 $5~$15 USD / 月</div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>成本結構拆解</span></div>
+      </div>
+    </section>
+
+    <!-- M11-3 省錢策略 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">STRATEGY</span><span class="zh">省錢大法</span></div>
+        <div class="head">
+          <h2>三大省錢策略：Token 消耗銳減 90%</h2>
+          <p class="sub">不盲目呼叫最高級的 S 級模型，善用機械檢查與便宜模型分工</p>
+        </div>
+        <div class="duo" style="margin-top: 30px; gap: 24px;">
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">💻 機械檢查交給腳本 (0 Token)</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              <strong>核心原理</strong>：排版、語法檢查、檔案是否存在等動作，用本機寫好的 Shell/Node 腳本來跑，<strong>完全不需要呼叫 LLM</strong>。驗收通過後，才放行進 LLM 進行語意分析，省下大量無謂的 token 開銷。
+            </div>
+          </div>
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--success); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--success); text-align: left; margin-bottom: 12px;">⚖️ 模型分級混用 (省下 80%)</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              <strong>核心原理</strong>：大量的文件粗加工、資料格式化，指派給便宜的模型（如 GPT-4o-mini 或 Gemini Flash，B 級）；只有最後的關鍵技術決策與語意把關，才交給最聰明的模型（如 Claude 3.5 Sonnet，S 級）。
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>成本優化策略</span></div>
+      </div>
+    </section>
+
+    <!-- M11-4 實做 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：估算您的 AI 月費與配置優化方案</h2>
+          <p class="sub">使用我們的分工卡，合理配置您的多模型分工，將預算腰斬</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [省token分工卡.md] (手把手帶您區分什麼任務用 B 級模型、什麼用 S 級模型)<br>
+            2. 本日實作 (利用簡單的 Node 腳本，先對文案進行字數限制與基本校對，再去呼叫 API)
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M11 實作帶走</span></div>
+      </div>
+    </section>
+
+    <!-- ==================== 第 13 堂 ==================== -->
+
+    <!-- M12 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 13 堂課</div>
+        <h1>安全實踐</h1>
+        <p class="subtitle">構築企業級 AI 護城河：白名單防越權、金鑰遮罩防洩漏與資料物理隔離</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M12-2 安全威脅 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">THREATS</span><span class="zh">三大安全威脅</span></div>
+        <div class="head">
+          <h2>AI 時代的全新安全挑戰</h2>
+          <p class="sub">不僅僅是防黑客，更要防範 Agent 因邏輯過於自主而把金鑰或個資暴露給外界</p>
+        </div>
+        <div class="pillar-grid" style="margin-top: 30px;">
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">1</span><b>金鑰外洩</b><small>KEY LEAK</small></div>
+            <p style="font-size: 0.38em; color: var(--text-sec); line-height: 1.5; margin: 0;">API 金鑰、資料庫連線密碼，誤被 Agent 在 log 中印出或 git push 提交至公網。</p>
+          </div>
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">2</span><b>未授權存取</b><small>ACCESS</small></div>
+            <p style="font-size: 0.38em; color: var(--text-sec); line-height: 1.5; margin: 0;">您的 Bot 沒有設白名單限制，被惡意第三方拉入陌生頻道瘋狂呼叫，盜刷額度。</p>
+          </div>
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">3</span><b>客戶個資暴露</b><small>DATA PRIVACY</small></div>
+            <p style="font-size: 0.38em; color: var(--text-sec); line-height: 1.5; margin: 0;">直接將包含客戶真實姓名、電話與地址的整份 Excel 餵給未去敏的公用模型，面臨個資法風險。</p>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>三大安全威脅</span></div>
+      </div>
+    </section>
+
+    <!-- M12-3 防護措施 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">DEFENSE</span><span class="zh">三道防線</span></div>
+        <div class="head">
+          <h2>堅不可摧：安全的三道防線</h2>
+          <p class="sub">建立規範的去敏與審核機制，將安全防護寫成自動化腳本</p>
+        </div>
+        <div class="duo" style="margin-top: 30px; gap: 24px;">
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">🛡️ 第一防線：自動化敏感詞掃描</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              每一次 <code>git commit</code> 之前，本地自動觸發密鑰掃描器（如 <code>trufflehog3</code>）。一旦檢測到疑似金鑰的亂碼，立刻中斷提交並發送警報。
+            </div>
+          </div>
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--success); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--success); text-align: left; margin-bottom: 12px;">🔐 第二防線：個資去敏與審核閘門</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              嚴禁任何包含真實個資的檔案直接進入 Git 或公開 API。必須經過<strong>「個資去敏過濾器」</strong>將敏感個資替換為去敏代號，並在最後發布前經過 Jacob 的 LINE 人工確認閘門。
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>安全防線</span></div>
+      </div>
+    </section>
+
+    <!-- M12-4 實做 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：完成您本機的安全檢查與掃描配置</h2>
+          <p class="sub">走讀安全清單，手動驗收您的金鑰是否被妥善隔離與保護</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [安全檢查清單.md] (包含 .gitignore 配置法、環境變數遮罩 SOP、白名單過濾規則)<br>
+            2. 本日實作 (在您的專案根目錄配置一份完美的 .gitignore，並確保測試金鑰不留痕跡)
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 註：這份在老師系統裡的真實版本 —— Jacob 系統在雲端執行期一律採用「單一服務、單一倉庫、最小權限」的短效憑證；本機 commit 前設有 Trufflehog3 敏感詞掃描，以最高標準構築防禦網。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M12 實作帶走</span></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  var isMobile = window.innerWidth <= 768;
+  Reveal.initialize({
+    hash: true,
+    center: true,
+    progress: true,
+    controls: true,
+    transition: 'slide',
+    width: isMobile ? window.innerWidth : 1280,
+    height: isMobile ? window.innerHeight : 720,
+    margin: isMobile ? 0.02 : 0.1,
+  });
+</script>
+</body>
+</html>

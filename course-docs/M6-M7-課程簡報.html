@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M6-M7 課程簡報 — Jacob Business OS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+  /* ===== 單一設計 token 來源 ===== */
+  :root {
+    --bg-main: #f4f1ea;
+    --text-main: #1a2b49;
+    --text-sec: #4a5d78;
+    --accent: #1a2b49;
+    --accent2: #c08a3e;
+    --success: #3f8a4f;
+    --warn: #d4a373;
+    --card-bg: #ffffff;
+    --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+    --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    --hairline: rgba(26, 43, 73, 0.12);
+    --fill-accent: rgba(26, 43, 73, 0.06);
+    --fill-accent2: rgba(192, 138, 62, 0.10);
+    --fill-success: rgba(63, 138, 79, 0.10);
+  }
+  :root.theme-dark {
+    --bg-main: #0b0f19;
+    --text-main: #f3f4f6;
+    --text-sec: #9ca3af;
+    --accent: #38bdf8;
+    --accent2: #fbbf24;
+    --success: #34d399;
+    --warn: #fbbf24;
+    --card-bg: #111827;
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    --hairline: #1e293b;
+    --fill-accent: rgba(56, 189, 248, 0.10);
+    --fill-accent2: rgba(251, 191, 36, 0.10);
+    --fill-success: rgba(52, 211, 153, 0.10);
+  }
+
+  .reveal {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    text-transform: none;
+  }
+  .reveal h1 { font-size: 2em; color: var(--accent); }
+  .reveal h2 { font-size: 1.3em; color: var(--accent); }
+  .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+  .reveal .slide-number { color: var(--text-sec); background: transparent; }
+  .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
+
+  /* ===== 資訊圖表畫布 ===== */
+  .canvas { position: relative; height: 600px; text-align: left; }
+
+  /* 章節標籤 */
+  .kicker {
+    position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+    font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+  }
+  .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+  .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+
+  /* 頁首標題區 */
+  .head { padding-top: 52px; }
+  .head h2 { margin: 0 0 6px; }
+  .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+  /* 來源註腳 */
+  .src-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    border-top: 1px solid var(--hairline); padding-top: 10px;
+    display: flex; justify-content: space-between;
+    font-size: 0.36em; color: var(--text-sec);
+  }
+
+  /* 內建 SVG 圖示座 */
+  .icon-seat {
+    width: 44px; height: 44px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--hairline);
+  }
+  .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+  .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+  .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+  /* 價值面板 */
+  .value-panel {
+    flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+    background: var(--card-bg); padding: 18px 20px; display: flex; flex-direction: column;
+  }
+  .value-panel .vp-title { font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .value-panel .vp-row { display: flex; gap: 14px; align-items: center; padding: 10px 0; }
+  .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+  .value-panel .vp-row b { display: block; font-size: 0.5em; }
+  .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  /* 三柱能力頁 */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+  .pillar {
+    border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .pillar .p-head { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+  .pillar .p-num {
+    width: 26px; height: 26px; border-radius: 50%; flex: none; align-self: center;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+  }
+  .pillar .p-head b { font-size: 0.6em; } .pillar .p-head small { font-size: 0.36em; color: var(--text-sec); letter-spacing: 0.1em; }
+  .pillar .p-item { display: flex; gap: 10px; align-items: center; }
+  .pillar .p-item b { display: block; font-size: 0.44em; }
+  .pillar .p-item small { font-size: 0.36em; color: var(--text-sec); }
+  .pillar .p-goal {
+    margin-top: auto; border: 1px solid var(--hairline); border-radius: 6px;
+    background: var(--fill-accent); font-size: 0.38em; text-align: center; padding: 7px; color: var(--text-main);
+  }
+  .conclusion-bar {
+    margin-top: 14px; border: 1px solid var(--hairline); border-radius: 10px;
+    background: var(--fill-accent); text-align: center; padding: 12px;
+    font-size: 0.55em; font-weight: 700; color: var(--text-main);
+  }
+
+  /* 雙欄 */
+  .duo { display: flex; gap: 24px; margin-top: 18px; align-items: stretch; }
+  .duo .main { flex: 1.2; position: relative; }
+
+  /* 統一排版 */
+  .title-slide { text-align: center; }
+  .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 12px; }
+  .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--accent); }
+  .compare-table td { padding: 10px; border-bottom: 1px solid var(--hairline); color: var(--text-sec); }
+  .compare-table td strong { color: var(--accent2); }
+  
+  .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 12px; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+  .prompt-card { background: var(--card-bg); border-radius: 14px; padding: 20px 24px; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); text-align: left; margin: 0.8em auto; max-width: 85%; }
+  .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+  .prompt-card .spell { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em; color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+  .highlight { color: var(--accent2); font-weight: 700; }
+
+  .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+  .step-card {
+    background: var(--card-bg); border-radius: 12px; padding: 18px;
+    border-top: 4px solid var(--accent); border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+    box-shadow: var(--card-shadow); text-align: left;
+  }
+  .step-card h4 { font-size: 0.6em; margin-bottom: 6px; color: var(--accent); }
+  .step-card p { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+  .case-item { padding: 14px; border: 1px solid var(--hairline); border-radius: 8px; background: var(--card-bg); }
+  .case-item h4 { font-size: 0.55em; color: var(--accent); margin-bottom: 4px; font-weight: 600; }
+  .case-item p { font-size: 0.36em; color: var(--text-sec); line-height: 1.5; margin: 0; }
+
+  /* ========== RWD ========== */
+  @media (max-width: 768px) {
+    .step-grid { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+    .duo { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ==================== 第 7 堂 ==================== -->
+
+    <!-- M6 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 7 堂課</div>
+        <h1>實戰案例 — 五人團隊</h1>
+        <p class="subtitle">解密多智慧特助協同作戰機制：狀態機、派工與 DoD 機器化驗收</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M6-2 五人團隊架構 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">STRUCTURE</span><span class="zh">團隊分工</span></div>
+        <div class="head">
+          <h2>多 Agent 協同：誰負責做什麼？</h2>
+          <p class="sub">老師的系統中，5 位 AI 特助各司其職，透過嚴密的邊界與看板進行高併發協作</p>
+        </div>
+        <div class="pillar-grid">
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">1</span><b>監管與串接</b><small>FRONT</small></div>
+            <div class="p-item"><span><b>Hermes (監督者)</b><small>對外接收老闆指令，進行任務派發與人工核對。</small></span></div>
+            <div class="p-item"><span><b>n8n (中樞)</b><small>串接所有 Webhook，負責將指令與狀態寫入團隊專區。</small></span></div>
+            <div class="p-goal">負責：輸入與數據流轉</div>
+          </div>
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">2</span><b>規劃與研發</b><small>CORE</small></div>
+            <div class="p-item"><span><b>AG (規格腦)</b><small>只出規劃與規格，負責出圖紙，絕不動手寫 code。</small></span></div>
+            <div class="p-item"><span><b>Codex (安全官)</b><small>審查代碼安全、機器化驗收，拒絕垃圾代碼進庫。</small></span></div>
+            <div class="p-goal">負責：系統規劃與安全防禦</div>
+          </div>
+          <div class="pillar">
+            <div class="p-head"><span class="p-num">3</span><b>執行與體力</b><small>WORKER</small></div>
+            <div class="p-item"><span><b>OpenCode (執行者)</b><small>負責執行體力活，修改代碼、套版部署，服從規格。</small></span></div>
+            <div class="p-item"><span><b>MiMoCode (供料手)</b><small>負責文字素材加工與教材初加工，為團隊提供源源源料。</small></span></div>
+            <div class="p-goal">負責：落地幹活與供料</div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>5人特助協作圖</span></div>
+      </div>
+    </section>
+
+    <!-- M6-3 狀態機與協作模式 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">STATE MACHINE</span><span class="zh">狀態運作</span></div>
+        <div class="head">
+          <h2>協作核心：單一任務的狀態流轉</h2>
+          <p class="sub">為了防止多個 AI 特助搶寫同一個檔案，全團隊必須嚴格遵守非同步狀態機</p>
+        </div>
+        <div class="step-grid" style="margin-top: 30px;">
+          <div class="step-card">
+            <h4>1. [📋 已指派]</h4>
+            <p>任務寫入 `團隊專區.md`，此時為靜態，尚無特助認領執行。</p>
+          </div>
+          <div class="step-card">
+            <h4>2. [/] 執行中</h4>
+            <p>單一特助認領並標記為執行中。<strong>看到這個標記，其餘特助必須立刻停手，嚴禁搶單。</strong></p>
+          </div>
+          <div class="step-card">
+            <h4>3. [✅ 完成]</h4>
+            <p>經由下游特助驗收通過，標記完成，將控制權還給老闆。</p>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>協作狀態流轉</span></div>
+      </div>
+    </section>
+
+    <!-- M6-4 DoD 驗收機制 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">ACCEPTANCE</span><span class="zh">DoD驗收</span></div>
+        <div class="head">
+          <h2>做的人不驗自己：機器化判定驗收 (DoD)</h2>
+          <p class="sub">拋棄模糊的主觀評價（如「代碼寫得很好」），改用可程式化、可 grep 檢驗的客觀指標</p>
+        </div>
+        <table class="compare-table" style="margin-top: 30px;">
+          <thead>
+            <tr>
+              <th style="width: 50%;">❌ 錯誤的模糊驗收方式</th>
+              <th style="width: 50%;">✅ 正確的機器判定驗收 (DoD)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>請確保「關於我們」頁面修改得非常精美。</td>
+              <td>執行 <code>verify-links.sh</code>，確認回傳為 200 且無失效相對連結。</td>
+            </tr>
+            <tr>
+              <td>請將最新的 n8n 憑證更換完畢。</td>
+              <td>執行 <code>node validate-workflow.js</code> 檢測是否回傳 <code>SUCCESS</code>。</td>
+            </tr>
+            <tr>
+              <td>文案中要保持資訊的保密性。</td>
+              <td>使用 <code>grep</code> 掃描敏感 API Key 正則，確認命中次數為 0。</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="src-footer"><span>Jacob Business OS</span><span>DoD 機器化驗收規範</span></div>
+      </div>
+    </section>
+
+    <!-- M6-5 防呆規則 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SAFEGUARD</span><span class="zh">防呆規則</span></div>
+        <div class="head">
+          <h2>單向指令流：Agent 互動的鐵律</h2>
+          <p class="sub">嚴禁 Agent 之間直接互叫，所有通訊與任務移交必須通過唯一真相來源：團隊專區</p>
+        </div>
+        <div class="duo" style="margin-top: 30px; gap: 24px;">
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">✅ 允許的指令流向</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              1. <strong>老闆 ➔ Agent</strong>：下達指令與需求變更。<br>
+              2. <strong>Agent ➔ 團隊專區</strong>：更新自身任務狀態與完成報告。<br>
+              3. <strong>Agent ➔ 老闆</strong>：提報阻塞（Block）與等待決策。
+            </div>
+          </div>
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--warn); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--warn); text-align: left; margin-bottom: 12px;">❌ 絕對禁止的行為</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              1. <strong>Agent 直接呼叫 Agent</strong>：這會引發無窮循環、燒毀 API 額度。<br>
+              2. <strong>未經檢驗的「自吹自擂」</strong>：未經 Codex 跑機器測試就自我宣稱任務已完成。<br>
+              3. <strong>直接改動 Production 環境</strong>：跳過驗收程序。
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>互動防護網</span></div>
+      </div>
+    </section>
+
+    <!-- M6-6 實做完成 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：畫出您的 Agent 團隊架構圖</h2>
+          <p class="sub">根據您的商業模型，定義出專屬於您的特助職責，並部署您的第一個團隊專區看板</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [團隊專區模板.md] (含今日重點表格、跨團隊接收卡、任務清單與完成記錄歷史格式)<br>
+            2. [狀態機小卡.md] (印製出來貼在本機螢幕旁，防止多 Agent 協作發生程式碼覆蓋悲劇)
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 註：這份在老師系統裡的真實版本 —— Jacob 團隊有極為嚴格的單向指令流限制。所有的狀態異動均寫入主 Repo 的 `團隊專區.md`，每個任務都有唯一持有者，沒有搶單或覆蓋代碼的可能。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M6 實作帶走</span></div>
+      </div>
+    </section>
+
+    <!-- ==================== 第 8 堂 ==================== -->
+
+    <!-- M7 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 8 堂課</div>
+        <h1>從使用者到管理者</h1>
+        <p class="subtitle">升級您的 AI 治理維度：掌握定時 Cron 排程、記憶備份清理與收工日誌規範</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M7-2 Cron 排程 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">CRON SCHEDULE</span><span class="zh">定時排程</span></div>
+        <div class="head">
+          <h2>讓 AI 特助像發條鐘般自動做事</h2>
+          <p class="sub">藉由配置 Cron 定時任務，不需要您主動過問，AI 就能在特定時間自動執行重複性工作</p>
+        </div>
+        <div class="step-grid" style="margin-top: 30px;">
+          <div class="step-card">
+            <h4>1. 定義時間規律</h4>
+            <p>使用 cron 規則（例如 <code>0 7 * * *</code> 代表每日 07:00）。</p>
+          </div>
+          <div class="step-card">
+            <h4>2. 觸發自動中轉</h4>
+            <p>n8n 定時喚醒，抓取 <code>團隊專區.md</code> 看板最上方的「📋 今日重點」。</p>
+          </div>
+          <div class="step-card">
+            <h4>3. 自動派送日報</h4>
+            <p>將看板內容渲染整理，於 07:00 準時發送至您的 Telegram 工作頻道。</p>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>Cron 自動化機制</span></div>
+      </div>
+    </section>
+
+    <!-- M7-3 記憶管理 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">MEMORY STORAGE</span><span class="zh">記憶管理</span></div>
+        <div class="head">
+          <h2>什麼該記、什麼不該記？</h2>
+          <p class="sub">建立清晰的知識屏障，避免 Agent 因為塞入過多廢棄垃圾而失去判斷力</p>
+        </div>
+        <table class="compare-table" style="margin-top: 30px;">
+          <thead>
+            <tr>
+              <th style="width: 50%;">💾 應長久保存的記憶（加進 Knowledge Base）</th>
+              <th style="width: 50%;">🧹 應主動清除的雜訊（嚴禁入庫）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>**客戶偏好與歷史合約紀錄**</td>
+              <td>暫時性的程式除錯日誌與編譯快取</td>
+            </tr>
+            <tr>
+              <td>**專案關鍵決策與技術選型 SOP**</td>
+              <td>第三方 API 金鑰、密碼與未遮罩的 Token</td>
+            </tr>
+            <tr>
+              <td>**團隊通訊與互動排班憲法**</td>
+              <td>已被新版取代的廢棄草稿檔案</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="src-footer"><span>Jacob Business OS</span><span>記憶存儲邊界</span></div>
+      </div>
+    </section>
+
+    <!-- M7-4 收工報告 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">CLOSE-OUT REPORT</span><span class="zh">收工規範</span></div>
+        <div class="head">
+          <h2>每日收工 SOP：為明天留下清晰的指引</h2>
+          <p class="sub">好的收工日誌，能讓明早開工的 Agent 在 10 秒內接棒，無縫展開工作</p>
+        </div>
+        <div class="duo" style="margin-top: 30px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p>1. **更新專區狀態**：將手中已完成的任務標記為 <code>[✅ 完成]</code>，未完的明確寫出阻塞點。</p>
+            <p style="margin-top: 14px;">2. **掃描敏感金鑰**：在 commit 之前，利用工具掃描是否有密鑰外流。</p>
+            <p style="margin-top: 14px;">3. **只 Git Add 相關檔案**：嚴禁盲目執行 <code>git add .</code>，避免將暫存的垃圾檔案一併提交。</p>
+            <p style="margin-top: 14px;">4. **自動生成日誌**：執行收工腳本，自動整理本日異動並推送至遠端。</p>
+          </div>
+          <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">收工日誌必填三要素</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M12 2v20M2 12h20"/></svg></span><span><b>本日已做完什麼</b><small>條列式說明，附上對應的 commit hash</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span><b>明日優先待辦</b><small>為明早開工的自己或特助留下精確指令</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17v-5l4 2 4-2v5"/></svg></span><span><b>當下卡關點</b><small>標記黃燈與阻塞對象，主動預警</small></span></div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>收工日誌規範</span></div>
+      </div>
+    </section>
+
+    <!-- M7-5 實做完成 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：設定您的第一個定時 Cron 任務與收工 SOP</h2>
+          <p class="sub">建立定時調度，並完成您本機的第一份規範化收工報告</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [派工三件套模板.md] (含任務卡、接收卡、DoD 驗收之極簡填寫表單)<br>
+            2. [DoD檢核卡.md] (上機前必經的機器自動化檢驗與測試執行指令清單)
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 註：這份在老師系統裡的真實版本 —— Jacob 系統的 n8n 每早 07:00 會準時被 Cron 喚醒，拉取 Git 上的最新看板並將重點推送到 Jacob 的 Telegram；收工時有專用 shell 腳本自動查敏並寫入專區，確保營運零漏洞。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M7 實作帶走</span></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  var isMobile = window.innerWidth <= 768;
+  Reveal.initialize({
+    hash: true,
+    center: true,
+    progress: true,
+    controls: true,
+    transition: 'slide',
+    width: isMobile ? window.innerWidth : 1280,
+    height: isMobile ? window.innerHeight : 720,
+    margin: isMobile ? 0.02 : 0.1,
+  });
+</script>
+</body>
+</html>

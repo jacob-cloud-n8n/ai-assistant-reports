@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M3-M4 課程簡報 — Jacob Business OS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+  /* ===== 單一設計 token 來源 ===== */
+  :root {
+    --bg-main: #f4f1ea;
+    --text-main: #1a2b49;
+    --text-sec: #4a5d78;
+    --accent: #1a2b49;
+    --accent2: #c08a3e;
+    --success: #3f8a4f;
+    --warn: #d4a373;
+    --card-bg: #ffffff;
+    --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+    --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    --hairline: rgba(26, 43, 73, 0.12);
+    --fill-accent: rgba(26, 43, 73, 0.06);
+    --fill-accent2: rgba(192, 138, 62, 0.10);
+    --fill-success: rgba(63, 138, 79, 0.10);
+  }
+  :root.theme-dark {
+    --bg-main: #0b0f19;
+    --text-main: #f3f4f6;
+    --text-sec: #9ca3af;
+    --accent: #38bdf8;
+    --accent2: #fbbf24;
+    --success: #34d399;
+    --warn: #fbbf24;
+    --card-bg: #111827;
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    --hairline: #1e293b;
+    --fill-accent: rgba(56, 189, 248, 0.10);
+    --fill-accent2: rgba(251, 191, 36, 0.10);
+    --fill-success: rgba(52, 211, 153, 0.10);
+  }
+
+  .reveal {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    text-transform: none;
+  }
+  .reveal h1 { font-size: 2em; color: var(--accent); }
+  .reveal h2 { font-size: 1.3em; color: var(--accent); }
+  .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+  .reveal .slide-number { color: var(--text-sec); background: transparent; }
+  .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
+
+  /* ===== 資訊圖表畫布 ===== */
+  .canvas { position: relative; height: 600px; text-align: left; }
+
+  /* 章節標籤 */
+  .kicker {
+    position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+    font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+  }
+  .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+  .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+
+  /* 頁首標題區 */
+  .head { padding-top: 52px; }
+  .head h2 { margin: 0 0 6px; }
+  .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+  /* 來源註腳 */
+  .src-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    border-top: 1px solid var(--hairline); padding-top: 10px;
+    display: flex; justify-content: space-between;
+    font-size: 0.36em; color: var(--text-sec);
+  }
+
+  /* 內建 SVG 圖示座 */
+  .icon-seat {
+    width: 44px; height: 44px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--hairline);
+  }
+  .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+  .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+  .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+  /* 價值面板 */
+  .value-panel {
+    flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+    background: var(--card-bg); padding: 18px 20px; display: flex; flex-direction: column;
+  }
+  .value-panel .vp-title { font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .value-panel .vp-row { display: flex; gap: 14px; align-items: center; padding: 10px 0; }
+  .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+  .value-panel .vp-row b { display: block; font-size: 0.5em; }
+  .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+  .value-panel .vp-formula {
+    margin-top: auto; border: 1px solid var(--hairline); border-radius: 8px;
+    background: var(--fill-accent); text-align: center; padding: 8px;
+    font-size: 0.42em; font-weight: 700; color: var(--text-main);
+  }
+
+  /* 三柱能力頁 */
+  .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+  .pillar {
+    border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+    padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .pillar .p-head { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+  .pillar .p-num {
+    width: 26px; height: 26px; border-radius: 50%; flex: none; align-self: center;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+  }
+  .pillar .p-head b { font-size: 0.6em; } .pillar .p-head small { font-size: 0.36em; color: var(--text-sec); letter-spacing: 0.1em; }
+  .pillar .p-item { display: flex; gap: 10px; align-items: center; }
+  .pillar .p-item b { display: block; font-size: 0.44em; }
+  .pillar .p-item small { font-size: 0.36em; color: var(--text-sec); }
+  .pillar .p-goal {
+    margin-top: auto; border: 1px solid var(--hairline); border-radius: 6px;
+    background: var(--fill-accent); font-size: 0.38em; text-align: center; padding: 7px; color: var(--text-main);
+  }
+  .conclusion-bar {
+    margin-top: 14px; border: 1px solid var(--hairline); border-radius: 10px;
+    background: var(--fill-accent); text-align: center; padding: 12px;
+    font-size: 0.55em; font-weight: 700; color: var(--text-main);
+  }
+
+  /* 雙欄與大數字 KPI 磚 */
+  .duo { display: flex; gap: 24px; margin-top: 18px; align-items: stretch; }
+  .duo .main { flex: 1.2; position: relative; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+  .stat-tile {
+    border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+    padding: 22px; text-align: left;
+  }
+  .stat-tile .num { font-family: 'Playfair Display', serif; font-size: 1.6em; font-weight: 700; color: var(--accent); line-height: 1.1; }
+  .stat-tile .num span { font-size: 0.45em; color: var(--accent2); }
+  .stat-tile b { display: block; font-size: 0.46em; margin-top: 6px; }
+  .stat-tile small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  /* 統一排版 */
+  .title-slide { text-align: center; }
+  .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 12px; }
+  .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--accent); }
+  .compare-table td { padding: 10px; border-bottom: 1px solid var(--hairline); color: var(--text-sec); }
+  .compare-table td strong { color: var(--accent2); }
+  
+  .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 12px; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+  .prompt-card { background: var(--card-bg); border-radius: 14px; padding: 20px 24px; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); text-align: left; margin: 0.8em auto; max-width: 85%; }
+  .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+  .prompt-card .spell { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em; color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+  .highlight { color: var(--accent2); font-weight: 700; }
+
+  .step-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
+  .step-card {
+    background: var(--card-bg); border-radius: 12px; padding: 18px;
+    border-top: 4px solid var(--accent); border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+    box-shadow: var(--card-shadow); text-align: left;
+  }
+  .step-card h4 { font-size: 0.6em; margin-bottom: 6px; color: var(--accent); }
+  .step-card p { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+  .code-block {
+    background: #2d3748; border-radius: 8px; padding: 12px 16px;
+    font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.44em;
+    color: #e2e8f0; text-align: left; margin: 12px 0;
+  }
+  .code-block .comment { color: #a0aec0; }
+  .code-block .cmd { color: #63b3ed; }
+
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+  .case-item { padding: 14px; border: 1px solid var(--hairline); border-radius: 8px; background: var(--card-bg); }
+  .case-item h4 { font-size: 0.55em; color: var(--accent); margin-bottom: 4px; font-weight: 600; }
+  .case-item p { font-size: 0.36em; color: var(--text-sec); line-height: 1.5; margin: 0; }
+
+  /* ========== RWD ========== */
+  @media (max-width: 768px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .step-grid { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+    .duo { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+  <!-- 內建 SVG 圖示庫 -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <marker id="arrhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="context-stroke" stroke-width="1.5"/></marker>
+      <g id="i-tool"><path d="M14 7a4 4 0 0 1-5.6 3.7L5 14l-2-2 3.3-3.4A4 4 0 0 1 10 3l2 2-2 2 2 2 2-2z" transform="scale(1.3)"/></g>
+      <g id="i-book"><path d="M3 4h7v14H5a2 2 0 0 1-2-2V4zm18 0h-7v14h5a2 2 0 0 0 2-2V4z" transform="scale(0.95)"/><path d="M10 4c1 .8 3 .8 4 0" transform="scale(0.95)"/></g>
+      <g id="i-bulb"><path d="M12 3a6 6 0 0 1 3.5 10.9c-.7.5-1 1.3-1 2.1h-5c0-.8-.3-1.6-1-2.1A6 6 0 0 1 12 3z"/><path d="M10 19h4M11 21.5h2"/></g>
+      <g id="i-target"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8"/></g>
+      <g id="i-cube"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></g>
+      <g id="i-users"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.5-3 2.7-5 5.5-5s5 2 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14c2.3.3 3.8 2 4.2 4.5"/></g>
+      <g id="i-chart"><path d="M4 4v16h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/></g>
+      <g id="i-loop"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g>
+      <g id="i-clip"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0M9 10h6M9 14h6M9 18h4"/></g>
+    </defs>
+  </svg>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ==================== 第 4 堂 ==================== -->
+
+    <!-- M3 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 4 堂課</div>
+        <h1>Agent 全覽 — 選對的工具</h1>
+        <p class="subtitle">避開盲目聊天的問答坑，精準挑選能落地幹活的 Agent 角色</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M3-2 Agent 是什麼 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">DEFINITION</span><span class="zh">定義</span></div>
+        <div class="head">
+          <h2>Agent ≠ 聊天機器人</h2>
+          <p class="sub">聊天機器人只是「問答機」，Agent 則是擁有記憶、能連外部工具並能執行指令的「隨身助理」</p>
+        </div>
+        <div class="duo" style="margin-top: 30px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p>傳統的 ChatGPT 只負責對話，每次開新視窗都是一次「記憶清空」的從頭來過，極難累積工作資產。</p>
+            <p style="margin-top: 14px;">而真正的 <span class="highlight">Agent（智慧代理）</span> 能夠：</p>
+            <p>1. 本地端儲存持久化記憶，不怕對話變笨失憶。</p>
+            <p>2. 直接呼叫終端機、資料庫或 API 幫您實際幹活。</p>
+            <p>3. 串接多個系統，實現全自動的接單、編譯與發布。</p>
+          </div>
+          <div class="value-panel" style="margin-top: 0; padding: 12px 16px;">
+            <div class="vp-title">Agent 的三大核心能力</div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-accent" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><use href="#i-book"/></svg></span><span><b>持久記憶庫</b><small>不怕長對話失憶，工作資產可沉澱</small></span></div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-accent2" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><use href="#i-tool"/></svg></span><span><b>工具連接器</b><small>能實際執行代碼、訪問網頁與資料庫</small></span></div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-success" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><use href="#i-loop"/></svg></span><span><b>自主執行流</b><small>依據工作說明書，自動完成複雜任務</small></span></div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>Agent 核心定義</span></div>
+      </div>
+    </section>
+
+    <!-- M3-3 市面常見 Agent 比較 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">COMPARISON</span><span class="zh">助理全覽</span></div>
+        <div class="head">
+          <h2>四大 Agent 工具一次看</h2>
+          <p class="sub">挑選最適合您目前業務場景的助理，是建立自動化產線的第一步</p>
+        </div>
+        <div class="case-grid" style="margin-top: 24px;">
+          <div class="case-item">
+            <h4>Hermes 隨身書僮</h4>
+            <p><strong>定位</strong>：輕量化生活/日常隨身助理。<br><strong>場景</strong>：透過 Telegram 或 Discord 進行語音記帳、隨手派工、研究摘要與資料整理。</p>
+          </div>
+          <div class="case-item">
+            <h4>Codex 安全守衛</h4>
+            <p><strong>定位</strong>：研發端自動化與代碼安全把關者。<br><strong>場景</strong>：跑機器化自動測試、審查代碼是否攜帶敏感 Key、把關 PR 合併與發布安全。</p>
+          </div>
+          <div class="case-item">
+            <h4>OpenCode 執行助理</h4>
+            <p><strong>定位</strong>：遠端與伺服器端體力活擔當。<br><strong>場景</strong>：原型代碼與教材初加工，執行大量的文案粗加工與自動化部署。</p>
+          </div>
+          <div class="case-item">
+            <h4>n8n 自動化中樞</h4>
+            <p><strong>定位</strong>：系統的神經血管與串接大師。<br><strong>場景</strong>：串接 Webhook、Notion 資料庫、Google 日曆等，負責多端自動化數據中轉。</p>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>常見 Agent 工具屬性</span></div>
+      </div>
+    </section>
+
+    <!-- M3-4 如何選擇 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">DECISION</span><span class="zh">決策指引</span></div>
+        <div class="head">
+          <h2>依據您的真實痛點，挑選最優助理組合</h2>
+          <p class="sub">不求大而全，先從免費、最能立竿見影解決日常繁雜事務的單一助理開始</p>
+        </div>
+        <table class="compare-table" style="margin-top: 24px;">
+          <thead>
+            <tr>
+              <th style="width: 20%;">需求維度</th>
+              <th style="width: 40%;">適合您的 Agent 組合</th>
+              <th style="width: 40%;">核心理由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>個人日常 / 移動派工</strong></td>
+              <td><strong>Hermes (TG / Discord)</strong></td>
+              <td>出門在外只需用語音/簡訊發送，即可遠端中轉備忘</td>
+            </tr>
+            <tr>
+              <td><strong>開發重構 / 安全把關</strong></td>
+              <td><strong>Codex + OpenCode</strong></td>
+              <td>代碼秒級重構、Git 安全防禦掃描、DoD 驗收</td>
+            </tr>
+            <tr>
+              <td><strong>多平台數據同步</strong></td>
+              <td><strong>n8n 自動化中樞</strong></td>
+              <td>串接 Notion、日曆、LINE 與 Webhook，免代碼串接</td>
+            </tr>
+            <tr>
+              <td><strong>剛起步 / 零預算</strong></td>
+              <td><strong>本地免費/去憑證降級方案</strong></td>
+              <td>先在本地跑免費模型，驗收通過後再擴展至付費 API</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="src-footer"><span>Jacob Business OS</span><span>決策配置模型</span></div>
+      </div>
+    </section>
+
+    <!-- M3-5 實做決策 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做時間：畫出最適合您的第一步</h2>
+          <p class="sub">將您的業務痛點填入表單，我們將帶您配置出專屬於您的助理分工表</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [Agent選擇決策表.md] (用簡單的二分決策樹，抓出您的核心痛點與對應工具)<br>
+            2. 本日真實案例走讀 (分析老師如何用 5 位特助協同編譯出您眼前的簡報)
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 註：這份在老師系統裡的真實版本 —— Jacob 的團隊由 5 位特助 (Hermes/Codex/OpenCode/AG/n8n) 構成。在您學習這堂課時，背後的 AG 負責規劃投影片結構，OpenCode 負責批次套版生成 HTML，n8n 負責通知，最後由 Codex 驗收。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M3 實作帶走</span></div>
+      </div>
+    </section>
+
+    <!-- ==================== 第 5 堂 ==================== -->
+
+    <!-- M4 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 5 堂課</div>
+        <h1>動手做 — 你的第一個 Agent</h1>
+        <p class="subtitle">不寫一行代碼，手把手部署出能 24 小時在線的 Hermes 隨身特助</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M4-2 部署選擇 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">INTERFACE</span><span class="zh">介面選擇</span></div>
+        <div class="head">
+          <h2>Telegram 還是 Discord？選一個最合適的</h2>
+          <p class="sub">雙介面皆支援語音、圖片與檔案，您的偏好決定了助理的「棲息地」</p>
+        </div>
+        <div class="duo" style="margin-top: 30px; gap: 24px;">
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">📱 Telegram：快速實用、說走就走</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              <strong>優勢</strong>：開通極快，僅需 1 分鐘申請 Bot Token。手機上直接用語音、簡訊進行即時溝通、發送 PDF 進行文件摘要。非常適合個人工作流程與行動派發任務。
+            </div>
+          </div>
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent); text-align: left; margin-bottom: 12px;">💻 Discord：多人協作、安全權限管理</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              <strong>優勢</strong>：無須綁定個人手機號碼。可為家庭或公司建立專屬的私人伺服器，將不同的 Bot 依頻道分組，具備極為精細的白名單與權限過濾機制，適合多人與多 Bot 協同運作。
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>TG/Discord 介面對比</span></div>
+      </div>
+    </section>
+
+    <!-- M4-3 一行指令安裝 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">DEPLOYMENT</span><span class="zh">極速部署</span></div>
+        <div class="head">
+          <h2>本機一行指令，迅速完成 Hermes 載入</h2>
+          <p class="sub">跟著步驟，在終端機輸入安裝指令，並妥善設定您的 OpenRouter API Key</p>
+        </div>
+        <div class="step-grid">
+          <div class="step-card">
+            <h4>Step 1: 下載與初始化腳本</h4>
+            <p>開啟本機終端機，執行 npm 初始化腳本安裝 Hermes 核心依賴。</p>
+            <div class="code-block" style="font-size: 0.36em; padding: 6px 10px; margin: 6px 0;">
+              <span class="comment"># 執行本機一鍵安裝</span><br>
+              <span class="cmd">npx hermes-agent-cli@latest init</span>
+            </div>
+          </div>
+          <div class="step-card">
+            <h4>Step 2: 配置 API Key 與啟動</h4>
+            <p>在產生的 .env 設定檔中，貼入您的金鑰並運行 start 指令。</p>
+            <div class="code-block" style="font-size: 0.36em; padding: 6px 10px; margin: 6px 0;">
+              <span class="comment"># 寫入環境變數並啟動服務</span><br>
+              <span class="cmd">npm run start</span>
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>本機一鍵安裝步驟</span></div>
+      </div>
+    </section>
+
+    <!-- M4-4 首次對話 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">ONBOARDING</span><span class="zh">首次開機</span></div>
+        <div class="head">
+          <h2>與您的 AI 助理說第一句話</h2>
+          <p class="sub">驗證基本對話、語音辨識與持久化記憶，確保助理的大腦已完全開通</p>
+        </div>
+        <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p>1. 發送 <b>`/start`</b> 啟動，Hermes 會回傳開工歡迎語並向您報告它的目前技能。</p>
+            <p style="margin-top: 14px;">2. 測試 **語音或圖片傳輸**。比如發一張您的名片，讓它辨識並萃取文字。</p>
+            <p style="margin-top: 14px;">3. 測試 **持久化記憶**：告訴 it「記住我的羊奶宅配客戶是高先生」，接著關閉重新啟動，再次詢問「我的羊奶客戶是誰？」，檢驗其 Volume 記憶是否完好。</p>
+          </div>
+          <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">首次對話驗收 Checklist</div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><use href="#i-loop"/></svg></span><span><b>/start 狀態碼正常</b><small>Bot 順利連線並回應</small></span></div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><use href="#i-tool"/></svg></span><span><b>圖片/語音辨識 PASS</b><small>多模態解析功能正常運作</small></span></div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><use href="#i-book"/></svg></span><span><b>記憶驗證成功</b><small>重啟測試，記憶內容未丟失</small></span></div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>開機測試流程</span></div>
+      </div>
+    </section>
+
+    <!-- M4-5 實做完成 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：部署並喚醒您的第一個 AI 特助</h2>
+          <p class="sub">請在您的終端機中跟著步驟執行，有任何阻塞隨時發起 code 審查</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [Hermes開工.md] (如何配置 Token、權限與啟動服務的極簡 SOP)<br>
+            2. [Hermes收工.md] (如何安全關閉、導出對話記錄並備份 Volume 資料)
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 註：這份在老師系統裡的真實版本 —— Jacob 為了確保 Hermes 的記憶不會因為 Docker 重啟而消失，在 Zeabur 部署時設定了持久化 Volume (掛載路徑為 `/root/.hermes`)。每次開收工都有腳本自動核對 key 的完整性，確保系統堅固。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M4 實作帶走</span></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  var isMobile = window.innerWidth <= 768;
+  Reveal.initialize({
+    hash: true,
+    center: true,
+    progress: true,
+    controls: true,
+    transition: 'slide',
+    width: isMobile ? window.innerWidth : 1280,
+    height: isMobile ? window.innerHeight : 720,
+    margin: isMobile ? 0.02 : 0.1,
+  });
+</script>
+</body>
+</html>

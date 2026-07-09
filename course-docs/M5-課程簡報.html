@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M5 課程簡報 — Jacob Business OS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+<style>
+  /* ===== 單一設計 token 來源 ===== */
+  :root {
+    --bg-main: #f4f1ea;
+    --text-main: #1a2b49;
+    --text-sec: #4a5d78;
+    --accent: #1a2b49;
+    --accent2: #c08a3e;
+    --success: #3f8a4f;
+    --warn: #d4a373;
+    --card-bg: #ffffff;
+    --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+    --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    --hairline: rgba(26, 43, 73, 0.12);
+    --fill-accent: rgba(26, 43, 73, 0.06);
+    --fill-accent2: rgba(192, 138, 62, 0.10);
+    --fill-success: rgba(63, 138, 79, 0.10);
+  }
+  :root.theme-dark {
+    --bg-main: #0b0f19;
+    --text-main: #f3f4f6;
+    --text-sec: #9ca3af;
+    --accent: #38bdf8;
+    --accent2: #fbbf24;
+    --success: #34d399;
+    --warn: #fbbf24;
+    --card-bg: #111827;
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    --hairline: #1e293b;
+    --fill-accent: rgba(56, 189, 248, 0.10);
+    --fill-accent2: rgba(251, 191, 36, 0.10);
+    --fill-success: rgba(52, 211, 153, 0.10);
+  }
+
+  .reveal {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    text-transform: none;
+  }
+  .reveal h1 { font-size: 2em; color: var(--accent); }
+  .reveal h2 { font-size: 1.3em; color: var(--accent); }
+  .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+  .reveal .slide-number { color: var(--text-sec); background: transparent; }
+  .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
+
+  /* ===== 資訊圖表畫布 ===== */
+  .canvas { position: relative; height: 600px; text-align: left; }
+
+  /* 章節標籤 */
+  .kicker {
+    position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+    font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+  }
+  .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+  .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+
+  /* 頁首標題區 */
+  .head { padding-top: 52px; }
+  .head h2 { margin: 0 0 6px; }
+  .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+  /* 來源註腳 */
+  .src-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    border-top: 1px solid var(--hairline); padding-top: 10px;
+    display: flex; justify-content: space-between;
+    font-size: 0.36em; color: var(--text-sec);
+  }
+
+  /* 內建 SVG 圖示座 */
+  .icon-seat {
+    width: 44px; height: 44px; border-radius: 50%; flex: none;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--hairline);
+  }
+  .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+  .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+  .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+  .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+  /* 價值面板 */
+  .value-panel {
+    flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+    background: var(--card-bg); padding: 18px 20px; display: flex; flex-direction: column;
+  }
+  .value-panel .vp-title { font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .value-panel .vp-row { display: flex; gap: 14px; align-items: center; padding: 10px 0; }
+  .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+  .value-panel .vp-row b { display: block; font-size: 0.5em; }
+  .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+  .value-panel .vp-formula {
+    margin-top: auto; border: 1px solid var(--hairline); border-radius: 8px;
+    background: var(--fill-accent); text-align: center; padding: 8px;
+    font-size: 0.42em; font-weight: 700; color: var(--text-main);
+  }
+
+  /* 雙欄 */
+  .duo { display: flex; gap: 24px; margin-top: 18px; align-items: stretch; }
+  .duo .main { flex: 1.2; position: relative; }
+
+  /* 統一排版 */
+  .title-slide { text-align: center; }
+  .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
+  .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+  .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 12px; }
+  .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 10px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--accent); }
+  .compare-table td { padding: 10px; border-bottom: 1px solid var(--hairline); color: var(--text-sec); }
+  .compare-table td strong { color: var(--accent2); }
+  
+  .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 12px; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+  .prompt-card { background: var(--card-bg); border-radius: 14px; padding: 20px 24px; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); text-align: left; margin: 0.8em auto; max-width: 85%; }
+  .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+  .prompt-card .spell { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em; color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+  .highlight { color: var(--accent2); font-weight: 700; }
+
+  .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+  .step-card {
+    background: var(--card-bg); border-radius: 12px; padding: 18px;
+    border-top: 4px solid var(--accent); border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+    box-shadow: var(--card-shadow); text-align: left;
+  }
+  .step-card h4 { font-size: 0.6em; margin-bottom: 6px; color: var(--accent); }
+  .step-card p { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+  .case-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+  .case-item { padding: 14px; border: 1px solid var(--hairline); border-radius: 8px; background: var(--card-bg); }
+  .case-item h4 { font-size: 0.55em; color: var(--accent); margin-bottom: 4px; font-weight: 600; }
+  .case-item p { font-size: 0.36em; color: var(--text-sec); line-height: 1.5; margin: 0; }
+
+  /* ========== RWD ========== */
+  @media (max-width: 768px) {
+    .step-grid { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+    .duo { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- M5 封面 -->
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 6 堂課</div>
+        <h1>實戰案例 — 隨身書僮</h1>
+        <p class="subtitle">打通 Discord Bot 核心關節，完成 Zeabur 雲端部署與持久化 Volumes 設定</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <!-- M5-2 為什麼選 Discord -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PLATFORM</span><span class="zh">平台優勢</span></div>
+        <div class="head">
+          <h2>為什麼大流量團隊首選 Discord？</h2>
+          <p class="sub">相較於 Telegram，Discord 在安全邊界、協作效率與權限管理上具備跨代優勢</p>
+        </div>
+        <div class="duo" style="margin-top: 30px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p>1. <span class="highlight">免綁手機門號</span>：Telegram 強制與個人門號綁定，且有嚴格的帳號數量限制；Discord 開通僅需電子信箱，極利於團隊部署多個功能助理。</p>
+            <p style="margin-top: 14px;">2. <span class="highlight">群組與頻道架構</span>：支援在單一伺服器下開設多個主題頻道（例如記帳頻道、代辦頻道、測試頻道），讓不同 Agent 在各自的頻道內各司其職，資訊不亂流。</p>
+            <p style="margin-top: 14px;">3. <span class="highlight">企業級權限管理</span>：可以對不同成員、Bot 設定極為精細的角色與白名單，確保敏感指令不被誤觸發。</p>
+          </div>
+          <div class="value-panel" style="margin-top: 0; padding: 12px 16px;">
+            <div class="vp-title">Discord 四大核心優勢</div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-accent" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>多頻道分流</b><small>不同頻道執行不同任務，互不干涉</small></span></div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-accent2" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span><b>精細權限</b><small>角色白名單安全限制，阻斷未授權存取</small></span></div>
+            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-success" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17v-5l4 2 4-2v5"/></svg></span><span><b>免門號認證</b><small>專案擴展無門號限制瓶頸</small></span></div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>Discord 平台決策</span></div>
+      </div>
+    </section>
+
+    <!-- M5-3 部署流程 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">WORKFLOW</span><span class="zh">三步部署</span></div>
+        <div class="head">
+          <h2>從零到一，Zeabur 雲端一鍵部署</h2>
+          <p class="sub">透過 Developer Portal 取得憑證，再到 Zeabur 部署執行，告別繁複的本機守護進程設定</p>
+        </div>
+        <div class="step-grid">
+          <div class="step-card">
+            <h4>Step 1: 建立 Discord Bot</h4>
+            <p>前往 Discord Developer Portal 建立 Application，在 Bot 頁面點擊 "Reset Token" 取得密鑰，並在 OAuth2 開通相關 Bot 權限。</p>
+          </div>
+          <div class="step-card">
+            <h4>Step 2: Zeabur 一鍵部署</h4>
+            <p>在 Zeabur 平台點擊 "Add Service"，選擇 Git Repository 或者是直接使用 Hermes 的預設模板快速拉起服務。</p>
+          </div>
+          <div class="step-card">
+            <h4>Step 3: 設定環境變數</h4>
+            <p>在 Zeabur 的 Variables 區設定 `DISCORD_BOT_TOKEN` 以及 `DISCORD_ALLOWED_USERS` 白名單，重啟服務即可開機。</p>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>Zeabur 雲端部署三部曲</span></div>
+      </div>
+    </section>
+
+    <!-- M5-4 Volume 設定 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PERSISTENCE</span><span class="zh">持久記憶</span></div>
+        <div class="head">
+          <h2>防失憶關鍵：Zeabur 持久化 Volume 設定</h2>
+          <p class="sub">沒有 Volumes，雲端容器每一次重建（Deploy/Rebuild）都會導致您的 Agent 徹底失憶</p>
+        </div>
+        <div class="duo" style="margin-top: 30px; gap: 24px;">
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">❌ 裸容器重建 (無 Volume)</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              <strong>致命痛點</strong>：Docker 容器是無狀態的。一旦您更新代碼、重啟服務，本地儲存的對話歷史、客戶記憶會被全部抹除。Agent 重開後會問「您是誰？」，工作資產徹底歸零。
+            </div>
+          </div>
+          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--success); margin-top: 0; padding: 20px;">
+            <div class="vp-title" style="font-size: 0.65em; color: var(--success); text-align: left; margin-bottom: 12px;">✅ 掛載 Persistent Volume</div>
+            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
+              <strong>正確做法</strong>：在 Zeabur 的 "Destinations / Volumes" 頁面中新增一個磁碟掛載，指定路徑為 <b>`/root/.hermes`</b>。這樣不論容器如何重啟重建，記憶文件依然完好無損。
+            </div>
+          </div>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>Volume 持久化架構</span></div>
+      </div>
+    </section>
+
+    <!-- M5-5 安全機制 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SECURITY</span><span class="zh">安全實踐</span></div>
+        <div class="head">
+          <h2>白名單機制：把安全威脅阻斷在外</h2>
+          <p class="sub">設定白名單與防越權機制，防止惡意第三方通過您的 Bot 盜用您的付費 Token 額度</p>
+        </div>
+        <table class="compare-table" style="margin-top: 24px;">
+          <thead>
+            <tr>
+              <th style="width: 25%;">防線位置</th>
+              <th style="width: 35%;">安全威脅</th>
+              <th style="width: 40%;">白名單防禦手法</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>白名單設定</strong></td>
+              <td>外界任意用戶向 Bot 發送指令</td>
+              <td>在變數中填寫 <code>DISCORD_ALLOWED_USERS</code>，限定只有指定 ID 才能得到回應</td>
+            </tr>
+            <tr>
+              <td><strong>憑證防護</strong></td>
+              <td>Bot Token 洩漏導致 API 權限被奪</td>
+              <td><strong>嚴禁</strong>將 Token 明文寫進代碼，必須通過環境變數注入且不進 Git</td>
+            </tr>
+            <tr>
+              <td><strong>最小權限</strong></td>
+              <td>Bot 被拉入未知群組竊取資料</td>
+              <td>在 Developer Portal 關閉 <code>Public Bot</code> 開關，拒絕非管理員的強制邀請</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="src-footer"><span>Jacob Business OS</span><span>安全邊界防禦</span></div>
+      </div>
+    </section>
+
+    <!-- M5-6 實做完成 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">今日實作</span></div>
+        <div class="head">
+          <h2>動手做：建立您的 Discord 書僮並掛載 Volume</h2>
+          <p class="sub">跟著隨課附贈的兩份 SOP，從零開通您的雲端 24h 智能書僮</p>
+        </div>
+        <div class="prompt-card" style="margin-top: 30px; max-width: 90%;">
+          <div class="label">帶走工具包 (本堂隨課附贈)</div>
+          <div class="spell">
+            1. [Discord部署SOP.md] (含 Discord Developer Portal 設定、白名單與 Zeabur 部署流程)<br>
+            2. [Telegram部署SOP.md] (含 BotFather 申請 Token、基本群組限制配置指南)
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 20px;">
+          * 註：這份在老師系統裡的真實版本 —— Jacob 在 Zeabur 部署的特助 Hermes 同時支援 Telegram 和 Discord 雙通道，在 Discord 端嚴格鎖定內部成員角色 ID。白名單外的人發送消息會自動觸發 Discord 書僮閘道警報並進行靜音處置。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M5 實作帶走</span></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  var isMobile = window.innerWidth <= 768;
+  Reveal.initialize({
+    hash: true,
+    center: true,
+    progress: true,
+    controls: true,
+    transition: 'slide',
+    width: isMobile ? window.innerWidth : 1280,
+    height: isMobile ? window.innerHeight : 720,
+    margin: isMobile ? 0.02 : 0.1,
+  });
+</script>
+</body>
+</html>
