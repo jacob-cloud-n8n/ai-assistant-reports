@@ -2,13 +2,26 @@
 <!--
   課程簡報母模板 (course-deck.html) — reveal.js 5.1.0
   ─────────────────────────────────────────────────────────
+  v2 正式版：「圖 > 表 > 文字」資訊圖表積木（2026-07-09 Jacob 指示，麥肯錫式簡報骨架、配色守自家規範）。
+  能畫圖就不用表、能用表就不寫段落文字；一頁一個視覺主角。
+
+  填內容四規則（麥肯錫法／金字塔原理，填字比排版更重要）：
+    1. 行動標題：h2 直接寫結論主張（「必須整合A×B×C」），不寫主題名詞（「關於整合」）。
+       全副標題連起來讀＝完整論證，順序亂了就是結構有問題。
+    2. 一頁一訊息：整頁圖解只為證明標題那句話；證明不了就換證據，塞不下就拆頁。
+    3. 結論先行：先講答案再講理由；副標(.sub)一句補原理，不留懸念。
+    4. 可溯源：.src-footer 的 Source 必填（內部資料就寫「內部營運資料」）；數字要真實可驗證。
+
   用法（見 skills/26-course-slide-pipeline）：
-    1. 複製本檔成 銷售專案/<你的簡報>.html
-    2. 內容從既有大綱取材：STAR 框架（痛點→金句→原理→方法→目標）+ course-docs/課程大綱.md
-    3. 只填 <section> 內容，**不要動 <style>**（設計 token 單一來源，改樣式改這裡一處全體受益）
-    4. 部署：cd 銷售專案 && ./deploy-firebase.sh（禁裸 firebase deploy）
-  設計系統萃取自 m1-m2-slides.html（Jacob/AG 已驗證的花叔美學：燕麥米底＋深藍＋麥芽金）。
-  下方 7 張為「slide 類型積木」範例，各對應 skill 26 映射表。複製需要的、刪不用的。
+    1. 複製本檔成 銷售專案/course-docs/<你的簡報>.html
+    2. 只填 <section> 內容，**不要動 <style>**（設計 token 單一來源）
+    3. 部署：cd 銷售專案 && ./deploy-firebase.sh（禁裸 firebase deploy）
+
+  積木目錄（複製需要的、刪不用的）：
+    ① 封面           ② 循環圖＋價值面板（主圖解頁）   ③ 文氏圖＋洞察列
+    ④ 三柱能力頁＋行動列   ⑤ 故事時間軸           ⑥ 大數字 KPI 磚
+    ⑦ 對比表         ⑧ 咒語卡              ⑨ 收尾
+  共用零件：.kicker 章節標籤 / .src-footer 來源註腳 / .icon-* 內建 SVG 圖示（禁 emoji）
 -->
 <html lang="zh-Hant">
 <head>
@@ -18,128 +31,261 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
-  <!-- 載入 Google Fonts 以實現精緻的花叔美學字體系統（排除 Arial 等 AI Slop 字體） -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
   <style>
     /* ===== 單一設計 token 來源（要改風格改這裡） ===== */
     :root {
-      /* 預設為淺色 (燕麥米底花叔美學) */
-      --bg-main: #f4f1ea;       /* 燕麥米背景 */
-      --text-main: #1a2b49;     /* 沉穩科技深藍 */
-      --text-sec: #4a5d78;      /* 次要文字 深灰藍 */
-      --accent: #1a2b49;        /* 主色 科技深藍 */
-      --accent2: #c08a3e;       /* 點綴 麥芽金/焦糖 */
-      --success: #3f8a4f;       /* 柔和綠 */
-      --warn: #d4a373;          /* 麥芽金 */
+      --bg-main: #f4f1ea;
+      --text-main: #1a2b49;
+      --text-sec: #4a5d78;
+      --accent: #1a2b49;
+      --accent2: #c08a3e;
+      --success: #3f8a4f;
+      --warn: #d4a373;
       --card-bg: #ffffff;
       --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
       --card-border: 1px solid rgba(26, 43, 73, 0.06);
+      --hairline: rgba(26, 43, 73, 0.12);
+      --fill-accent: rgba(26, 43, 73, 0.06);
+      --fill-accent2: rgba(192, 138, 62, 0.10);
+      --fill-success: rgba(63, 138, 79, 0.10);
     }
-
-    /* 深色花叔美學 (?theme=dark) */
     :root.theme-dark {
-      --bg-main: #0b0f19;       /* 極深藍灰背景 */
-      --text-main: #f3f4f6;     /* 亮灰白文字 */
-      --text-sec: #9ca3af;      /* 次要文字 淺灰 */
-      --accent: #38bdf8;        /* 主色 天空藍 */
-      --accent2: #fbbf24;       /* 點綴 琥珀金 */
-      --success: #34d399;       /* 柔和綠 */
-      --warn: #fbbf24;          /* 橘黃 */
-      --card-bg: #111827;       /* 深灰卡片底色 */
+      --bg-main: #0b0f19;
+      --text-main: #f3f4f6;
+      --text-sec: #9ca3af;
+      --accent: #38bdf8;
+      --accent2: #fbbf24;
+      --success: #34d399;
+      --warn: #fbbf24;
+      --card-bg: #111827;
       --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
       --card-border: 1px solid rgba(255, 255, 255, 0.08);
+      --hairline: #1e293b;
+      --fill-accent: rgba(56, 189, 248, 0.10);
+      --fill-accent2: rgba(251, 191, 36, 0.10);
+      --fill-success: rgba(52, 211, 153, 0.10);
     }
 
     .reveal {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-main);
+      background-color: var(--bg-main); color: var(--text-main);
     }
     .reveal h1, .reveal h2, .reveal h3 {
       font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
       font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
     }
     .reveal h1 { font-size: 2em; color: var(--accent); }
-    .reveal h2 { font-size: 1.4em; color: var(--accent); }
-    .reveal h3 { font-size: 1.1em; color: var(--accent2); }
-    .reveal .progress { color: var(--accent); }
-    .reveal .controls { color: var(--accent); }
-    .reveal .slide-number { color: var(--text-sec); background-color: transparent; }
-    .reveal .fragment { opacity: 0.2; }
-    .reveal .fragment.visible { opacity: 1; }
+    .reveal h2 { font-size: 1.3em; color: var(--accent); }
+    .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+    .reveal .slide-number { color: var(--text-sec); background: transparent; }
+    .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
 
-    .title-slide { text-align: center; }
-    .title-slide .tag {
-      display: inline-block; background: var(--accent2); color: #fff;
-      padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
-      letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+    /* ===== 共用：資訊圖表畫布（絕對定位零件的地基） ===== */
+    .canvas { position: relative; height: 660px; text-align: left; }
+
+    /* 章節標籤（頁面左上角，EN 小字＋中文） */
+    .kicker {
+      position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+      font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
     }
+    .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+    .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+
+    /* 頁首標題區（kicker 下方；用 padding 避免與畫布外距合併） */
+    .head { padding-top: 52px; }
+    .head h2 { margin: 0 0 6px; }
+    .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+    /* 來源註腳（頁面底部細線＋左 Source 右 Note） */
+    .src-footer {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      border-top: 1px solid var(--hairline); padding-top: 10px;
+      display: flex; justify-content: space-between;
+      font-size: 0.36em; color: var(--text-sec);
+    }
+
+    /* 內建 SVG 圖示座（圓底細框，禁 emoji） */
+    .icon-seat {
+      width: 44px; height: 44px; border-radius: 50%; flex: none;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--hairline);
+    }
+    .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+    .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+    .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+    /* ===== ② 循環圖（3 節點迴圈＋中心標籤＋外側註解） ===== */
+    .duo { display: flex; gap: 28px; margin-top: 18px; align-items: stretch; }
+    .duo .main { flex: 1.5; position: relative; }
+    .cycle { position: relative; width: 100%; height: 430px; }
+    .cycle .node {
+      position: absolute; width: 150px; height: 150px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      text-align: center; border: 1px solid var(--hairline);
+    }
+    .cycle .node .icon-seat { border: none; background: transparent; width: auto; height: auto; }
+    .cycle .node .icon-seat svg { width: 26px; height: 26px; }
+    .cycle .node b { font-size: 0.5em; letter-spacing: 0.05em; }
+    .cycle .node small { font-size: 0.34em; color: var(--text-sec); line-height: 1.5; }
+    .cycle .node.n1 { top: 0;   left: 50%; transform: translateX(-50%); background: var(--fill-accent);  color: var(--accent); }
+    .cycle .node.n2 { bottom: 0; right: 8%; background: var(--fill-success); color: var(--success); }
+    .cycle .node.n3 { bottom: 0; left: 8%;  background: var(--fill-accent2); color: var(--accent2); }
+    .cycle .node b, .cycle .node small { color: var(--text-main); }
+    .cycle .node small { color: var(--text-sec); }
+    .cycle .hub {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -46%);
+      text-align: center; width: 150px;
+    }
+    .cycle .hub b { font-size: 0.62em; color: var(--text-main); display: block; }
+    .cycle .hub small { font-size: 0.34em; color: var(--text-sec); }
+    .cycle svg.arrows { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cycle svg.arrows path { fill: none; stroke: var(--text-sec); stroke-width: 2; opacity: 0.55; marker-end: url(#arrhead); }
+    /* 外側註解（細線引出） */
+    .callout { position: absolute; max-width: 190px; font-size: 0.4em; line-height: 1.5; }
+    .callout b { display: block; font-size: 1.05em; margin-bottom: 2px; }
+    .callout.t-accent b { color: var(--accent); } .callout.t-accent2 b { color: var(--accent2); } .callout.t-success b { color: var(--success); }
+    .callout p { margin: 0; color: var(--text-sec); }
+
+    /* ===== ②側欄：價值面板（icon 列＋虛線分隔＋公式列） ===== */
+    .value-panel {
+      flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+      background: var(--card-bg); padding: 22px 24px; display: flex; flex-direction: column;
+    }
+    .value-panel .vp-title { text-align: center; font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .value-panel .vp-row { display: flex; gap: 14px; align-items: center; padding: 14px 0; }
+    .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+    .value-panel .vp-row b { display: block; font-size: 0.5em; }
+    .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+    .value-panel .vp-formula {
+      margin-top: auto; border: 1px solid var(--hairline); border-radius: 8px;
+      background: var(--fill-accent); text-align: center; padding: 10px;
+      font-size: 0.42em; font-weight: 700; color: var(--text-main);
+    }
+
+    /* ===== ③ 文氏圖（SVG 三圓） ===== */
+    .venn-wrap { display: flex; gap: 28px; margin-top: 18px; align-items: center; }
+    .venn-wrap .insights { flex: 1; }
+    .insight-row { display: flex; gap: 14px; align-items: flex-start; padding: 13px 0; }
+    .insight-row + .insight-row { border-top: 1px dashed var(--hairline); }
+    .insight-row b { display: block; font-size: 0.5em; margin-bottom: 3px; }
+    .insight-row ul { list-style: none; margin: 0; padding: 0; font-size: 0.4em; color: var(--text-sec); line-height: 1.7; }
+    .insight-row ul li::before { content: "· "; color: var(--accent2); }
+    .venn { flex: 1.1; }
+    .venn svg { width: 100%; height: auto; }
+    .venn .vlabel { font-family: 'Inter', 'Noto Sans TC', sans-serif; font-weight: 700; }
+    .venn .vsub { font-family: 'Inter', 'Noto Sans TC', sans-serif; font-weight: 400; }
+
+    /* ===== ④ 三柱能力頁（編號柱＋目標列＋匯流結論＋行動列） ===== */
+    .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+    .pillar {
+      border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+      padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .pillar.hot { border-color: var(--accent2); }
+    .pillar .p-head { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+    .pillar .p-num {
+      width: 26px; height: 26px; border-radius: 50%; flex: none; align-self: center;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+    }
+    .pillar.hot .p-num { background: var(--accent2); }
+    .pillar .p-head b { font-size: 0.6em; } .pillar .p-head small { font-size: 0.36em; color: var(--text-sec); letter-spacing: 0.1em; }
+    .pillar .p-item { display: flex; gap: 10px; align-items: center; }
+    .pillar .p-item b { display: block; font-size: 0.44em; }
+    .pillar .p-item small { font-size: 0.36em; color: var(--text-sec); }
+    .pillar .p-goal {
+      margin-top: auto; border: 1px solid var(--hairline); border-radius: 6px;
+      background: var(--fill-accent); font-size: 0.38em; text-align: center; padding: 7px; color: var(--text-main);
+    }
+    .pillar.hot .p-goal { background: var(--fill-accent2); }
+    .conclusion-bar {
+      margin-top: 14px; border: 1px solid var(--hairline); border-radius: 10px;
+      background: var(--fill-accent); text-align: center; padding: 12px;
+      font-size: 0.55em; font-weight: 700; color: var(--text-main);
+    }
+
+    /* 底部行動列（3 格，細線分隔） */
+    .action-strip { display: flex; margin-top: 14px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--card-bg); }
+    .action-strip .as-item { flex: 1; display: flex; gap: 12px; align-items: center; padding: 12px 16px; }
+    .action-strip .as-item + .as-item { border-left: 1px solid var(--hairline); }
+    .action-strip b { display: block; font-size: 0.44em; }
+    .action-strip small { font-size: 0.36em; color: var(--text-sec); line-height: 1.4; }
+
+    /* ===== ⑤ 故事時間軸（目標→阻礙→努力→結果） ===== */
+    .timeline { position: relative; margin-top: 40px; }
+    .timeline .tl-track { position: absolute; top: 21px; left: 4%; right: 4%; height: 2px; background: var(--hairline); }
+    .timeline .tl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; }
+    .tl-step { text-align: left; }
+    .tl-step .tl-dot {
+      width: 44px; height: 44px; border-radius: 50%; margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+      border: 4px solid var(--bg-main); position: relative;
+    }
+    .tl-step:nth-child(2) .tl-dot { background: var(--warn); }
+    .tl-step:nth-child(3) .tl-dot { background: var(--accent2); }
+    .tl-step:nth-child(4) .tl-dot { background: var(--success); }
+    .tl-step b { display: block; font-size: 0.52em; margin-bottom: 4px; }
+    .tl-step p { font-size: 0.4em; color: var(--text-sec); line-height: 1.6; margin: 0; }
+    .tl-quote {
+      margin-top: 26px; border-left: 3px solid var(--accent2); padding: 10px 18px;
+      font-size: 0.55em; line-height: 1.6; color: var(--text-main); font-style: italic;
+    }
+
+    /* ===== ⑥ 大數字 KPI 磚 ===== */
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .stat-tile {
+      border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+      padding: 22px; text-align: left;
+    }
+    .stat-tile .num { font-family: 'Playfair Display', serif; font-size: 1.6em; font-weight: 700; color: var(--accent); line-height: 1.1; }
+    .stat-tile .num span { font-size: 0.45em; color: var(--accent2); }
+    .stat-tile b { display: block; font-size: 0.46em; margin-top: 6px; }
+    .stat-tile small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+    /* ===== 沿用 v1 的文字型積木 ===== */
+    .title-slide { text-align: center; }
+    .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
     .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
     .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
-
-    .checklist { list-style: none; text-align: left; font-size: 0.6em; }
-    .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(26,43,73,0.06); display: flex; align-items: center; gap: 12px; color: var(--text-main); }
-    .checklist li::before { content: "\2610"; font-size: 1.2em; color: var(--accent); }
-    .checklist li.done::before { content: "\2611"; color: var(--success); }
-
-    .points { list-style: none; text-align: left; font-size: 0.62em; margin-top: 0.6em; }
-    .points li { padding: 12px 0; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); line-height: 1.5; }
-    .points li strong { color: var(--accent2); }
-
-    .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
-    .step-card {
-      background: var(--card-bg); border-radius: 16px; padding: 20px;
-      border-top: 4px solid var(--accent); box-shadow: var(--card-shadow);
-      border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
-      text-align: left;
-    }
-    .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
-    .step-card p { color: var(--text-sec); line-height: 1.6; }
-
-    .code-block {
-      background: #2d3748; border-radius: 8px; padding: 16px 20px;
-      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.5em;
-      color: #e2e8f0; text-align: left; margin: 1em 0;
-    }
-    .code-block .comment { color: #a0aec0; }
-    .code-block .cmd { color: #63b3ed; }
-
     .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
-    .compare-table th { background: rgba(26,43,73,0.08); color: var(--accent); padding: 12px; text-align: left; }
-    .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); }
-
-    .tip-box {
-      background: rgba(192,138,62,0.06); border-left: 4px solid var(--accent2);
-      border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em;
-      font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5;
-    }
-
-    /* 咒語卡 / Prompt 卡：你們課程特色的「一句話 prompt」 */
-    .prompt-card {
-      background: var(--card-bg); border-radius: 14px; padding: 20px 24px;
-      box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2);
-      text-align: left; margin: 0.8em auto; max-width: 80%;
-    }
+    .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 12px; text-align: left; }
+    .compare-table td { padding: 10px 12px; border-bottom: 1px solid var(--hairline); color: var(--text-main); }
+    .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+    .prompt-card { background: var(--card-bg); border-radius: 14px; padding: 20px 24px; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); text-align: left; margin: 0.8em auto; max-width: 80%; }
     .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
-    .prompt-card .spell {
-      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em;
-      color: var(--text-main); margin-top: 8px; line-height: 1.6;
-    }
-
+    .prompt-card .spell { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em; color: var(--text-main); margin-top: 8px; line-height: 1.6; }
     .end-slide { text-align: center; }
     .end-slide .big { font-size: 3em; margin-bottom: 0.2em; color: var(--accent); }
     .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
-
     .highlight { color: var(--accent2); font-weight: 700; }
   </style>
 </head>
 <body>
+  <!-- 內建 SVG 圖示庫（use 引用；要加新圖示加在這，維持細線風格） -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <marker id="arrhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="context-stroke" stroke-width="1.5"/></marker>
+      <g id="i-tool"><path d="M14 7a4 4 0 0 1-5.6 3.7L5 14l-2-2 3.3-3.4A4 4 0 0 1 10 3l2 2-2 2 2 2 2-2z" transform="scale(1.3)"/></g>
+      <g id="i-book"><path d="M3 4h7v14H5a2 2 0 0 1-2-2V4zm18 0h-7v14h5a2 2 0 0 0 2-2V4z" transform="scale(0.95)"/><path d="M10 4c1 .8 3 .8 4 0" transform="scale(0.95)"/></g>
+      <g id="i-bulb"><path d="M12 3a6 6 0 0 1 3.5 10.9c-.7.5-1 1.3-1 2.1h-5c0-.8-.3-1.6-1-2.1A6 6 0 0 1 12 3z"/><path d="M10 19h4M11 21.5h2"/></g>
+      <g id="i-target"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8"/></g>
+      <g id="i-cube"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></g>
+      <g id="i-users"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.5-3 2.7-5 5.5-5s5 2 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14c2.3.3 3.8 2 4.2 4.5"/></g>
+      <g id="i-chart"><path d="M4 4v16h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/></g>
+      <g id="i-loop"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g>
+      <g id="i-clip"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0M9 10h6M9 14h6M9 18h4"/></g>
+    </defs>
+  </svg>
+
   <div class="reveal">
     <div class="slides">
 
-      <!-- ① 封面｜大綱元素：模組標題 + 堂次 -->
+      <!-- ① 封面 -->
       <section class="title-slide">
         <div class="tag">第 N 堂課</div>
         <h1>這堂課的標題</h1>
@@ -147,27 +293,154 @@
         <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
       </section>
 
-      <!-- ② 議程 / 學習階梯｜大綱元素：你會學到 / 學習路徑 -->
+      <!-- ② 主圖解頁：循環圖＋外側註解＋右欄價值面板＋來源註腳 -->
       <section>
-        <h2>這堂課的路徑</h2>
-        <ul class="checklist">
-          <li class="done">L1 認識：知道它能做什麼、不能做什麼</li>
-          <li>L2 會用：跟著做出第一個成果</li>
-          <li>L3 帶走：拿到可重複用的模板/小卡</li>
-        </ul>
+        <div class="canvas">
+          <div class="kicker"><span class="en">METHODOLOGY</span><span class="zh">方法論</span></div>
+          <div class="head">
+            <h2>「做－學－想」循環，把知識變成成果</h2>
+            <p class="sub">動手實踐與反思迭代，培養真實問題解決力</p>
+          </div>
+          <div class="duo">
+            <div class="main">
+              <div class="cycle">
+                <svg class="arrows" viewBox="0 0 480 430" preserveAspectRatio="none">
+                  <path d="M 320 90 Q 420 160 400 280" />
+                  <path d="M 330 380 Q 240 420 150 380" />
+                  <path d="M 80 280 Q 60 160 160 90" />
+                </svg>
+                <div class="node n1"><span class="icon-seat"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span><b>DO｜做</b><small>動手實作<br>原型製作</small></div>
+                <div class="node n2"><span class="icon-seat"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><b>LEARN｜學</b><small>分析經驗<br>建構知識</small></div>
+                <div class="node n3"><span class="icon-seat"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span><b>THINK｜想</b><small>反思問題<br>驅動迭代</small></div>
+                <div class="hub"><b>PBL</b><small>專案式學習</small></div>
+                <div class="callout t-accent" style="top:14px; right:-12px;"><b>將想法具體化</b><p>結合工具與技術，打造可驗證原型</p></div>
+                <div class="callout t-accent2" style="top:40%; left:-18px;"><b>反思與再思考</b><p>檢視問題與限制，激發創新想法</p></div>
+              </div>
+            </div>
+            <div class="value-panel">
+              <div class="vp-title">創造的成果與價值</div>
+              <div class="vp-row"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-cube"/></svg></span><span><b>實體作品</b><small>從創意到產品，驗證想法可行性</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>問題解決</b><small>培養跨域思考，解決真實問題</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>協作共享</b><small>團隊合作與交流，深化知識意義</small></span></div>
+              <div class="vp-formula">產出價值 ＝ 創新力 × 實踐力 × 溝通力</div>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：來源出處寫這裡</span><span>Note：補充注記寫這裡</span></div>
+        </div>
       </section>
 
-      <!-- ③ 概念頁｜大綱元素：STAR 重要性(金句) + 原理。一概念一頁，要點≤3，fragment 逐點揭示 -->
+      <!-- ③ 文氏圖頁：左欄洞察列＋右側三圓交集 -->
       <section>
-        <h2>金句當大標，一句就記住</h2>
-        <ul class="points">
-          <li class="fragment"><strong>要點一</strong>：用一行講清楚原理</li>
-          <li class="fragment"><strong>要點二</strong>：再一行，別塞第四點（超過就拆頁）</li>
-          <li class="fragment"><strong>要點三</strong>：收在學員能行動的結論</li>
-        </ul>
+        <div class="canvas">
+          <div class="kicker"><span class="en">FRAMEWORK</span><span class="zh">框架</span></div>
+          <div class="head">
+            <h2>三個圈的交集，就是你的位置</h2>
+            <p class="sub">A × B × C，缺一角都站不穩</p>
+          </div>
+          <div class="venn-wrap">
+            <div class="insights">
+              <div class="insight-row"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>核心洞察</b><ul><li>洞察一，一行講完</li><li>洞察二</li><li>洞察三</li></ul></span></div>
+              <div class="insight-row"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></span><span><b>關鍵證據</b><ul><li>證據一</li><li>證據二</li></ul></span></div>
+              <div class="insight-row"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>行動建議</b><ul><li>建議一</li><li>建議二</li></ul></span></div>
+            </div>
+            <div class="venn">
+              <svg viewBox="0 0 420 380">
+                <circle cx="210" cy="130" r="105" fill="var(--fill-accent)"  stroke="var(--accent)"  stroke-width="1.5"/>
+                <circle cx="150" cy="235" r="105" fill="var(--fill-accent2)" stroke="var(--accent2)" stroke-width="1.5"/>
+                <circle cx="270" cy="235" r="105" fill="var(--fill-success)" stroke="var(--success)" stroke-width="1.5"/>
+                <text class="vlabel" x="210" y="82"  text-anchor="middle" font-size="17" fill="var(--accent)">圈 A</text>
+                <text class="vsub"   x="210" y="102" text-anchor="middle" font-size="11" fill="var(--text-sec)">一句定義</text>
+                <text class="vlabel" x="112" y="262" text-anchor="middle" font-size="17" fill="var(--accent2)">圈 B</text>
+                <text class="vsub"   x="112" y="282" text-anchor="middle" font-size="11" fill="var(--text-sec)">一句定義</text>
+                <text class="vlabel" x="310" y="262" text-anchor="middle" font-size="17" fill="var(--success)">圈 C</text>
+                <text class="vsub"   x="310" y="282" text-anchor="middle" font-size="11" fill="var(--text-sec)">一句定義</text>
+                <text class="vlabel" x="210" y="205" text-anchor="middle" font-size="14" fill="var(--text-main)">交集＝定位</text>
+              </svg>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：來源出處</span><span>Strategic Framework</span></div>
+        </div>
       </section>
 
-      <!-- ④ 對比表｜大綱元素：這樣做 vs 那樣做 / B級 vs A級 vs S級 -->
+      <!-- ④ 三柱能力頁：編號柱＋匯流結論＋行動列 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">FOUNDATION</span><span class="zh">能力基石</span></div>
+          <div class="head">
+            <h2>三根柱子，共構一個能力地基</h2>
+            <p class="sub">各司其職，最後匯流到同一個結論</p>
+          </div>
+          <div class="pillar-grid">
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">1</span><b>柱一</b><small>PILLAR</small></div>
+              <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>子項一</b><small>一行說明</small></span></div>
+              <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span><span><b>子項二</b><small>一行說明</small></span></div>
+              <div class="p-goal">目標：一句話</div>
+            </div>
+            <div class="pillar hot">
+              <div class="p-head"><span class="p-num">2</span><b>柱二（重點）</b><small>PILLAR</small></div>
+              <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span><span><b>子項一</b><small>一行說明</small></span></div>
+              <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>子項二</b><small>一行說明</small></span></div>
+              <div class="p-goal">目標：一句話</div>
+            </div>
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">3</span><b>柱三</b><small>PILLAR</small></div>
+              <div class="p-item"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></span><span><b>子項一</b><small>一行說明</small></span></div>
+              <div class="p-item"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-loop"/></svg></span><span><b>子項二</b><small>一行說明</small></span></div>
+              <div class="p-goal">目標：一句話</div>
+            </div>
+          </div>
+          <div class="conclusion-bar">跨域能力：創造性解決真實世界的問題</div>
+          <div class="action-strip">
+            <div class="as-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>行動一</b><small>一行怎麼做</small></span></div>
+            <div class="as-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-loop"/></svg></span><span><b>行動二</b><small>一行怎麼做</small></span></div>
+            <div class="as-item"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>行動三</b><small>一行怎麼做</small></span></div>
+          </div>
+          <div class="src-footer"><span>Source：來源出處</span><span>Note：注記</span></div>
+        </div>
+      </section>
+
+      <!-- ⑤ 故事時間軸：目標→阻礙→努力→結果 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">OUR STORY</span><span class="zh">真實故事</span></div>
+          <div class="head">
+            <h2>金句當標題：一句話說完這段路</h2>
+            <p class="sub">故事鐵則：真實不虛構，反差越大越有記憶點</p>
+          </div>
+          <div class="timeline">
+            <div class="tl-track"></div>
+            <div class="tl-grid">
+              <div class="tl-step"><div class="tl-dot">目標</div><b>曾經的渴望</b><p>想要的生活長什麼樣，一兩行。</p></div>
+              <div class="tl-step"><div class="tl-dot">阻礙</div><b>最痛的時刻</b><p>具體到有畫面的那個場景。</p></div>
+              <div class="tl-step"><div class="tl-dot">努力</div><b>轉折與嘗試</b><p>做了什麼、失敗過什麼。</p></div>
+              <div class="tl-step"><div class="tl-dot">結果</div><b>現在的樣子</b><p>反差收尾，接回產品價值。</p></div>
+            </div>
+          </div>
+          <div class="tl-quote">「一句當事人的原話當結尾，比十頁形容詞都有力。」</div>
+          <div class="src-footer"><span>Jacob Business OS</span><span>真實案例，未經加工</span></div>
+        </div>
+      </section>
+
+      <!-- ⑥ 大數字 KPI 磚 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">TRACK RECORD</span><span class="zh">運作實績</span></div>
+          <div class="head">
+            <h2>數字自己會說話</h2>
+            <p class="sub">挑三個最有反差的，別放滿</p>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-tile"><div class="num">6<span> 位</span></div><b>AI 數位員工</b><small>分工協作、互相交接，全年無休</small></div>
+            <div class="stat-tile"><div class="num">1<span> 句話</span></div><b>從指令到交付</b><small>拍板之後，產線自己跑完</small></div>
+            <div class="stat-tile"><div class="num">0<span> 行</span></div><b>老闆寫的程式</b><small>不會寫程式，也能帶工程團隊</small></div>
+          </div>
+          <div class="tip-box">KPI 磚選數法：數字要「真實、可驗證、有反差」——寧可小而真，不要大而虛。</div>
+          <div class="src-footer"><span>Source：內部營運資料</span><span>統計至 YYYY-MM</span></div>
+        </div>
+      </section>
+
+      <!-- ⑦ 對比表 -->
       <section>
         <h2>對比：一眼看出差別</h2>
         <table class="compare-table">
@@ -179,17 +452,7 @@
         </table>
       </section>
 
-      <!-- ⑤ 實作示範｜大綱元素：STAR 方法 / 實做項目。步驟卡 + code -->
-      <section>
-        <h2>動手做：跟著這幾步</h2>
-        <div class="step-grid">
-          <div class="step-card"><h4>Step 1</h4><p>先做什麼，一句話說清楚。</p></div>
-          <div class="step-card"><h4>Step 2</h4><p>再做什麼，附關鍵注意點。</p></div>
-        </div>
-        <div class="code-block"><span class="comment"># 範例指令</span><br><span class="cmd">./start-work.sh</span></div>
-      </section>
-
-      <!-- ⑥ 咒語卡 / Prompt 卡｜大綱元素：課程特色的一句話 prompt -->
+      <!-- ⑧ 咒語卡 -->
       <section>
         <h2>今天的咒語卡</h2>
         <div class="prompt-card">
@@ -199,13 +462,9 @@
         <div class="tip-box">咒語卡是學員帶走的即戰力——一堂放 1~2 張，貼上就能用。</div>
       </section>
 
-      <!-- ⑦ 回顧 + 回家功課｜大綱元素：STAR 目標 / 學員帶走 -->
+      <!-- ⑨ 收尾 -->
       <section class="end-slide">
         <p class="big">今天帶走什麼</p>
-        <ul class="checklist" style="max-width:70%;margin:0 auto;">
-          <li class="done">學會了：______</li>
-          <li>回家做：______（下堂帶來）</li>
-        </ul>
         <p class="tagline">下一堂：______</p>
       </section>
 
@@ -214,7 +473,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
   <script>
-    // 檢查 URL 參數是否指定深色主題 (?theme=dark)
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('theme') === 'dark') {
       document.documentElement.classList.add('theme-dark');
