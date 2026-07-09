@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>模組 1：AI 素養與個人特助環境準備 — 線上課程簡報</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #f4f1ea;       /* 燕麥米背景 */
+      --text-main: #1a2b49;     /* 沉穩科技深藍 */
+      --text-sec: #4a5d78;      /* 次要文字 深灰藍 */
+      --accent: #1a2b49;        /* 主色 科技深藍 */
+      --accent2: #c08a3e;       /* 點綴 麥芽金/焦糖 */
+      --success: #3f8a4f;       /* 柔和綠 */
+      --warn: #d4a373;          /* 麥芽金 */
+      --card-bg: #ffffff;
+      --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+      --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    }
+
+    :root.theme-dark {
+      --bg-main: #0b0f19;       /* 極深藍灰背景 */
+      --text-main: #f3f4f6;     /* 亮灰白文字 */
+      --text-sec: #9ca3af;      /* 次要文字 淺灰 */
+      --accent: #38bdf8;        /* 主色 天空藍 */
+      --accent2: #fbbf24;       /* 點綴 琥珀金 */
+      --success: #34d399;       /* 柔和綠 */
+      --warn: #fbbf24;          /* 橘黃 */
+      --card-bg: #111827;       /* 深灰卡片底色 */
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
+    }
+    .reveal h1 { font-size: 2em; color: var(--accent); }
+    .reveal h2 { font-size: 1.4em; color: var(--accent); }
+    .reveal h3 { font-size: 1.1em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .controls { color: var(--accent); }
+    .reveal .slide-number { color: var(--text-sec); background-color: transparent; }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block; background: var(--accent2); color: #fff;
+      padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
+      letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+    .checklist { list-style: none; text-align: left; font-size: 0.6em; }
+    .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(26,43,73,0.06); display: flex; align-items: center; gap: 12px; color: var(--text-main); }
+    .checklist li::before { content: "\2610"; font-size: 1.2em; color: var(--accent); }
+    .checklist li.done::before { content: "\2611"; color: var(--success); }
+
+    .points { list-style: none; text-align: left; font-size: 0.62em; margin-top: 0.6em; }
+    .points li { padding: 12px 0; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); line-height: 1.5; }
+    .points li strong { color: var(--accent2); }
+
+    .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
+    .step-card {
+      background: var(--card-bg); border-radius: 16px; padding: 20px;
+      border-top: 4px solid var(--accent); box-shadow: var(--card-shadow);
+      border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+      text-align: left;
+    }
+    .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
+    .step-card p { color: var(--text-sec); line-height: 1.6; }
+
+    .code-block {
+      background: #2d3748; border-radius: 8px; padding: 16px 20px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.5em;
+      color: #e2e8f0; text-align: left; margin: 1em 0;
+    }
+    .code-block .comment { color: #a0aec0; }
+    .code-block .cmd { color: #63b3ed; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
+    .compare-table th { background: rgba(26,43,73,0.08); color: var(--accent); padding: 12px; text-align: left; }
+    .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); }
+
+    .tip-box {
+      background: rgba(192,138,62,0.06); border-left: 4px solid var(--accent2);
+      border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em;
+      font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5;
+    }
+
+    .prompt-card {
+      background: var(--card-bg); border-radius: 14px; padding: 20px 24px;
+      box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2);
+      text-align: left; margin: 0.8em auto; max-width: 85%;
+    }
+    .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+    .prompt-card .spell {
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em;
+      color: var(--text-main); margin-top: 8px; line-height: 1.6;
+    }
+
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; color: var(--accent); }
+    .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
+
+    .highlight { color: var(--accent2); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ① 封面 -->
+      <section class="title-slide">
+        <div class="tag">模組 1</div>
+        <h1>AI 素養與個人特助環境準備</h1>
+        <p class="subtitle">掌握提示詞公式，為你的 AI 助理鋪設安全防線</p>
+        <p class="author">AI 助理運用與實戰課程 · 線上自學版</p>
+      </section>
+
+      <!-- ② 學習路徑 -->
+      <section>
+        <h2>今天你會學到</h2>
+        <div class="step-grid">
+          <div class="step-card">
+            <h4>1. AI 素養與提示詞</h4>
+            <p>理解提示詞黃金公式，讓 AI 聽懂你、精準交付任務。</p>
+          </div>
+          <div class="step-card">
+            <h4>2. 環境與金鑰安全</h4>
+            <p>完成 OpenRouter 與 Zeabur 設定，學會保護 API Key。</p>
+          </div>
+          <div class="step-card">
+            <h4>3. 協作自律禮儀</h4>
+            <p>學習開工與收工 SOP，落實單一真相來源 (SSOT)。</p>
+          </div>
+          <div class="step-card">
+            <h4>4. 學習護照體驗</h4>
+            <p>動手建立五級學習階梯，開啟你的第一個費曼法練習。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 單元一：為什麼要學 AI 素養？ -->
+      <section>
+        <h2>為什麼要學 AI 素養？</h2>
+        <p style="font-size: 0.65em; color: var(--text-sec); margin-bottom: 0.5em;">大多數人只把 AI 當玩具隨意問，改用語境引導能獲得數倍的回答品質</p>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>情境</th>
+              <th>一般人問法（得過且過）</th>
+              <th>高手自學問法（精準破局）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="fragment">
+              <td><strong>寫 Email</strong></td>
+              <td>「幫我寫一封回覆詢價的信。」</td>
+              <td>「你是<span class="highlight">資深行銷專家</span>，請幫我寫一封回覆詢價的 Email，字數限制 <span class="highlight">150字內、分三段</span>，語氣要<span class="highlight">親切專業</span>...」</td>
+            </tr>
+            <tr class="fragment">
+              <td><strong>尋求解答</strong></td>
+              <td>「這個怎麼做？」</td>
+              <td>「我目前在 <span class="highlight">[情境]</span>，遇到 <span class="highlight">[具體阻塞點]</span>，你覺得最符合效率的解決步驟是什麼？」</td>
+            </tr>
+            <tr class="fragment">
+              <td><strong>概念學習</strong></td>
+              <td>「什麼是 API？」</td>
+              <td>「請使用<span class="highlight">費曼法</span>，用連<span class="highlight">六歲小孩都聽得懂</span>的比喻向我解釋 API，並在結尾提出問題確認我懂了。」</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ④ 單元二：提示詞公式 -->
+      <section>
+        <h2>提示詞黃金公式</h2>
+        <div style="font-size: 1em; margin: 1em 0;">
+          <p><span class="highlight">角色 (Role)</span> + <span class="highlight">任務 (Task)</span> + <span class="highlight">格式 (Format)</span> + <span class="highlight">限制 (Constraint)</span></p>
+        </div>
+        <div class="prompt-card fragment">
+          <div class="label">萬用公式示範</div>
+          <div class="spell">
+            「你是<span class="highlight">資深時間管理教練 (角色)</span>，幫我設計一份<span class="highlight">遠端工作者的每日作息表 (任務)</span>。請使用<span class="highlight">Markdown 表格輸出 (格式)</span>，限制<span class="highlight">排除晚餐後的任何工作安排，並加入番茄鐘休息區間 (限制)</span>。」
+          </div>
+        </div>
+        <div class="tip-box fragment">
+          💡 <strong>自學提示：</strong>每次與 AI 互動前，花 5 秒對齊這四個要素，就能免去 80% 的來回校正時間。
+        </div>
+      </section>
+
+      <!-- ⑤ 單元三：設備與安全環境準備 -->
+      <section>
+        <h2>第一步：硬體與終端機準備</h2>
+        <ul class="checklist">
+          <li class="done">準備電腦（Mac / Windows / Linux 均可，建議安裝 Chrome 瀏覽器）</li>
+          <li>學會開啟終端機（Terminal）作為控制台</li>
+        </ul>
+        <div class="step-grid fragment" style="margin-top: 0.8em;">
+          <div class="step-card">
+            <h4>🍏 macOS 終端機</h4>
+            <p>點選「應用程式」→「工具程式」→「終端機」；或按下 <code>Command + 空白鍵</code> 搜尋「終端機」。</p>
+          </div>
+          <div class="step-card">
+            <h4>🪟 Windows PowerShell</h4>
+            <p>按下鍵盤 <code>Win 鍵</code>，輸入「PowerShell」開啟；或按下 <code>Win + R</code> 輸入 <code>powershell</code>。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>第二步：雲端服務帳號申請</h2>
+        <p style="font-size: 0.65em; color: var(--text-sec);">請跟著課程步驟，完成以下服務的註冊：</p>
+        <ul class="checklist" style="margin-top: 0.5em;">
+          <li><strong>Telegram</strong>：下載 App 並註冊，這將是您的 AI 特助互動通道。</li>
+          <li><strong>OpenRouter</strong>：前往 <code>openrouter.ai</code>，使用 Google 帳號一鍵註冊取得 API Key。</li>
+          <li><strong>Zeabur</strong>：前往 <code>zeabur.com</code>，提供雲端一鍵部署服務的平台。</li>
+          <li><strong>GitHub</strong>：前往 <code>github.com</code> 註冊，用於同步您的第二大腦與程式碼。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>OpenRouter 金鑰申請步驟</h2>
+        <ol style="font-size: 0.6em; text-align: left; line-height: 1.8;">
+          <li>打開瀏覽器，導航至 <a href="https://openrouter.ai" target="_blank">openrouter.ai</a>。</li>
+          <li>點擊右上角的 <strong>Sign In / Sign Up</strong>，選擇 Google 登入。</li>
+          <li>登入後，點擊左側選單的 <strong>Keys</strong>，再點擊右上角 <strong>Create Key</strong>。</li>
+          <li>為金鑰命名（例如：<code>course-key</code>），並點擊確認。</li>
+          <li><strong>重要！</strong> 複製以 <code>sk-or-v1-</code> 開頭的完整金鑰，並暫存在本地安全的文字檔。</li>
+        </ol>
+        <div class="tip-box">
+          ⚠️ <strong>安全提示：</strong>OpenRouter 金鑰生成後只會顯示一次。千萬不要將它截圖、發送到公開聊天室，或直接上傳到 GitHub！
+        </div>
+      </section>
+
+      <!-- 🎥 影片 1 佔位頁 -->
+      <section data-background-color="#1a2b49" style="color: #fff;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.8em; color: var(--accent2); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 20px;">🎥 實操演示影片 1</div>
+          <h2 style="color: #fff; font-size: 1.6em; margin-bottom: 30px;">OpenRouter 金鑰申請與安全防線配置</h2>
+          <div style="display: inline-block; padding: 20px 40px; border: 2px dashed var(--accent2); border-radius: 8px; font-size: 0.8em; cursor: pointer;">
+            ▶ 播放演示 (預估時長：3 分鐘)
+          </div>
+          <p style="font-size: 0.5em; color: rgba(255,255,255,0.6); margin-top: 30px;">
+            請觀看本段影片，跟著操作完成金鑰申請，並在 VS Code 中設定防禦性 <code>.gitignore</code>。
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛡️ AI 特助的安全防禦</h2>
+        <p style="font-size: 0.65em; color: var(--text-sec);">AI 擁有讀寫本機與雲端的權限，安全自律是開發協作的核心</p>
+        <div class="step-grid">
+          <div class="step-card" style="border-top: 4px solid var(--accent2);">
+            <h4>1. 半自動確認機制</h4>
+            <p>當 AI 助理欲執行寫入或終端機指令時，務必人工審查後才放行。拒絕一味點選「Bypass」，避免幻覺指令導致的檔案刪除風險。</p>
+          </div>
+          <div class="step-card" style="border-top: 4px solid var(--success);">
+            <h4>2. 金鑰環境變數隔離</h4>
+            <p>絕不將明文 API Key 寫死在代碼中，應統一存放在 <code>.env</code> 檔案。並確保 <code>.gitignore</code> 已排除該檔案，防止金鑰推送至公開倉庫。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>動手做：防禦性專案初始化</h2>
+        <p style="font-size: 0.55em; color: var(--text-sec); text-align: left; margin-bottom: 0.4em;">為你的第一個 AI 專案建立安全圍欄，避免上傳金鑰：</p>
+        <div class="step-card" style="font-size: 0.55em; padding: 15px 20px;">
+          <strong>📂 1. 建立目錄並初始化 Git</strong> (終端機操作)：
+          <div class="code-block" style="margin: 6px 0; font-size: 0.85em;">
+            mkdir my-ai-project && cd my-ai-project<br>
+            git init
+          </div>
+        </div>
+        <div class="step-card" style="font-size: 0.55em; padding: 15px 20px; margin-top: 10px;">
+          <strong>🛡️ 2. 建立 <code>.gitignore</code> 檔案</strong> (寫入以下內容並存檔)：
+          <div class="code-block" style="margin: 6px 0; font-size: 0.85em;">
+            .env<br>
+            *key*<br>
+            *.json<br>
+            .DS_Store
+          </div>
+        </div>
+      </section>
+
+      <!-- ⑥ 單元四：AI 協作自律禮儀 -->
+      <section>
+        <h2>AI 協作自律禮儀：開工與收工</h2>
+        <p style="font-size: 0.65em; color: var(--text-sec);">AI 助理不是一問一答的搜尋框，而是你的工作夥伴</p>
+        <div class="step-grid">
+          <div class="step-card">
+            <h4>🌅 1. 開工對齊 (Start Work)</h4>
+            <p>每次開啟新對話時，輸入「開工」Prompt，讓 AI 自動載入任務設定、專案目標與目前進度，防範上下文遺忘，免去反覆背景解釋。</p>
+          </div>
+          <div class="step-card" style="border-top: 4px solid var(--success);">
+            <h4>🌃 2. 收工整理 (Finish Work)</h4>
+            <p>對話結束前輸入「收工」，讓 AI 總結今日產出、標明剩餘卡點、排除任何隱私或金鑰資料，確保下次開工能無縫接軌。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>單一真相來源 (SSOT)</h2>
+        <p style="font-size: 0.65em; color: var(--text-sec);">對話視窗是沙灘上的腳印，隨時會被潮水沖走</p>
+        <div class="tip-box">
+          <strong>Single Source of Truth (SSOT) 原則：</strong><br>
+          由於 AI 的對話記錄與記憶隨時可能隨着對話清理或額度耗盡而蒸發，重要的程式碼片段、決策、或是你的學習重點，<strong>一律禁止只存留在對話記錄中</strong>！必須在收工時，將其同步整理至您的「第二大腦 (Obsidian 筆記庫)」或實體的「黃金收工卡」中。
+        </div>
+      </section>
+
+      <!-- 🎥 影片 2 佔位頁 -->
+      <section data-background-color="#1a2b49" style="color: #fff;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.8em; color: var(--accent2); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 20px;">🎥 實操演示影片 2</div>
+          <h2 style="color: #fff; font-size: 1.6em; margin-bottom: 30px;">AI 協作自律禮儀實操：開工與收工</h2>
+          <div style="display: inline-block; padding: 20px 40px; border: 2px dashed var(--accent2); border-radius: 8px; font-size: 0.8em; cursor: pointer;">
+            ▶ 播放演示 (預估時長：4 分鐘)
+          </div>
+          <p style="font-size: 0.5em; color: rgba(255,255,255,0.6); margin-top: 30px;">
+            請觀看本段影片，觀看如何透過一組引導語，引導 AI 成為你的思維教練，並在練習後完成收工。
+          </p>
+        </div>
+      </section>
+
+      <!-- ⑦ 單元五：費曼法與學習階梯建立 -->
+      <section>
+        <h2>自學高效心法：費曼學習法</h2>
+        <p style="font-size: 0.65em; color: var(--text-sec); margin-bottom: 0.8em;">如果習慣只向 AI 要答案，大腦會逐漸失去思考與解決問題的能力</p>
+        <div class="step-grid">
+          <div class="step-card">
+            <h4>❌ 傳統被動問法</h4>
+            <p>向 AI 索取一段代碼或一個知識定義，複製貼上，但下次遇到類似問題依舊不會解。</p>
+          </div>
+          <div class="step-card" style="border-top: 4px solid var(--accent2);">
+            <h4>💡 費曼法主動出擊</h4>
+            <p>讓 AI 扮演思維教練追問你，迫使你用大白話解釋概念。只有能跟六歲小孩解釋清楚的事物，才是你真正內化的知識。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>建立你的學習階梯</h2>
+        <p style="font-size: 0.65em; color: var(--text-sec);">讓 AI 為你量身打造你的學習路徑：</p>
+        <div class="prompt-card">
+          <div class="label">對 AI 貼上以下 Prompt</div>
+          <div class="spell">
+            我想一步步學會「使用 AI agent 來幫助我的工作與生活」，請先問我三個問題：<br>
+            1. 我現在對 AI agent 的了解程度？（1 新手 ~ 5 能獨立操作）<br>
+            2. 我希望 2 個月後能做到什麼具體的事？<br>
+            3. 我過去學新東西最大的障礙是什麼？<br>
+            根據我的回答，幫我建立一個五級學習階梯，每級都要有：里程碑、3 題自檢問題、過了這關後的下一步。
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>動手做：費曼法極速體驗</h2>
+        <div class="step-grid" style="font-size: 0.52em;">
+          <div class="step-card">
+            <h4>🌅 1. 開工對齊</h4>
+            <p>發送 Prompt：<code>開工！今天我要用費曼法練習解釋『AI 助理』。請扮演蘇格拉底式的思維教練，用六歲小孩聽得懂的邏輯向我追問...</code></p>
+          </div>
+          <div class="step-card">
+            <h4>🧠 2. 費曼對決</h4>
+            <p>回答教練的挑戰，試著不用專業術語，用你自己的白話把「AI 助理」解釋清楚。</p>
+          </div>
+          <div class="step-card" style="grid-column: 1 / -1; border-top: 4px solid var(--success);">
+            <h4>🌌 3. 收工存檔 (SSOT)</h4>
+            <p>發送：<code>收工！請幫我整理今天理解的重點與盲點到我的 SSOT 小卡中，並清理暫存。</code> 複製回覆並安全封存！</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 🎥 影片 3 佔位頁 -->
+      <section data-background-color="#1a2b49" style="color: #fff;">
+        <div style="text-align: center;">
+          <div style="font-size: 0.8em; color: var(--accent2); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 20px;">🎥 實操演示影片 3</div>
+          <h2 style="color: #fff; font-size: 1.6em; margin-bottom: 30px;">學習護照體驗與費曼法自強特訓</h2>
+          <div style="display: inline-block; padding: 20px 40px; border: 2px dashed var(--accent2); border-radius: 8px; font-size: 0.8em; cursor: pointer;">
+            ▶ 播放演示 (預估時長：5 分鐘)
+          </div>
+          <p style="font-size: 0.5em; color: rgba(255,255,255,0.6); margin-top: 30px;">
+            請觀看本段影片，觀看如何引導 AI 生成個人化的學習護照，並跟著演示完成費曼法第一關自檢。
+          </p>
+        </div>
+      </section>
+
+      <!-- ⑧ 總結與下堂預告 -->
+      <section class="end-slide">
+        <h2>今天你帶走了什麼？</h2>
+        <ul class="checklist" style="max-width:80%; margin:0 auto;">
+          <li class="done">掌握了<strong>提示詞四要素</strong>（角色、任務、格式、限制）</li>
+          <li class="done">完成了設備盤點與 <strong>OpenRouter API Key</strong> 申請</li>
+          <li class="done">配置了專案安全防火牆 <strong><code>.gitignore</code></strong></li>
+          <li class="done">開啟了你的個人專屬 <strong>學習護照</strong></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>下堂課預告</h2>
+        <div class="step-card" style="max-width: 850px; margin: 1em auto; text-align: center; border-top: 4px solid var(--accent2);">
+          <h3 style="font-size: 1.1em; margin-bottom: 12px; color: var(--accent);">M1 + M2：克服 AI 健忘症<br>與打造第二大腦</h3>
+          <p style="font-size: 0.72em; color: var(--text-sec); line-height: 1.6; text-align: left;">
+            AI 聊完即忘的「短期記憶」該如何克服？我們將教你如何使用本地的知識庫工具 <strong>Obsidian</strong>，建立好記的三層管理結構（Clippings/Brain/Projects），並利用 Git 進行安全的私有雲端備份，打造你終身相伴的第二大腦！
+          </p>
+        </div>
+      </section>
+
+      <section class="end-slide">
+        <div class="big">🎉</div>
+        <h1 style="color: var(--accent);">第一堂課完成！</h1>
+        <p class="tagline">自律是與 AI 協作最穩固的護欄。我們下堂課見！</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('theme') === 'dark') {
+      document.documentElement.classList.add('theme-dark');
+    }
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      transition: 'fade',
+      transitionSpeed: 'default',
+      center: true,
+      progress: true,
+      controls: true
+    });
+  </script>
+</body>
+</html>

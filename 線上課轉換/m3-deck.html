@@ -1,0 +1,346 @@
+<!doctype html>
+<!--
+  課程簡報模組 3 (m3-deck.html) — reveal.js 5.1.0
+  ─────────────────────────────────────────────────────────
+  燕麥米底、深藍、麥芽金配色，包含雙主題 ?theme=dark 載入邏輯。
+  無 Arial 字體，無紫粉漸變色碼。
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>模組 3：Agent 全覽與部署你的第一個 AI 助理 — 線上課程簡報</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== 設計 token 來源 ===== */
+    :root {
+      --bg-main: #f4f1ea;       /* 燕麥米背景 */
+      --text-main: #1a2b49;     /* 沉穩科技深藍 */
+      --text-sec: #4a5d78;      /* 次要文字 深灰藍 */
+      --accent: #1a2b49;        /* 主色 科技深藍 */
+      --accent2: #c08a3e;       /* 點綴 麥芽金/焦糖 */
+      --success: #3f8a4f;       /* 柔和綠 */
+      --warn: #d4a373;          /* 麥芽金 */
+      --card-bg: #ffffff;
+      --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+      --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    }
+
+    /* 深色主題 (?theme=dark) */
+    :root.theme-dark {
+      --bg-main: #0b0f19;       /* 極深藍灰背景 */
+      --text-main: #f3f4f6;     /* 亮灰白文字 */
+      --text-sec: #9ca3af;      /* 次要文字 淺灰 */
+      --accent: #38bdf8;        /* 主色 天空藍 */
+      --accent2: #fbbf24;       /* 點綴 琥珀金 */
+      --success: #34d399;       /* 柔和綠 */
+      --warn: #fbbf24;          /* 橘黃 */
+      --card-bg: #111827;       /* 深灰卡片底色 */
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
+    }
+    .reveal h1 { font-size: 2em; color: var(--accent); }
+    .reveal h2 { font-size: 1.4em; color: var(--accent); }
+    .reveal h3 { font-size: 1.1em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .controls { color: var(--accent); }
+    .reveal .slide-number { color: var(--text-sec); background-color: transparent; }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block; background: var(--accent2); color: #fff;
+      padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
+      letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+    .checklist { list-style: none; text-align: left; font-size: 0.6em; }
+    .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(26,43,73,0.06); display: flex; align-items: center; gap: 12px; color: var(--text-main); }
+    .checklist li::before { content: "\2610"; font-size: 1.2em; color: var(--accent); }
+    .checklist li.done::before { content: "\2611"; color: var(--success); }
+
+    .points { list-style: none; text-align: left; font-size: 0.62em; margin-top: 0.6em; }
+    .points li { padding: 12px 0; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); line-height: 1.5; }
+    .points li strong { color: var(--accent2); }
+
+    .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
+    .step-card {
+      background: var(--card-bg); border-radius: 16px; padding: 20px;
+      border-top: 4px solid var(--accent); box-shadow: var(--card-shadow);
+      border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+      text-align: left;
+    }
+    .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
+    .step-card p { color: var(--text-sec); line-height: 1.6; }
+
+    .code-block {
+      background: #2d3748; border-radius: 8px; padding: 16px 20px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.5em;
+      color: #e2e8f0; text-align: left; margin: 1em 0;
+    }
+    .code-block .comment { color: #a0aec0; }
+    .code-block .cmd { color: #63b3ed; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
+    .compare-table th { background: rgba(26,43,73,0.08); color: var(--accent); padding: 12px; text-align: left; }
+    .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); }
+
+    .tip-box {
+      background: rgba(192,138,62,0.06); border-left: 4px solid var(--accent2);
+      border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em;
+      font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5;
+    }
+
+    .prompt-card {
+      background: var(--card-bg); border-radius: 14px; padding: 20px 24px;
+      box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2);
+      text-align: left; margin: 0.8em auto; max-width: 80%;
+    }
+    .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+    .prompt-card .spell {
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em;
+      color: var(--text-main); margin-top: 8px; line-height: 1.6;
+    }
+
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 2.2em; margin-bottom: 0.2em; color: var(--accent); }
+    .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
+
+    .highlight { color: var(--accent2); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 封面 -->
+      <section class="title-slide">
+        <div class="tag">模組 3</div>
+        <h1>Agent 全覽與部署你的第一個 AI 助理</h1>
+        <p class="subtitle">從市面工具對比到雲端 24hr 自治助理實戰</p>
+        <p class="author">AI 助理運用與實戰課程 · 線上自學版</p>
+      </section>
+
+      <!-- 學習路徑 -->
+      <section>
+        <h2>今天你會學到</h2>
+        <ul class="checklist">
+          <li>第一單元：市面常見 Agent 工具與平台 (Coze, Dify 等對比)</li>
+          <li>第二單元：部署前的準備：BotFather 申請 Telegram Bot</li>
+          <li>第三單元：Zeabur 雲端服務一鍵部署與環境變數綁定</li>
+          <li>第四單元：進階配置：Volume 持久化儲存與安全防範</li>
+        </ul>
+      </section>
+
+      <!-- 第一單元：什麼是 AI Agent -->
+      <section>
+        <h2>第一單元：常見 Agent 工具與平台</h2>
+        <h3>什麼是 AI Agent？</h3>
+        <ul class="points">
+          <li class="fragment"><strong>主動規劃 (Planning)</strong>：能將複雜任務拆解成多個子步驟並自主執行，而非單純一問一答。</li>
+          <li class="fragment"><strong>記憶系統 (Memory)</strong>：包含短期對話上下文，以及與 Volume/資料庫對接的長期記憶。</li>
+          <li class="fragment"><strong>工具調用 (Tools)</strong>：能呼叫網頁搜尋、API、資料庫讀寫等外部工具擴展能力邊界。</li>
+        </ul>
+      </section>
+
+      <!-- 第一單元：平台對比 -->
+      <section>
+        <h2>主流 Agent 平台對比</h2>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>平台類型</th>
+              <th>優勢</th>
+              <th>劣勢</th>
+              <th>適用場景</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Coze / Dify</strong></td>
+              <td>介面友善、工作流畫布強大、支援多平台一鍵發佈</td>
+              <td>資料隱私與自訂度受限，平台限制較多</td>
+              <td>快速驗證原型與常規工作流</td>
+            </tr>
+            <tr>
+              <td><strong>Hermes / 自部署</strong></td>
+              <td>100% 掌握代碼、自由度極高、可自訂安全防範機制</td>
+              <td>需要基本的雲端部署概念與環境配置</td>
+              <td>個人/團隊專屬的安全隱私助理</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 第二單元：BotFather 申請 -->
+      <section>
+        <h2>第二單元：BotFather 申請 Telegram Bot</h2>
+        <h3>步驟：在 Telegram 建立新機器人</h3>
+        <div class="code-block">
+          <span class="comment">1. 開啟 Telegram，搜尋並點擊官方的 @BotFather</span><br />
+          <span class="comment">2. 發送指令開始建立：</span><br />
+          <span class="cmd">/newbot</span><br />
+          <span class="comment">3. 依提示輸入機器人的暱稱 (例如：我的隨身特助)</span><br />
+          <span class="comment">4. 輸入唯一的 Username (必須以 bot 結尾，如 my_assistant_bot)</span><br />
+          <span class="comment">5. 複製生成的 HTTP API Token (例如：123456789:AAFfakeToken...)</span>
+        </div>
+        <div class="tip-box">
+          ⚠️ <strong>安全鐵律</strong>：Bot Token 代表該機器人的最高控制權，請妥善保管，千萬不可截圖公開或上傳到 GitHub 公開倉庫！
+        </div>
+      </section>
+
+      <!-- 錄影佔位頁 1 -->
+      <section class="end-slide" data-background-color="#1a2b49" style="color: #fff;">
+        <p class="big" style="color: var(--accent2);">🎥 錄影實操演示 1</p>
+        <h2 style="color: #fff;">Telegram 機器人申請 (BotFather) 實操演示</h2>
+        <p class="tagline" style="color: rgba(255,255,255,0.7);">預估時長：3 分鐘 | 檔名：<code>tg-botfather-setup.mp4</code></p>
+        <ul class="checklist" style="max-width:80%; margin: 1em auto 0 auto; color: #fff;">
+          <li class="done" style="color: #fff;">在 Telegram 中精確搜尋官方帳號 @BotFather</li>
+          <li class="done" style="color: #fff;">發送 /newbot，依序設定顯示名稱與後綴為 bot 的用戶名稱</li>
+          <li class="done" style="color: #fff;">成功取得 API Token 並安全記錄於本地記事本</li>
+        </ul>
+      </section>
+
+      <!-- 第三單元：Zeabur 雲端服務一鍵部署 -->
+      <section>
+        <h2>第三單元：Zeabur 雲端服務一鍵部署</h2>
+        <h3>為什麼選擇 Zeabur？</h3>
+        <ul class="points">
+          <li class="fragment"><strong>免管理伺服器</strong>：不需懂得 Linux 指令或設定複雜的 SSL 憑證，一鍵完成部署。</li>
+          <li class="fragment"><strong>GitHub 連動</strong>：綁定個人 GitHub 專案，當程式碼 push 更新時，Zeabur 會自動觸發構建與更新。</li>
+          <li class="fragment"><strong>輕鬆配置變數</strong>：透過視覺化介面設定環境變數，將敏感 API Key 與程式碼物理抽離。</li>
+        </ul>
+      </section>
+
+      <!-- 第三單元：環境變數設定 -->
+      <section>
+        <h2>部署時的環境變數綁定</h2>
+        <p style="font-size:0.5em; color:var(--text-sec);">在 Zeabur 服務的 Variables 設定頁面新增以下項目：</p>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>變數名稱 (Key)</th>
+              <th>說明</th>
+              <th>範例值</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>TELEGRAM_BOT_TOKEN</code></td>
+              <td>您的 Telegram 機器人金鑰</td>
+              <td><code>123456789:AAFfakeToken...</code></td>
+            </tr>
+            <tr>
+              <td><code>OPENROUTER_API_KEY</code></td>
+              <td>OpenRouter API 金鑰</td>
+              <td><code>sk-or-v1-your-key-here...</code></td>
+            </tr>
+            <tr>
+              <td><code>HERMES_INFERENCE_PROVIDER</code></td>
+              <td>LLM 供應商設定</td>
+              <td><code>deepseek</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 錄影佔位頁 2 -->
+      <section class="end-slide" data-background-color="#1a2b49" style="color: #fff;">
+        <p class="big" style="color: var(--accent2);">🎥 錄影實操演示 2</p>
+        <h2 style="color: #fff;">Zeabur 雲端部署與環境變數設定實操</h2>
+        <p class="tagline" style="color: rgba(255,255,255,0.7);">預估時長：5 分鐘 | 檔名：<code>zeabur-deploy-variables.mp4</code></p>
+        <ul class="checklist" style="max-width:80%; margin: 1em auto 0 auto; color: #fff;">
+          <li class="done" style="color: #fff;">登入 Zeabur，建立新專案 (地區選擇 Tokyo/Singapore)</li>
+          <li class="done" style="color: #fff;">匯入個人的 GitHub Repository 程式碼開始構建</li>
+          <li class="done" style="color: #fff;">在 Variables 分頁中設定環境變數並重新部署</li>
+          <li class="done" style="color: #fff;">在 Telegram 發送「你好」進行真機測試並確認成功回覆</li>
+        </ul>
+      </section>
+
+      <!-- 第四單元：進階配置：Volume 持久化與安全防護 -->
+      <section>
+        <h2>第四單元：Volume 持久化與安全防護</h2>
+        <h3>雲端硬碟 (Volume) 與白名單防護</h3>
+        <div class="step-grid">
+          <div class="step-card">
+            <h4>Volume 持久化</h4>
+            <p>解決重啟失憶。因為雲端容器是唯讀臨時的，必須手動在 Zeabur 建立硬碟掛載至 <code>/app/data</code>，確保記憶 JSON 檔永久保存。</p>
+          </div>
+          <div class="step-card">
+            <h4>白名單限制</h4>
+            <p>防範 API 金鑰被他人盜刷。設定白名單變數，限制僅有指定用戶 ID 可以跟機器人說話。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 第四單元：設定範例 -->
+      <section>
+        <h2>Volume 與白名單配置範本</h2>
+        <div class="code-block">
+          <span class="comment"># 限制僅允許的使用者 ID (多個人用逗號隔開)</span><br />
+          <span class="cmd">TELEGRAM_ALLOWED_USERS=123456789,987654321</span><br /><br />
+          <span class="comment"># 指定記憶體檔案的持久化儲存路徑</span><br />
+          <span class="cmd">MEMORY_FILE_PATH=/app/data/memory.json</span>
+        </div>
+        <div class="tip-box">
+          💡 <strong>如何獲取個人 Telegram ID？</strong><br />
+          在 Telegram 搜尋 @userinfobot 並發送隨意訊息，它會立刻回覆您的個人數字 ID (例如 <code>123456789</code>)。
+        </div>
+      </section>
+
+      <!-- 錄影佔位頁 3 -->
+      <section class="end-slide" data-background-color="#1a2b49" style="color: #fff;">
+        <p class="big" style="color: var(--accent2);">🎥 錄影實操演示 3</p>
+        <h2 style="color: #fff;">Volume 持久化與安全白名單配置實操</h2>
+        <p class="tagline" style="color: rgba(255,255,255,0.7);">預估時長：4 分鐘 | 檔名：<code>volume-whitelist-setup.mp4</code></p>
+        <ul class="checklist" style="max-width:80%; margin: 1em auto 0 auto; color: #fff;">
+          <li class="done" style="color: #fff;">在 Zeabur 服務下方點擊 Add Volume 並設定 Mount Path</li>
+          <li class="done" style="color: #fff;">在環境變數中新增 TELEGRAM_ALLOWED_USERS 並填入個人 ID</li>
+          <li class="done" style="color: #fff;">使用未在白名單的 Telegram 帳號測試，驗證安全攔截正常運作</li>
+        </ul>
+      </section>
+
+      <!-- 總結與預告 -->
+      <section class="end-slide">
+        <h2>今天你帶走了什麼？</h2>
+        <ul class="checklist" style="max-width:70%; margin:0 auto;">
+          <li class="done">了解 AI Agent 核心概念，與市面主流工具對比</li>
+          <li class="done">學會利用 BotFather 申請 TG Bot，並妥善保管金鑰</li>
+          <li class="done">學會使用 Zeabur 雲端服務一鍵部署與綁定環境變數</li>
+          <li class="done">學會配置 Volume 持久化防失憶，以及設定白名單防盜刷</li>
+        </ul>
+        <p class="tagline" style="margin-top: 1em;">下一堂預告：模組 4：多 Agent 協作<br>與個人時間審計系統</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    // 檢查 URL 參數是否指定深色主題 (?theme=dark)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('theme') === 'dark') {
+      document.documentElement.classList.add('theme-dark');
+    }
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade' });
+  </script>
+</body>
+</html>

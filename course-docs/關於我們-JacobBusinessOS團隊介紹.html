@@ -120,44 +120,86 @@
     font-size: 0.55em; margin-top: 0.5em;
   }
   .flow-step {
-    padding: 28px 24px;
+    padding: 16px 12px;
     text-align: center; flex: 1 1 0; min-width: 0; max-width: 280px;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
     border-right: 1px solid var(--line);
   }
   .flow-step:last-child { border-right: none; }
-  .flow-step .text { color: var(--text-main); font-family: 'Noto Serif TC', serif; font-weight: 600; font-size: 1.15em; margin-bottom: 10px; white-space: nowrap; }
-  .flow-step .desc { color: var(--text-sec); line-height: 1.75; font-size: 0.9em; flex: 1; }
-  .flow-arrow { color: var(--accent2); font-size: 1.2em; font-weight: 400; align-self: center; flex-shrink: 0; padding: 0 8px; }
+  .flow-step .text { color: var(--text-main); font-family: 'Noto Serif TC', serif; font-weight: 600; font-size: 1.1em; margin-bottom: 8px; white-space: nowrap; }
+  .flow-step .desc { color: var(--text-sec); line-height: 1.75; font-size: 0.85em; flex: 1; }
+  .flow-arrow { color: var(--accent2); font-size: 1.2em; font-weight: 400; align-self: center; flex-shrink: 0; padding: 0 4px; }
+
+  .arch-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .arch-list > div { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .arch-list > div:last-child { border-bottom: none; }
 
   /* ========== RWD ========== */
   @media (max-width: 768px) {
-    .reveal { font-size: 0.7em; }
-    .reveal h1 { font-size: 1.6em; }
-    .reveal h2 { font-size: 1.2em; }
-    .oneliner { font-size: 0.7em; max-width: 100%; padding: 0 4%; }
-    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .step-grid { grid-template-columns: 1fr !important; gap: 12px; }
-    .case-grid { grid-template-columns: 1fr; gap: 10px; }
-    .flow-row { flex-direction: column; gap: 12px; }
-    .flow-arrow { transform: rotate(90deg); }
-    .compare-table { font-size: 0.45em; }
-    .arch-diagram { font-size: 0.5em; padding: 16px 12px; }
-    .philosophy-card { font-size: 0.55em; padding: 20px 16px; max-width: 100%; }
-    .story-card { font-size: 0.5em; padding: 16px 14px; max-width: 100%; }
-    .title-slide .tag { font-size: 0.55em; }
-    .title-slide .subtitle { font-size: 0.65em; }
+    .reveal h1 { font-size: 1.8em; }
+    .reveal h2 { font-size: 1.3em; padding-bottom: 0.2em; }
+    .oneliner { font-size: 0.75em; max-width: 100%; padding: 0 4%; line-height: 1.7; }
+
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 0; font-size: 0.55em; margin-top: 0.8em; }
+    .stat-item { padding: 16px 8px; border-right: none; border-bottom: 1px solid var(--line); }
+    .stat-item:nth-child(odd) { border-right: 1px solid var(--line); }
+    .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+    .stat-item .number { font-size: 1.8em; }
+
+    .step-grid { grid-template-columns: 1fr 1fr !important; gap: 0; font-size: 0.55em; margin-top: 0.8em; }
+    .step-item { padding: 16px 12px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .step-item:nth-child(even) { border-right: none; }
+    .step-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    .case-grid { grid-template-columns: 1fr 1fr; gap: 0; font-size: 0.48em; margin-top: 0.8em; }
+    .case-item { padding: 12px 10px; }
+
+    .flow-row { flex-direction: column; gap: 0; font-size: 0.5em; margin-top: 0.8em; }
+    .flow-step { border-right: none; border-bottom: 1px solid var(--line); padding: 16px; max-width: 100%; }
+    .flow-step:last-child { border-bottom: none; }
+    .flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+
+    .compare-table { font-size: 0.48em; margin-top: 0.8em; }
+    .compare-table th, .compare-table td { padding: 8px 6px; }
+
+    .arch-diagram { font-size: 0.5em; padding: 12px 8px; }
+
+    .philosophy-section { font-size: 0.55em; line-height: 1.8; max-width: 100%; padding: 0 12px; }
+    .philosophy-section .quote { font-size: 1.2em; margin-bottom: 12px; }
+
+    .story-section { font-size: 0.55em; line-height: 1.8; max-width: 100%; padding: 0 12px; }
+
+    .title-slide .subtitle { font-size: 0.65em; margin-top: 0.3em; }
+    .title-slide .author { font-size: 0.45em; margin-top: 1em; }
+
     .end-slide .big { font-size: 1.8em; }
     .end-slide .tagline { font-size: 0.55em; }
+
+    .meta { font-size: 0.4em; margin-top: 0.6em; }
+
+    .arch-list > div { flex-direction: column; gap: 2px; padding: 6px 0; }
+    .arch-list > div span:last-child { font-size: 0.9em; }
   }
+
   @media (max-width: 480px) {
-    .reveal { font-size: 0.6em; }
-    .reveal h1 { font-size: 1.4em; }
-    .stats-grid { grid-template-columns: 1fr; gap: 8px; }
-    .stat-card .number { font-size: 1.8em; }
-    .compare-table { font-size: 0.4em; }
-    .arch-diagram { font-size: 0.42em; }
+    .reveal h1 { font-size: 1.6em; }
+    .reveal h2 { font-size: 1.2em; }
+
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+    .stat-item { padding: 12px 6px; }
+
+    .step-grid { grid-template-columns: 1fr 1fr !important; gap: 0; }
+    .step-item { padding: 12px 8px; }
+
+    .case-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+    .case-item { padding: 10px 8px; }
+
+    .flow-step { padding: 12px; }
+
+    .philosophy-section { font-size: 0.55em; }
+    .story-section { font-size: 0.48em; }
   }
+
   /* RWD: reveal.js 簡報尺寸在小螢幕自動縮放 */
   @media (max-width: 768px) and (orientation: portrait) {
     .reveal .slides section { padding: 20px 10px; }
@@ -172,8 +214,8 @@
     <section data-background-color="#ede8dc">
       <div class="title-slide">
         <h1 style="color: #2b2825;">關於我們</h1>
-        <p class="subtitle" style="color: #6b665e;">Jacob Business OS — AI 原生協作團隊</p>
-        <p class="author" style="color: #8a847a;">不只學工具，學一整套思考與協作的方式</p>
+        <p class="subtitle" style="color: #6b665e;">Jacob Business OS — 現代 AI 原生軟體協作團隊</p>
+        <p class="author" style="color: #8a847a;">不只學工具，學一整套跟 AI 協同開發的實戰體系</p>
       </div>
     </section>
 
@@ -181,25 +223,25 @@
     <section>
       <h2>我們在做什麼</h2>
       <div class="oneliner">
-        <p>我們自己<span class="highlight">每天都在用 AI agent 團隊協作</span>，</p>
-        <p>累積了<span class="highlight">真實的開發歷程與踩坑經驗</span>。</p>
-        <p>現在，我們把這套經驗轉化為課程——</p>
-        <p>教你讓 AI 成為<span class="highlight">陪著你一起成長的教練</span>。</p>
+        <p>我們自己<span class="highlight">每天都與多智慧體 (Multi-Agents) 同時作戰</span>，</p>
+        <p>積累了<span class="highlight">第一線極速開發與真實踩坑經驗</span>。</p>
+        <p>現在，我們將這套成熟的實戰經驗轉化為課程——</p>
+        <p>教你打造一個<span class="highlight">24小時自動運作的 AI 虛擬團隊</span>。</p>
       </div>
-      <p class="meta">累計燃燒的 token 數為 84.7 億</p>
+      <p class="meta">累計燃燒的 Token 數已接近 100 億 (其中 Claude Code 研發佔 70 億，AG 專案管理與 Codex 驗收共佔 28 億)</p>
     </section>
 
-    <!-- 核心哲學：教練，不是工具 -->
+    <!-- 核心哲學：駕馭，不是盲從 -->
     <section>
       <h2>我們相信</h2>
       <div class="philosophy-section">
-        <p class="quote">工具會過時，但核心思維不會。</p>
-        <p>AI 工具進步太快——今天學的操作，三個月後可能就被取代。</p>
-        <p>所以我們不教<span class="highlight">「按哪個按鈕」</span>，我們教<span class="highlight">「怎麼思考」</span>。</p>
-        <p style="margin-top: 14px;">就像一個<span class="highlight">教練</span>，不是丟一本手冊給你，</p>
-        <p>而是陪在你旁邊、知道你的進度、在你卡住時推你一把。</p>
-        <p style="margin-top: 14px;">當你的<span class="highlight">核心思維建立起來</span>，</p>
-        <p>工具進步不是威脅——<span class="highlight">是更大的助力</span>。</p>
+        <p class="quote">工具會一直變，但協作體系不會。</p>
+        <p>單一 AI 工具的操作非常容易過時，今天學的介面，明天就改版。</p>
+        <p>所以我們不只教<span class="highlight">「如何與單一 AI 對話」</span>，我們更教<span class="highlight">「多智慧體如何協同工作」</span>。</p>
+        <p style="margin-top: 14px;">當你學會如何將規則寫成「工作說明書（CLAUDE.md）」、</p>
+        <p>讓不同的 Agent 按照「狀態機」與「DoD 驗收標準」自動運轉時，</p>
+        <p style="margin-top: 14px;">AI 工具的升級對你而言不再是威脅——</p>
+        <p>而是<span class="highlight">瞬間釋放更大生產力的加速引擎</span>。</p>
       </div>
     </section>
 
@@ -208,165 +250,222 @@
       <h2>我們的運作實績</h2>
       <div class="stats-grid">
         <div class="stat-item">
-          <span class="number">174</span>
-          <span class="label">GitHub 提交</span>
+          <span class="number">220+</span>
+          <span class="label">GitHub 提交次數</span>
         </div>
         <div class="stat-item">
-          <span class="number">7</span>
-          <span class="label">AI Agent 成員</span>
+          <span class="number">8+ 位</span>
+          <span class="label">AI 團隊成員</span>
         </div>
         <div class="stat-item">
-          <span class="number">25</span>
-          <span class="label">可安裝 AI 技能</span>
+          <span class="number">10+ 組</span>
+          <span class="label">雲端 / 本地工作流</span>
         </div>
         <div class="stat-item">
-          <span class="number">100+</span>
-          <span class="label">知識庫文章</span>
+          <span class="number">100%</span>
+          <span class="label">資料主權本地備份</span>
         </div>
       </div>
       <div class="stats-grid" style="margin-top: 0;">
         <div class="stat-item">
-          <span class="number">6</span>
-          <span class="label">商業網站與系統</span>
+          <span class="number">100%</span>
+          <span class="label">真實商業系統穩定運轉</span>
         </div>
         <div class="stat-item">
-          <span class="number">3</span>
-          <span class="label">開設中課程</span>
+          <span class="number">41 分鐘</span>
+          <span class="label">課程成片全備份錄製</span>
         </div>
         <div class="stat-item">
-          <span class="number">4</span>
-          <span class="label">部署服務 × 自動化</span>
+          <span class="number">24 小時</span>
+          <span class="label">雲端伺服器在線守候</span>
         </div>
         <div class="stat-item">
-          <span class="number">桌面↔雲端</span>
-          <span class="label">雙向同步</span>
+          <span class="number">秒級</span>
+          <span class="label">本地代碼極速重構</span>
         </div>
       </div>
     </section>
 
-    <!-- 團隊架構 -->
+    <!-- 團隊成員與分工 (精華) -->
     <section>
-      <h2>團隊架構</h2>
-      <div style="font-size: 0.55em; margin-top: 0.8em; max-width: 800px; margin-left: auto; margin-right: auto;">
-        <div style="text-align: center; margin-bottom: 12px;">
-          <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; font-size: 1.15em; color: var(--accent);">Jacob</span>
-          <span style="color: var(--text-sec); margin-left: 8px;">創辦人 / 教練</span>
+      <h2>AI 團隊架構與角色分工</h2>
+      <div style="font-size: 0.5em; margin-top: 0.5em; max-width: 950px; margin-left: auto; margin-right: auto;">
+        <div style="text-align: center; margin-bottom: 8px;">
+          <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; font-size: 1.1em; color: var(--accent);">Jacob</span>
+          <span style="color: var(--text-sec); margin-left: 6px;">創辦人 / 核心決策者</span>
         </div>
-        <div style="border-top: 1px solid var(--line); margin: 0 20% 16px 20%;"></div>
-        <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
-            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent2);">Claude AI</span>
-            <span style="color: var(--text-sec);">by Anthropic · 需求理解 · 任務編排 · 居中協調</span>
+        <div style="border-top: 1px solid var(--line); margin: 0 30% 12px 30%;"></div>
+        <div class="arch-list">
+          <div>
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent2); width: 220px; text-align: left; display: inline-block;">Claude Code (新大將)</span>
+            <span style="color: var(--text-sec); text-align: left; flex: 1;">本機研發主力 ➔ 直接控制終端機，執行秒級程式碼編寫、Debug 與極速重構。</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
-            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">AntiGravity</span>
-            <span style="color: var(--text-sec);">架構設計 · UI 拋光 · 全局調度</span>
+          <div>
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent); width: 220px; text-align: left; display: inline-block;">AntiGravity (AG)</span>
+            <span style="color: var(--text-sec); text-align: left; flex: 1;">AI 專案經理 & 美學統籌 ➔ 負責系統架構設計、全局工作調度、調用子代理 (Sub-agents) 並把關 UI 視覺體驗。</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
-            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">Codex</span>
-            <span style="color: var(--text-sec);">by OpenAI · 技術審查 · 測試把關 · PR 合併</span>
+          <div>
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent); width: 220px; text-align: left; display: inline-block;">Codex</span>
+            <span style="color: var(--text-sec); text-align: left; flex: 1;">技術防禦守衛 ➔ 負責高風險審查、PR 合併、執行機器化自動測試與 DoD 驗收把關。</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
-            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">OpenCode</span>
-            <span style="color: var(--text-sec);">執行開發 · 原型實作 · 部署</span>
+          <div>
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent); width: 220px; text-align: left; display: inline-block;">Hermes (赫密士)</span>
+            <span style="color: var(--text-sec); text-align: left; flex: 1;">雙向隨身使者 (本機/雲端) ➔ Jacob 在 Telegram 的專屬隨身秘書，負責客戶溝通、資料研究與二腦知識整理。</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
-            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">MiMoCode</span>
-            <span style="color: var(--text-sec);">by Xiaomi · 執行開發 · 原型實作</span>
+          <div>
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent); width: 220px; text-align: left; display: inline-block;">OpenCode / MiMoCode</span>
+            <span style="color: var(--text-sec); text-align: left; flex: 1;">原型實作與粗加工 ➔ 負責快速功能實作、測試部署，以及大量機械性文案的粗加工。</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line);">
-            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">Hermes</span>
-            <span style="color: var(--text-sec);">隨身陪伴 · 客戶溝通 · 文件研究</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; padding: 8px 0;">
-            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent);">n8n</span>
-            <span style="color: var(--text-sec);">自動化血管 · 日報 · 通知 · 同步</span>
+          <div>
+            <span style="font-family: 'Noto Serif TC', serif; font-weight: 600; color: var(--accent); width: 220px; text-align: left; display: inline-block;">n8n</span>
+            <span style="color: var(--text-sec); text-align: left; flex: 1;">系統神經與血管 ➔ 本地與雲端中轉，串接 Webhook、Notion 對講機、Google 日曆等自動化。</span>
           </div>
         </div>
       </div>
-      <p class="meta">7 個 AI agent，各有專業領域，彼此協作。我們每天都這樣工作。</p>
+    </section>
+
+    <!-- 硬核地基：三大核心建設 -->
+    <section>
+      <h2>團隊的硬核地基：三大核心建設</h2>
+      <p style="font-size: 0.55em; color: var(--text-sec); margin-bottom: 0.8em;">沒有底層地基的 Agent 只是空中樓閣；這套基礎建設賦予 AI 大腦、記憶與雙手</p>
+      <div class="step-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-top: 0.5em;">
+        <div class="step-item" style="text-align: center; padding: 16px 12px;">
+          <img src="assets/obsidian_brain.jpg" style="width: 120px; height: 120px; margin: 0 auto 12px auto; display: block; border-radius: 8px; object-fit: cover; border: 1px solid var(--line);">
+          <h4 style="color: var(--accent2); text-align: center; font-size: 1.1em; margin-bottom: 8px;">🧠 大腦記憶庫 (Obsidian)</h4>
+          <p style="font-size: 0.9em; text-align: left; line-height: 1.6;">所有專案規則、踩坑日誌與知識文件皆存放在本地端。Agent 能隨時讀取，徹底解決一般對話模型「聊長了就失憶」的痛點。</p>
+        </div>
+        <div class="step-item" style="text-align: center; padding: 16px 12px;">
+          <img src="assets/rag_search.jpg" style="width: 120px; height: 120px; margin: 0 auto 12px auto; display: block; border-radius: 8px; object-fit: cover; border: 1px solid var(--line);">
+          <h4 style="color: var(--accent); text-align: center; font-size: 1.1em; margin-bottom: 8px;">🔍 語意搜尋引擎 (RAG)</h4>
+          <p style="font-size: 0.9em; text-align: left; line-height: 1.6;">利用本地輕量級向量檢索，Agent 能夠在 1 秒內，從幾萬字的歷史檔案中精準抓出您的歷史決策，實現記憶即時水合。</p>
+        </div>
+        <div class="step-item" style="text-align: center; padding: 16px 12px;">
+          <img src="assets/mcp_connector.jpg" style="width: 120px; height: 120px; margin: 0 auto 12px auto; display: block; border-radius: 8px; object-fit: cover; border: 1px solid var(--line);">
+          <h4 style="color: var(--accent); text-align: center; font-size: 1.1em; margin-bottom: 8px;">🔌 實體連接器 (MCP)</h4>
+          <p style="font-size: 0.9em; text-align: left; line-height: 1.6;">透過 Model Context Protocol (MCP) 連接本機的 Chrome 瀏覽器、資料庫與 Docker 容器，讓 AI 特助擁有自動化操作的雙手。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 協作方式：內外兼修的 AI 協作體驗 -->
+    <section>
+      <h2>無縫切換的 AI 協作體驗 (內外兼修)</h2>
+      <p style="font-size: 0.55em; color: var(--text-sec); margin-bottom: 0.8em;">不論出門在外還是回到電腦前，AI 特助團隊隨時在線，工作絕不耽誤</p>
+      <div style="font-size: 0.55em; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left;">
+        <div class="step-card" style="border-top: 4px solid var(--accent2);">
+          <h4 style="font-size: 1.15em; margin-bottom: 8px; color: var(--accent2);">📱 對外：手機輕鬆派工 (出門在外)</h4>
+          <p style="line-height: 1.6; color: var(--text-sec);">出門在外無電腦時，Jacob 透過手機 Telegram 發送簡訊或語音給 **Hermes**。n8n 會自動中轉並儲存在 Notion 對講機信箱中。AI 助理們在後台默默接單、開發與拋光。人離線，工作依然在飛速前進！</p>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent);">
+          <h4 style="font-size: 1.15em; margin-bottom: 8px; color: var(--accent);">💻 對內：電腦全力發動 (回到辦公室)</h4>
+          <p style="line-height: 1.6; color: var(--text-sec);">回到辦公室電腦前，本地端 **Claude Code (研發主力)**、**AG (專案經理)** 與 **Codex** 火力全開！自動讀取本地 `CLAUDE.md` 二腦，直接在終端機執行秒級代碼編寫與自動化 DoD 驗收。內外無縫接軌！</p>
+        </div>
+      </div>
+      <p class="meta" style="margin-top: 1.2em;">這套行動端與研發端完美串接的「無障礙協作流」，是商業運營自動化的終極體現。</p>
+    </section>
+
+    <!-- 白話解讀：如何防止 AI 搗亂？ -->
+    <section>
+      <h2>白話解讀：如何防止 AI 搗亂？</h2>
+      <p style="font-size: 0.55em; color: var(--text-sec); margin-bottom: 0.8em;">不講高深術語，用最直覺的機制讓多個 AI 乖乖聽話、各司其職</p>
+      <div style="font-size: 0.55em; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left;">
+        <div class="step-card" style="border-top: 4px solid var(--accent2); padding: 16px; display: flex; gap: 16px; align-items: flex-start;">
+          <img src="assets/state_baton.jpg" style="width: 100px; height: 100px; border-radius: 6px; object-fit: cover; border: 1px solid var(--line); flex-shrink: 0;">
+          <div>
+            <h4 style="font-size: 1.15em; margin-bottom: 8px; color: var(--accent2);">🏃‍♂️ 任務接力棒 (原本的「狀態機」)</h4>
+            <p style="line-height: 1.6; color: var(--text-sec);">任務現在在誰手上？「待辦 ➔ 研發 ➔ 專案經理拋光 ➔ 安全驗收 ➔ 完成」，每個 AI 特助都只在自己的專屬跑道跑。沒拿到接力棒的人絕對不動，避免多個 AI 同時修改代碼產生衝突，讓協作井然有序！</p>
+          </div>
+        </div>
+        <div class="step-card" style="border-top: 4px solid var(--accent); padding: 16px; display: flex; gap: 16px; align-items: flex-start;">
+          <img src="assets/dod_grader.jpg" style="width: 100px; height: 100px; border-radius: 6px; object-fit: cover; border: 1px solid var(--line); flex-shrink: 0;">
+          <div>
+            <h4 style="font-size: 1.15em; margin-bottom: 8px; color: var(--accent);">📝 自動改考卷 (原本的「DoD 驗收」)</h4>
+            <p style="line-height: 1.6; color: var(--text-sec);">AI 寫完程式碼或做完網頁不等於完工！必須通過「自動改題機」的嚴格查核（有沒有漏字、程式能不能跑通、有無敏感金鑰外洩）。只有拿到 100 分，系統才准交卷（Commit）。確保產出品質永遠穩定！</p>
+          </div>
+        </div>
+      </div>
+      <p class="meta" style="margin-top: 1.2em;">把規則寫清楚，交給機器自動判定，你就能真正當個省心的決策者。</p>
     </section>
 
     <!-- 我們做過什麼 -->
     <section>
-      <h2>我們做過什麼</h2>
+      <h2>我們實戰落地過什麼</h2>
       <div class="case-grid">
         <div class="case-item">
-          <h4>企業官網建置</h4>
-          <p>為多家中小企業建置現代化官網：SSR 架構、SEO 優化、聯絡表單，從設計到上線全流程</p>
+          <h4>美地官網與 Notion 串接</h4>
+          <p>建置現代化 SSR 官網，串接 Notion 實現無後台的即時文章與隱私宣告發布系統。</p>
         </div>
         <div class="case-item">
-          <h4>LINE 官方助理</h4>
-          <p>為農產品牌夥伴串接 n8n × LINE 自動回覆系統，客戶詢問不再漏接</p>
+          <h4>LINE 官方隨身助理</h4>
+          <p>串接問卷、自動判定預約訂單，幫助品牌建立 24 小時漏接防禦機制，降低 45% 的錯誤率。</p>
         </div>
         <div class="case-item">
-          <h4>進銷存管理系統</h4>
-          <p>為零售業者打造庫存管理工具，客戶回饋直接轉化為功能：進貨自動換算單位成本</p>
+          <h4>小牧人進銷存管理系統</h4>
+          <p>梳理 107 位歷史客戶數據，優化 Notion 資料庫，提供一鍵單位換算與訂閱配送管理。</p>
         </div>
         <div class="case-item">
-          <h4>AI 系列課程</h4>
-          <p>開設多堂 AI 實戰課程，從 12 歲到成人，含 AI 書僮部署、Google 日曆同步等實作</p>
+          <h4>AI 隨身書僮課程產線</h4>
+          <p>將 AI 書僮 Bot 部署流程 SOP 化，讓新客戶的交付時間從 1 天縮短至 1 小時以內。</p>
         </div>
         <div class="case-item">
-          <h4>課程創作方法論</h4>
-          <p>80 份課程檔案系統化重整 + 費曼學習法實戰內化，從「照 SOP 走」到「能評估效果」</p>
+          <h4>OBS 自動化錄影控制</h4>
+          <p>編寫 Node 原生指令碼，讓 AI 助理能透過 WebSocket 自動遙控 OBS 錄製、暫停與 status 查詢。</p>
         </div>
         <div class="case-item">
-          <h4>AI 知識庫系統</h4>
-          <p>100+ 篇文章語意搜尋引擎，任何 AI agent 都能查詢——知識不再沉在資料夾底層</p>
+          <h4>100+ Wiki 卡語意搜尋</h4>
+          <p>建立本地二腦的編譯 status 與向量嵌入 (Embeddings) 機制，任何 Agent 均可實現秒級調用。</p>
         </div>
       </div>
     </section>
 
-    <!-- 故事：從客戶到學員 -->
+    <!-- 故事：從系統展示到教學現場 -->
     <section>
       <h2>一個真實的故事</h2>
       <div class="story-section">
-        <p>有一位企業主，原本只是請我們做<span class="highlight">系統展示</span>。</p>
-        <p style="margin-top: 10px;">展示過程中，他看到的不只是一個工具——</p>
-        <p>他看到的是<span class="highlight">「原來 AI 可以這樣陪我做事」</span>。</p>
-        <p style="margin-top: 14px;">展示結束後，他沒有說「報價多少」，</p>
-        <p>他說的是<span class="highlight">「我可以學這個嗎」</span>。</p>
-        <p style="margin-top: 14px;"><span class="arrow">→</span> 後來，他成為我們 AI 教學班的學員。</p>
-        <p style="margin-top: 14px; color: var(--text-sec);">這正是我們想傳遞的：<span class="highlight">不是賣工具給你，是讓你學會怎麼駕馭它。</span></p>
+        <p>有一位企業主，原本只是請我們做<span class="highlight">系統展示與修復</span>。</p>
+        <p style="margin-top: 10px;">但在展示中，他親眼看見——</p>
+        <p>我們不是手忙腳亂地打字，而是敲入一行指令，</p>
+        <p>背後的 AI 特助軍團（AG、Codex）就自動把 bug 修好、自動跑完測試並一鍵安全推送。</p>
+        <p style="margin-top: 14px;">他非常震撼，說道：<span class="highlight">「這就是我想要的！我可以跟著你學，在我的公司也建立一套這樣的 AI 團隊嗎？」</span></p>
+        <p style="margin-top: 14px;"><span class="arrow">→</span> 後來，他成為我們 AI 助理實戰課程的第一批學員。</p>
+        <p style="margin-top: 14px; color: var(--text-sec);">這正是我們想傳遞的：<span class="highlight">不只賣工具給你，是讓你學會怎麼像我們一樣駕馭 AI 團隊。</span></p>
       </div>
-    </section>
-
-    <!-- 協作方式 -->
-    <section>
-      <h2>我們的協作方式</h2>
-      <div class="step-grid" style="grid-template-columns: 1fr 1fr;">
-        <div class="step-item">
-          <h4>開工</h4>
-          <p>Git 同步 → 讀治理文件 → 看今日重點 → 回報狀態 → 等確認 → 動手</p>
-        </div>
-        <div class="step-item">
-          <h4>執行</h4>
-          <p>任務去中心化——每任務一個務一個檔案，狀態透明，誰都能接手</p>
-        </div>
-        <div class="step-item">
-          <h4>收工</h4>
-          <p>安全掃描 → 寫筆記 → 編譯知識庫 → stage 產出 → commit/push</p>
-        </div>
-        <div class="step-item">
-          <h4>復盤</h4>
-          <p>每日 session log + 每週自動 health lint + 雙 AI 交叉審查</p>
-        </div>
-      </div>
-      <p class="meta">這套流程，就是學員在課程中會學到的核心協作思維。</p>
     </section>
 
     <!-- 為什麼跟我們學 -->
     <section>
       <h2>為什麼跟我們學</h2>
-      <p style="font-size: 0.6em; color: var(--text-sec);">一般 AI 課程教你操作，我們教你思考</p>
+      <p style="font-size: 0.65em; color: var(--text-sec); margin-bottom: 0.5em;">一般 AI 課程只教按鈕操作，我們教你建立 AI 軍團與核心思考方式</p>
       <table class="compare-table">
-        <tr><th>一般 AI 課程</th><th>Jacob Business OS</th></tr>
-        <tr><td>教你用 ChatGPT 寫文案</td><td>教你建立自己的 AI 協作流程</td></tr>
-        <tr><td>單一工具操作教學</td><td>25 個可複用技能 + 核心思維方法論</td></tr>
-        <tr><td>講師的個人經驗</td><td>174 次 git commit 的真實團隊開發歷程</td></tr>
-        <tr><td>踩坑靠自己摸索</td><td>每個坑都有記錄，你不用再踩一次</td></tr>
-        <tr><td>工具更新就掉隊</td><td>核心思維建立後，工具進步是助力不是威脅</td></tr>
+        <thead>
+          <tr>
+            <th>維度</th>
+            <th>一般 AI 課程 (照本宣科)</th>
+            <th>Jacob Business OS (硬核實戰)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>教學內容</strong></td>
+            <td>教你用 ChatGPT 寫文案、改圖片</td>
+            <td>教你設定 Cloud 部署、Git 安全防線與本地 Obsidian 二腦</td>
+          </tr>
+          <tr>
+            <td><strong>實戰深度</strong></td>
+            <td>單一工具操作，缺乏串接</td>
+            <td>10+ 組 n8n 工作流、API 金鑰管理與多 Agent 本地協同開發</td>
+          </tr>
+          <tr>
+            <td><strong>課程來源</strong></td>
+            <td>講師收集的網路碎片知識</td>
+            <td>220+ 次 Git Commit 真實專案運作所積累的「踩坑日誌」</td>
+          </tr>
+          <tr>
+            <td><strong>防範機制</strong></td>
+            <td>完全沒提金鑰安全與隱私防護</td>
+            <td>配置防禦性 .gitignore，白名單防禦與本地資料庫持久化</td>
+          </tr>
+        </tbody>
       </table>
     </section>
 
@@ -375,52 +474,30 @@
       <h2>適合誰</h2>
       <div class="step-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="step-item">
-          <h4>想入門但不知從何開始</h4>
-          <p>你不需要先懂技術——你需要一個有系統的起點和陪著你的人</p>
+          <h4>初入 AI 門檻的學習者</h4>
+          <p>不需要寫代碼的底子，我們手把手帶您配好 OpenRouter、Obsidian 並部署第一個 TG 秘書。</p>
         </div>
         <div class="step-item">
-          <h4>有專業想做成課程的人</h4>
-          <p>你懂你的領域，我們教你怎麼用 AI 把知識規模化</p>
+          <h4>希望將專業規模化的創作者</h4>
+          <p>你有專業知識，我們教你用 AI 團隊來幫你生產教材、文案與維護系統，放大產能。</p>
         </div>
         <div class="step-item">
-          <h4>已經在用 AI 但卡關的人</h4>
-          <p>一個人做卡住了，你需要的是協作思維，不是更多工具教學</p>
+          <h4>卡在 AI 效率瓶頸的開發者</h4>
+          <p>用 ChatGPT 聊長了就失憶？我們教你一任務一對話的解耦心法與 CLAUDE.md 的治理守則。</p>
         </div>
         <div class="step-item">
-          <h4>擔心被 AI 時代拋下的人</h4>
-          <p>工具會一直變，但學會怎麼跟 AI 協作，你不會掉隊</p>
+          <h4>尋求數位轉型的企業主</h4>
+          <p>想降低營運成本？這門課是將您的業務流程自動化、建立內部 AI 軟體產線的最快捷徑。</p>
         </div>
       </div>
-    </section>
-
-    <!-- 你將學到什麼 -->
-    <section>
-      <h2>跟我們學，你會得到</h2>
-      <div class="flow-row">
-        <div class="flow-step">
-          <div class="text">核心協作思維</div>
-          <p class="desc">不是背指令，是學會怎麼跟 AI 對話、拆解任務、編排流程</p>
-        </div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step">
-          <div class="text">全能的 AI 教練</div>
-          <p class="desc">裝一個陪著你成長的 agent，知道你的進度，在你卡住時<br>推你一把</p>
-        </div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step">
-          <div class="text">持續進化的系統</div>
-          <p class="desc">核心思維內化後，工具進步不是威脅——是更大的助力</p>
-        </div>
-      </div>
-      <p class="meta" style="margin-top: 1.5em;">從入門到協作，從協作到內化——你的 AI 教練陪著你走。</p>
     </section>
 
     <!-- 結尾 -->
     <section data-background-color="#ede8dc">
       <div class="end-slide">
-        <div class="big" style="color: #2b2825;">不是教你用一個工具</div>
-        <p class="tagline" style="color: #6b665e;">是陪你建立一整套跟 AI 協作的核心思維</p>
-        <p style="font-size: 0.5em; color: var(--accent2); margin-top: 2em; letter-spacing: 0.05em;">Jacob Business OS · 讓 AI 陪著你一起成長</p>
+        <div class="big" style="color: #2b2825; font-size: 1.8em;">不是教你用一個工具</div>
+        <p class="tagline" style="color: #6b665e; font-size: 0.6em;">是陪你建立一整套多智慧體協作的 AI 原生思維</p>
+        <p style="font-size: 0.55em; color: var(--accent2); margin-top: 1.5em; letter-spacing: 0.05em;">Jacob Business OS · 讓 AI 特助軍團陪著你一起成長</p>
       </div>
     </section>
 
@@ -429,15 +506,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
+  var isMobile = window.innerWidth <= 768;
   Reveal.initialize({
     hash: true,
     center: true,
     progress: true,
     controls: true,
     transition: 'slide',
-    width: 1280,
-    height: 720,
-    margin: 0.1,
+    width: isMobile ? window.innerWidth : 1280,
+    height: isMobile ? window.innerHeight : 720,
+    margin: isMobile ? 0.02 : 0.1,
   });
 </script>
 </body>

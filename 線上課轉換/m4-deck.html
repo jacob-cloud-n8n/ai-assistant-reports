@@ -1,0 +1,335 @@
+<!doctype html>
+<!--
+  課程簡報模組 4 (m4-deck.html) — reveal.js 5.1.0
+  ─────────────────────────────────────────────────────────
+  燕麥米底、深藍、麥芽金配色，包含雙主題 ?theme=dark 載入邏輯。
+  無 Arial 字體，無紫粉漸變色碼。
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>模組 4：多 Agent 協作與個人時間審計系統 — 線上課程簡報</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== 設計 token 來源 ===== */
+    :root {
+      --bg-main: #f4f1ea;       /* 燕麥米背景 */
+      --text-main: #1a2b49;     /* 沉穩科技深藍 */
+      --text-sec: #4a5d78;      /* 次要文字 深灰藍 */
+      --accent: #1a2b49;        /* 主色 科技深藍 */
+      --accent2: #c08a3e;       /* 點綴 麥芽金/焦糖 */
+      --success: #3f8a4f;       /* 柔和綠 */
+      --warn: #d4a373;          /* 麥芽金 */
+      --card-bg: #ffffff;
+      --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+      --card-border: 1px solid rgba(26, 43, 73, 0.06);
+    }
+
+    /* 深色主題 (?theme=dark) */
+    :root.theme-dark {
+      --bg-main: #0b0f19;       /* 極深藍灰背景 */
+      --text-main: #f3f4f6;     /* 亮灰白文字 */
+      --text-sec: #9ca3af;      /* 次要文字 淺灰 */
+      --accent: #38bdf8;        /* 主色 天空藍 */
+      --accent2: #fbbf24;       /* 點綴 琥珀金 */
+      --success: #34d399;       /* 柔和綠 */
+      --warn: #fbbf24;          /* 橘黃 */
+      --card-bg: #111827;       /* 深灰卡片底色 */
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --card-border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
+    }
+    .reveal h1 { font-size: 2em; color: var(--accent); }
+    .reveal h2 { font-size: 1.4em; color: var(--accent); }
+    .reveal h3 { font-size: 1.1em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .controls { color: var(--accent); }
+    .reveal .slide-number { color: var(--text-sec); background-color: transparent; }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block; background: var(--accent2); color: #fff;
+      padding: 6px 18px; border-radius: 20px; font-size: 0.6em;
+      letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+    .checklist { list-style: none; text-align: left; font-size: 0.6em; }
+    .checklist li { padding: 10px 0; border-bottom: 1px solid rgba(26,43,73,0.06); display: flex; align-items: center; gap: 12px; color: var(--text-main); }
+    .checklist li::before { content: "\2610"; font-size: 1.2em; color: var(--accent); }
+    .checklist li.done::before { content: "\2611"; color: var(--success); }
+
+    .points { list-style: none; text-align: left; font-size: 0.62em; margin-top: 0.6em; }
+    .points li { padding: 12px 0; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); line-height: 1.5; }
+    .points li strong { color: var(--accent2); }
+
+    .step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.55em; margin-top: 1em; }
+    .step-card {
+      background: var(--card-bg); border-radius: 16px; padding: 20px;
+      border-top: 4px solid var(--accent); box-shadow: var(--card-shadow);
+      border-left: var(--card-border); border-right: var(--card-border); border-bottom: var(--card-border);
+      text-align: left;
+    }
+    .step-card h4 { font-size: 1.1em; margin-bottom: 8px; color: var(--accent); }
+    .step-card p { color: var(--text-sec); line-height: 1.6; }
+
+    .code-block {
+      background: #2d3748; border-radius: 8px; padding: 16px 20px;
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.5em;
+      color: #e2e8f0; text-align: left; margin: 1em 0;
+    }
+    .code-block .comment { color: #a0aec0; }
+    .code-block .cmd { color: #63b3ed; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
+    .compare-table th { background: rgba(26,43,73,0.08); color: var(--accent); padding: 12px; text-align: left; }
+    .compare-table td { padding: 10px 12px; border-bottom: 1px solid rgba(26,43,73,0.06); color: var(--text-main); }
+
+    .tip-box {
+      background: rgba(192,138,62,0.06); border-left: 4px solid var(--accent2);
+      border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em;
+      font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5;
+    }
+
+    .prompt-card {
+      background: var(--card-bg); border-radius: 14px; padding: 20px 24px;
+      box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2);
+      text-align: left; margin: 0.8em auto; max-width: 80%;
+    }
+    .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+    .prompt-card .spell {
+      font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em;
+      color: var(--text-main); margin-top: 8px; line-height: 1.6;
+    }
+
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 2.2em; margin-bottom: 0.2em; color: var(--accent); }
+    .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
+
+    .highlight { color: var(--accent2); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 封面 -->
+      <section class="title-slide">
+        <div class="tag">模組 4</div>
+        <h1>多 Agent 協作與個人時間審計系統</h1>
+        <p class="subtitle">從多智能體分工到柳比歇夫時間自動化審計實戰</p>
+        <p class="author">AI 助理運用與實戰課程 · 線上自學版</p>
+      </section>
+
+      <!-- 學習路徑 -->
+      <section>
+        <h2>今天你會學到</h2>
+        <ul class="checklist">
+          <li>第一單元：多 Agent 分工與角色職責 (AG, Codex, OpenCode, Hermes 等)</li>
+          <li>第二單元：任務狀態機運作與機器可判定驗收標準 (DoD) 原則</li>
+          <li>第三單元：本地自動化沙盒：n8n Docker-Compose 啟動與基礎操作</li>
+          <li>第四單元：時間審計系統實戰：從時間記錄到自動彙整</li>
+        </ul>
+      </section>
+
+      <!-- 第一單元：為什麼需要分工 -->
+      <section>
+        <h2>第一單元：多 Agent 分工與角色職責</h2>
+        <h3>多 Agent 團隊：為什麼需要分工？</h3>
+        <ul class="points">
+          <li class="fragment"><strong>防範模型能力瓶頸</strong>：沒有單一模型能完美做好所有事，分工能讓特定 Agent 專精特定任務。</li>
+          <li class="fragment"><strong>降低 Token 浪費</strong>：讓低成本的助理處理常規工作，高智商審查者進行最終把關。</li>
+          <li class="fragment"><strong>提高專案穩定度</strong>：透過角色物理與權限隔離，避免核心程式被不相干的 Prompt 意外破壞。</li>
+        </ul>
+      </section>
+
+      <!-- 第一單元：團隊角色職責對照 -->
+      <section>
+        <h2>AI 助理團隊成員與分工職責</h2>
+        <table class="compare-table" style="font-size: 0.45em;">
+          <thead>
+            <tr>
+              <th>Agent 角色</th>
+              <th>核心職責</th>
+              <th>允許動作</th>
+              <th>禁止動作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>AG (AntiGravity)</strong></td>
+              <td>架構設計、UI 拋光、統整提交</td>
+              <td>設計網頁、編譯 PDF、git commit/push 治理文件</td>
+              <td>大規模修改核心邏輯代碼</td>
+            </tr>
+            <tr>
+              <td><strong>Codex</strong></td>
+              <td>技術審查、測試把關、程式碼重構</td>
+              <td>代碼審查、合併 PR、直接修復 Bug 與重構</td>
+              <td>未跑測試即合併 PR 至 main 分支</td>
+            </tr>
+            <tr>
+              <td><strong>OpenCode / MiMo</strong></td>
+              <td>原型實作、自動部署與測試</td>
+              <td>實作功能代碼、本機測試、建立 PR 分支</td>
+              <td>直接 merge 至 main，裸部署生產環境</td>
+            </tr>
+            <tr>
+              <td><strong>Hermes (四兒)</strong></td>
+              <td>一線陪伴、客戶問答、文件整理</td>
+              <td>對話陪伴、更新 Notion 與 docs/、發送報告</td>
+              <td>存取核心代碼、進行生產部署</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 第二單元：任務狀態機運作 -->
+      <section>
+        <h2>第二單元：任務狀態機與 DoD</h2>
+        <h3>任務生命週期：黃金狀態機</h3>
+        <div class="code-block">
+          <span class="comment"># 任務流轉狀態</span><br />
+          <span class="cmd">[📋 已指派] ➔ [/] 執行中 ➔ [📤 移交] (Codex 審核) ➔ [✅ 完成]</span>
+        </div>
+        <ul class="points">
+          <li class="fragment"><strong>一人一任務</strong>：任務在同一時間只能有一個持有者，防止協作衝突。</li>
+          <li class="fragment"><strong>去中心化任務紀錄</strong>：每個任務獨立建檔於 <code>.tasks/&lt;task-id&gt;.md</code>，拒絕共用單一文件。</li>
+        </ul>
+      </section>
+
+      <!-- 第二單元：機器可判定驗收標準 -->
+      <section>
+        <h2>機器可判定驗收標準 (DoD)</h2>
+        <p style="font-size:0.55em; color:var(--text-sec);">Definition of Done (DoD) 必須是機器可判定的硬指標，拒絕含糊</p>
+        <ul class="checklist">
+          <li>專案編譯 (Build) 成功，無任何嚴重錯誤與 Lint 警報</li>
+          <li>Unit Test 與 E2E 測試 100% 通過，無 regression</li>
+          <li>指定網頁 URL HTTP 狀態碼為 200 (運作正常)</li>
+          <li><code>verify-links.sh</code> 執行無任何斷鏈與 404</li>
+          <li class="done"><strong>最終審查關卡</strong>：Codex Review 標記為 accepted</li>
+        </ul>
+      </section>
+
+      <!-- 第三單元：本地 n8n -->
+      <section>
+        <h2>第三單元：本地自動化沙盒 n8n</h2>
+        <h3>為什麼在本地使用 Docker 啟動 n8n？</h3>
+        <ul class="points">
+          <li class="fragment"><strong>無限制使用</strong>：雲端免費版有執行次數限制，本地 Docker 則是 100% 免費且無限次運行。</li>
+          <li class="fragment"><strong>資料隱私安全</strong>：工作流與資料庫均儲存在本地硬碟，保護個人與商業隱私不外洩。</li>
+          <li class="fragment"><strong>一鍵啟動</strong>：透過 docker-compose.yml 配置文件，一行指令拉起 n8n 與 PostgreSQL。</li>
+        </ul>
+      </section>
+
+      <!-- 第三單元：Docker 啟動步驟 -->
+      <section>
+        <h2>本地 n8n 啟動與操作</h2>
+        <div class="code-block">
+          <span class="comment"># 1. 電腦安裝並開啟 Docker Desktop</span><br />
+          <span class="comment"># 2. 來到工作目錄，在終端機輸入：</span><br />
+          <span class="cmd">docker compose up -d</span><br /><br />
+          <span class="comment"># 3. 檢查容器是否正常啟動：</span><br />
+          <span class="cmd">docker compose ps</span><br /><br />
+          <span class="comment"># 4. 瀏覽器造訪本地畫布，完成初始帳號註冊：</span><br />
+          <span class="cmd">http://localhost:5678</span>
+        </div>
+        <div class="tip-box">
+          💡 <strong>參數說明</strong>：<code>-d</code> 參數代表背景執行 (Detached mode)。啟動後，即使關閉終端機，n8n 也會繼續永久運作。
+        </div>
+      </section>
+
+      <!-- 錄影佔位頁 1 -->
+      <section class="end-slide" data-background-color="#1a2b49" style="color: #fff;">
+        <p class="big" style="color: var(--accent2);">🎥 錄影實操演示 1</p>
+        <h2 style="color: #fff;">n8n Docker 本地容器啟動與連線實操</h2>
+        <p class="tagline" style="color: rgba(255,255,255,0.7);">預估時長：3 分鐘 | 檔名：<code>n8n-docker-setup.mp4</code></p>
+        <ul class="checklist" style="max-width:80%; margin: 1em auto 0 auto; color: #fff;">
+          <li class="done" style="color: #fff;">在編輯器展示 docker-compose.yml 檔案結構</li>
+          <li class="done" style="color: #fff;">在終端機輸入 docker compose up -d 啟動本地 n8n</li>
+          <li class="done" style="color: #fff;">造訪 localhost:5678 完成管理者註冊，展示空工作流畫布</li>
+        </ul>
+      </section>
+
+      <!-- 第四單元：時間審計系統實戰 -->
+      <section>
+        <h2>第四單元：時間審計系統實戰</h2>
+        <h3>什麼是柳比歇夫時間統計法？</h3>
+        <ul class="points">
+          <li class="fragment"><strong>以數據對抗主觀偏見</strong>：對自己「純專注時間」(Net Time) 進行無情、誠實的紀錄。</li>
+          <li class="fragment"><strong>定量 AI 運算消耗</strong>：記錄 AI 助理在 Rate Limit 或死鎖 Debug 重試花費的時間與 Token，精算真實成本。</li>
+          <li class="fragment"><strong>數據驅動報價決策</strong>：分析「主業開發」、「輔業維護」及「時間垃圾」，作為未來估時的科學指標。</li>
+        </ul>
+      </section>
+
+      <!-- 第四單元：n8n 工作流 -->
+      <section>
+        <h2>時間記帳自動化數據流</h2>
+        <div class="step-grid">
+          <div class="step-card">
+            <h4>1. Webhook 觸發器</h4>
+            <p>透過手機快捷指令或 Telegram Bot 發送時間記錄，例如：「閱讀 AI 書籍 45m #學習」。</p>
+          </div>
+          <div class="step-card">
+            <h4>2. AI 分類與 Notion 寫入</h4>
+            <p>n8n 攔截訊息並呼叫 AI 拆解出：時間 (45)，內容 (閱讀 AI 書籍) 與標籤 (學習)，並自動寫入 Notion 資料庫中。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 錄影佔位頁 2 -->
+      <section class="end-slide" data-background-color="#1a2b49" style="color: #fff;">
+        <p class="big" style="color: var(--accent2);">🎥 錄影實操演示 2</p>
+        <h2 style="color: #fff;">辦理柳比歇夫時間記錄與 n8n 自動化審計實操</h2>
+        <p class="tagline" style="color: rgba(255,255,255,0.7);">預估時長：5 分鐘 | 檔名：<code>lyubishchev-n8n-notion.mp4</code></p>
+        <ul class="checklist" style="max-width:80%; margin: 1em auto 0 auto; color: #fff;">
+          <li class="done" style="color: #fff;">在 n8n 工作流畫布中匯入隨課附贈的 lyubishchev-workflow.json</li>
+          <li class="done" style="color: #fff;">設定 Webhook 接收 URL 並配置 Notion 連接金鑰與 DB ID</li>
+          <li class="done" style="color: #fff;">模擬發送一筆簡訊，展示 Notion 資料庫自動解析並即時寫入</li>
+          <li class="done" style="color: #fff;">啟用右上角 Active 開關，實現背景永久時間記帳</li>
+        </ul>
+      </section>
+
+      <!-- 總結與回家功課 -->
+      <section class="end-slide">
+        <h2>今天你帶走了什麼？</h2>
+        <ul class="checklist" style="max-width:70%; margin:0 auto;">
+          <li class="done">學會了：多 Agent 協作分工與 DoD 驗收原則</li>
+          <li class="done">學會了：使用 Docker Compose 本地啟動 n8n 自動化沙盒</li>
+          <li class="done">學會了：柳比歇夫時間統計自動化工作流的匯入與 Notion 寫入</li>
+          <li><strong>回家功課</strong>：下載 <code>docker-compose.yml</code> 啟動本地 n8n，匯入 <code>lyubishchev-workflow.json</code> 完成一次記帳測試！</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    // 檢查 URL 參數是否指定深色主題 (?theme=dark)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('theme') === 'dark') {
+      document.documentElement.classList.add('theme-dark');
+    }
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade' });
+  </script>
+</body>
+</html>
