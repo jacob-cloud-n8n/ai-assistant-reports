@@ -185,52 +185,1083 @@
 
 <div class="reveal">
   <div class="slides">
-
     <!-- ==================== 第 11 堂 ==================== -->
 
-    <!-- M10 封面 -->
     <section data-background-color="#ede8dc">
       <div class="title-slide">
         <div class="tag">第 11 堂課</div>
         <h1>踩坑紀錄與防呆</h1>
-        <p class="subtitle">前人血淚結晶：防範 API 外洩、上下文塌陷、自動化誤觸發與止損機制</p>
+        <p class="subtitle">這些是真實發生過的事故 · 讀完你就知道「哪些事不能做」</p>
         <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
       </div>
     </section>
 
-    <!-- M10-2 常見踩坑 -->
     <section>
       <div class="canvas">
-        <div class="kicker"><span class="en">ACCIDENTS</span><span class="zh">常見事故</span></div>
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
         <div class="head">
-          <h2>營運 AI 團隊必知的六大深坑</h2>
-          <p class="sub">這些都是真實發生過的事故，提前了解，能幫您省下可觀的額度與無形的時間成本</p>
+          <h2>別人的学费，你可以免交</h2>
+          <p class="sub">第 11 堂課 · 頁面 2</p>
         </div>
-        <div class="case-grid" style="margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
-          <div class="case-item">
-            <h4>1. Token 金鑰外洩</h4>
-            <p>API Key 誤傳到 Github 公開倉庫，一小時被盜刷 $50 美元。</p>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 每一個踩坑案例，都是真金白銀換來的教訓</p>
+<p style="margin-top: 8px;">· 學别人踩过的坑 = 省自己的時間和錢</p>
+<p style="margin-top: 8px;">· 今天的目標：認識六大常見踩坑，學會對應解法</p>
           </div>
-          <div class="case-item">
-            <h4>2. 長對話變笨 (塌陷)</h4>
-            <p>歷史對話過長，超出 Context 限制，導致 Agent 邏輯錯亂、忘記規則。</p>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
           </div>
-          <div class="case-item">
-            <h4>3. 自動化誤觸發</h4>
-            <p>未對測試環境隔離，測試自動化流程時，在 production 環境觸發了真動作。</p>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 2</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>API Key 被偷了</h2>
+          <p class="sub">第 11 堂課 · 頁面 3</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **發生什麼**：API Key 不小心貼到公開地方（GitHub、論壇、截圖）</p>
+<p style="margin-top: 8px;">· **後果**：別人用你的 Key 燒你的額度（可能一夜花光）</p>
+<p style="margin-top: 8px;">· **解法**：立刻廢棄舊 Key → 產生新 Key → 檢查用量有無異常</p>
+<p style="margin-top: 8px;">· **預防**：`.gitignore` 排除 `.env`、收工必掃 `git diff`</p>
           </div>
-          <div class="case-item">
-            <h4>4. 同 Bug 重複死鎖燒錢</h4>
-            <p>Agent 在同一個 bug 上因重複 debug 陷入無限循環，燒乾 API 額度。</p>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
           </div>
-          <div class="case-item">
-            <h4>5. 部署到錯誤專案</h4>
-            <p>從錯誤的目錄跑部署， deploy 到了不該 deploy 的正式環境專案。</p>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 3</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>上下文塌陷</h2>
+          <p class="sub">第 11 堂課 · 頁面 4</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **發生什麼**：對話太長，AI 開始忘記前面說過的事</p>
+<p style="margin-top: 8px;">· **後果**：回答矛盾、遺漏重要資訊、品質下降</p>
+<p style="margin-top: 8px;">· **解法**：壓縮寫回（把重點寫到檔案）→ 開新對話</p>
+<p style="margin-top: 8px;">· **預防**：重要決策立刻寫入任務檔，不要只存在對話裡</p>
           </div>
-          <div class="case-item">
-            <h4>6. 制度自己違反自己</h4>
-            <p>制定了規則但自己沒遵守（如說好不 git add . 但還是手動加了）。</p>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
           </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 4</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>測試搞到 production</h2>
+          <p class="sub">第 11 堂課 · 頁面 5</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **發生什麼**：在 production 環境測試自動化流程，結果觸發了真動作</p>
+<p style="margin-top: 8px;">· **後果**：自動發送了訊息、修改了資料、搞亂了環境</p>
+<p style="margin-top: 8px;">· **解法**：測試用獨立環境、上線前負責人必須拍板</p>
+<p style="margin-top: 8px;">· **預防**：測試環境和 production 完全隔離</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 5</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>燒額度的無底洞</h2>
+          <p class="sub">第 11 堂課 · 頁面 6</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **發生什麼**：同一個 bug 換了三種方法還是修不好</p>
+<p style="margin-top: 8px;">· **後果**：燒了大量 API 額度，問題還沒解決</p>
+<p style="margin-top: 8px;">· **解法**：凍結——記錄失敗軌跡，等 Jacob 決策</p>
+<p style="margin-top: 8px;">· **預防**：單次派工 2 輪停手、累計 3 次凍結</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 6</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>搞混環境</h2>
+          <p class="sub">第 11 堂課 · 頁面 7</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **發生什麼**：從錯誤的目錄跑部署腳本，deploy 到了不該 deploy 的專案</p>
+<p style="margin-top: 8px;">· **後果**：覆蓋了 production 內容、搞亂了其他專案</p>
+<p style="margin-top: 8px;">· **解法**：確認目錄、用腳本鎖定專案名稱</p>
+<p style="margin-top: 8px;">· **預防**：部署前 double-check 專案 ID、用 `--dry-run` 先跑一次</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 7</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>自律失效</h2>
+          <p class="sub">第 11 堂課 · 頁面 8</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **發生什麼**：制定了規則但自己沒遵守（例如說好不 `git add .` 但還是加了）</p>
+<p style="margin-top: 8px;">· **後果**：敏感資料被 commit、流程失控</p>
+<p style="margin-top: 8px;">· **解法**：把規則寫成腳本自動檢查（例如 pre-commit hook）</p>
+<p style="margin-top: 8px;">· **預防**：能自動化的規則不要靠人記</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 8</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PITFALL</span><span class="zh">踩坑</span></div>
+        <div class="head">
+          <h2>六大踩坑 → 六個解法</h2>
+          <p class="sub">第 11 堂課 · 頁面 9</p>
+        </div>
+        
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 9</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">COMPARISON</span><span class="zh">對比</span></div>
+        <div class="head">
+          <h2>情境案例：常見踩坑重現（情境示範，非真實事故）</h2>
+          <p class="sub">第 11 堂課 · 頁面 10</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 案例 1：API Key 貼到 GitHub → 短時間內被刷了 $50 → 廢 Key + 重新設定</p>
+<p style="margin-top: 8px;">· 案例 2：n8n 自動化誤觸發 → 群發了 200 封測試郵件 → 關閉自動化 + 道歉</p>
+<p style="margin-top: 8px;">· 案例 3：同一個 bug 累計試到第 3 次仍失敗 → 觸發止損凍結，記錄軌跡後換方法才解決</p>
+<p style="margin-top: 8px;">· 教訓：每一個坑都有跡可循，問題是你要不要學</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 10</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>一分鐘損失 $50 的故事（情境示範）</h2>
+          <p class="sub">第 11 堂課 · 頁面 10B</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **時間線**：14:00 貼 Key 到 GitHub → 14:01 被爬蟲掃到 → 14:30 已被刷 $50</p>
+<p style="margin-top: 8px;">· **怎麼發現的**：收到 API 用量異常警報</p>
+<p style="margin-top: 8px;">· **怎麼處理**：廢棄舊 Key → 產生新 Key → 檢查 Git 歷史 → 確認沒有其他洩漏</p>
+<p style="margin-top: 8px;">· **花了多少時間修**：30 分鐘（但 $50 已經回不來）——教訓：預防永遠比事後修復划算</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 10B</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PITFALL</span><span class="zh">踩坑</span></div>
+        <div class="head">
+          <h2>你的防呆 checklist</h2>
+          <p class="sub">第 11 堂課 · 頁面 11</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· [ ] `.env` 在 `.gitignore` 裡嗎？</p>
+<p style="margin-top: 8px;">· [ ] 收工時掃過 `git diff` 了嗎？</p>
+<p style="margin-top: 8px;">· [ ] 測試環境與 production 隔離、部署前確認過專案 ID 了嗎？</p>
+<p style="margin-top: 8px;">· [ ] 同一個 bug 有設止損線嗎？</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 11</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PITFALL</span><span class="zh">踩坑</span></div>
+        <div class="head">
+          <h2>六大踩坑 → 三道防線</h2>
+          <p class="sub">第 11 堂課 · 頁面 11B</p>
+        </div>
+        
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 11B</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">實作</span></div>
+        <div class="head">
+          <h2>動手做時間</h2>
+          <p class="sub">第 11 堂課 · 頁面 12</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 走讀踩坑清單</p>
+<p style="margin-top: 8px;">· 標記你遇過的（或可能遇過的）</p>
+<p style="margin-top: 8px;">· 記錄你的解法</p>
+<p style="margin-top: 8px;">· 為你的專案建立防呆清單，學員帶走：`事故案例集v1.md`、`止損三次卡.md`</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 12</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SUMMARY</span><span class="zh">總結</span></div>
+        <div class="head">
+          <h2>M10 小結——防呆的三個原則</h2>
+          <p class="sub">第 11 堂課 · 頁面 13</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **預防勝於治療**：能自動化的規則不要靠人記</p>
+<p style="margin-top: 8px;">· **止損要快**：同一個坑不踩三次</p>
+<p style="margin-top: 8px;">· **記錄要詳**：失敗軌跡是下次成功的門票</p>
+<p style="margin-top: 8px;">· 下堂課：成本優化——你的 AI 要花多少錢？</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 11 堂 · 頁 13</span></div>
+      </div>
+    </section>
+
+
+    <!-- ==================== 第 12 堂 ==================== -->
+
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 12 堂課</div>
+        <h1>成本優化術</h1>
+        <p class="subtitle">今天你會學省錢策略 · 試算你的 AI 月費</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">COST</span><span class="zh">成本</span></div>
+        <div class="head">
+          <h2>成本結構拆解</h2>
+          <p class="sub">第 12 堂課 · 頁面 2</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **工具費用**：Hermes 免費 / Codex 有限免費 / n8n 自架免費</p>
+<p style="margin-top: 8px;">· **API 費用**：按 Token 計費（最重要的成本來源）</p>
+<p style="margin-top: 8px;">· **部署費用**：Zeabur 免費額度 / 自架伺服器月費</p>
+<p style="margin-top: 8px;">· **隱形成本**：你的時間（這才是最貴的）</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 2</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">DEFINITION</span><span class="zh">定義</span></div>
+        <div class="head">
+          <h2>Token 是什麼？為什麼要省？</h2>
+          <p class="sub">第 12 堂課 · 頁面 3</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· Token ≈ 文字片段（大約 1 個中文字 = 1-2 Token）</p>
+<p style="margin-top: 8px;">· 模型越強（opus > sonnet > haiku），每個 Token 越貴</p>
+<p style="margin-top: 8px;">· 一場對話可能花幾百到幾千 Token</p>
+<p style="margin-top: 8px;">· 一個月下來，可能花幾十到幾百美元</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 3</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>零 Token 的做法</h2>
+          <p class="sub">第 12 堂課 · 頁面 4</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 很多檢查不需要 AI：grep 搜尋、curl 測試、build 通過</p>
+<p style="margin-top: 8px;">· 把這些交給腳本（Shell/Python），不花任何 Token</p>
+<p style="margin-top: 8px;">· AI 只做需要「判斷」的事：內容品質、邏輯正確性</p>
+<p style="margin-top: 8px;">· 原則：**能用腳本做的，不要用 AI**</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 4</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>B 級做粗工，S 級做判斷</h2>
+          <p class="sub">第 12 堂課 · 頁面 5</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **B 級（haiku/便宜模型）**：格式轉換、內容填充、初步整理</p>
+<p style="margin-top: 8px;">· **S 級（opus/聰明模型）**：複雜判斷、架構決策、品質驗收</p>
+<p style="margin-top: 8px;">· 用 haiku 做 10 件事的錢，可能只夠 opus 做 1 件事</p>
+<p style="margin-top: 8px;">· 原則：**先用便宜模型試，不行再升級**</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 5</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>從 4 分鐘到 1 分鐘</h2>
+          <p class="sub">第 12 堂課 · 頁面 6</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 實測故事：原本開工流程要 4 分鐘（讀一堆檔案、跑同步、等回應）</p>
+<p style="margin-top: 8px;">· 優化後：1 分鐘完成（只讀必要的、跳過耗時同步、先掌握全局再深入）</p>
+<p style="margin-top: 8px;">· 節省的不是時間，是每天累積的 Token</p>
+<p style="margin-top: 8px;">· 原則：**每次對話都要有意義，不要浪費在重複讀取**</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 6</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>用更便宜的模型</h2>
+          <p class="sub">第 12 堂課 · 頁面 7</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· OpenRouter 是模型聚合平台，提供多種便宜模型</p>
+<p style="margin-top: 8px;">· 適合場景：大量粗加工、格式轉換、初步篩選</p>
+<p style="margin-top: 8px;">· 價格：比直接用 Claude/OpenAI 便宜不少，確切幅度視模型與方案而定</p>
+<p style="margin-top: 8px;">· 限制：品質可能不穩定，重要任務還是用主流模型</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 7</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>不花錢的做法</h2>
+          <p class="sub">第 12 堂課 · 頁面 8</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· Ollama 讓你在自己電腦上跑 AI 模型（完全免費）</p>
+<p style="margin-top: 8px;">· 適合場景：隱私敏感、大量測試、學習用途</p>
+<p style="margin-top: 8px;">· 限制：需要好電腦（至少 16GB RAM）、品質不如雲端模型</p>
+<p style="margin-top: 8px;">· 原則：**能本地跑的不要上雲端**</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 8</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>性價比之王</h2>
+          <p class="sub">第 12 堂課 · 頁面 9</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· DeepSeek 是中國的 AI 模型，價格極低</p>
+<p style="margin-top: 8px;">· 適合場景：大量中文處理、預算極限</p>
+<p style="margin-top: 8px;">· 價格：比 Claude 便宜非常多，具體看官網最新報價</p>
+<p style="margin-top: 8px;">· 限制：中文以外的能力較弱、偶爾不穩定</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 9</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">STRATEGY</span><span class="zh">策略</span></div>
+        <div class="head">
+          <h2>六大策略一覽</h2>
+          <p class="sub">第 12 堂課 · 頁面 10</p>
+        </div>
+        
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 10</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>你的 AI 要花多少錢？</h2>
+          <p class="sub">第 12 堂課 · 頁面 11</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 步驟 1：估計你每天跟 AI 對話幾次</p>
+<p style="margin-top: 8px;">· 步驟 2：每次對話平均多少 Token</p>
+<p style="margin-top: 8px;">· 步驟 3：乘以 30 天，查模型定價表算出月費</p>
+<p style="margin-top: 8px;">· 範例：每天 10 次 × 2000 Token × 30 天 × $0.015/1K = $9/月</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 11</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>你可能花多少？</h2>
+          <p class="sub">第 12 堂課 · 頁面 11B</p>
+        </div>
+        
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 11B</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">實作</span></div>
+        <div class="head">
+          <h2>動手做時間</h2>
+          <p class="sub">第 12 堂課 · 頁面 12</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 計算你的預期用量</p>
+<p style="margin-top: 8px;">· 找出最省錢的方案</p>
+<p style="margin-top: 8px;">· 制定你的成本優化策略</p>
+<p style="margin-top: 8px;">· 學員帶走：`省token分工卡.md`</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 12</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>怎麼選最省？</h2>
+          <p class="sub">第 12 堂課 · 頁面 12B</p>
+        </div>
+                <div style="margin-top: 24px; text-align: left; padding: 0 40px;">
+          <p style="font-size: 0.46em; color: var(--text-sec); margin: 6px 0;">· ```</p>
+<p style="font-size: 0.46em; color: var(--text-sec); margin: 6px 0;">· 你需要做什麼？</p>
+<p style="font-size: 0.46em; color: var(--text-sec); margin: 6px 0;">· ├─ 格式轉換/整理 → 用腳本（零 Token）</p>
+<p style="font-size: 0.46em; color: var(--text-sec); margin: 6px 0;">· ├─ 大量粗加工 → haiku + OpenRouter（低價位級距）</p>
+<p style="font-size: 0.46em; color: var(--text-sec); margin: 6px 0;">· ├─ 需要判斷 → sonnet（中價位級距）</p>
+<p style="font-size: 0.46em; color: var(--text-sec); margin: 6px 0;">· └─ 複雜決策 → opus（高價位級距）</p>
+<p style="font-size: 0.46em; color: var(--text-sec); margin: 6px 0;">· ```</p>
+                  <div class="code-block" style="font-size: 0.44em; line-height: 1.6; max-width: 90%; margin: 24px auto;">
+          <span class="comment"># 執行以下指令</span><br>
+          <span class="cmd">你需要做什麼？
+├─ 格式轉換/整理 → 用腳本（零 Token）
+├─ 大量粗加工 → haiku + OpenRouter（低價位級距）
+├─ 需要判斷 → sonnet（中價位級距）
+└─ 複雜決策 → opus（高價位級距）</span>
+        </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 12B</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SUMMARY</span><span class="zh">總結</span></div>
+        <div class="head">
+          <h2>M11 小結——省錢的三個原則</h2>
+          <p class="sub">第 12 堂課 · 頁面 13</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **分級使用**：能用腳本的不 AI，能用便宜模型的不選貴的</p>
+<p style="margin-top: 8px;">· **持續優化**：每次開工都在省 Token，累積效果驚人</p>
+<p style="margin-top: 8px;">· **量力而為**：預算決定你的起步，先解決最痛的點</p>
+<p style="margin-top: 8px;">· 下堂課：安全實踐——保護你的 AI 和資料</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 12 堂 · 頁 13</span></div>
+      </div>
+    </section>
+
+
+    <!-- ==================== 第 13 堂 ==================== -->
+
+    <section data-background-color="#ede8dc">
+      <div class="title-slide">
+        <div class="tag">第 13 堂課</div>
+        <h1>安全實踐</h1>
+        <p class="subtitle">今天你會完成安全檢查清單 · 保護你的 AI 助理和資料</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>AI 的便利，也是它的風險</h2>
+          <p class="sub">第 13 堂課 · 頁面 2</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· AI 能做的事越多，洩漏的風險越大</p>
+<p style="margin-top: 8px;">· 一次 API Key 外洩可能損失數百美元</p>
+<p style="margin-top: 8px;">· 一次資料洩漏可能影響你的客戶信任</p>
+<p style="margin-top: 8px;">· 安全不是限制，是保護你自己的投資</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 2</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>你可能遇到的風險</h2>
+          <p class="sub">第 13 堂課 · 頁面 3</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **API Key 外洩**：金鑰被盜用，帳單暴增</p>
+<p style="margin-top: 8px;">· **未授權存取**：別人用你的 AI Bot（燒你的額度）</p>
+<p style="margin-top: 8px;">· **資料洩漏**：敏感資訊被 AI 記住、被別人看到</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 3</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>金鑰被偷了怎麼辦</h2>
+          <p class="sub">第 13 堂課 · 頁面 4</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **怎麼發生的**：Key 貼到 GitHub/截圖/對話中、.env 沒加到 .gitignore</p>
+<p style="margin-top: 8px;">· **立刻做的事**：廢棄舊 Key → 產生新 Key → 檢查用量異常</p>
+<p style="margin-top: 8px;">· **預防**：.gitignore 排除 .env、收工掃描 git diff、不把 Key 貼到任何公開地方</p>
+<p style="margin-top: 8px;">· **工具**：trufflehog3 自動掃描 Git 歷史中的 Key</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 4</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>別人用你的 Bot</h2>
+          <p class="sub">第 13 堂課 · 頁面 5</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **怎麼發生的**：Bot Token 洩漏、白名單沒設、權限太大</p>
+<p style="margin-top: 8px;">· **立刻做的事**：重置 Token → 更新白名單 → 測試</p>
+<p style="margin-top: 8px;">· **預防**：設定白名單（`ALLOWED_USERS`）、限制 Bot 權限、定期更換 Token</p>
+<p style="margin-top: 8px;">· **原則**：最小權限——只給必要的權限</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 5</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>你的資料被看到了</h2>
+          <p class="sub">第 13 堂課 · 頁面 6</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **怎麼發生的**：敏感資料存到 AI 記憶、對話被記錄、資料沒加密</p>
+<p style="margin-top: 8px;">· **立刻做的事**：清理 AI 記憶、檢查分享設定</p>
+<p style="margin-top: 8px;">· **預防**：敏感資料不進 AI、.env 不進 Git、定期清理過期資料</p>
+<p style="margin-top: 8px;">· **原則**：資料隔離——敏感的跟不敏感的分開</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 6</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SECURITY</span><span class="zh">安全</span></div>
+        <div class="head">
+          <h2>防護措施</h2>
+          <p class="sub">第 13 堂課 · 頁面 7</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **第一道：白名單**——只有授權的人能用（`ALLOWED_USERS`）</p>
+<p style="margin-top: 8px;">· **第二道：金鑰過濾**——`.gitignore` + 敏感掃描（收工必做）</p>
+<p style="margin-top: 8px;">· **第三道：資料隔離**——`.env` 不進 Git、敏感資料不讓 AI 記</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 7</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>什麼不能進 Git</h2>
+          <p class="sub">第 13 堂課 · 頁面 8</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 必須排除：`.env`、`*.key`、`*.pem`、`credentials.json`、`node_modules/`</p>
+<p style="margin-top: 8px;">· 收工必掃：`git diff` 中搜尋 `api_key`、`token`、`secret`、`password`</p>
+<p style="margin-top: 8px;">· 絕不 `git add .`——只 stage 相關檔案</p>
+<p style="margin-top: 8px;">· 驗證：`git status` 確認 .env 不在清單中</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 8</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>限制誰能用你的 AI</h2>
+          <p class="sub">第 13 堂課 · 頁面 9</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· Hermes：`ALLOWED_USERS=你的TelegramID`</p>
+<p style="margin-top: 8px;">· Discord Bot：`DISCORD_ALLOWED_USERS=你的DiscordID`</p>
+<p style="margin-top: 8px;">· n8n：Webhook 加 API Key 驗證</p>
+<p style="margin-top: 8px;">· 測試：用另一個帳號試 → 被拒絕 = 設定成功</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 9</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>保護你的金鑰</h2>
+          <p class="sub">第 13 堂課 · 頁面 10</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **產生**：用最小權限（只給必要的 scope）</p>
+<p style="margin-top: 8px;">· **儲存**：存在 .env，不寫在 code 裡</p>
+<p style="margin-top: 8px;">· **使用**：不貼到截圖、不貼到對話、不貼到 GitHub</p>
+<p style="margin-top: 8px;">· **更換與監控**：建議每 3 個月換一次 Token，並定期查 API 用量，有異常立刻處理</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 10</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>定期清理過期資料</h2>
+          <p class="sub">第 13 堂課 · 頁面 11</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· AI 記憶：太久以前的可能不準確，定期清理</p>
+<p style="margin-top: 8px;">· 對話紀錄：敏感對話及時刪除</p>
+<p style="margin-top: 8px;">· 暫存檔：.tmp、.log 定期清理</p>
+<p style="margin-top: 8px;">· 備份：清理前先備份重要資料</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 11</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SECURITY</span><span class="zh">安全</span></div>
+        <div class="head">
+          <h2>你的安全 checklist</h2>
+          <p class="sub">第 13 堂課 · 頁面 12</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· [ ] `.env` 在 `.gitignore` 裡、收工時也掃過 `git diff` 了嗎？</p>
+<p style="margin-top: 8px;">· [ ] 白名單設定了、Token 也定期更換了嗎？</p>
+<p style="margin-top: 8px;">· [ ] 敏感資料有跟 AI 說「不要記」嗎？</p>
+<p style="margin-top: 8px;">· [ ] 測試環境跟 production 隔離了嗎？</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 12</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>遇到這些情況怎麼辦</h2>
+          <p class="sub">第 13 堂課 · 頁面 13</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **發現 Key 外洩**：立刻廢棄 → 產生新 Key → 檢查用量 → 通知相關人</p>
+<p style="margin-top: 8px;">· **Bot 被別人用了**：重置 Token → 更新白名單 → 檢查對話紀錄</p>
+<p style="margin-top: 8px;">· **資料被 AI 記住了**：要求 AI 清理記憶 → 未來避免敏感資料出現在對話中</p>
+<p style="margin-top: 8px;">· **不確定某件事安不安全**：當作不安全處理，先問再做</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 13</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">實作</span></div>
+        <div class="head">
+          <h2>動手做時間</h2>
+          <p class="sub">第 13 堂課 · 頁面 14</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 走讀安全清單</p>
+<p style="margin-top: 8px;">· 確認你的設定（.gitignore / 白名單 / Token）</p>
+<p style="margin-top: 8px;">· 建立你的安全 checklist</p>
+<p style="margin-top: 8px;">· 學員帶走：`安全檢查清單.md`</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 14</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SUMMARY</span><span class="zh">總結</span></div>
+        <div class="head">
+          <h2>M12 小結——安全的三個原則</h2>
+          <p class="sub">第 13 堂課 · 頁面 15</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **預防為主**：能自動化的安全規則不要靠人記</p>
+<p style="margin-top: 8px;">· **最小權限**：只給必要的權限、只記必要的資料</p>
+<p style="margin-top: 8px;">· **持續監控**：定期掃描、定期更換、定期清理</p>
+<p style="margin-top: 8px;">· 恭喜你！你已經完成所有課程——現在開始建立你的 AI 團隊</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 14px;">
+          * 註：這份在老師系統裡的真實版本：Jacob 的團隊有 trufflehog3 敏感掃描、`.gitignore` 鐵律、白名單機制，確保零洩漏。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 13 堂 · 頁 15</span></div>
+      </div>
+    </section>
+  </div>
         </div>
         <div class="src-footer"><span>Jacob Business OS</span><span>AI營運事故大綱</span></div>
       </div>

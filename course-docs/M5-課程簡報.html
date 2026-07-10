@@ -159,37 +159,413 @@
 
 <div class="reveal">
   <div class="slides">
+    <!-- ==================== 第 6 堂 ==================== -->
 
-    <!-- M5 封面 -->
     <section data-background-color="#ede8dc">
       <div class="title-slide">
         <div class="tag">第 6 堂課</div>
         <h1>實戰案例 — 隨身書僮</h1>
-        <p class="subtitle">打通 Discord Bot 核心關節，完成 Zeabur 雲端部署與持久化 Volumes 設定</p>
+        <p class="subtitle">今天你會建立自己的 Discord Bot · 完成 Zeabur 部署 · 學會防失憶 Volume 設定</p>
         <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
       </div>
     </section>
 
-    <!-- M5-2 為什麼選 Discord -->
     <section>
       <div class="canvas">
-        <div class="kicker"><span class="en">PLATFORM</span><span class="zh">平台優勢</span></div>
+        <div class="kicker"><span class="en">CAPABILITY</span><span class="zh">能力</span></div>
         <div class="head">
-          <h2>為什麼大流量團隊首選 Discord？</h2>
-          <p class="sub">相較於 Telegram，Discord 在安全邊界、協作效率與權限管理上具備跨代優勢</p>
+          <h2>Discord 的優勢</h2>
+          <p class="sub">第 6 堂課 · 頁面 2</p>
         </div>
-        <div class="duo" style="margin-top: 30px;">
+                <div class="duo" style="margin-top: 24px;">
           <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
-            <p>1. <span class="highlight">免綁手機門號</span>：Telegram 強制與個人門號綁定，且有嚴格的帳號數量限制；Discord 開通僅需電子信箱，極利於團隊部署多個功能助理。</p>
-            <p style="margin-top: 14px;">2. <span class="highlight">群組與頻道架構</span>：支援在單一伺服器下開設多個主題頻道（例如記帳頻道、代辦頻道、測試頻道），讓不同 Agent 在各自的頻道內各司其職，資訊不亂流。</p>
-            <p style="margin-top: 14px;">3. <span class="highlight">企業級權限管理</span>：可以對不同成員、Bot 設定極為精細的角色與白名單，確保敏感指令不被誤觸發。</p>
+            <p style="margin-top: 8px;">· 免手機門號（Telegram 需要）</p>
+<p style="margin-top: 8px;">· 可建私人伺服器（團隊协作）</p>
+<p style="margin-top: 8px;">· 適合多人使用（家庭教育）</p>
+<p style="margin-top: 8px;">· 豐富的權限管理（角色、頻道、存取控制）</p>
           </div>
-          <div class="value-panel" style="margin-top: 0; padding: 12px 16px;">
-            <div class="vp-title">Discord 四大核心優勢</div>
-            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-accent" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>多頻道分流</b><small>不同頻道執行不同任務，互不干涉</small></span></div>
-            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-accent2" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span><span><b>精細權限</b><small>角色白名單安全限制，阻斷未授權存取</small></span></div>
-            <div class="vp-row" style="padding: 6px 0;"><span class="icon-seat t-success" style="width:32px; height:32px;"><svg viewBox="0 0 24 24" style="width:16px; height:16px;"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 17v-5l4 2 4-2v5"/></svg></span><span><b>免門號認證</b><small>專案擴展無門號限制瓶頸</small></span></div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
           </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 2</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>不只是聊天機器人</h2>
+          <p class="sub">第 6 堂課 · 頁面 3</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 隨身書僮 = 有記憶的 AI 助理，24hr 在線</p>
+<p style="margin-top: 8px;">· 它會記得你說過的話、你的偏好、你的專案進度</p>
+<p style="margin-top: 8px;">· 你可以跟它對話、傳檔案、請它幫忙做事</p>
+<p style="margin-top: 8px;">· 真實案例：一位創業者用隨身書僮管理團隊、記帳、排程</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 3</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>四步完成</h2>
+          <p class="sub">第 6 堂課 · 頁面 4</p>
+        </div>
+        <div class="step-grid" style="margin-top: 24px;">
+          <div class="step-card">
+            <h4>1. 建立 Discord Bot（Developer Portal）</h4>
+            <p>Developer Portal</p>
+          </div>
+          <div class="step-card">
+            <h4>2. 設定 Zeabur 部署</h4>
+            <p>跟著步驟，確實執行以確保流程正確無誤。</p>
+          </div>
+          <div class="step-card">
+            <h4>3. 環境變數與 Volume 設定</h4>
+            <p>跟著步驟，確實執行以確保流程正確無誤。</p>
+          </div>
+          <div class="step-card">
+            <h4>4. 測試對話與記憶功能</h4>
+            <p>跟著步驟，確實執行以確保流程正確無誤。</p>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 4</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>Developer Portal 操作</h2>
+          <p class="sub">第 6 堂課 · 頁面 5</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 進 Discord Developer Portal（`discord.com/developers`）</p>
+<p style="margin-top: 8px;">· New Application → 取名（例如「我的書僮」）</p>
+<p style="margin-top: 8px;">· 左側選 Bot → Reset Token → 複製 Token</p>
+<p style="margin-top: 8px;">· 開啟 MESSAGE CONTENT INTENT（重要！不開會讀不到訊息）</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 5</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>OAuth2 邀請連結</h2>
+          <p class="sub">第 6 堂課 · 頁面 6</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 左側選 OAuth2 → URL Generator</p>
+<p style="margin-top: 8px;">· Scopes 勾選 `bot`</p>
+<p style="margin-top: 8px;">· Bot Permissions 勾選：Send Messages、Read Messages、Attach Files</p>
+<p style="margin-top: 8px;">· 複製連結 → 貼到瀏覽器 → 選擇你的伺服器 → 授權 → 看到 Bot 出現在清單 = 成功</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 6</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">DEPLOYMENT</span><span class="zh">部署</span></div>
+        <div class="head">
+          <h2>一鍵部署</h2>
+          <p class="sub">第 6 堂課 · 頁面 7</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 進 Zeabur → 匯入 Hermes 模板</p>
+<p style="margin-top: 8px;">· 填入 Discord Token（環境變數 `DISCORD_TOKEN`）</p>
+<p style="margin-top: 8px;">· 填入白名單（`DISCORD_ALLOWED_USERS`，你的 Discord User ID）</p>
+<p style="margin-top: 8px;">· 部署 → 等約 30 秒（依平台而定）→ 看到 "Bot is running"</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 7</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SECURITY</span><span class="zh">安全</span></div>
+        <div class="head">
+          <h2>怎麼拿到白名單 ID</h2>
+          <p class="sub">第 6 堂課 · 頁面 8</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 開啟 Discord 設定 → 進階 → 開啟「開發者模式」</p>
+<p style="margin-top: 8px;">· 回到伺服器 → 右鍵你的頭像 → 「複製使用者 ID」</p>
+<p style="margin-top: 8px;">· 貼到 `DISCORD_ALLOWED_USERS`</p>
+<p style="margin-top: 8px;">· 沒有這個 ID = Bot 不理你（安全機制）</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 8</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>防失憶</h2>
+          <p class="sub">第 6 堂課 · 頁面 9</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 問題：Zeabur 容器重啟會丟資料（記憶歸零）</p>
+<p style="margin-top: 8px;">· 解法：掛載 Volume 到 `/root/.hermes`</p>
+<p style="margin-top: 8px;">· 操作：Zeabur → 你的服務 → Volumes → 新增 → 路徑填 `/root/.hermes`</p>
+<p style="margin-top: 8px;">· 驗證：重啟服務 → 問 Bot「你記得我嗎？」→ 如果記得 = 成功</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 9</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>跟你的書僮說第一句話</h2>
+          <p class="sub">第 6 堂課 · 頁面 10</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 在 Discord 頻道 @你的 Bot 或私訊它</p>
+<p style="margin-top: 8px;">· 發送：「你好，我是你的主人」</p>
+<p style="margin-top: 8px;">· 它會回你問候</p>
+<p style="margin-top: 8px;">· 記憶測試：先說「我喜歡吃拉麵」→ 過一陣子問「我喜歡吃什麼？」</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 10</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>玩玩看</h2>
+          <p class="sub">第 6 堂課 · 頁面 11</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 問問題：「幫我整理今天的待辦事項」</p>
+<p style="margin-top: 8px;">· 傳圖片：上傳一張照片請它描述</p>
+<p style="margin-top: 8px;">· 傳檔案：上傳一份 PDF 請它摘要</p>
+<p style="margin-top: 8px;">· 記憶：告訴它「我的專案叫鮮果樂園」→ 過一陣子問「我的專案叫什麼？」</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 11</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SECURITY</span><span class="zh">安全</span></div>
+        <div class="head">
+          <h2>白名單 + 權限管理</h2>
+          <p class="sub">第 6 堂課 · 頁面 12</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **白名單**：只有 `ALLOWED_USERS` 裡的人能跟 Bot 對話</p>
+<p style="margin-top: 8px;">· **權限管理**：限制 Bot 能做什麼（例如不能刪除檔案）</p>
+<p style="margin-top: 8px;">· **Token 安全**：絕不把 Token 貼到公開地方</p>
+<p style="margin-top: 8px;">· **定期更換**：建議每 3 個月換一次 Token</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 12</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PITFALL</span><span class="zh">踩坑</span></div>
+        <div class="head">
+          <h2>卡住了怎麼辦</h2>
+          <p class="sub">第 6 堂課 · 頁面 13</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· Bot 不回話 → 檢查 Token、ALLOWED_USERS、MESSAGE CONTENT INTENT</p>
+<p style="margin-top: 8px;">· 記憶消失 → 檢查 Volume 有沒有掛載</p>
+<p style="margin-top: 8px;">· 回覆很慢 → 免費方案正常，升級可加速</p>
+<p style="margin-top: 8px;">· 錯誤訊息 → 貼到 Google 搜尋</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 13</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">LESSON</span><span class="zh">課程</span></div>
+        <div class="head">
+          <h2>讓書僮更有個性</h2>
+          <p class="sub">第 6 堂課 · 頁面 14</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 你可以告訴它「請用溫柔的語氣跟我說話」</p>
+<p style="margin-top: 8px;">· 設定它的專業領域：「你是我的財務助理，專門記帳」</p>
+<p style="margin-top: 8px;">· 建立工作流：「每天早上 9 點提醒我今天的行程」</p>
+<p style="margin-top: 8px;">· 進階玩法：串接 Notion、Google Calendar、n8n</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 14</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">PRACTICE</span><span class="zh">實作</span></div>
+        <div class="head">
+          <h2>動手做時間</h2>
+          <p class="sub">第 6 堂課 · 頁面 15</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· 建立 Discord Bot</p>
+<p style="margin-top: 8px;">· 完成 Zeabur 部署</p>
+<p style="margin-top: 8px;">· 設定 Volume 防失憶</p>
+<p style="margin-top: 8px;">· 測試對話與記憶功能，並收好學員帶走檔案：`Discord部署SOP.md`、`Telegram部署SOP.md`</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 15</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SUMMARY</span><span class="zh">總結</span></div>
+        <div class="head">
+          <h2>M5 小結——你的書僮上線了</h2>
+          <p class="sub">第 6 堂課 · 頁面 16</p>
+        </div>
+                <div class="duo" style="margin-top: 24px;">
+          <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
+            <p style="margin-top: 8px;">· **四步部署**：建 Bot → 邀請 → Zeabur → 測試</p>
+<p style="margin-top: 8px;">· **防失憶**：Volume 掛載到 `/root/.hermes`</p>
+<p style="margin-top: 8px;">· **安全**：白名單 + Token 保護</p>
+<p style="margin-top: 8px;">· 下堂課：從一個 Agent 到六人團隊——你準備好了嗎？</p>
+          </div>
+                    <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
+            <div class="vp-title">核心指引與驗收</div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>痛點解決</b><small>精準狙擊繁雜重複的工作流</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>品質驗收</b><small>DoD 機器化判定，做人不驗自己</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="8"/><path d="M12 2v20M2 12h20"/></svg></span><span><b>安全防線</b><small>Token 與個資嚴格把關不洩漏</small></span></div>
+          </div>
+        </div>
+        <div class="tip-box" style="margin-top: 14px;">
+          * 註：這份在老師系統裡的真實版本：Jacob 的團隊在 Zeabur 部署了 Hermes，支援 Telegram 和 Discord，用 Volume 防失憶，白名單防越權。
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>第 6 堂 · 頁 16</span></div>
+      </div>
+    </section>
+  </div>
         </div>
         <div class="src-footer"><span>Jacob Business OS</span><span>Discord 平台決策</span></div>
       </div>
