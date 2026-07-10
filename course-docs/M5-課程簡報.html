@@ -231,13 +231,13 @@
         </div>
         <div class="duo" style="margin-top: 30px; gap: 24px;">
           <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
-            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">❌ 裸容器重建 (無 Volume)</div>
+            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">[裸容器重建] (無 Volume)</div>
             <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
               <strong>致命痛點</strong>：Docker 容器是無狀態的。一旦您更新代碼、重啟服務，本地儲存的對話歷史、客戶記憶會被全部抹除。Agent 重開後會問「您是誰？」，工作資產徹底歸零。
             </div>
           </div>
           <div class="value-panel" style="flex: 1; border-top: 4px solid var(--success); margin-top: 0; padding: 20px;">
-            <div class="vp-title" style="font-size: 0.65em; color: var(--success); text-align: left; margin-bottom: 12px;">✅ 掛載 Persistent Volume</div>
+            <div class="vp-title" style="font-size: 0.65em; color: var(--success); text-align: left; margin-bottom: 12px;">[掛載 Persistent Volume]</div>
             <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
               <strong>正確做法</strong>：在 Zeabur 的 "Destinations / Volumes" 頁面中新增一個磁碟掛載，指定路徑為 <b>`/root/.hermes`</b>。這樣不論容器如何重啟重建，記憶文件依然完好無損。
             </div>
@@ -301,9 +301,26 @@
           </div>
         </div>
         <div class="tip-box" style="margin-top: 20px;">
-          * 註：這份在老師系統裡的真實版本 —— Jacob 在 Zeabur 部署的特助 Hermes 同時支援 Telegram 和 Discord 雙通道，在 Discord 端嚴格鎖定內部成員角色 ID。白名單外的人發送消息會自動觸發 Discord 書僮閘道警報並進行靜音處置。
+          * 註：這份在老師系統裡的真實版本 ── Jacob 在 Zeabur 部署的特助 Hermes 同時支援 Telegram 和 Discord 雙通道，在 Discord 端嚴格鎖定內部成員角色 ID。白名單外的人發送消息會自動觸發 Discord 書僮閘道警報並進行靜音處置。
         </div>
         <div class="src-footer"><span>Jacob Business OS</span><span>M5 實作帶走</span></div>
+      </div>
+    </section>
+
+    <!-- M5-7 今日小結 -->
+    <section>
+      <div class="canvas">
+        <div class="kicker"><span class="en">SUMMARY</span><span class="zh">今日小結</span></div>
+        <div class="head">
+          <h2>M5 小結 ── 您的書僮正式上線</h2>
+          <p class="sub">穩固個人隨身特助，是踏出 AI 團隊協作的第一步</p>
+        </div>
+        <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); margin-top: 30px; text-align: left; padding: 0 40px;">
+          <p>1. <span class="highlight">四步部署閉環</span>：建 Bot ➔ 邀請入群 ➔ Zeabur 部署 ➔ 測試記憶與白名單。</p>
+          <p style="margin-top: 14px;">2. <span class="highlight">Volume 防失憶</span>：務必將 Volume 掛載至 <code>/root/.hermes</code>，確保重啟後特助不會忘記您的偏好。</p>
+          <p style="margin-top: 14px;">3. <span class="highlight">安全第一防禦</span>：以白名單與 Token 不入 Git 的鐵律，嚴密保護您的 API 額度不被濫用。</p>
+        </div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>M5 今日小結</span></div>
       </div>
     </section>
 

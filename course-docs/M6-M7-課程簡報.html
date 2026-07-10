@@ -187,41 +187,41 @@
     <section data-background-color="#ede8dc">
       <div class="title-slide">
         <div class="tag">第 7 堂課</div>
-        <h1>實戰案例 — 五人團隊</h1>
+        <h1>實戰案例 — 六人團隊</h1>
         <p class="subtitle">解密多智慧特助協同作戰機制：狀態機、派工與 DoD 機器化驗收</p>
         <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
       </div>
     </section>
 
-    <!-- M6-2 五人團隊架構 -->
+    <!-- M6-2 六人團隊架構 -->
     <section>
       <div class="canvas">
         <div class="kicker"><span class="en">STRUCTURE</span><span class="zh">團隊分工</span></div>
         <div class="head">
           <h2>多 Agent 協同：誰負責做什麼？</h2>
-          <p class="sub">老師的系統中，5 位 AI 特助各司其職，透過嚴密的邊界與看板進行高併發協作</p>
+          <p class="sub">老師的系統中，6 位 AI 特助各司其職，透過嚴密的邊界與看板進行高併發協作</p>
         </div>
         <div class="pillar-grid">
           <div class="pillar">
             <div class="p-head"><span class="p-num">1</span><b>監管與串接</b><small>FRONT</small></div>
-            <div class="p-item"><span><b>Hermes (監督者)</b><small>對外接收老闆指令，進行任務派發與人工核對。</small></span></div>
-            <div class="p-item"><span><b>n8n (中樞)</b><small>串接所有 Webhook，負責將指令與狀態寫入團隊專區。</small></span></div>
-            <div class="p-goal">負責：輸入與數據流轉</div>
+            <div class="p-item"><span><b>Hermes (隨身特助)</b><small>對外接收指令進行日常派工與陪伴，兼做緊急通道備援。</small></span></div>
+            <div class="p-item"><span><b>n8n (自動化中樞)</b><small>串接 Webhook 與各平台，負責自動化數據中轉與通知推送。</small></span></div>
+            <div class="p-goal">負責：輸入、數據流轉與通知</div>
           </div>
           <div class="pillar">
-            <div class="p-head"><span class="p-num">2</span><b>規劃與研發</b><small>CORE</small></div>
-            <div class="p-item"><span><b>AG (規格腦)</b><small>只出規劃與規格，負責出圖紙，絕不動手寫 code。</small></span></div>
-            <div class="p-item"><span><b>Codex (安全官)</b><small>審查代碼安全、機器化驗收，拒絕垃圾代碼進庫。</small></span></div>
-            <div class="p-goal">負責：系統規劃與安全防禦</div>
+            <div class="p-head"><span class="p-num">2</span><b>規劃與驗收</b><small>CORE</small></div>
+            <div class="p-item"><span><b>AG (設計產線)</b><small>規劃系統架構與設計 UI，負責統一 commit-push 統整產出。</small></span></div>
+            <div class="p-item"><span><b>Codex (程式與驗收)</b><small>跑自動化測試、審查安全性與連結存活，負責 PR 與部署驗收。</small></span></div>
+            <div class="p-goal">負責：產線設計、統整與程式驗收</div>
           </div>
           <div class="pillar">
-            <div class="p-head"><span class="p-num">3</span><b>執行與體力</b><small>WORKER</small></div>
-            <div class="p-item"><span><b>OpenCode (執行者)</b><small>負責執行體力活，修改代碼、套版部署，服從規格。</small></span></div>
-            <div class="p-item"><span><b>MiMoCode (供料手)</b><small>負責文字素材加工與教材初加工，為團隊提供源源源料。</small></span></div>
-            <div class="p-goal">負責：落地幹活與供料</div>
+            <div class="p-head"><span class="p-num">3</span><b>執行與粗加工</b><small>WORKER</small></div>
+            <div class="p-item"><span><b>OpenCode (部署實作)</b><small>負責執行體力活，修改程式碼、建立 PR 分支與實作部署。</small></span></div>
+            <div class="p-item"><span><b>MiMoCode (CLI 粗加工)</b><small>以限免額度執行大量文字與教材粗加工，提供基礎供料。</small></span></div>
+            <div class="p-goal">負責：代碼實作、原型部署與粗加工</div>
           </div>
         </div>
-        <div class="src-footer"><span>Jacob Business OS</span><span>5人特助協作圖</span></div>
+        <div class="src-footer"><span>Jacob Business OS</span><span>6人特助協作圖</span></div>
       </div>
     </section>
 

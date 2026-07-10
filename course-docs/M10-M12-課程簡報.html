@@ -204,24 +204,32 @@
         <div class="kicker"><span class="en">ACCIDENTS</span><span class="zh">常見事故</span></div>
         <div class="head">
           <h2>營運 AI 團隊必知的六大深坑</h2>
-          <p class="sub">這些都是真實發生過的事故，提前了解，能幫您省下十萬元的額度與無形的時間成本</p>
+          <p class="sub">這些都是真實發生過的事故，提前了解，能幫您省下可觀的額度與無形的時間成本</p>
         </div>
-        <div class="case-grid" style="margin-top: 24px;">
+        <div class="case-grid" style="margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
           <div class="case-item">
             <h4>1. Token 金鑰外洩</h4>
-            <p>API Key 未經遮罩誤傳到 Github 公開倉庫，被黑客在 3 分鐘內盜刷數千美元。</p>
+            <p>API Key 誤傳到 Github 公開倉庫，一小時被盜刷 $50 美元。</p>
           </div>
           <div class="case-item">
             <h4>2. 長對話變笨 (塌陷)</h4>
-            <p>歷史對話過長，超出模型 Context 上下文限制，導致 Agent 邏輯錯亂、忘記規則。</p>
+            <p>歷史對話過長，超出 Context 限制，導致 Agent 邏輯錯亂、忘記規則。</p>
           </div>
           <div class="case-item">
             <h4>3. 自動化誤觸發</h4>
-            <p>未對測試環境隔離，執行測試腳本時，直接向 Production 正式客戶發送了付款通知。</p>
+            <p>未對測試環境隔離，測試自動化流程時，在 production 環境觸發了真動作。</p>
           </div>
           <div class="case-item">
             <h4>4. 同 Bug 重複死鎖燒錢</h4>
-            <p>Agent 在同一個 bug 上瘋狂自動嘗試十幾次未果，不知停手，極速燒乾單日 API 額度。</p>
+            <p>Agent 在同一個 bug 上因重複 debug 陷入無限循環，燒乾 API 額度。</p>
+          </div>
+          <div class="case-item">
+            <h4>5. 部署到錯誤專案</h4>
+            <p>從錯誤的目錄跑部署， deploy 到了不該 deploy 的正式環境專案。</p>
+          </div>
+          <div class="case-item">
+            <h4>6. 制度自己違反自己</h4>
+            <p>制定了規則但自己沒遵守（如說好不 git add . 但還是手動加了）。</p>
           </div>
         </div>
         <div class="src-footer"><span>Jacob Business OS</span><span>AI營運事故大綱</span></div>
@@ -236,12 +244,12 @@
           <h2>六大踩坑的快速處置指南</h2>
           <p class="sub">防呆重於救援，將安全閥固化進您的啟動與收工腳本中</p>
         </div>
-        <table class="compare-table" style="margin-top: 24px;">
+        <table class="compare-table" style="margin-top: 16px; font-size: 0.45em;">
           <thead>
             <tr>
-              <th style="width: 25%;">踩坑場景</th>
-              <th style="width: 35%;">❌ 錯誤且危險的做法</th>
-              <th style="width: 40%;">✅ 規範的防呆處置</th>
+              <th style="width: 20%;">踩坑場景</th>
+              <th style="width: 40%;">[危險的做法]</th>
+              <th style="width: 40%;">[規範的防呆處置]</th>
             </tr>
           </thead>
           <tbody>
@@ -258,12 +266,22 @@
             <tr>
               <td><strong>同 Bug 燃燒額度</strong></td>
               <td>任由 Agent 自主無限循環 debug</td>
-              <td><strong>「止損三次原則」</strong>：同一 Bug 嘗試 3 次失敗必須停手並紅燈預警</td>
+              <td><strong>「止損雙軌原則」</strong>：單次派工 2 輪停手、累計 3 次必須強制凍結並紅燈預警</td>
             </tr>
             <tr>
               <td><strong>誤觸正式環境</strong></td>
               <td>共用同一個 API Token 與帳號</td>
               <td>測試環境與正式環境完全隔離，部署前必須經由 Jacob 拍板</td>
+            </tr>
+            <tr>
+              <td><strong>部署到錯誤專案</strong></td>
+              <td>從任意目錄跑部署，忽略專案 ID</td>
+              <td>部署前執行 <code>--dry-run</code>，用腳本鎖定專案名稱與 ID</td>
+            </tr>
+            <tr>
+              <td><strong>制度自己違反自己</strong></td>
+              <td>只靠口頭或記憶來要求團隊遵守規範</td>
+              <td>將規則寫成腳本自動檢查（如 pre-commit hook）</td>
             </tr>
           </tbody>
         </table>
@@ -314,17 +332,17 @@
           <div class="pillar">
             <div class="p-head"><span class="p-num">1</span><b>固定工具費用</b><small>FIXED</small></div>
             <div class="p-item"><span><b>訂閱費</b><small>例如 Claude Pro、ChatGPT Plus 或 Zeabur 基礎部署月費。</small></span></div>
-            <div class="p-goal">預期：約 $20~$30 USD / 月</div>
+            <div class="p-goal">預期：免費 / 部分付費訂閱 (以選用工具為準)</div>
           </div>
           <div class="pillar">
             <div class="p-head"><span class="p-num">2</span><b>動態 API 消耗</b><small>DYNAMIC</small></div>
             <div class="p-item"><span><b>Token 計費</b><small>按輸入與輸出字數計費，受 Agent 運行次數影響最大。</small></span></div>
-            <div class="p-goal">預期：浮動，需嚴防死循環燒錢</div>
+            <div class="p-goal">預期：依 API 實際調用量計費 (防死循環)</div>
           </div>
           <div class="pillar">
             <div class="p-head"><span class="p-num">3</span><b>基礎設施部署</b><small>HOSTING</small></div>
             <div class="p-item"><span><b>主機費</b><small>伺服器、資料庫 (Postgres)、n8n 雲端託管與 Domain 續約費。</small></span></div>
-            <div class="p-goal">預期：約 $5~$15 USD / 月</div>
+            <div class="p-goal">預期：免費額度 / 依伺服器及服務規模而定</div>
           </div>
         </div>
         <div class="src-footer"><span>Jacob Business OS</span><span>成本結構拆解</span></div>
@@ -334,22 +352,34 @@
     <!-- M11-3 省錢策略 -->
     <section>
       <div class="canvas">
-        <div class="kicker"><span class="en">STRATEGY</span><span class="zh">省錢大法</span></div>
+        <div class="kicker"><span class="en">STRATEGY</span><span class="zh">省錢策略</span></div>
         <div class="head">
-          <h2>三大省錢策略：Token 消耗銳減 90%</h2>
+          <h2>四項省錢策略：Token 成本精細化控制</h2>
           <p class="sub">不盲目呼叫最高級的 S 級模型，善用機械檢查與便宜模型分工</p>
         </div>
-        <div class="duo" style="margin-top: 30px; gap: 24px;">
-          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--accent2); margin-top: 0; padding: 20px;">
-            <div class="vp-title" style="font-size: 0.65em; color: var(--accent2); text-align: left; margin-bottom: 12px;">💻 機械檢查交給腳本 (0 Token)</div>
-            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
-              <strong>核心原理</strong>：排版、語法檢查、檔案是否存在等動作，用本機寫好的 Shell/Node 腳本來跑，<strong>完全不需要呼叫 LLM</strong>。驗收通過後，才放行進 LLM 進行語意分析，省下大量無謂的 token 開銷。
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+          <div class="value-panel" style="margin-top: 0; padding: 12px 16px; border-top: 4px solid var(--accent2);">
+            <div class="vp-title" style="font-size: 0.55em; color: var(--accent2); text-align: left; margin-bottom: 8px;">[機械檢查交給腳本] (0 Token)</div>
+            <div style="font-size: 0.38em; line-height: 1.6; color: var(--text-sec); text-align: left;">
+              排版、編譯或檔案存在性等檢查，用 Shell 腳本來跑，<strong>不呼叫 LLM</strong>。驗收通過後才進語意分析。
             </div>
           </div>
-          <div class="value-panel" style="flex: 1; border-top: 4px solid var(--success); margin-top: 0; padding: 20px;">
-            <div class="vp-title" style="font-size: 0.65em; color: var(--success); text-align: left; margin-bottom: 12px;">⚖️ 模型分級混用 (省下 80%)</div>
-            <div style="font-size: 0.42em; line-height: 1.7; color: var(--text-sec);">
-              <strong>核心原理</strong>：大量的文件粗加工、資料格式化，指派給便宜的模型（如 GPT-4o-mini 或 Gemini Flash，B 級）；只有最後的關鍵技術決策與語意把關，才交給最聰明的模型（如 Claude 3.5 Sonnet，S 級）。
+          <div class="value-panel" style="margin-top: 0; padding: 12px 16px; border-top: 4px solid var(--success);">
+            <div class="vp-title" style="font-size: 0.55em; color: var(--success); text-align: left; margin-bottom: 8px;">[模型分級混用]</div>
+            <div style="font-size: 0.38em; line-height: 1.6; color: var(--text-sec); text-align: left;">
+              文件與資料粗加工指派給便宜模型（如 Gemini Flash / B 級）；關鍵技術決策才交給高級模型（如 Sonnet / S 級）。
+            </div>
+          </div>
+          <div class="value-panel" style="margin-top: 0; padding: 12px 16px; border-top: 4px solid var(--accent);">
+            <div class="vp-title" style="font-size: 0.55em; color: var(--accent); text-align: left; margin-bottom: 8px;">[開工流程優化]</div>
+            <div style="font-size: 0.38em; line-height: 1.6; color: var(--text-sec); text-align: left;">
+              減少不必要的檔案重複讀取，實測將開工流程從 4 分鐘優化到 1 分鐘，累積省下可觀的上下文 context token。
+            </div>
+          </div>
+          <div class="value-panel" style="margin-top: 0; padding: 12px 16px; border-top: 4px solid var(--accent2);">
+            <div class="vp-title" style="font-size: 0.55em; color: var(--accent2); text-align: left; margin-bottom: 8px;">[利用聚合平台降低成本]</div>
+            <div style="font-size: 0.38em; line-height: 1.6; color: var(--text-sec); text-align: left;">
+              使用 OpenRouter 等模型聚合平台，在不同任務中靈活切換高性價比模型，降低單次調用平均成本。
             </div>
           </div>
         </div>
