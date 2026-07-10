@@ -194,4 +194,4 @@
 
 ---
 
-> 📌 這份在老師系統裡的真實版本：Jacob 的團隊有五個 Agent（Hermes/Codex/OpenCode/AG/n8n），各司其職，用接收卡和狀態機協作。
+> 📌 這份在老師系統裡的真實版本：Jacob 的團隊有六個 Agent（Claude/AG/Codex/OpenCode/Hermes/n8n），各司其職，用接收卡和狀態機協作。
