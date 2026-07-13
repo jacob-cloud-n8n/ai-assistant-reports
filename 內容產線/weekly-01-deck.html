@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>週更教材 #01 — 開工 4 分鐘變 1 分鐘</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #f4f1ea;
+      --text-main: #1a2b49;
+      --text-sec: #4a5d78;
+      --accent: #1a2b49;
+      --accent2: #c08a3e;
+      --success: #3f8a4f;
+      --warn: #d4a373;
+      --card-bg: #ffffff;
+      --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+      --card-border: 1px solid rgba(26, 43, 73, 0.06);
+      --hairline: rgba(26, 43, 73, 0.12);
+      --fill-accent: rgba(26, 43, 73, 0.06);
+      --fill-accent2: rgba(192, 138, 62, 0.10);
+      --fill-success: rgba(63, 138, 79, 0.10);
+    }
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main); color: var(--text-main);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
+    }
+    .reveal h1 { font-size: 2em; color: var(--accent); }
+    .reveal h2 { font-size: 1.3em; color: var(--accent); }
+    .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+    .reveal .slide-number { color: var(--text-sec); background: transparent; }
+    .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
+
+    .canvas { position: relative; height: 660px; text-align: left; }
+    .kicker {
+      position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+      font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+    }
+    .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+    .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+    .head { padding-top: 40px; }
+    .head h2 { margin: 0 0 6px; }
+    .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+    .src-footer {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      border-top: 1px solid var(--hairline); padding-top: 10px;
+      display: flex; justify-content: space-between;
+      font-size: 0.36em; color: var(--text-sec);
+    }
+    .icon-seat {
+      width: 44px; height: 44px; border-radius: 50%; flex: none;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--hairline);
+    }
+    .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+    .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+    .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+    .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
+    .pillar {
+      border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+      padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .pillar.hot { border-color: var(--accent2); }
+    .pillar .p-head { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--hairline); padding-bottom: 6px; }
+    .pillar .p-num {
+      min-width: 26px; height: 26px; border-radius: 13px; flex: none; align-self: center;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+      padding: 0 6px; box-sizing: border-box;
+    }
+    .pillar.hot .p-num { background: var(--accent2); }
+    .pillar .p-head b { font-size: 0.6em; } .pillar .p-head small { font-size: 0.36em; color: var(--text-sec); letter-spacing: 0.1em; }
+    .pillar .p-item { display: flex; gap: 10px; align-items: center; }
+    .pillar .p-item b { display: block; font-size: 0.44em; }
+    .pillar .p-item small { font-size: 0.36em; color: var(--text-sec); }
+    .pillar .p-goal {
+      margin-top: auto; border: 1px solid var(--hairline); border-radius: 6px;
+      background: var(--fill-accent); font-size: 0.38em; text-align: center; padding: 7px; color: var(--text-main);
+    }
+    .pillar.hot .p-goal { background: var(--fill-accent2); }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .stat-tile {
+      border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+      padding: 22px; text-align: left;
+    }
+    .stat-tile .num { font-family: 'Playfair Display', serif; font-size: 1.6em; font-weight: 700; color: var(--accent); line-height: 1.1; }
+    .stat-tile .num span { font-size: 0.45em; color: var(--accent2); }
+    .stat-tile b { display: block; font-size: 0.46em; margin-top: 6px; }
+    .stat-tile small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+
+    .title-slide { text-align: center; }
+    .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1em; }
+    .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 12px; text-align: left; }
+    .compare-table td { padding: 10px 12px; border-bottom: 1px solid var(--hairline); color: var(--text-main); }
+
+    .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+
+    .timeline { position: relative; margin-top: 40px; }
+    .timeline .tl-track { position: absolute; top: 21px; left: 4%; right: 4%; height: 2px; background: var(--hairline); }
+    .timeline .tl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; }
+    .tl-step { text-align: left; }
+    .tl-step .tl-dot {
+      width: 44px; height: 44px; border-radius: 50%; margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+      border: 4px solid var(--bg-main); position: relative;
+    }
+    .tl-step:nth-child(2) .tl-dot { background: var(--warn); }
+    .tl-step:nth-child(3) .tl-dot { background: var(--accent2); }
+    .tl-step:nth-child(4) .tl-dot { background: var(--success); }
+    .tl-step b { display: block; font-size: 0.52em; margin-bottom: 4px; }
+    .tl-step p { font-size: 0.4em; color: var(--text-sec); line-height: 1.6; margin: 0; }
+    .tl-quote {
+      margin-top: 26px; border-left: 3px solid var(--accent2); padding: 10px 18px;
+      font-size: 0.55em; line-height: 1.6; color: var(--text-main); font-style: italic;
+    }
+
+    .action-strip { display: flex; margin-top: 14px; border: 1px solid var(--hairline); border-radius: 10px; background: var(--card-bg); }
+    .action-strip .as-item { flex: 1; display: flex; gap: 12px; align-items: center; padding: 12px 16px; }
+    .action-strip .as-item + .as-item { border-left: 1px solid var(--hairline); }
+    .action-strip b { display: block; font-size: 0.44em; }
+    .action-strip small { font-size: 0.36em; color: var(--text-sec); line-height: 1.4; }
+
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; color: var(--accent); }
+    .end-slide .tagline { font-size: 0.65em; color: var(--text-sec); }
+    .lesson-slide .head h2 { font-size: 1.08em; }
+    .lesson-slide .lesson-quote {
+      font-family: 'Playfair Display', 'Noto Serif TC', serif;
+      font-size: 0.82em; color: var(--accent); margin: 0; line-height: 1.65;
+    }
+    .lesson-slide .lesson-columns { margin-top: 24px; }
+    .lesson-slide .pillar { padding: 10px 14px; gap: 6px; }
+    .lesson-slide .pillar .p-item { gap: 8px; }
+    .end-slide .closing-title {
+      font-size: 1.65em; line-height: 1.3; margin: 0 0 0.4em; color: var(--accent);
+    }
+    .end-slide .closing-tagline {
+      margin-top: 12px; font-size: 0.7em; line-height: 1.55; color: var(--text-main);
+    }
+    .highlight { color: var(--accent2); font-weight: 700; }
+
+    .duo { display: flex; gap: 24px; margin-top: 12px; align-items: stretch; }
+    .duo .main { flex: 1.5; position: relative; }
+
+    .value-panel {
+      flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+      background: var(--card-bg); padding: 14px 18px; display: flex; flex-direction: column;
+    }
+    .value-panel .vp-title { text-align: center; font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+    .value-panel .vp-row { display: flex; gap: 12px; align-items: center; padding: 8px 0; }
+    .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+    .value-panel .vp-row b { display: block; font-size: 0.5em; }
+    .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+    .value-panel .vp-formula {
+      margin-top: auto; border: 1px solid var(--hairline); border-radius: 8px;
+      background: var(--fill-accent); text-align: center; padding: 8px;
+      font-size: 0.42em; font-weight: 700; color: var(--text-main);
+    }
+
+    .conclusion-bar {
+      margin-top: 10px; border: 1px solid var(--hairline); border-radius: 10px;
+      background: var(--fill-accent); text-align: center; padding: 10px;
+      font-size: 0.55em; font-weight: 700; color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <marker id="arrhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="context-stroke" stroke-width="1.5"/></marker>
+      <g id="i-tool"><path d="M14 7a4 4 0 0 1-5.6 3.7L5 14l-2-2 3.3-3.4A4 4 0 0 1 10 3l2 2-2 2 2 2 2-2z" transform="scale(1.3)"/></g>
+      <g id="i-book"><path d="M3 4h7v14H5a2 2 0 0 1-2-2V4zm18 0h-7v14h5a2 2 0 0 0 2-2V4z" transform="scale(0.95)"/><path d="M10 4c1 .8 3 .8 4 0" transform="scale(0.95)"/></g>
+      <g id="i-bulb"><path d="M12 3a6 6 0 0 1 3.5 10.9c-.7.5-1 1.3-1 2.1h-5c0-.8-.3-1.6-1-2.1A6 6 0 0 1 12 3z"/><path d="M10 19h4M11 21.5h2"/></g>
+      <g id="i-target"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8"/></g>
+      <g id="i-cube"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></g>
+      <g id="i-users"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.5-3 2.7-5 5.5-5s5 2 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14c2.3.3 3.8 2 4.2 4.5"/></g>
+      <g id="i-chart"><path d="M4 4v16h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/></g>
+      <g id="i-loop"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g>
+      <g id="i-clip"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0M9 10h6M9 14h6M9 18h4"/></g>
+    </defs>
+  </svg>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1. 封面 -->
+      <section class="title-slide">
+        <div class="tag">週更教材 #01</div>
+        <h1>開工 4 分鐘變 1 分鐘</h1>
+        <p class="subtitle">把機械檢查從 LLM 手裡拿走，讓 AI 只做值得做的判斷</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </section>
+
+      <!-- 2. 情境痛點 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">PAIN POINT</span><span class="zh">情境痛點</span></div>
+          <div class="head">
+            <h2>你請了時薪三千的顧問，結果他在幫你掃地</h2>
+            <p class="sub">AI 每天早上幫你巡檢，聽起來很貼心——直到你打開用量儀表板</p>
+          </div>
+          <div class="duo">
+            <div class="main">
+              <div class="pillar" style="height:100%">
+                <div class="p-head"><span class="p-num" style="background:var(--warn)">!</span><b>一人公司的早晨</b><small>SITUATION</small></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>每天早上說「開工」</b><small>AI 開始幫你讀 Git 狀態、掃描任務檔、比對規則、檢查通知</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></span><span><b>打開用量儀表板</b><small>光是「開工」這個動作，每天就吃掉你 15% 的 API 額度</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>近五分之一的錢</b><small>只用來問：「檔案變了沒？」</small></span></div>
+                <div class="p-goal">更心寒的是：真正用來思考、判斷、做決策的額度，反而被擠壓到所剩無幾</div>
+              </div>
+            </div>
+            <div class="value-panel">
+              <div class="vp-title">你的 AI 助理正在做什麼</div>
+              <div class="vp-row"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>讀 Git 狀態</b><small>git status 一行指令就能做</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span><span><b>比對 Hash</b><small>md5sum 一行指令就能做</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>掃描通知</b><small>find + 時間戳就能做</small></span></div>
+              <div class="vp-formula">這些都是機械活，不需要語言模型</div>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：真實專案運作數據</span><span>一人公司 + AI Agent 運作模式</span></div>
+        </div>
+      </section>
+
+      <!-- 3. 認知翻轉 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">INSIGHT</span><span class="zh">認知翻轉</span></div>
+          <div class="head">
+            <h2>AI 做得越多，它用來「真正思考」的空間就越少</h2>
+            <p class="sub">關鍵認知：不是更聰明的 AI，而是把機械活還給機器</p>
+          </div>
+          <div class="duo">
+            <div class="main">
+              <div class="pillar" style="height:100%">
+                <div class="p-head"><span class="p-num" style="background:var(--warn)">!</span><b>多數人的迷思</b><small>MISCONCEPTION</small></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>「AI 能做的越多越好」</b><small>把所有東西都丟給它，看起來很忙</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span><span><b>但每一次它花 token 讀檔案</b><small>比對 hash、掃描通知，都在消耗 context window</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>真正需要深度思考的任務</b><small>反而被邊緣化了</small></span></div>
+                <div class="p-goal">讓它讀的每一個字都有價值</div>
+              </div>
+            </div>
+            <div class="value-panel">
+              <div class="vp-title">正確的分工邏輯</div>
+              <div class="vp-row"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span><span><b>腳本做機械</b><small>git status、md5sum、grep、find</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span><span><b>模型做判斷</b><small>這三個任務逾期了，先處理哪一個？</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>人類做決策</b><small>拍板方向、調整優先序</small></span></div>
+              <div class="vp-formula">讓適合的工具做適合的事</div>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：真實專案運作經驗</span><span>人機協作正確分工</span></div>
+        </div>
+      </section>
+
+      <!-- 4. 第一刀：Bash 腳本取代 LLM 巡檢 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">CUT #1</span><span class="zh">第一刀</span></div>
+          <div class="head">
+            <h2>寫一個 Bash 腳本，取代 LLM 巡檢</h2>
+            <p class="sub">100 多行腳本，零 LLM 呼叫，跑完直接輸出結構化摘要</p>
+          </div>
+          <div class="pillar-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 28px;">
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">1</span><b>Git 操作</b><small>機械檢查</small></div>
+              <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-loop"/></svg></span><span><b>git fetch</b><small>檢查遠端同步</small></span></div>
+              <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>git status</b><small>抓未提交變更</small></span></div>
+              <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></span><span><b>git log -n 3</b><small>看最近 commit</small></span></div>
+              <div class="p-goal">輸出結構化摘要</div>
+            </div>
+            <div class="pillar hot">
+              <div class="p-head"><span class="p-num">2</span><b>檔案掃描</b><small>Unix 工具主場</small></div>
+              <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>md5sum</b><small>檔案 hash 比對</small></span></div>
+              <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span><span><b>find + 時間戳</b><small>掃描逾期任務</small></span></div>
+              <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>grep 篩選</b><small>抓超過 48 小時的舊通知</small></span></div>
+              <div class="p-goal">人類或 AI 一眼就能掃完</div>
+            </div>
+          </div>
+          <div class="conclusion-bar">這些操作的每一個，都有對應的 Unix 工具可以完成，而且速度比 LLM 快幾個數量級</div>
+          <div class="src-footer"><span>Source：內部營運資料</span><span>start-work.sh 腳本實作</span></div>
+        </div>
+      </section>
+
+      <!-- 5. 第二刀：規則檔加版本戳 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">CUT #2</span><span class="zh">第二刀</span></div>
+          <div class="head">
+            <h2>規則檔加版本戳，有變才讀</h2>
+            <p class="sub">從「每次都全讀」變成「有變才讀」，消除不必要的重複</p>
+          </div>
+          <div class="duo" style="margin-top: 28px;">
+            <div class="main">
+              <div class="pillar" style="height:100%">
+                <div class="p-head"><span class="p-num" style="background:var(--warn)">before</span><b>以前</b><small>每次開工</small></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>重新讀 4 份規則檔</b><small>團隊共識、通訊協議、ROADMAP、AGENTS</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>每份都不短</b><small>加起來的 token 消耗相當可觀</small></span></div>
+                <div class="p-goal" style="background:rgba(212,163,115,0.15)">每次都重複做相同的功課</div>
+              </div>
+            </div>
+            <div class="main">
+              <div class="pillar hot" style="height:100%">
+                <div class="p-head"><span class="p-num">after</span><b>現在</b><small>改動後</small></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>底部加 hash 戳</b><small><!-- hash: abc123 --></small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-loop"/></svg></span><span><b>腳本幾毫秒比對</b><small>有變才把檔案丟給 AI</small></span></div>
+                <div class="p-goal">沒變就不讀，重複消耗大幅下降</div>
+              </div>
+            </div>
+          </div>
+          <div class="conclusion-bar">你不是在「減少」AI 的工作，而是在「消除不必要的重複」</div>
+          <div class="src-footer"><span>Source：內部營運資料</span><span>規則檔版本戳實作</span></div>
+        </div>
+      </section>
+
+      <!-- 6. 第三刀：通知歸檔 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">CUT #3</span><span class="zh">第三刀</span></div>
+          <div class="head">
+            <h2>通知歸檔從 7 天改 48 小時</h2>
+            <p class="sub">不是減肥，是控制進食量——設定持續機制比偶爾手動清理更有效</p>
+          </div>
+          <div class="stat-grid" style="margin-top: 36px;">
+            <div class="stat-tile">
+              <div class="num" style="color:var(--warn)">56.5<span>KB</span></div>
+              <b>改善前板頭體積</b>
+              <small>7 天歸檔一次，板頭不斷膨脹</small>
+            </div>
+            <div class="stat-tile">
+              <div class="num">18.8<span>KB</span></div>
+              <b>改善後板頭體積</b>
+              <small>48 小時歸檔，穩定控制體積</small>
+            </div>
+            <div class="stat-tile">
+              <div class="num" style="color:var(--success)">48<span>hr</span></div>
+              <b>歸檔週期</b>
+              <small>持續機制，不是一次性清理</small>
+            </div>
+          </div>
+          <div class="tip-box">這就像房間的整理——每天花兩分鐘把東西歸位，比每個月大掃除一次更有效率，也更省力。</div>
+          <div class="src-footer"><span>Source：內部營運資料</span><span>團隊專區通知歸檔實作</span></div>
+        </div>
+      </section>
+
+      <!-- 7. 結果數字表 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">RESULTS</span><span class="zh">數字說話</span></div>
+          <div class="head">
+            <h2>三刀下去，開工流程重寫</h2>
+            <p class="sub">一個月省下的額度，夠你多跑好幾次完整的專案討論</p>
+          </div>
+          <table class="compare-table" style="margin-top: 36px;">
+            <thead>
+              <tr><th>指標</th><th>改善前</th><th>改善後</th><th>變化</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:700">開工耗時</td>
+                <td>~4 分鐘</td>
+                <td style="color:var(--success);font-weight:700">~1 分鐘</td>
+                <td>大幅縮短</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">LLM 額度消耗</td>
+                <td>~15% / 次</td>
+                <td style="color:var(--success);font-weight:700">近零</td>
+                <td>額度幾乎全額回收</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">板頭體積</td>
+                <td>56.5KB</td>
+                <td style="color:var(--success);font-weight:700">18.8KB</td>
+                <td>穩定控制</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="tip-box">你的 AI 助理終於把 context window 留給了真正需要它的任務：閱讀文件、分析現況、幫你做判斷。</div>
+          <div class="src-footer"><span>Source：內部營運資料</span><span>真實專案數據</span></div>
+        </div>
+      </section>
+
+      <!-- 8. 核心教訓金句 -->
+      <section class="lesson-slide">
+        <div class="canvas">
+          <div class="kicker"><span class="en">LESSON</span><span class="zh">核心教訓</span></div>
+          <div class="head">
+            <h2>機械活下放，判斷留給模型</h2>
+            <p class="sub">這件事的核心教訓只有一句話</p>
+          </div>
+          <div style="margin-top:30px; text-align:center;">
+            <div style="border-left:4px solid var(--accent2); border-right:4px solid var(--accent2); display:inline-block; padding:20px 48px; background:var(--card-bg); border-radius:12px; box-shadow:var(--card-shadow);">
+              <p class="lesson-quote">「有沒有變」是機械問題；<br/>「變了怎麼辦」才是 AI 的價值。</p>
+            </div>
+          </div>
+          <div class="duo lesson-columns">
+            <div class="main">
+              <div class="pillar" style="height:100%">
+                <div class="p-head"><span class="p-num" style="background:var(--text-sec)">0</span><b>Python / Bash 主場</b><small>機械執行</small></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span><span><b>md5sum 比對</b><small>hash 有沒有變</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></span><span><b>時間戳計算</b><small>多久沒更新</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>grep 篩選</b><small>哪些通知該歸檔</small></span></div>
+              </div>
+            </div>
+            <div class="main">
+              <div class="pillar hot" style="height:100%">
+                <div class="p-head"><span class="p-num">1</span><b>LLM 主場</b><small>判斷決策</small></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span><span><b>這三個任務都逾期了</b><small>根據優先序，今天先處理哪一個？</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>分析專案現況</b><small>閱讀你丟給它的文件</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>幫你做下一步判斷</b><small>把 context window 留給真正需要的事</small></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：真實專案運作經驗</span><span>人機協作正確分工</span></div>
+        </div>
+      </section>
+
+      <!-- 9. 明天就能做的三步 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">ACTION</span><span class="zh">明天就能做</span></div>
+          <div class="head">
+            <h2>三步，明天就開始優化你的 AI 助理</h2>
+            <p class="sub">不管你是 Claude、ChatGPT、還是自建 Agent，都可以從這裡開始</p>
+          </div>
+          <div class="action-strip" style="margin-top:28px; flex-direction:column; gap:0;">
+            <div class="as-item" style="padding:20px 28px; border-bottom:1px solid var(--hairline); border-left:4px solid var(--accent);">
+              <span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></span>
+              <span>
+                <b style="font-size:0.55em">第一步：記錄</b>
+                <small style="font-size:0.44em">記錄你的 AI 每天花多少時間在「巡檢」上（讀檔案、比對狀態、掃描變動）。把數字攤開，你才會發現它在做多少機械活。</small>
+              </span>
+            </div>
+            <div class="as-item" style="padding:20px 28px; border-bottom:1px solid var(--hairline); border-left:4px solid var(--accent2);">
+              <span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span>
+              <span>
+                <b style="font-size:0.55em">第二步：寫腳本</b>
+                <small style="font-size:0.44em">把這些機械動作寫成腳本（哪怕只是幾行 shell）。不需要很精緻，先跑起來再說。</small>
+              </span>
+            </div>
+            <div class="as-item" style="padding:20px 28px; border-left:4px solid var(--success);">
+              <span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span>
+              <span>
+                <b style="font-size:0.55em">第三步：讓 AI 只接收結果</b>
+                <small style="font-size:0.44em">讓 AI 只接收腳本的輸出結果，而不是自己從頭掃一遍。你會發現，AI 的回應品質反而更好——context window 裡裝的是「有意義的摘要」。</small>
+              </span>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：真實專案運作經驗</span><span>可立即執行的行動建議</span></div>
+        </div>
+      </section>
+
+      <!-- 10. 收尾 -->
+      <section class="end-slide">
+        <p class="closing-title">效率不是<br/>「讓 AI 做更多事」</p>
+        <p class="closing-tagline">而是<br/><strong style="color:var(--accent2)">「讓 AI 只做它該做的事」</strong></p>
+        <p style="margin-top:2.5em; font-size:0.55em; color:var(--text-sec); line-height:1.8;">
+          我們持續在探索：怎麼讓 AI 真正成為生產力工具<br/>
+          而不是另一個需要管理的雜務來源
+        </p>
+        <p style="margin-top:2em; font-size:0.5em; color:var(--accent2); font-weight:600;">
+          不是教你怎麼用 ChatGPT<br/>
+          而是教你怎麼建立一個能自己跑的 AI 團隊
+        </p>
+        <p class="author" style="margin-top:2em; font-size:0.45em; color:var(--text-sec);">
+          AI 助理運用與實戰課程 · 1 對 1 手把手<br/>
+          本文數據來自真實專案運作記錄
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('theme') === 'dark') {
+      document.documentElement.classList.add('theme-dark');
+    }
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade' });
+  </script>
+</body>
+</html>
