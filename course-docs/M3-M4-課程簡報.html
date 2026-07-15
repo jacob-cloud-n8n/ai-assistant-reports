@@ -358,24 +358,24 @@
         </div>
         <div class="duo" style="margin-top: 24px;">
           <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
-            <p style="margin-top: 8px;">· **Hermes**：隨身助理，Telegram/Discord 介面，記憶＋排程，適合個人日常</p>
-            <p style="margin-top: 8px;">· **Codex**：工作流助理，終端機介面，執行＋自動化，適合開發者</p>
-            <p style="margin-top: 8px;">· **OpenCode**：遠端執行，雲端環境，適合需要伺服器的場景</p>
-            <p style="margin-top: 8px;">· **n8n**：自動化中樞，視覺化工作流，串接多個服務，適合進階用戶</p>
+            <p style="margin-top: 8px;">· **Claude**：決策特助/統籌大腦，負責架構規劃、代碼審查與思維挑戰</p>
+            <p style="margin-top: 8px;">· **Antigravity**：流程特助/治理統籌，負責專案初始化、Git同步與二腦編譯</p>
+            <p style="margin-top: 8px;">· **Hermes / Codex**：日常隨身特助 (TG/Discord) / 本地開發自動化特助 (CLI)</p>
+            <p style="margin-top: 8px;">· **n8n / OpenCode**：自動化串接中樞 / 雲端沙盒與背景腳本實作執行端</p>
           </div>
-          <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
-            <div class="vp-title">AI 特助定位對照</div>
-            <div class="vp-row" style="padding: 8px 0;">
-              <span class="icon-seat t-accent" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><circle cx="12" cy="12" r="10" stroke="currentColor" fill="none" stroke-width="1.6"/><path d="M12 8v4l3 3" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></span>
-              <span><b>Hermes · 隨身特助</b><small>日常對答、記帳與行事曆管理</small></span>
+          <div class="value-panel" style="margin-top: 0; padding: 10px 16px; font-size: 0.9em;">
+            <div class="vp-title" style="margin-bottom: 2px;">AI 特助定位對照</div>
+            <div class="vp-row" style="padding: 4px 0;">
+              <span class="icon-seat t-accent" style="width:22px; height:22px;"><svg viewBox="0 0 24 24" style="width:11px; height:11px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></span>
+              <span><b style="font-size:0.46em;">Claude · 決策統籌</b><small style="font-size:0.34em;">架構規劃、決策挑戰與首件抽驗</small></span>
             </div>
-            <div class="vp-row" style="padding: 8px 0;">
-              <span class="icon-seat t-accent2" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></span>
-              <span><b>Codex · 代碼特助</b><small>代碼編寫、終端排錯與自動化</small></span>
+            <div class="vp-row" style="padding: 4px 0;">
+              <span class="icon-seat t-accent2" style="width:22px; height:22px;"><svg viewBox="0 0 24 24" style="width:11px; height:11px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" fill="none" stroke-width="1.6"/><line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" fill="none" stroke-width="1.6"/><line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></span>
+              <span><b style="font-size:0.46em;">Antigravity · 流程特助</b><small style="font-size:0.34em;">專案治理、二腦編譯與 Git 同步</small></span>
             </div>
-            <div class="vp-row" style="padding: 8px 0;">
-              <span class="icon-seat t-success" style="width:28px; height:28px;"><svg viewBox="0 0 24 24" style="width:14px; height:14px;"><polygon points="12 2 2 7 12 12 22 7 12 2" stroke="currentColor" fill="none" stroke-width="1.6"/><polyline points="2 17 12 22 22 17" stroke="currentColor" fill="none" stroke-width="1.6"/><polyline points="2 12 12 17 22 12" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></span>
-              <span><b>n8n · 自動化特助</b><small>視覺化串接與定時自動工作流</small></span>
+            <div class="vp-row" style="padding: 4px 0;">
+              <span class="icon-seat t-success" style="width:22px; height:22px;"><svg viewBox="0 0 24 24" style="width:11px; height:11px;"><circle cx="12" cy="12" r="10" stroke="currentColor" fill="none" stroke-width="1.6"/><path d="M12 8v4l3 3" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></span>
+              <span><b style="font-size:0.46em;">Hermes · 隨身助理</b><small style="font-size:0.34em;">日常對答、記帳與行事曆管理</small></span>
             </div>
           </div>
         </div>
@@ -390,45 +390,59 @@
           <h2>誰能做什麼？</h2>
           <p class="sub">能力評估矩陣：找出適合您當前業務難點的最佳人選</p>
         </div>
-        <div class="table-container" style="margin-top: 24px; font-size: 0.38em; width: 100%;">
+        <div class="table-container" style="margin-top: 14px; font-size: 0.35em; width: 100%;">
           <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--hairline); background: var(--card-bg);">
             <thead>
               <tr style="background: var(--fill-accent); border-bottom: 2px solid var(--hairline); text-align: left;">
-                <th style="padding: 10px 14px; color: var(--accent);">特助名稱</th>
-                <th style="padding: 10px 14px; color: var(--accent);">核心介面</th>
-                <th style="padding: 10px 14px; color: var(--accent);">擅長任務 (能代勞的事)</th>
-                <th style="padding: 10px 14px; color: var(--accent);">使用門檻與限制</th>
-                <th style="padding: 10px 14px; color: var(--accent);">費用預算</th>
+                <th style="padding: 8px 10px; color: var(--accent); width: 12%;">特助名稱</th>
+                <th style="padding: 8px 10px; color: var(--accent); width: 18%;">核心介面</th>
+                <th style="padding: 8px 10px; color: var(--accent);">擅長任務 (能代勞的事)</th>
+                <th style="padding: 8px 10px; color: var(--accent); width: 30%;">使用門檻與限制</th>
+                <th style="padding: 8px 10px; color: var(--accent); width: 12%;">費用預算</th>
               </tr>
             </thead>
             <tbody>
               <tr style="border-bottom: 1px solid var(--hairline);">
-                <td style="padding: 10px 14px; font-weight: bold; color: var(--accent2);">Hermes</td>
-                <td style="padding: 10px 14px;">TG / Discord 聊天框</td>
-                <td style="padding: 10px 14px;">日常對答、靈感記錄、記帳、行事曆</td>
-                <td style="padding: 10px 14px;">不適合進行複雜程式開發與寫檔</td>
-                <td style="padding: 10px 14px; color: var(--success); font-weight: bold;">🌟 免費</td>
+                <td style="padding: 8px 10px; font-weight: bold; color: var(--accent2);">Claude</td>
+                <td style="padding: 8px 10px;">Web / 桌面 App / CLI</td>
+                <td style="padding: 8px 10px;">架構規劃、程式審查、決策挑戰、首件抽驗</td>
+                <td style="padding: 8px 10px;">需提供充足 SSOT 背景防範失憶</td>
+                <td style="padding: 8px 10px; color: var(--accent2); font-weight: bold;">$20 / 月</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--hairline);">
-                <td style="padding: 10px 14px; font-weight: bold; color: var(--accent2);">Codex</td>
-                <td style="padding: 10px 14px;">終端機 (CLI) / IDE</td>
-                <td style="padding: 10px 14px;">代碼開發、自動化寫檔、專案部署驗收</td>
-                <td style="padding: 10px 14px;">需要具備基本 CLI 終端指令知識</td>
-                <td style="padding: 10px 14px;">API 用量付費</td>
+                <td style="padding: 8px 10px; font-weight: bold; color: var(--accent2);">Antigravity</td>
+                <td style="padding: 8px 10px;">IDE 整合環境 / CLI</td>
+                <td style="padding: 8px 10px;">專案初始化、Git 自動推送、二腦編譯與向量同步</td>
+                <td style="padding: 8px 10px;">需要本機 Antigravity 運行環境</td>
+                <td style="padding: 8px 10px; color: var(--success); font-weight: bold;">🌟 免費/內建</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--hairline);">
-                <td style="padding: 10px 14px; font-weight: bold; color: var(--accent2);">OpenCode</td>
-                <td style="padding: 10px 14px;">雲端 Linux 沙盒</td>
-                <td style="padding: 10px 14px;">跑 Python 腳本、語音克隆、背景處理</td>
-                <td style="padding: 10px 14px;">需要設定沙盒與 Python 環境變數</td>
-                <td style="padding: 10px 14px;">依沙盒用量計費</td>
+                <td style="padding: 8px 10px; font-weight: bold; color: var(--accent2);">Hermes</td>
+                <td style="padding: 8px 10px;">TG / Discord 聊天框</td>
+                <td style="padding: 8px 10px;">日常對答、靈感記錄、記帳、行事曆</td>
+                <td style="padding: 8px 10px;">不適合進行複雜程式開發與寫檔</td>
+                <td style="padding: 8px 10px; color: var(--success); font-weight: bold;">🌟 免費</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--hairline);">
-                <td style="padding: 10px 14px; font-weight: bold; color: var(--accent2);">n8n</td>
-                <td style="padding: 10px 14px;">網頁視覺化工作流</td>
-                <td style="padding: 10px 14px;">跨服務自動同步、日報/週報定時發送</td>
-                <td style="padding: 10px 14px;">需要理解 Webhook 與 API 授權</td>
-                <td style="padding: 10px 14px; color: var(--success); font-weight: bold;">🌟 免費開源</td>
+                <td style="padding: 8px 10px; font-weight: bold; color: var(--accent2);">Codex</td>
+                <td style="padding: 8px 10px;">終端機 (CLI) / IDE</td>
+                <td style="padding: 8px 10px;">代碼開發、自動化寫檔、專案部署驗收</td>
+                <td style="padding: 8px 10px;">需要具備基本 CLI 終端指令知識</td>
+                <td style="padding: 8px 10px;">API 用量計費</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--hairline);">
+                <td style="padding: 8px 10px; font-weight: bold; color: var(--accent2);">OpenCode</td>
+                <td style="padding: 8px 10px;">雲端 Linux 沙盒</td>
+                <td style="padding: 8px 10px;">跑 Python 腳本、語音克隆、背景處理</td>
+                <td style="padding: 8px 10px;">需要設定沙盒與 Python 環境變數</td>
+                <td style="padding: 8px 10px;">依沙盒用量計費</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--hairline);">
+                <td style="padding: 8px 10px; font-weight: bold; color: var(--accent2);">n8n</td>
+                <td style="padding: 8px 10px;">網頁視覺化工作流</td>
+                <td style="padding: 8px 10px;">跨服務自動同步、日報/週報定時發送</td>
+                <td style="padding: 8px 10px;">需要理解 Webhook 與 API 授權</td>
+                <td style="padding: 8px 10px; color: var(--success); font-weight: bold;">🌟 免費開源</td>
               </tr>
             </tbody>
           </table>
@@ -446,10 +460,10 @@
         </div>
         <div class="duo" style="margin-top: 24px;">
           <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
-            <p style="margin-top: 8px;">· 個人日常（記事、提醒、問問題）→ Hermes（Telegram/Discord）</p>
-            <p style="margin-top: 8px;">· 開發自動化（改 code、跑測試、部署）→ Codex + OpenCode</p>
-            <p style="margin-top: 8px;">· 多服務串接（自動發通知、同步資料）→ n8n</p>
-            <p style="margin-top: 8px;">· 預算有限 → 先從免費方案開始</p>
+            <p style="margin-top: 8px;">· 個人日常與決策規劃 → Hermes (日常) + Claude (大腦與審查)</p>
+            <p style="margin-top: 8px;">· 專案管理與流程治理 → Antigravity (IDE 整合與編譯推送)</p>
+            <p style="margin-top: 8px;">· 開發自動化與伺服器 → Codex (寫代碼) + OpenCode (沙盒實作)</p>
+            <p style="margin-top: 8px;">· 多系統同步通知 → n8n 工作流中樞</p>
           </div>
           <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
             <div class="vp-title">決策三步走</div>
@@ -471,9 +485,9 @@
         </div>
         <div class="duo" style="margin-top: 24px;">
           <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
-            <p style="margin-top: 8px;">· 預算有限 → 先從免費方案開始（Hermes 免費、Codex 有限免費額度）</p>
+            <p style="margin-top: 8px;">· 預算有限 → 先從免費方案開始（Hermes 免費、Antigravity 內建）</p>
             <p style="margin-top: 8px;">· 先求有再求好：一個免費工具跑順，比五個都半吊子好</p>
-            <p style="margin-top: 8px;">· 之後有穩定收入再考慮升級付費方案</p>
+            <p style="margin-top: 8px;">· 之後有穩定收入再考慮升級付費方案（如訂閱 Claude Pro、綁定付費 API）</p>
             <p style="margin-top: 8px;">· 別為了「以防萬一」預先買一堆用不到的額度</p>
           </div>
           <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
@@ -496,16 +510,16 @@
         </div>
         <div class="duo" style="margin-top: 24px;">
           <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
-            <p style="margin-top: 8px;">· 一人起步：Hermes 就夠（日常助理 + 記憶）</p>
-            <p style="margin-top: 8px;">· 有客戶後：加上 n8n（自動化通知 + 流程）</p>
-            <p style="margin-top: 8px;">· 有產品後：加上 Codex（代碼審查 + 部署）</p>
+            <p style="margin-top: 8px;">· 一人起步：Claude Pro + Hermes 就夠（規劃大腦 + 隨身特助）</p>
+            <p style="margin-top: 8px;">· 流程成熟：引進 Antigravity 與 n8n（專案治理 + 自動化同步）</p>
+            <p style="margin-top: 8px;">· 軟體開發：引進 Codex + OpenCode（代碼編寫 + 遠端實作）</p>
             <p style="margin-top: 8px;">· 原則：先求有、再求好，不要一次開五個 Agent</p>
           </div>
           <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
             <div class="vp-title">經典協作接力鏈</div>
-            <div class="vp-row" style="padding: 8px 0;"><span><b>語音收集 ➔ Hermes</b><small>手機隨手錄音發送給隨身特助</small></span></div>
-            <div class="vp-row" style="padding: 8px 0;"><span><b>文件編排 ➔ Codex</b><small>Codex 將語音重整並增量寫入二腦知識庫</small></span></div>
-            <div class="vp-row" style="padding: 8px 0;"><span><b>自動通知 ➔ n8n</b><small>n8n 定時將成果發送給 Telegram 頻道</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span><b>1. 規劃與挑戰 ➔ Claude</b><small>提供點子由 Claude 進行思維挑戰並擬定架構</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span><b>2. 代碼與實作 ➔ Codex</b><small>Codex 依架構自動編寫與修改本機代碼</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span><b>3. 統籌與推送 ➔ Antigravity</b><small>AG 執行代碼二腦編譯與 Git 自動同步推送</small></span></div>
           </div>
         </div>
         <div class="src-footer"><span>Jacob Business OS</span><span>第 4 堂 · 頁 11</span></div>
@@ -521,16 +535,16 @@
         </div>
         <div class="duo" style="margin-top: 24px;">
           <div class="main" style="font-size: 0.52em; line-height: 1.8; color: var(--text-sec); padding-right: 20px;">
-            <p style="margin-top: 8px;">· 起步：只用 Hermes 處理日常提醒與問答</p>
-            <p style="margin-top: 8px;">· 有客戶後：加 n8n，自動通知客戶進度</p>
-            <p style="margin-top: 8px;">· 有產品後：加 Codex，做代碼審查與部署</p>
+            <p style="margin-top: 8px;">· 起步：用 Claude Pro + Hermes 處理日常規劃與靈感收集</p>
+            <p style="margin-top: 8px;">· 中期：引入 Antigravity 與 n8n，開始規範專案治理與客戶流程</p>
+            <p style="margin-top: 8px;">· 後期：引進 Codex / OpenCode，實現產線式自動代碼開發與部署</p>
             <p style="margin-top: 8px;">· 教訓：每加一個 Agent 前，先確認上一個已經跑順</p>
           </div>
           <div class="value-panel" style="margin-top: 0; padding: 16px 20px;">
             <div class="vp-title">Agent 擴充階段指南</div>
-            <div class="vp-row" style="padding: 8px 0;"><span><b>Phase 1: 單人作戰 (D0)</b><small>僅需一個 Hermes 作為日常靈感庫與助理</small></span></div>
-            <div class="vp-row" style="padding: 8px 0;"><span><b>Phase 2: 自動化 (D30)</b><small>引入 n8n，自動串接客戶金流與通知</small></span></div>
-            <div class="vp-row" style="padding: 8px 0;"><span><b>Phase 3: 團隊化 (D90)</b><small>引入 Codex/OpenCode 開始自動寫 code 與維護系統</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span><b>Phase 1: 決策與日常 (D0)</b><small>Claude 規劃大腦 + Hermes 隨身語音特助</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span><b>Phase 2: 自動化治理 (D30)</b><small>n8n 工作流 + Antigravity 專案二腦同步</small></span></div>
+            <div class="vp-row" style="padding: 8px 0;"><span><b>Phase 3: 軟體產線 (D90)</b><small>Codex 代碼寫作 + OpenCode 雲端沙盒</small></span></div>
           </div>
         </div>
         <div class="src-footer"><span>Jacob Business OS</span><span>第 4 堂 · 頁 12</span></div>
