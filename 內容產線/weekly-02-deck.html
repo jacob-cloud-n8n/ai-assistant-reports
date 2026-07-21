@@ -1,0 +1,425 @@
+<!doctype html>
+<!--
+  課程簡報 (weekly-02-deck.html) — reveal.js 5.1.0
+  ─────────────────────────────────────────────────────────
+  週更教材 #02 — AI 時代人人需要第二大腦
+  套用 course-deck.html 模板規範（麥肯錫式簡報骨架、配色守自家規範）
+-->
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>週更教材 #02 — AI 時代人人需要第二大腦</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/simple.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== 單一設計 token 來源 ===== */
+    :root {
+      --bg-main: #f4f1ea;
+      --text-main: #1a2b49;
+      --text-sec: #4a5d78;
+      --accent: #1a2b49;
+      --accent2: #c08a3e;
+      --success: #3f8a4f;
+      --warn: #d4a373;
+      --card-bg: #ffffff;
+      --card-shadow: 0 8px 24px rgba(26, 43, 73, 0.04);
+      --card-border: 1px solid rgba(26, 43, 73, 0.06);
+      --hairline: rgba(26, 43, 73, 0.12);
+      --fill-accent: rgba(26, 43, 73, 0.06);
+      --fill-accent2: rgba(192, 138, 62, 0.10);
+      --fill-success: rgba(63, 138, 79, 0.10);
+    }
+    :root.theme-dark {
+      --bg-main: #0b0f19;
+      --text-main: #f3f4f6;
+      --text-sec: #9ca3af;
+      --accent: #38bdf8;
+      --accent2: #fbbf24;
+      --success: #34d399;
+      --warn: #fbbf24;
+      --card-bg: #111827;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --card-border: 1px solid rgba(255, 255, 255, 0.08);
+      --hairline: #1e293b;
+      --fill-accent: rgba(56, 189, 248, 0.10);
+      --fill-accent2: rgba(251, 191, 36, 0.10);
+      --fill-success: rgba(52, 211, 153, 0.10);
+    }
+
+    .reveal {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang TC', 'Noto Sans TC', sans-serif;
+      background-color: var(--bg-main); color: var(--text-main);
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Playfair Display', 'Noto Serif TC', -apple-system, serif;
+      font-weight: 700; letter-spacing: -0.02em; color: var(--text-main); text-transform: none;
+    }
+    .reveal h1 { font-size: 2em; color: var(--accent); }
+    .reveal h2 { font-size: 1.3em; color: var(--accent); }
+    .reveal h3 { font-size: 1.05em; color: var(--accent2); }
+    .reveal .slide-number { color: var(--text-sec); background: transparent; }
+    .reveal .fragment { opacity: 0.2; } .reveal .fragment.visible { opacity: 1; }
+
+    /* ===== 共用：資訊圖表畫布 ===== */
+    .canvas { position: relative; height: 660px; text-align: left; }
+
+    /* 章節標籤 */
+    .kicker {
+      position: absolute; top: 0; left: 0; display: flex; align-items: center; gap: 10px;
+      font-size: 0.34em; letter-spacing: 0.14em; font-weight: 700;
+    }
+    .kicker .en { background: var(--accent); color: var(--bg-main); padding: 5px 14px; }
+    .kicker .zh { color: var(--text-sec); letter-spacing: 0.3em; border-left: 2px solid var(--accent2); padding-left: 10px; }
+
+    /* 頁首標題區 */
+    .head { padding-top: 52px; }
+    .head h2 { margin: 0 0 6px; }
+    .head .sub { font-size: 0.5em; color: var(--text-sec); margin: 0; }
+
+    /* 來源註腳 */
+    .src-footer {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      border-top: 1px solid var(--hairline); padding-top: 10px;
+      display: flex; justify-content: space-between;
+      font-size: 0.36em; color: var(--text-sec);
+    }
+
+    /* 內建 SVG 圖示座 */
+    .icon-seat {
+      width: 44px; height: 44px; border-radius: 50%; flex: none;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--hairline);
+    }
+    .icon-seat svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .icon-seat.t-accent  { color: var(--accent);  background: var(--fill-accent); }
+    .icon-seat.t-accent2 { color: var(--accent2); background: var(--fill-accent2); }
+    .icon-seat.t-success { color: var(--success); background: var(--fill-success); }
+
+    /* ===== 雙欄面板 ===== */
+    .duo { display: flex; gap: 28px; margin-top: 18px; align-items: stretch; }
+    .duo .main { flex: 1.5; position: relative; }
+
+    /* ===== 側欄：價值面板 ===== */
+    .value-panel {
+      flex: 1; border: 1px solid var(--hairline); border-radius: 14px;
+      background: var(--card-bg); padding: 22px 24px; display: flex; flex-direction: column;
+    }
+    .value-panel .vp-title { text-align: center; font-size: 0.55em; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .value-panel .vp-row { display: flex; gap: 14px; align-items: center; padding: 14px 0; }
+    .value-panel .vp-row + .vp-row { border-top: 1px dashed var(--hairline); }
+    .value-panel .vp-row b { display: block; font-size: 0.5em; }
+    .value-panel .vp-row small { font-size: 0.38em; color: var(--text-sec); line-height: 1.5; }
+    .value-panel .vp-formula {
+      margin-top: auto; border: 1px solid var(--hairline); border-radius: 8px;
+      background: var(--fill-accent); text-align: center; padding: 10px;
+      font-size: 0.42em; font-weight: 700; color: var(--text-main);
+    }
+
+    /* ===== 三/四柱能力頁 ===== */
+    .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+    .pillar {
+      border: 1px solid var(--hairline); border-radius: 12px; background: var(--card-bg);
+      padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .pillar.hot { border-color: var(--accent2); }
+    .pillar .p-head { display: flex; align-items: baseline; gap: 10px; border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+    .pillar .p-num {
+      width: 26px; height: 26px; border-radius: 50%; flex: none; align-self: center;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+    }
+    .pillar.hot .p-num { background: var(--accent2); }
+    .pillar .p-head b { font-size: 0.6em; } .pillar .p-head small { font-size: 0.36em; color: var(--text-sec); letter-spacing: 0.1em; }
+    .pillar .p-item { display: flex; gap: 10px; align-items: center; }
+    .pillar .p-item b { display: block; font-size: 0.44em; }
+    .pillar .p-item small { font-size: 0.36em; color: var(--text-sec); }
+    .pillar .p-goal {
+      margin-top: auto; border: 1px solid var(--hairline); border-radius: 6px;
+      background: var(--fill-accent); font-size: 0.38em; text-align: center; padding: 7px; color: var(--text-main);
+    }
+    .pillar.hot .p-goal { background: var(--fill-accent2); }
+    .conclusion-bar {
+      margin-top: 14px; border: 1px solid var(--hairline); border-radius: 10px;
+      background: var(--fill-accent); text-align: center; padding: 12px;
+      font-size: 0.55em; font-weight: 700; color: var(--text-main);
+    }
+
+    /* ===== 故事時間軸 ===== */
+    .timeline { position: relative; margin-top: 40px; }
+    .timeline .tl-track { position: absolute; top: 21px; left: 4%; right: 4%; height: 2px; background: var(--hairline); }
+    .timeline .tl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; }
+    .tl-step { text-align: left; }
+    .tl-step .tl-dot {
+      width: 44px; height: 44px; border-radius: 50%; margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.42em; font-weight: 700; color: var(--bg-main); background: var(--accent);
+      border: 4px solid var(--bg-main); position: relative;
+    }
+    .tl-step:nth-child(2) .tl-dot { background: var(--warn); }
+    .tl-step:nth-child(3) .tl-dot { background: var(--accent2); }
+    .tl-step:nth-child(4) .tl-dot { background: var(--success); }
+    .tl-step b { display: block; font-size: 0.52em; margin-bottom: 4px; }
+    .tl-step p { font-size: 0.4em; color: var(--text-sec); line-height: 1.6; margin: 0; }
+    .tl-quote {
+      margin-top: 26px; border-left: 3px solid var(--accent2); padding: 10px 18px;
+      font-size: 0.55em; line-height: 1.6; color: var(--text-main); font-style: italic;
+    }
+
+    /* ===== 沿用文字型積木 ===== */
+    .title-slide { text-align: center; }
+    .title-slide .tag { display: inline-block; background: var(--accent2); color: #fff; padding: 6px 18px; border-radius: 20px; font-size: 0.6em; letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600; }
+    .title-slide .subtitle { font-size: 0.75em; color: var(--text-sec); margin-top: 0.5em; }
+    .title-slide .author { margin-top: 2em; font-size: 0.5em; color: var(--text-sec); }
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.5em; margin-top: 1.5em; }
+    .compare-table th { background: var(--fill-accent); color: var(--accent); padding: 12px; text-align: left; }
+    .compare-table td { padding: 10px 12px; border-bottom: 1px solid var(--hairline); color: var(--text-main); }
+    .tip-box { background: var(--fill-accent2); border-left: 4px solid var(--accent2); border-radius: 0 12px 12px 0; padding: 14px 18px; margin-top: 1em; font-size: 0.65em; color: var(--text-main); text-align: left; line-height: 1.5; }
+    .prompt-card { background: var(--card-bg); border-radius: 14px; padding: 20px 24px; box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); text-align: left; margin: 0.8em auto; max-width: 85%; }
+    .prompt-card .label { font-size: 0.5em; letter-spacing: 0.1em; color: var(--accent2); font-weight: 700; }
+    .prompt-card .spell { font-family: 'SF Mono', Monaco, Consolas, monospace; font-size: 0.6em; color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+    .end-slide { text-align: center; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; color: var(--accent); }
+    .end-slide .closing-title { font-size: 1.65em; line-height: 1.3; margin: 0 0 0.4em; color: var(--accent); }
+    .end-slide .closing-tagline { margin-top: 12px; font-size: 0.7em; line-height: 1.55; color: var(--text-main); }
+  </style>
+</head>
+<body>
+  <!-- 內建 SVG 圖示庫 -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <marker id="arrhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="context-stroke" stroke-width="1.5"/></marker>
+      <g id="i-tool"><path d="M14 7a4 4 0 0 1-5.6 3.7L5 14l-2-2 3.3-3.4A4 4 0 0 1 10 3l2 2-2 2 2 2 2-2z" transform="scale(1.3)"/></g>
+      <g id="i-book"><path d="M3 4h7v14H5a2 2 0 0 1-2-2V4zm18 0h-7v14h5a2 2 0 0 0 2-2V4z" transform="scale(0.95)"/><path d="M10 4c1 .8 3 .8 4 0" transform="scale(0.95)"/></g>
+      <g id="i-bulb"><path d="M12 3a6 6 0 0 1 3.5 10.9c-.7.5-1 1.3-1 2.1h-5c0-.8-.3-1.6-1-2.1A6 6 0 0 1 12 3z"/><path d="M10 19h4M11 21.5h2"/></g>
+      <g id="i-target"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8"/></g>
+      <g id="i-cube"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></g>
+      <g id="i-users"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.5-3 2.7-5 5.5-5s5 2 5.5 5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14c2.3.3 3.8 2 4.2 4.5"/></g>
+      <g id="i-chart"><path d="M4 4v16h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/></g>
+      <g id="i-loop"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></g>
+      <g id="i-clip"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0M9 10h6M9 14h6M9 18h4"/></g>
+    </defs>
+  </svg>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1. 封面 -->
+      <section class="title-slide">
+        <div class="tag">週更教材 #02</div>
+        <h1>AI 時代人人需要第二大腦</h1>
+        <p class="subtitle">從一個免費工具開始，打造你的一人公司知識資產</p>
+        <p class="author">AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </section>
+
+      <!-- 2. 情境痛點 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">PAIN POINT</span><span class="zh">情境痛點</span></div>
+          <div class="head">
+            <h2>跟 AI 聊了一下午，隔天它問「您是哪位？」</h2>
+            <p class="sub">知識散落各處，導致人機協作效率極度低下</p>
+          </div>
+          <div class="duo" style="margin-top: 24px;">
+            <div class="main">
+              <div class="pillar" style="height:100%">
+                <div class="p-head"><span class="p-num" style="background:var(--warn)">!</span><b>知識碎片的痛點</b><small>FRAGMENTED KNOWLEDGE</small></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>筆記散落各處</b><small>記在手機、電腦、與各處備忘錄，每次找都像翻箱倒櫃</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>AI 助理健忘</b><small>上次聊完的背景與需求，重開對話框它又全部忘光</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-clip"/></svg></span><span><b>跨工具交接困難</b><small>新的 AI 助理完全不認得你的舊檔案，只能從頭解釋</small></span></div>
+                <div class="p-goal">問題在於：你沒有一個能讓 AI 隨時讀取的第二大腦</div>
+              </div>
+            </div>
+            <div class="value-panel">
+              <div class="vp-title">人機協作效率流失</div>
+              <div class="vp-row"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-cube"/></svg></span><span><b>解釋成本高</b><small>光是前置溝通就花掉一半工作時間</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>Context 浪費</b><small>重複上傳背景檔案，白白燒掉 API 額度</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>知識零累積</b><small>人機互動只剩一次性對話，無法化為資產</small></span></div>
+              <div class="vp-formula">流失價值 ＝ 解釋成本 × 重複額度</div>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：知識工作者日常協作痛點</span><span>一人公司人機分工</span></div>
+        </div>
+      </section>
+
+      <!-- 3. 認知翻轉 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">INSIGHT</span><span class="zh">認知翻轉</span></div>
+          <div class="head">
+            <h2>第二大腦不是工具，是你的數位知識管家</h2>
+            <p class="sub">把原始筆記交給 AI 整理，讓多個 AI 助理秒懂你的工作背景</p>
+          </div>
+          <div class="duo" style="margin-top: 24px;">
+            <div class="main">
+              <div class="pillar" style="height:100%">
+                <div class="p-head"><span class="p-num" style="background:var(--accent2)">★</span><b>真實運作實績</b><small>REAL EXPERIENCE</small></div>
+                <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></span><span><b>來源集中處理</b><small>所有的原始筆記都送入同一個二腦入口</small></span></div>
+                <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-loop"/></svg></span><span><b>編譯為 626 張知識卡片</b><small>AI 自動將 264 份雜亂筆記編譯成結構化卡片</small></span></div>
+                <div class="p-item"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></span><span><b>多 Agent 無縫接力</b><small>新助理只要讀卡片，即可瞬間接軌專案，不需再次解釋</small></span></div>
+                <div class="p-goal">工具只是載體，真正有價值的是背後的運作機制</div>
+              </div>
+            </div>
+            <div class="value-panel">
+              <div class="vp-title">二腦管家的核心價值</div>
+              <div class="vp-row"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>免重複對齊</b><small>一次建立，全體 AI 助理共享記憶</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span><span><b>全局檢索</b><small>RAG 檢索即時提供正確專案脈絡</small></span></div>
+              <div class="vp-row"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-cube"/></svg></span><span><b>數位資產化</b><small>隨時間自動增長，成為你的競爭護城河</small></span></div>
+              <div class="vp-formula">二腦價值 ＝ 結構化知識 × 助理調度效率</div>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：Jacob 實戰二腦運作數據</span><span>編譯：264 份筆記 ➔ 626 張卡片</span></div>
+        </div>
+      </section>
+
+      <!-- 4. 關鍵機制 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">METHODOLOGY</span><span class="zh">關鍵機制</span></div>
+          <div class="head">
+            <h2>第二大腦必須具備的四個運作機制</h2>
+            <p class="sub">缺少這四個機制的「第二大腦」，換十個工具都一樣亂</p>
+          </div>
+          <div class="pillar-grid" style="grid-template-columns: repeat(4, 1fr); margin-top: 24px;">
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">1</span><b>來源集中</b><small>SOURCE</small></div>
+              <div class="p-item"><span><small>所有筆記只進同一個入口，絕不在多個工具中漂移分散</small></span></div>
+              <div class="p-goal">告別混亂</div>
+            </div>
+            <div class="pillar hot">
+              <div class="p-head"><span class="p-num">2</span><b>自動合成</b><small>COMPILATION</small></div>
+              <div class="p-item"><span><small>AI 自動將雜亂的原始筆記，提煉成結構化知識卡，拒絕手動</small></span></div>
+              <div class="p-goal">自動產出</div>
+            </div>
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">3</span><b>增量更新</b><small>INCREMENTAL</small></div>
+              <div class="p-item"><span><small>只編譯重構變動的筆記，不重新編譯全庫，節省時間與 API</small></span></div>
+              <div class="p-goal">節能省力</div>
+            </div>
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">4</span><b>來源可溯</b><small>TRACEABLE</small></div>
+              <div class="p-item"><span><small>卡片必須附帶原始 Hash 來源，保證修改時可對帳、不漏更</small></span></div>
+              <div class="p-goal">追溯源頭</div>
+            </div>
+          </div>
+          <div class="conclusion-bar" style="margin-top:20px;">機制大於工具：有這四項，用最簡單的文字檔也能成二腦</div>
+          <div class="src-footer"><span>Source：第二大腦系統架構原則</span><span>知識管理機制</span></div>
+        </div>
+      </section>
+
+      <!-- 5. 真實故事 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">OUR STORY</span><span class="zh">真實故事</span></div>
+          <div class="head">
+            <h2>我們研究了開源工具 openwiki，最後決定不換</h2>
+            <p class="sub">工具可以作為絕佳的起點，但機制才是最深的核心資產</p>
+          </div>
+          <div class="timeline" style="margin-top: 30px;">
+            <div class="tl-track"></div>
+            <div class="tl-grid">
+              <div class="tl-step"><div class="tl-dot">起點</div><b>聽聞 openwiki</b><p>開源免費、自動生成 wiki，甚至支援增量同步，讓人躍躍欲試</p></div>
+              <div class="tl-step"><div class="tl-dot">阻礙</div><b>發現功能單一</b><p>深入研究後，發現它僅僅是 wiki 整理工具，不支援自動調度與追蹤</p></div>
+              <div class="tl-step"><div class="tl-dot">轉折</div><b>權衡核心需求</b><p>我們自己需要包含專案狀態追蹤、團隊共享及自動分類的客製流程</p></div>
+              <div class="tl-step"><div class="tl-dot">結論</div><b>決定維持自建</b><p>不為新工具打亂現有機制，因為「工具可以入門，機制才是資產」</p></div>
+            </div>
+          </div>
+          <div class="tl-quote">「有沒有變」是機械問題；「變了怎麼辦」才是我們需要的 AI 價值。</div>
+          <div class="src-footer"><span>Source：AI 團隊內部架構調研</span><span>2026-07 決策會議</span></div>
+        </div>
+      </section>
+
+      <!-- 6. 起步建議 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">ACTION</span><span class="zh">起步建議</span></div>
+          <div class="head">
+            <h2>三種不同程度的人，三種起步方式</h2>
+            <p class="sub">挑選最適合你技術水準的跑道，立即開始累積第二大腦</p>
+          </div>
+          <div class="pillar-grid" style="margin-top: 24px;">
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">1</span><b>完全新手</b><small>NO-CODE</small></div>
+              <div class="p-item"><span class="icon-seat t-accent"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></span><span><b>NotebookLM / Notion</b><small>先練習把所有筆記和原始資料集中在一個地方，建立集中習慣</small></span></div>
+              <div class="p-goal">新手起跑：手動整理</div>
+            </div>
+            <div class="pillar hot">
+              <div class="p-head"><span class="p-num">2</span><b>終端機經驗者</b><small>CLI-START</small></div>
+              <div class="p-item"><span class="icon-seat t-accent2"><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg></span><span><b>安裝 openwiki 個人版</b><small>一個指令即可自動將資料夾轉化為 AI 可讀 wiki，體驗二腦</small></span></div>
+              <div class="p-goal">快速上手：開源工具</div>
+            </div>
+            <div class="pillar">
+              <div class="p-head"><span class="p-num">3</span><b>進階開發者</b><small>CUSTOMIZE</small></div>
+              <div class="p-item"><span class="icon-seat t-success"><svg viewBox="0 0 24 24"><use href="#i-bulb"/></svg></span><span><b>客製核心機制</b><small>理清「增量編譯、來源可溯」後，使用 Python 自建最貼合的流程</small></span></div>
+              <div class="p-goal">終極挑戰：自建機制</div>
+            </div>
+          </div>
+          <div class="src-footer"><span>Source：給學員的第二大腦起步指南</span><span>AI 助理實戰課程</span></div>
+        </div>
+      </section>
+
+      <!-- 7. 必踩之坑 -->
+      <section>
+        <div class="canvas">
+          <div class="kicker"><span class="en">WARNING</span><span class="zh">必踩之坑</span></div>
+          <div class="head">
+            <h2>二腦建置前，先避開這兩個隱形坑</h2>
+            <p class="sub">別在資料外洩或 API 帳單爆表後，才後悔莫及</p>
+          </div>
+          <table class="compare-table" style="margin-top: 36px;">
+            <thead>
+              <tr><th>潛在風險</th><th>致命現象</th><th>正確避坑心法</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight:700">個資邊界模糊</td>
+                <td>把客戶個資、信箱、金鑰一併丟給 AI 模型</td>
+                <td style="color:var(--success);font-weight:700">API 送出前置去敏，敏感資訊只留本機</td>
+              </tr>
+              <tr>
+                <td style="font-weight:700">自動更新燒錢</td>
+                <td>未設限制地頻繁觸發全庫更新，消耗 API 額度</td>
+                <td style="color:var(--success);font-weight:700">落實增量編譯，並於 API 設定警示與用量上限</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="tip-box" style="margin-top: 24px;">親身血淚教訓：個資防護與用量防呆是任何自動化產線的第一條鐵律。</div>
+          <div class="src-footer"><span>Source：AI 團隊內部資安與預算檢盤</span><span>防範大於救火</span></div>
+        </div>
+      </section>
+
+      <!-- 8. 咒語卡 -->
+      <section>
+        <h2>今天的即戰力咒語</h2>
+        <p class="sub" style="font-size: 0.6em; color: var(--text-sec); margin-top: -10px;">貼入 ChatGPT / Claude，開始你的二腦粗加工</p>
+        <div class="prompt-card" style="margin-top: 24px;">
+          <div class="label">複製即用 PROMPT</div>
+          <div class="spell">「請閱讀我以下提供的原始工作筆記，幫我將其提煉成結構化的知識卡片。<br/>卡片必須包含下列欄位：<br/>1. [標題]（簡短精煉）<br/>2. [核心總結]（一行字說完）<br/>3. [關鍵證據與限制]（條列式）<br/>4. [來源標記]（Hash 碼與檔名）<br/>請使用繁體中文（台灣習慣用語）進行整理。」</div>
+        </div>
+        <div class="tip-box">隨堂練習：隨便找一篇你上週的凌亂會議紀錄丟進去，體驗一下 AI 幫你合成卡片的威力。</div>
+      </section>
+
+      <!-- 9. 結尾 -->
+      <section class="end-slide">
+        <p class="big">工具只幫你入門</p>
+        <div class="closing-title">機制，才是你永恆的數位資產。</div>
+        <p class="closing-tagline">下一堂：AI 團隊協作 — 六位數位員工的工作流與調度<br/>AI 助理運用與實戰課程 · 1 對 1 手把手</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('theme') === 'dark') {
+      document.documentElement.classList.add('theme-dark');
+    }
+    Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade' });
+  </script>
+</body>
+</html>
